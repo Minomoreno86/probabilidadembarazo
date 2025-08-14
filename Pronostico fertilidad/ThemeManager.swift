@@ -10,20 +10,33 @@ import SwiftUI
 // MARK: - 🎨 THEME MANAGER
 class ThemeManager: ObservableObject {
     @Published var currentTheme: AppTheme = .light
-    @AppStorage("isDarkMode") private var isDarkMode: Bool = false
+    @AppStorage("selectedTheme") private var selectedThemeString: String = AppTheme.light.rawValue
     
     init() {
-        currentTheme = isDarkMode ? .dark : .light
-    }
-    
-    func toggleTheme() {
-        isDarkMode.toggle()
-        currentTheme = isDarkMode ? .dark : .light
+        // Cargar el tema guardado o usar light por defecto
+        if let savedTheme = AppTheme(rawValue: selectedThemeString) {
+            currentTheme = savedTheme
+        } else {
+            currentTheme = .light
+            selectedThemeString = AppTheme.light.rawValue
+        }
     }
     
     func setTheme(_ theme: AppTheme) {
         currentTheme = theme
-        isDarkMode = theme == .dark
+        selectedThemeString = theme.rawValue
+    }
+    
+    // Función de compatibilidad para el toggle tradicional
+    func toggleTheme() {
+        switch currentTheme {
+        case .light:
+            setTheme(.dark)
+        case .dark:
+            setTheme(.pink)
+        case .pink:
+            setTheme(.light)
+        }
     }
 }
 
