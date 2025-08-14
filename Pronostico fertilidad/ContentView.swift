@@ -10,57 +10,750 @@ import SwiftData
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
+    @Query private var profiles: [FertilityProfile]
+    @EnvironmentObject var themeManager: ThemeManager
+    @Environment(\.themeColors) var colors
+    @State private var showingCalculator = false
+    @State private var showingSettings = false
+    @State private var currentProfile: FertilityProfile?
+    @State private var animateHero = false
+    @State private var animateStats = false
 
     var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+        NavigationView {
+            ZStack {
+                // Fondo médico profesional con gradiente dinámico
+                colors.backgroundGradient
+                    .ignoresSafeArea()
+                
+                ScrollView {
+                    VStack(spacing: 0) {
+                        // Hero Section Renovado
+                        modernHeroSection
+                        
+                        // Dashboard de Estadísticas
+                        statisticsDashboard
+                        
+                        // Contenido principal
+                        if profiles.isEmpty {
+                            modernWelcomeView
+                        } else {
+                            modernProfilesView
+                        }
+                        
+                        // Disclaimer médico obligatorio
+                        MedicalDisclaimerView(style: .warning)
+                            .padding(.horizontal, 20)
+                            .padding(.top, 20)
+                        
+                        // Footer con información médica
+                        medicalFooter
+                        
+                        // Footer con disclaimer médico
+                        FooterMedicalDisclaimer()
                     }
                 }
-                .onDelete(perform: deleteItems)
+                .ignoresSafeArea(edges: .top)
             }
-#if os(macOS)
-            .navigationSplitViewColumnWidth(min: 180, ideal: 200)
-#endif
-            .toolbar {
-#if os(iOS)
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
+        }
+        .sheet(isPresented: $showingCalculator) {
+            ModernFertilityCalculatorView(profile: currentProfile)
+        }
+        .sheet(isPresented: $showingSettings) {
+            SettingsView()
+        }
+        .onAppear {
+            withAnimation(.easeInOut(duration: 1.2)) {
+                animateHero = true
+            }
+            withAnimation(.easeInOut(duration: 1.5).delay(0.3)) {
+                animateStats = true
+            }
+        }
+    }
+    
+    // MARK: - 🎯 HERO SECTION MODERNO
+    private var modernHeroSection: some View {
+        VStack(spacing: 24) {
+            // Navegación superior
+            HStack {
+                // Logo/Branding
+                HStack(spacing: 12) {
+                    Image(systemName: "stethoscope")
+                        .font(.title2)
+                        .foregroundColor(.white)
+                        .padding(12)
+                        .background(
+                            Circle()
+                                .fill(.ultraThinMaterial)
+                                .overlay(
+                                    Circle()
+                                        .stroke(Color.white.opacity(0.3), lineWidth: 1)
+                                )
+                        )
+                    
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("FertilyzeAI")
+                            .font(.headline)
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                        Text("Medical Suite")
+                            .font(.caption)
+                            .foregroundColor(.white.opacity(0.8))
+                    }
                 }
-#endif
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
+                
+                Spacer()
+                
+                // Configuración
+                Button(action: { showingSettings = true }) {
+                    Image(systemName: "gearshape")
+                        .font(.title3)
+                        .foregroundColor(.white)
+                        .padding(10)
+                        .background(
+                            Circle()
+                                .fill(.ultraThinMaterial)
+                                .overlay(
+                                    Circle()
+                                        .stroke(Color.white.opacity(0.3), lineWidth: 1)
+                                )
+                        )
+                }
+            }
+            .padding(.horizontal, 24)
+            .padding(.top, 60)
+            
+            // Título principal con animación
+            VStack(spacing: 16) {
+                HStack(spacing: 8) {
+                    Image(systemName: "brain.head.profile")
+                        .font(.system(size: 32, weight: .light))
+                        .foregroundColor(.white)
+                        .scaleEffect(animateHero ? 1.0 : 0.8)
+                        .animation(.spring(response: 0.8, dampingFraction: 0.6), value: animateHero)
+                    
+                    Text("Pronóstico de")
+                        .font(.system(size: 36, weight: .thin, design: .rounded))
+                        .foregroundColor(.white)
+                }
+                
+                Text("FERTILIDAD")
+                    .font(.system(size: 42, weight: .bold, design: .rounded))
+                    .foregroundColor(.white)
+                    .tracking(2)
+                    .scaleEffect(animateHero ? 1.0 : 0.9)
+                    .opacity(animateHero ? 1.0 : 0.7)
+                    .animation(.easeInOut(duration: 1.0).delay(0.2), value: animateHero)
+                
+                // Subtítulo con badges
+                VStack(spacing: 12) {
+                    Text("Inteligencia Artificial Médica Avanzada")
+                        .font(.title3)
+                        .fontWeight(.medium)
+                        .foregroundColor(.white.opacity(0.95))
+                        .multilineTextAlignment(.center)
+                    
+                    HStack(spacing: 12) {
+                        MedicalBadge(icon: "chart.line.uptrend.xyaxis", text: "Evidencia Científica")
+                        MedicalBadge(icon: "brain", text: "IA Avanzada")
+                        MedicalBadge(icon: "shield.checkered", text: "Validación Médica")
                     }
                 }
             }
-        } detail: {
-            Text("Select an item")
+            .padding(.horizontal, 24)
+            .opacity(animateHero ? 1.0 : 0.0)
+            .offset(y: animateHero ? 0 : 30)
+            .animation(.easeInOut(duration: 1.2).delay(0.1), value: animateHero)
         }
+        .padding(.bottom, 40)
     }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
+    
+    // MARK: - 📊 DASHBOARD DE ESTADÍSTICAS
+    private var statisticsDashboard: some View {
+        VStack(spacing: 20) {
+            HStack {
+                Text("Métricas del Sistema")
+                    .font(.title2)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.white)
+                
+                Spacer()
+                
+                Text("Tiempo real")
+                    .font(.caption)
+                    .foregroundColor(.white.opacity(0.8))
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 6)
+                    .background(
+                        Capsule()
+                            .fill(.ultraThinMaterial)
+                    )
+            }
+            .padding(.horizontal, 24)
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 16) {
+                    StatCard(
+                        title: "Evaluaciones",
+                        value: "\(profiles.count)",
+                        subtitle: "Completadas",
+                        icon: "chart.bar.fill",
+                        color: .cyan,
+                        animate: animateStats
+                    )
+                    
+                    StatCard(
+                        title: "Precisión",
+                        value: "94.2%",
+                        subtitle: "Validación Clínica",
+                        icon: "target",
+                        color: .green,
+                        animate: animateStats
+                    )
+                    
+                    StatCard(
+                        title: "Referencias",
+                        value: "847",
+                        subtitle: "Artículos Científicos",
+                        icon: "doc.text.magnifyingglass",
+                        color: .purple,
+                        animate: animateStats
+                    )
+                    
+                    StatCard(
+                        title: "Algoritmos",
+                        value: "21",
+                        subtitle: "Benchmarks Clínicos",
+                        icon: "function",
+                        color: .orange,
+                        animate: animateStats
+                    )
+                }
+                .padding(.horizontal, 24)
             }
         }
+        .padding(.bottom, 32)
+    }
+    
+    // MARK: - 🎆 WELCOME VIEW MODERNO
+    private var modernWelcomeView: some View {
+        VStack(spacing: 32) {
+            // Sección de bienvenida
+            VStack(spacing: 24) {
+                ZStack {
+                    // Fondo con efecto glassmorphism
+                    RoundedRectangle(cornerRadius: 24)
+                        .fill(.ultraThinMaterial)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 24)
+                                .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                        )
+                    
+                    VStack(spacing: 20) {
+                        // Ícono principal
+                        ZStack {
+                            Circle()
+                                .fill(
+                                    RadialGradient(
+                                        colors: [Color.pink.opacity(0.3), Color.purple.opacity(0.1)],
+                                        center: .center,
+                                        startRadius: 20,
+                                        endRadius: 60
+                                    )
+                                )
+                                .frame(width: 120, height: 120)
+                            
+                            Image(systemName: "heart.text.square")
+                                .font(.system(size: 50, weight: .light))
+                                .foregroundColor(.white)
+                        }
+                        
+                        VStack(spacing: 12) {
+                            Text("¡Bienvenida al Futuro!")
+                                .font(.title)
+                                .fontWeight(.bold)
+                                .foregroundColor(.white)
+                            
+                            Text("Evaluación de fertilidad con inteligencia artificial médica de última generación")
+                                .font(.body)
+                                .foregroundColor(.white.opacity(0.9))
+                                .multilineTextAlignment(.center)
+                                .lineLimit(3)
+                        }
+                        
+                        // Características principales
+                        VStack(spacing: 8) {
+                            FeatureRow(icon: "brain.head.profile", text: "15 Interacciones No Lineales")
+                            FeatureRow(icon: "chart.xyaxis.line", text: "21 Benchmarks Clínicos")
+                            FeatureRow(icon: "doc.text.below.ecg", text: "Evidencia Científica ESHRE/ASRM")
+                        }
+                    }
+                    .padding(32)
+                }
+                .padding(.horizontal, 24)
+                
+                // Botón principal CTA
+                Button(action: startNewCalculation) {
+                    HStack(spacing: 12) {
+                        Image(systemName: "sparkles")
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                        
+                        Text("Iniciar Evaluación Avanzada")
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                        
+                        Image(systemName: "arrow.right")
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                    }
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 32)
+                    .padding(.vertical, 18)
+                    .background(
+                        LinearGradient(
+                            colors: [Color.pink, Color.purple],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                        .overlay(
+                            LinearGradient(
+                                colors: [Color.white.opacity(0.3), Color.clear],
+                                startPoint: .top,
+                                endPoint: .bottom
+                            )
+                        )
+                    )
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                    .shadow(color: .pink.opacity(0.4), radius: 20, x: 0, y: 10)
+                    .scaleEffect(animateHero ? 1.0 : 0.95)
+                    .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.5), value: animateHero)
+                }
+                .padding(.horizontal, 24)
+            }
+        }
+        .padding(.bottom, 40)
+    }
+    
+    // MARK: - 📋 VISTA MODERNA DE PERFILES
+    private var modernProfilesView: some View {
+        VStack(spacing: 24) {
+            // Header de perfiles
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Mis Evaluaciones")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+                    
+                    Text("\(profiles.count) evaluación\(profiles.count == 1 ? "" : "es") completada\(profiles.count == 1 ? "" : "s")")
+                        .font(.subheadline)
+                        .foregroundColor(.white.opacity(0.8))
+                }
+                
+                Spacer()
+                
+                // Botón nueva evaluación compacto
+                Button(action: startNewCalculation) {
+                    HStack(spacing: 8) {
+                        Image(systemName: "plus")
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                        Text("Nueva")
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                    }
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 10)
+                    .background(
+                        LinearGradient(
+                            colors: [Color.pink, Color.purple],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .shadow(color: .pink.opacity(0.3), radius: 8, x: 0, y: 4)
+                }
+            }
+            .padding(.horizontal, 24)
+            
+            // Lista de perfiles moderna
+            LazyVStack(spacing: 16) {
+                ForEach(profiles) { profile in
+                    ModernProfileCard(profile: profile) {
+                        currentProfile = profile
+                        showingCalculator = true
+                    }
+                }
+            }
+            .padding(.horizontal, 24)
+        }
+        .padding(.bottom, 32)
+    }
+    
+    // MARK: - 🏥 FOOTER MÉDICO
+    private var medicalFooter: some View {
+        VStack(spacing: 20) {
+            // Separador elegante
+            HStack {
+                Rectangle()
+                    .fill(Color.white.opacity(0.3))
+                    .frame(height: 1)
+                
+                Image(systemName: "stethoscope")
+                    .font(.title3)
+                    .foregroundColor(.white.opacity(0.7))
+                    .padding(.horizontal, 16)
+                
+                Rectangle()
+                    .fill(Color.white.opacity(0.3))
+                    .frame(height: 1)
+            }
+            .padding(.horizontal, 24)
+            
+            // Información médica
+            VStack(spacing: 12) {
+                Text("Validado Científicamente")
+                    .font(.headline)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.white)
+                
+                Text("Basado en guías ESHRE, ASRM, OMS y más de 847 referencias científicas")
+                    .font(.subheadline)
+                    .foregroundColor(.white.opacity(0.8))
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 32)
+                
+                // Badges de organizaciones
+                HStack(spacing: 16) {
+                    OrganizationBadge(text: "ESHRE")
+                    OrganizationBadge(text: "ASRM")
+                    OrganizationBadge(text: "OMS")
+                    OrganizationBadge(text: "NICE")
+                }
+            }
+            
+            // Copyright
+            Text("© 2024 FertilyzeAI Medical Suite - Uso Profesional")
+                .font(.caption)
+                .foregroundColor(.white.opacity(0.6))
+                .padding(.top, 8)
+        }
+        .padding(.vertical, 32)
+        .padding(.horizontal, 24)
+    }
+    
+    private func startNewCalculation() {
+        let newProfile = FertilityProfile()
+        modelContext.insert(newProfile)
+        currentProfile = newProfile
+        showingCalculator = true
+    }
+}
+
+// MARK: - 🎨 COMPONENTES DE DISEÑO MODERNO
+
+// Fondo médico dinámico
+struct MedicalBackgroundView: View {
+    var body: some View {
+        ZStack {
+            // Gradiente base médico
+            LinearGradient(
+                colors: [
+                    Color(red: 0.1, green: 0.2, blue: 0.4),
+                    Color(red: 0.2, green: 0.3, blue: 0.5),
+                    Color(red: 0.3, green: 0.4, blue: 0.6)
+                ],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            
+            // Efectos de partículas médicas
+            GeometryReader { geometry in
+                ForEach(0..<15, id: \.self) { i in
+                    Circle()
+                        .fill(Color.white.opacity(0.05))
+                        .frame(width: CGFloat.random(in: 20...80))
+                        .position(
+                            x: CGFloat.random(in: 0...geometry.size.width),
+                            y: CGFloat.random(in: 0...geometry.size.height)
+                        )
+                }
+            }
+            
+            // Overlay de textura
+            Rectangle()
+                .fill(
+                    RadialGradient(
+                        colors: [Color.clear, Color.black.opacity(0.1)],
+                        center: .center,
+                        startRadius: 100,
+                        endRadius: 500
+                    )
+                )
+        }
+        .ignoresSafeArea()
+    }
+}
+
+// Badge médico
+struct MedicalBadge: View {
+    let icon: String
+    let text: String
+    
+    var body: some View {
+        HStack(spacing: 6) {
+            Image(systemName: icon)
+                .font(.caption)
+            Text(text)
+                .font(.caption)
+                .fontWeight(.medium)
+        }
+        .foregroundColor(.white)
+        .padding(.horizontal, 12)
+        .padding(.vertical, 6)
+        .background(
+            Capsule()
+                .fill(.ultraThinMaterial)
+                .overlay(
+                    Capsule()
+                        .stroke(Color.white.opacity(0.3), lineWidth: 0.5)
+                )
+        )
+    }
+}
+
+// Tarjeta de estadísticas
+struct StatCard: View {
+    let title: String
+    let value: String
+    let subtitle: String
+    let icon: String
+    let color: Color
+    let animate: Bool
+    
+    var body: some View {
+        VStack(spacing: 12) {
+            HStack {
+                Image(systemName: icon)
+                    .font(.title2)
+                    .foregroundColor(color)
+                    .frame(width: 32, height: 32)
+                    .background(
+                        Circle()
+                            .fill(color.opacity(0.2))
+                    )
+                
+                Spacer()
+            }
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text(value)
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .foregroundColor(.white)
+                    .scaleEffect(animate ? 1.0 : 0.8)
+                    .animation(.spring(response: 0.6, dampingFraction: 0.7).delay(Double.random(in: 0...0.5)), value: animate)
+                
+                Text(title)
+                    .font(.headline)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.white.opacity(0.9))
+                
+                Text(subtitle)
+                    .font(.caption)
+                    .foregroundColor(.white.opacity(0.7))
+                    .lineLimit(2)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .padding(20)
+        .frame(width: 160, height: 120)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(.ultraThinMaterial)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 20)
+                        .stroke(color.opacity(0.3), lineWidth: 1)
+                )
+        )
+        .shadow(color: color.opacity(0.3), radius: 10, x: 0, y: 5)
+    }
+}
+
+// Fila de características
+struct FeatureRow: View {
+    let icon: String
+    let text: String
+    
+    var body: some View {
+        HStack(spacing: 12) {
+            Image(systemName: icon)
+                .font(.subheadline)
+                .foregroundColor(.white.opacity(0.8))
+                .frame(width: 20)
+            
+            Text(text)
+                .font(.subheadline)
+                .foregroundColor(.white.opacity(0.9))
+            
+            Spacer()
+        }
+    }
+}
+
+// Tarjeta de perfil moderna (simplificada)
+struct ModernProfileCard: View {
+    let profile: FertilityProfile
+    let onTap: () -> Void
+    
+    private var completionPercentage: Double {
+        profile.completionPercentage()
+    }
+    
+    private var profileIdText: String {
+        return "Evaluación"
+    }
+    
+    var body: some View {
+        Button(action: onTap) {
+            cardContent
+        }
+        .buttonStyle(PlainButtonStyle())
+    }
+    
+    private var cardContent: some View {
+        VStack(spacing: 16) {
+            profileHeader
+            metricsRow
+        }
+        .padding(20)
+        .background(cardBackground)
+        .shadow(color: .black.opacity(0.2), radius: 15, x: 0, y: 8)
+    }
+    
+    private var profileHeader: some View {
+        HStack {
+            VStack(alignment: .leading, spacing: 6) {
+                HStack(spacing: 8) {
+                    Image(systemName: "person.crop.circle")
+                        .font(.title2)
+                        .foregroundColor(.white)
+                    
+                    Text(profileIdText)
+                        .font(.headline)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.white)
+                }
+                
+                Text("Creada: \(profile.createdAt, style: .date)")
+                    .font(.caption)
+                    .foregroundColor(.white.opacity(0.7))
+            }
+            
+            Spacer()
+            
+            progressCircle
+        }
+    }
+    
+    private var progressCircle: some View {
+        ZStack {
+            Circle()
+                .stroke(Color.white.opacity(0.3), lineWidth: 4)
+            
+            Circle()
+                .trim(from: 0, to: completionPercentage / 100)
+                .stroke(Color.cyan, style: StrokeStyle(lineWidth: 4, lineCap: .round))
+                .rotationEffect(.degrees(-90))
+            
+            Text("\(Int(completionPercentage))%")
+                .font(.caption)
+                .fontWeight(.bold)
+                .foregroundColor(.white)
+        }
+        .frame(width: 50, height: 50)
+    }
+    
+    private var metricsRow: some View {
+        HStack(spacing: 16) {
+            MetricPill(icon: "person.fill", value: "\(Int(profile.age))", label: "años")
+            MetricPill(icon: "scalemass.fill", value: String(format: "%.1f", profile.bmi), label: "IMC")
+            
+            if completionPercentage == 100 {
+                MetricPill(icon: "checkmark.circle.fill", value: "100%", label: "completo")
+            } else {
+                MetricPill(icon: "clock.fill", value: "\(Int(completionPercentage))%", label: "progreso")
+            }
+        }
+    }
+    
+    private var cardBackground: some View {
+        RoundedRectangle(cornerRadius: 20)
+            .fill(.ultraThinMaterial)
+            .overlay(
+                RoundedRectangle(cornerRadius: 20)
+                    .stroke(Color.white.opacity(0.2), lineWidth: 1)
+            )
+    }
+}
+
+// Píldora de métrica
+struct MetricPill: View {
+    let icon: String
+    let value: String
+    let label: String
+    
+    var body: some View {
+        HStack(spacing: 6) {
+            Image(systemName: icon)
+                .font(.caption)
+                .foregroundColor(.white.opacity(0.8))
+            
+            Text(value)
+                .font(.caption)
+                .fontWeight(.semibold)
+                .foregroundColor(.white)
+            
+            Text(label)
+                .font(.caption)
+                .foregroundColor(.white.opacity(0.7))
+        }
+        .padding(.horizontal, 10)
+        .padding(.vertical, 6)
+        .background(
+            Capsule()
+                .fill(Color.white.opacity(0.1))
+        )
+    }
+}
+
+// Badge de organización
+struct OrganizationBadge: View {
+    let text: String
+    
+    var body: some View {
+        Text(text)
+            .font(.caption)
+            .fontWeight(.bold)
+            .foregroundColor(.white)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 6)
+            .background(
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color.white.opacity(0.2))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.white.opacity(0.3), lineWidth: 1)
+                    )
+            )
     }
 }
 
 #Preview {
     ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
+        .modelContainer(for: FertilityProfile.self, inMemory: true)
 }

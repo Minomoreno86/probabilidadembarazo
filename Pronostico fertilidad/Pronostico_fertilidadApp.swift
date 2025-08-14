@@ -10,11 +10,18 @@ import SwiftData
 
 @main
 struct Pronostico_fertilidadApp: App {
+    @StateObject private var themeManager = ThemeManager()
+    
+    // MARK: - 🗄️ CONFIGURACIÓN DE BASE DE DATOS
+    // Nota: Usando memoria temporal durante desarrollo debido a cambios en el modelo
+    // Para producción, cambiar isStoredInMemoryOnly a false
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Item.self,
+            FertilityProfile.self,
+            FertilityCalculationResult.self,
         ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+        // Configuración temporal para desarrollo - usar memoria durante pruebas
+        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
 
         do {
             return try ModelContainer(for: schema, configurations: [modelConfiguration])
@@ -26,6 +33,9 @@ struct Pronostico_fertilidadApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(themeManager)
+                .environment(\.themeColors, ThemeColors.current(themeManager.currentTheme))
+                .preferredColorScheme(themeManager.currentTheme == .dark ? .dark : .light)
         }
         .modelContainer(sharedModelContainer)
     }
