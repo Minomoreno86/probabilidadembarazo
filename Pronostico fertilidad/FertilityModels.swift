@@ -84,6 +84,54 @@ enum OtbMethod: String, CaseIterable, Codable {
     }
 }
 
+// MARK: - Enums para evaluación detallada del SOP
+
+enum HirsutismSeverity: String, CaseIterable, Codable {
+    case none = "none"
+    case mild = "mild"
+    case moderate = "moderate"
+    case severe = "severe"
+    
+    var displayName: String {
+        switch self {
+        case .none: return "No"
+        case .mild: return "Leve (vello en mentón)"
+        case .moderate: return "Moderado (vello en mentón + mejillas)"
+        case .severe: return "Severo (vello facial extenso)"
+        }
+    }
+}
+
+enum AcneSeverity: String, CaseIterable, Codable {
+    case none = "none"
+    case mild = "mild"
+    case moderate = "moderate"
+    case severe = "severe"
+    
+    var displayName: String {
+        switch self {
+        case .none: return "No"
+        case .mild: return "Leve (pocos granos)"
+        case .moderate: return "Moderado (acné persistente)"
+        case .severe: return "Severo (acné quístico)"
+        }
+    }
+}
+
+enum OvarianMorphology: String, CaseIterable, Codable {
+    case notEvaluated = "notEvaluated"
+    case normal = "normal"
+    case polycystic = "polycystic"
+    
+    var displayName: String {
+        switch self {
+        case .notEvaluated: return "No me la han hecho"
+        case .normal: return "Normal"
+        case .polycystic: return "Ovarios poliquísticos (>12 folículos)"
+        }
+    }
+}
+
 // MARK: - Modelo principal de datos de fertilidad
 
 @Model
@@ -99,6 +147,10 @@ final class FertilityProfile {
     var infertilityDuration: Double?
     var previousPregnancies: Int // Paridad previa (nullípara vs multípara)
     var hasPcos: Bool
+    // Evaluación detallada del SOP (condicional cuando hasPcos = true)
+    var hirsutismSeverity: HirsutismSeverity
+    var acneSeverity: AcneSeverity
+    var ovarianMorphology: OvarianMorphology
     var endometriosisStage: Int
     var myomaType: MyomaType
     var myomaSize: Double? // Tamaño del mioma más grande (en cm)
@@ -141,6 +193,9 @@ final class FertilityProfile {
         infertilityDuration: Double? = nil,
         previousPregnancies: Int = 0,
         hasPcos: Bool = false,
+        hirsutismSeverity: HirsutismSeverity = .none,
+        acneSeverity: AcneSeverity = .none,
+        ovarianMorphology: OvarianMorphology = .notEvaluated,
         endometriosisStage: Int = 0,
         myomaType: MyomaType = .none,
         myomaSize: Double? = nil,
@@ -173,6 +228,9 @@ final class FertilityProfile {
         self.infertilityDuration = infertilityDuration
         self.previousPregnancies = previousPregnancies
         self.hasPcos = hasPcos
+        self.hirsutismSeverity = hirsutismSeverity
+        self.acneSeverity = acneSeverity
+        self.ovarianMorphology = ovarianMorphology
         self.endometriosisStage = endometriosisStage
         self.myomaType = myomaType
         self.myomaSize = myomaSize
@@ -229,7 +287,7 @@ final class FertilityProfile {
     
     // Función para calcular el porcentaje de completitud
     func completionPercentage() -> Double {
-        let totalFields = 28 // Número total de campos importantes (eliminadas 2 variables innecesarias)
+        let totalFields = 31 // Número total de campos importantes (incluyendo 3 campos detallados del SOP)
         var completedFields = 0
         
         // Campos básicos siempre completados
@@ -239,7 +297,13 @@ final class FertilityProfile {
         if cycleLength != nil { completedFields += 1 }
         if infertilityDuration != nil { completedFields += 1 }
         if previousPregnancies > 0 { completedFields += 1 } // Nueva variable
-        if hasPcos { completedFields += 1 }
+        if hasPcos { 
+            completedFields += 1
+            // Contar propiedades detalladas del SOP como campos adicionales
+            if hirsutismSeverity != .none { completedFields += 1 }
+            if acneSeverity != .none { completedFields += 1 }
+            if ovarianMorphology != .notEvaluated { completedFields += 1 }
+        }
         if endometriosisStage > 0 { completedFields += 1 }
         if myomaType != .none { completedFields += 1 }
         if myomaSize != nil { completedFields += 1 } // Nueva variable

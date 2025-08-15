@@ -437,6 +437,72 @@ struct ModernFertilityCalculatorView: View {
                 color: .pink
             )
             
+            // Preguntas condicionales del SOP
+            if profile.hasPcos {
+                VStack(alignment: .leading, spacing: 16) {
+                    // Header de la sección
+                    HStack {
+                        Image(systemName: "circle.hexagongrid.fill")
+                            .foregroundColor(.pink)
+                        Text("Evaluación Detallada del SOP")
+                            .font(.headline)
+                            .foregroundColor(colors.text)
+                        Spacer()
+                    }
+                    
+                    // Manifestaciones androgénicas
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Manifestaciones Androgénicas")
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.white.opacity(0.9))
+                        
+                        Picker("Hirsutismo", selection: $profile.hirsutismSeverity) {
+                            Text("No").tag(HirsutismSeverity.none)
+                            Text("Leve (vello en mentón)").tag(HirsutismSeverity.mild)
+                            Text("Moderado (vello en mentón + mejillas)").tag(HirsutismSeverity.moderate)
+                            Text("Severo (vello facial extenso)").tag(HirsutismSeverity.severe)
+                        }
+                        .pickerStyle(MenuPickerStyle())
+                        .foregroundColor(.white)
+                        
+                        Picker("Acné", selection: $profile.acneSeverity) {
+                            Text("No").tag(AcneSeverity.none)
+                            Text("Leve (pocos granos)").tag(AcneSeverity.mild)
+                            Text("Moderado (acné persistente)").tag(AcneSeverity.moderate)
+                            Text("Severo (acné quístico)").tag(AcneSeverity.severe)
+                        }
+                        .pickerStyle(MenuPickerStyle())
+                        .foregroundColor(.white)
+                    }
+                    
+                    // Evaluación ovárica
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Evaluación Ovárica")
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.white.opacity(0.9))
+                        
+                        Picker("Conteo folicular", selection: $profile.ovarianMorphology) {
+                            Text("No me la han hecho").tag(OvarianMorphology.notEvaluated)
+                            Text("Normal").tag(OvarianMorphology.normal)
+                            Text("Ovarios poliquísticos (>12 folículos)").tag(OvarianMorphology.polycystic)
+                        }
+                        .pickerStyle(MenuPickerStyle())
+                        .foregroundColor(.white)
+                    }
+                }
+                .padding(16)
+                .background(
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(colors.surface.opacity(0.6))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 12)
+                                .stroke(Color.pink.opacity(0.3), lineWidth: 1)
+                        )
+                )
+            }
+            
             // Endometriosis
             VStack(alignment: .leading, spacing: 12) {
                 HStack {

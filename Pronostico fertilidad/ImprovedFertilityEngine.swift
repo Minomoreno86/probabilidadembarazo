@@ -168,7 +168,7 @@ class ImprovedFertilityEngine: ObservableObject {
         let medicalFactors = convertProfileToMedicalFactors(profile)
         
         // 🧬 FASE 2: Evaluar interacciones no lineales
-        let interactions = evaluateNonLinearInteractions(factors: medicalFactors)
+        let interactions = evaluateNonLinearInteractions(factors: medicalFactors, profile: profile)
         
         // ⚡ FASE 3: Calcular probabilidad con evidencia científica
         let (probability, confidence) = calculateEvidenceBasedProbability(

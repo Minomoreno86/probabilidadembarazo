@@ -100,45 +100,131 @@ struct ImprovedFertilityResultsView: View {
     }
     
     private var probabilityCard: some View {
-        VStack(spacing: 16) {
-            Text("Probabilidad de Embarazo")
-                .font(.title2)
-                .fontWeight(.bold)
-                .foregroundColor(.primary)
+        ZStack {
+            // Fondo con gradiente
+            RoundedRectangle(cornerRadius: 24)
+                .fill(LinearGradient(
+                    colors: [
+                        probabilityColor.opacity(0.1),
+                        probabilityColor.opacity(0.05),
+                        colors.surface
+                    ],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                ))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 24)
+                        .stroke(probabilityColor.opacity(0.2), lineWidth: 1)
+                )
             
-            HStack(spacing: 40) {
-                VStack(spacing: 8) {
-                    Text("\(Int(result.annualProbability * 100))%")
-                        .font(.system(size: 48, weight: .bold, design: .rounded))
-                        .foregroundColor(probabilityColor)
-                    Text("Anual")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+            VStack(spacing: 20) {
+                // Icono médico
+                Image(systemName: "heart.text.square.fill")
+                    .font(.system(size: 40))
+                    .foregroundColor(probabilityColor)
+                
+                // Título
+                Text("Probabilidad de Fertilidad")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .foregroundColor(.primary)
+                
+                // Probabilidades principales
+                HStack(spacing: 40) {
+                    VStack(spacing: 12) {
+                        ZStack {
+                            Circle()
+                                .stroke(probabilityColor.opacity(0.2), lineWidth: 8)
+                                .frame(width: 80, height: 80)
+                            
+                            Circle()
+                                .trim(from: 0, to: result.annualProbability)
+                                .stroke(
+                                    LinearGradient(
+                                        colors: [probabilityColor, probabilityColor.opacity(0.7)],
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    ),
+                                    style: StrokeStyle(lineWidth: 8, lineCap: .round)
+                                )
+                                .frame(width: 80, height: 80)
+                                .rotationEffect(.degrees(-90))
+                                .animation(.easeInOut(duration: 1.5), value: result.annualProbability)
+                            
+                            VStack {
+                                Text("\(Int(result.annualProbability * 100))%")
+                                    .font(.system(size: 18, weight: .bold, design: .rounded))
+                                    .foregroundColor(probabilityColor)
+                                Text("Anual")
+                                    .font(.caption2)
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                    }
+                    
+                    VStack(spacing: 12) {
+                        ZStack {
+                            Circle()
+                                .stroke(probabilityColor.opacity(0.2), lineWidth: 6)
+                                .frame(width: 60, height: 60)
+                            
+                            Circle()
+                                .trim(from: 0, to: result.monthlyProbability)
+                                .stroke(
+                                    LinearGradient(
+                                        colors: [probabilityColor, probabilityColor.opacity(0.7)],
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    ),
+                                    style: StrokeStyle(lineWidth: 6, lineCap: .round)
+                                )
+                                .frame(width: 60, height: 60)
+                                .rotationEffect(.degrees(-90))
+                                .animation(.easeInOut(duration: 1.5), value: result.monthlyProbability)
+                            
+                            VStack {
+                                Text("\(Int(result.monthlyProbability * 100))%")
+                                    .font(.system(size: 14, weight: .bold, design: .rounded))
+                                    .foregroundColor(probabilityColor)
+                                Text("Mensual")
+                                    .font(.caption2)
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                    }
                 }
                 
-                VStack(spacing: 8) {
-                    Text("\(Int(result.monthlyProbability * 100))%")
-                        .font(.system(size: 32, weight: .semibold, design: .rounded))
-                        .foregroundColor(probabilityColor)
-                    Text("Por Ciclo")
+                // Categoría
+                Text(result.category.rawValue)
+                    .font(.title3)
+                    .fontWeight(.semibold)
+                    .foregroundColor(categoryColor)
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 10)
+                    .background(
+                        RoundedRectangle(cornerRadius: 25)
+                            .fill(categoryColor.opacity(0.15))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 25)
+                                    .stroke(categoryColor.opacity(0.3), lineWidth: 1)
+                            )
+                    )
+                
+                // Indicador de confianza
+                HStack(spacing: 8) {
+                    Circle()
+                        .fill(confidenceColor)
+                        .frame(width: 12, height: 12)
+                    
+                    Text("Confianza: \(Int(result.confidenceLevel * 100))%")
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
             }
-            
-            Text(result.category.rawValue)
-                .font(.title3)
-                .fontWeight(.semibold)
-                .foregroundColor(categoryColor)
-                .padding(.horizontal, 16)
-                .padding(.vertical, 8)
-                .background(categoryColor.opacity(0.1))
-                .cornerRadius(20)
+            .padding(32)
         }
-        .padding(24)
-        .background(colors.surface)
-        .cornerRadius(16)
-        .shadow(color: colors.border.opacity(0.3), radius: 8, x: 0, y: 4)
+        .frame(height: 280)
+        .shadow(color: probabilityColor.opacity(0.2), radius: 12, x: 0, y: 6)
     }
     
     private var qualityIndicators: some View {
@@ -199,20 +285,231 @@ struct ImprovedFertilityResultsView: View {
     // MARK: - Vista de Análisis Detallado
     private var analysisView: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
-                Text("Análisis Médico Completo")
-                    .font(.title2)
-                    .fontWeight(.bold)
-                    .padding(.horizontal)
-                
-                Text(result.detailedAnalysis)
-                    .font(.body)
-                    .lineSpacing(4)
-                    .padding()
-                    .background(colors.surface)
+            VStack(alignment: .leading, spacing: 20) {
+                // Header con icono médico
+                HStack {
+                    Image(systemName: "stethoscope")
+                        .font(.title)
+                        .foregroundColor(.blue)
+                    
+                    Text("Análisis Médico Completo")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                    
+                    Spacer()
+                    
+                    // Indicador de confianza
+                    HStack(spacing: 4) {
+                        Circle()
+                            .fill(confidenceColor)
+                            .frame(width: 8, height: 8)
+                        Text("\(Int(result.confidenceLevel * 100))%")
+                            .font(.caption)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.secondary)
+                    }
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 6)
+                    .background(confidenceColor.opacity(0.1))
                     .cornerRadius(12)
-                    .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: 2)
-                    .padding(.horizontal)
+                }
+                .padding(.horizontal)
+                
+                // Métricas principales en cards
+                LazyVGrid(columns: [
+                    GridItem(.flexible()),
+                    GridItem(.flexible())
+                ], spacing: 16) {
+                    MetricCard(
+                        icon: "heart.fill",
+                        title: "Puntuación",
+                        value: String(format: "%.1f", result.fertilityScore),
+                        color: .red,
+                        subtitle: "Fertilidad"
+                    )
+                    
+                    MetricCard(
+                        icon: "chart.line.uptrend.xyaxis",
+                        title: "Tendencia",
+                        value: result.category.rawValue.capitalized,
+                        color: categoryColor,
+                        subtitle: "Categoría"
+                    )
+                    
+                    MetricCard(
+                        icon: "clock.fill",
+                        title: "Tiempo",
+                        value: "\(Int(result.annualProbability * 100))%",
+                        color: .blue,
+                        subtitle: "Anual"
+                    )
+                    
+                    MetricCard(
+                        icon: "calendar",
+                        title: "Mensual",
+                        value: "\(Int(result.monthlyProbability * 100))%",
+                        color: .green,
+                        subtitle: "Probabilidad"
+                    )
+                }
+                .padding(.horizontal)
+                
+                // Análisis detallado con diseño mejorado
+                VStack(alignment: .leading, spacing: 20) {
+                    // Header elegante
+                    HStack(spacing: 12) {
+                        ZStack {
+                            Circle()
+                                .fill(
+                                    LinearGradient(
+                                        colors: [.blue, .purple],
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    )
+                                )
+                                .frame(width: 40, height: 40)
+                            
+                            Image(systemName: "stethoscope")
+                                .font(.title3)
+                                .foregroundColor(.white)
+                        }
+                        
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Evaluación Clínica")
+                                .font(.title3)
+                                .fontWeight(.bold)
+                                .foregroundColor(.primary)
+                            
+                            Text("Análisis médico detallado")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                        
+                        Spacer()
+                        
+                        // Badge de estado
+                        Text("Completa")
+                            .font(.caption2)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 4)
+                            .background(
+                                Capsule()
+                                    .fill(Color.green)
+                            )
+                    }
+                    
+                    // Contenido principal con diseño moderno
+                    VStack(alignment: .leading, spacing: 16) {
+                        // Icono decorativo
+                        HStack {
+                            Image(systemName: "quote.bubble.fill")
+                                .font(.title2)
+                                .foregroundColor(.blue.opacity(0.6))
+                            
+                            Spacer()
+                        }
+                        
+                        // Texto del análisis con mejor formato
+                        Text(result.detailedAnalysis)
+                            .font(.body)
+                            .lineSpacing(8)
+                            .foregroundColor(.primary)
+                            .multilineTextAlignment(.leading)
+                        
+                        // Separador decorativo
+                        HStack {
+                            Rectangle()
+                                .fill(
+                                    LinearGradient(
+                                        colors: [.blue.opacity(0.3), .purple.opacity(0.3)],
+                                        startPoint: .leading,
+                                        endPoint: .trailing
+                                    )
+                                )
+                                .frame(height: 2)
+                            
+                            Spacer()
+                        }
+                        
+                        // Footer con información adicional
+                        HStack {
+                            Image(systemName: "clock.fill")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                            
+                            Text("Análisis generado automáticamente")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                            
+                            Spacer()
+                            
+                            Image(systemName: "checkmark.seal.fill")
+                                .font(.caption)
+                                .foregroundColor(.green)
+                        }
+                    }
+                    .padding(20)
+                    .background(
+                        RoundedRectangle(cornerRadius: 20)
+                            .fill(
+                                LinearGradient(
+                                    colors: [
+                                        Color.white.opacity(0.9),
+                                        Color.blue.opacity(0.02),
+                                        Color.purple.opacity(0.02)
+                                    ],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
+                            )
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .stroke(
+                                        LinearGradient(
+                                            colors: [.blue.opacity(0.2), .purple.opacity(0.2)],
+                                            startPoint: .topLeading,
+                                            endPoint: .bottomTrailing
+                                        ),
+                                        lineWidth: 1
+                                    )
+                            )
+                            .shadow(
+                                color: Color.blue.opacity(0.1),
+                                radius: 15,
+                                x: 0,
+                                y: 8
+                            )
+                    )
+                }
+                .padding(.horizontal)
+                
+                // Factores clave destacados
+                VStack(alignment: .leading, spacing: 12) {
+                    HStack {
+                        Image(systemName: "target")
+                            .font(.title3)
+                            .foregroundColor(.orange)
+                        
+                        Text("Factores Clave")
+                            .font(.headline)
+                            .fontWeight(.semibold)
+                        
+                        Spacer()
+                    }
+                    
+                    LazyVGrid(columns: [GridItem(.flexible())], spacing: 8) {
+                        ForEach(Array(result.keyFactors.prefix(3).enumerated()), id: \.offset) { index, factor in
+                            KeyFactorCard(
+                                factor: factor.key.capitalized.replacingOccurrences(of: "_", with: " "),
+                                impact: factor.value,
+                                index: index
+                            )
+                        }
+                    }
+                }
+                .padding(.horizontal)
                 
                 Spacer(minLength: 20)
             }
@@ -288,7 +585,31 @@ struct ImprovedFertilityResultsView: View {
     }
     
     private var categoryColor: Color {
-        probabilityColor
+        switch result.category {
+        case .excellent:
+            return .green
+        case .good:
+            return .blue
+        case .moderate:
+            return .orange
+        case .low:
+            return .red
+        case .veryLow:
+            return .purple
+        case .critical:
+            return .purple
+        }
+    }
+    
+    private var confidenceColor: Color {
+        switch result.confidenceLevel {
+        case 0.8...:
+            return .green
+        case 0.6..<0.8:
+            return .orange
+        default:
+            return .red
+        }
     }
     
     private var categoryDescription: String {
@@ -470,6 +791,8 @@ struct RecommendationRowView: View {
             return .purple
         }
     }
+    
+
 }
 
 #Preview {
@@ -608,5 +931,122 @@ extension ImprovedFertilityResultsView {
         case 0.5..<0.8: return .yellow
         default: return .green
         }
+    }
+}
+
+// MARK: - 🎨 Componentes de Diseño Mejorado
+
+struct MetricCard: View {
+    let icon: String
+    let title: String
+    let value: String
+    let color: Color
+    let subtitle: String
+    
+    var body: some View {
+        VStack(spacing: 8) {
+            Image(systemName: icon)
+                .font(.title2)
+                .foregroundColor(color)
+            
+            Text(value)
+                .font(.title2)
+                .fontWeight(.bold)
+                .foregroundColor(.primary)
+            
+            Text(title)
+                .font(.caption)
+                .fontWeight(.semibold)
+                .foregroundColor(.secondary)
+            
+            Text(subtitle)
+                .font(.caption2)
+                .foregroundColor(.secondary)
+        }
+        .frame(maxWidth: .infinity)
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(
+                    LinearGradient(
+                        colors: [color.opacity(0.1), color.opacity(0.05)],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 16)
+                        .stroke(color.opacity(0.2), lineWidth: 1)
+                )
+        )
+        .shadow(color: color.opacity(0.1), radius: 8, x: 0, y: 4)
+    }
+}
+
+struct KeyFactorCard: View {
+    let factor: String
+    let impact: Double
+    let index: Int
+    
+    private var impactColor: Color {
+        if impact > 0.3 {
+            return .green
+        } else if impact > 0.1 {
+            return .orange
+        } else if impact > -0.1 {
+            return .blue
+        } else {
+            return .red
+        }
+    }
+    
+    private var impactIcon: String {
+        if impact > 0.3 {
+            return "arrow.up.circle.fill"
+            } else if impact > 0.1 {
+            return "arrow.up.circle"
+        } else if impact > -0.1 {
+            return "minus.circle"
+        } else {
+            return "arrow.down.circle.fill"
+        }
+    }
+    
+    var body: some View {
+        HStack(spacing: 12) {
+            // Número de índice
+            Text("\(index + 1)")
+                .font(.caption)
+                .fontWeight(.bold)
+                .foregroundColor(.white)
+                .frame(width: 24, height: 24)
+                .background(Circle().fill(impactColor))
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text(factor)
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.primary)
+                
+                Text("Impacto: \(String(format: "%.1f", abs(impact) * 100))%")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+            
+            Spacer()
+            
+            Image(systemName: impactIcon)
+                .font(.title3)
+                .foregroundColor(impactColor)
+        }
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(impactColor.opacity(0.05))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(impactColor.opacity(0.2), lineWidth: 1)
+                )
+        )
     }
 }

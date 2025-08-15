@@ -417,7 +417,7 @@ extension ImprovedFertilityEngine {
     
     // MARK: - 🧬 INTERACCIONES NO LINEALES
     
-    internal func evaluateNonLinearInteractions(factors: MedicalFactors) -> NonLinearInteractions {
+    internal func evaluateNonLinearInteractions(factors: MedicalFactors, profile: FertilityProfile) -> NonLinearInteractions {
         var interactions = NonLinearInteractions()
         
         // 🧬 Interacciones críticas basadas en evidencia científica
@@ -429,45 +429,56 @@ extension ImprovedFertilityEngine {
         
         // Sinergia edad-AMH crítica (DOI: 10.1093/humupd/dmt012)
         // Edad >38 años + AMH baja (<0.8) = ventana reproductiva crítica
-        if approximateAge >= 38 && factors.amh <= 0.60 {
+        // SOLO si el usuario proporcionó datos de AMH
+        if profile.amhValue != nil && approximateAge >= 38 && factors.amh <= 0.60 {
             interactions.ageAmhSynergy = 0.35
         }
         
         // SOP + resistencia insulínica (DOI: 10.1016/j.fertnstert.2023.07.025)
         // HOMA-IR >2.5 (factor <0.9) + SOP = sinergia negativa
-        if factors.pcos < 1.0 && factors.homaIR < 0.9 {
+        // SOLO si el usuario tiene SOP Y proporcionó datos de HOMA-IR
+        if profile.hasPcos && profile.homaIr != nil && factors.pcos < 1.0 && factors.homaIR < 0.9 {
             interactions.scopInsulinResistance = 0.25
         }
         
         // Endometriosis + factor masculino (DOI: 10.1093/hropen/hoac009)
-        if factors.endometriosis >= 0.3 && factors.male >= 0.3 {
+        // SOLO si el usuario tiene endometriosis Y proporcionó datos de factor masculino
+        if profile.endometriosisStage > 0 && 
+           (profile.spermConcentration != nil || profile.spermProgressiveMotility != nil || profile.spermNormalMorphology != nil) &&
+           factors.endometriosis < 1.0 && factors.male < 1.0 {
             interactions.endometriosisMale = 0.30
         }
         
         // Fallo crítico por edad avanzada + baja reserva (DOI: 10.1016/j.fertnstert.2019.02.111)
         // Edad >42 años + AMH <0.4 = ventana reproductiva cerrada
-        if approximateAge >= 42 && factors.amh <= 0.15 {
+        // SOLO si el usuario proporcionó datos de AMH
+        if profile.amhValue != nil && approximateAge >= 42 && factors.amh <= 0.15 {
             interactions.ageCriticalFailure = 0.45
         }
         
         // SOP + obesidad severa (DOI: 10.1210/jc.2015-3761)
-        if factors.pcos > 0.0 && factors.bmi >= 0.4 {
+        // SOLO si el usuario tiene SOP
+        if profile.hasPcos && factors.pcos > 0.0 && factors.bmi >= 0.4 {
             interactions.scopObesitySevere = 0.25
         }
         
         // Adenomiosis + edad avanzada (DOI: 10.1016/j.jogc.2018.05.007)
-        if factors.adenomyosis >= 0.5 && factors.age >= 0.5 {
+        // SOLO si el usuario tiene adenomiosis
+        if profile.adenomyosisType != .none && factors.adenomyosis >= 0.5 && factors.age >= 0.5 {
             interactions.adenomyosisAge = 0.30
         }
         
         // Múltiples cirugías + larga duración (DOI: 10.1016/j.ejogrb.2020.01.012)
-        if factors.infertilityDuration >= 0.45 && factors.pelvicSurgery >= 0.12 {
+        // SOLO si el usuario tiene cirugías pélvicas Y proporcionó duración de infertilidad
+        if profile.hasPelvicSurgery && profile.infertilityDuration != nil && 
+           factors.pelvicSurgery < 1.0 && factors.infertilityDuration < 1.0 {
             interactions.multipleSurgeries = 0.25
         }
         
         // Reserva crítica (DOI: 10.1093/humupd/dmt012)
         // AMH <0.4 + edad >40 años = fallo ovárico inminente
-        if factors.amh <= 0.15 && approximateAge >= 40 {
+        // SOLO si el usuario proporcionó datos de AMH
+        if profile.amhValue != nil && factors.amh <= 0.15 && approximateAge >= 40 {
             interactions.reserveCritical = 0.40
         }
         
@@ -646,9 +657,16 @@ extension ImprovedFertilityEngine {
         // Basado en: Sin cirugías=100%, 1 cirugía=90-95%, ≥2 cirugías=80-85%
         // Referencia: DOI: 10.1016/j.fertnstert.2023.04.008, DOI: 10.1016/j.rbmo.2022.05.008
         
-        // Por ahora, aplicamos un impacto moderado general
-        // En futuras versiones se puede desglosar por tipo específico de cirugía
-        return 0.88  // 88% de fertilidad base (reducción estimada 10-15%)
+        if !profile.hasPelvicSurgery {
+            return 1.0  // Sin cirugías: factor óptimo (100%)
+        } else {
+            // Con cirugías: aplicar factor según número de cirugías
+            if profile.numberOfPelvicSurgeries == 1 {
+                return 0.92  // 1 cirugía: 92% de fertilidad base
+            } else {
+                return 0.85  // ≥2 cirugías: 85% de fertilidad base
+            }
+        }
     }
     
     func generateKeyFactors(profile: FertilityProfile, factors: MedicalFactors) -> [String: Double] {
@@ -1377,152 +1395,267 @@ extension ImprovedFertilityEngine {
         let monthlyPercentage = Int(monthlyProbability * 100)
         let annualPercentage = Int(annualProbability * 100)
         
-        // 🎯 ANÁLISIS MÉDICO COMPLETO MEJORADO
+        // 🎯 ANÁLISIS MÉDICO COMPLETO MEJORADO - TEXTO NATURAL Y PROFESIONAL
         var analysis = ""
         
-        // HEADER PROFESIONAL
-        analysis += "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-        analysis += "🩺 ANÁLISIS MÉDICO INTEGRAL\n"
-        analysis += "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+        // INTRODUCCIÓN PERSONALIZADA
+        analysis += "Basándome en su perfil reproductivo, he realizado una evaluación integral de su fertilidad. "
+        analysis += "Los resultados muestran una probabilidad de embarazo espontáneo del \(monthlyPercentage)% por ciclo mensual "
+        analysis += "y del \(annualPercentage)% en el transcurso de un año. "
+        analysis += "Su categoría clínica es: \(category.rawValue.capitalized).\n\n"
         
-        // PROBABILIDADES DESTACADAS
-        analysis += "📊 PROBABILIDADES DE EMBARAZO ESPONTÁNEO:\n"
-        analysis += "┌─────────────────────────────────────┐\n"
-        analysis += "│  Por ciclo mensual:    \(String(format: "%2d", monthlyPercentage))%          │\n"
-        analysis += "│  Probabilidad anual:   \(String(format: "%2d", annualPercentage))%          │\n"
-        analysis += "│  Categoría clínica:  \(category.rawValue.padding(toLength: 12, withPad: " ", startingAt: 0)) │\n"
-        analysis += "└─────────────────────────────────────┘\n\n"
-        
-        // ANÁLISIS POR FACTORES RELEVANTES
-        analysis += "🔍 ANÁLISIS DE FACTORES REPRODUCTIVOS:\n"
-        analysis += "─────────────────────────────────────────\n\n"
-        
-        // Factor edad (siempre presente)
-        analysis += "👤 EDAD MATERNA (\(Int(profile.age)) años):\n"
+        // ANÁLISIS DE EDAD - SECCIÓN PRINCIPAL
+        analysis += "**Edad Materna (\(Int(profile.age)) años):** "
         let ageFactor = FertilityCalculations.calculateAgeFactor(profile.age)
         let agePercentage = Int(ageFactor * 100)
-        analysis += "   • Fecundabilidad base: \(agePercentage)% mensual\n"
         
         if profile.age < 25 {
-            analysis += "   • ✅ VENTANA ÓPTIMA - Máxima fertilidad natural\n"
+            analysis += "Se encuentra en la ventana óptima de fertilidad natural. Su edad de \(Int(profile.age)) años representa el período de máxima fecundabilidad, con una tasa base del \(agePercentage)% mensual. Esta es la edad ideal para concebir de forma espontánea."
         } else if profile.age < 30 {
-            analysis += "   • ✅ EXCELENTE - Ventana reproductiva ideal\n"
+            analysis += "Su edad de \(Int(profile.age)) años se encuentra en el rango excelente para la reproducción. Mantiene una fecundabilidad del \(agePercentage)% mensual, lo que indica una ventana reproductiva ideal con excelentes probabilidades de concepción natural."
         } else if profile.age < 35 {
-            analysis += "   • ⚠️ BUENA - Leve descenso, aún favorable\n"
+            analysis += "Con \(Int(profile.age)) años, su fertilidad se mantiene en un nivel bueno, aunque comienza a observarse un leve descenso natural. Su fecundabilidad del \(agePercentage)% mensual sigue siendo favorable, pero se recomienda no retrasar la búsqueda del embarazo."
         } else if profile.age < 40 {
-            analysis += "   • ⚠️ MODERADA - Descenso acelerado, considerar tratamiento\n"
+            analysis += "A los \(Int(profile.age)) años, se observa un descenso más acelerado de la fertilidad natural. Su fecundabilidad del \(agePercentage)% mensual indica que, aunque es posible el embarazo espontáneo, se recomienda considerar tratamientos de reproducción asistida para optimizar las probabilidades."
         } else {
-            analysis += "   • 🚨 CRÍTICA - Urgencia reproductiva inmediata\n"
+            analysis += "Su edad de \(Int(profile.age)) años representa un factor crítico en la evaluación. Con una fecundabilidad del \(agePercentage)% mensual, se requiere una evaluación reproductiva urgente y la consideración inmediata de tratamientos especializados."
         }
-        analysis += "\n"
+        analysis += "\n\n"
         
-        // Factor IMC
+        // ANÁLISIS DE IMC - SI ES RELEVANTE
         let imcFactor = FertilityCalculations.calculateBMIFactor(profile.bmi)
         if imcFactor != 1.0 {
-            analysis += "⚖️ ÍNDICE DE MASA CORPORAL (IMC: \(String(format: "%.1f", profile.bmi))):\n"
+            analysis += "**Índice de Masa Corporal (IMC \(String(format: "%.1f", profile.bmi))):** "
             let imcImpact = Int((1.0 - imcFactor) * 100)
+            
             if profile.bmi < 18.5 {
-                analysis += "   • ⚠️ BAJO PESO - Reducción fertilidad \(imcImpact)%\n"
-                analysis += "   • Recomendación: Ganar peso hasta IMC 20-25\n"
+                analysis += "Su IMC indica bajo peso, lo que puede reducir su fertilidad en aproximadamente \(imcImpact)%. Se recomienda trabajar con un nutricionista para alcanzar un peso saludable (IMC 20-25) antes de buscar el embarazo."
             } else if profile.bmi > 25 {
                 if profile.bmi > 30 {
-                    analysis += "   • 🚨 OBESIDAD - Reducción fertilidad \(imcImpact)%\n"
+                    analysis += "Su IMC indica obesidad, lo que puede reducir significativamente su fertilidad en aproximadamente \(imcImpact)%. Se recomienda una pérdida de peso del 5-10% antes de iniciar tratamientos reproductivos, ya que esto puede mejorar significativamente las tasas de éxito."
                 } else {
-                    analysis += "   • ⚠️ SOBREPESO - Reducción fertilidad \(imcImpact)%\n"
+                    analysis += "Su IMC indica sobrepeso, lo que puede reducir su fertilidad en aproximadamente \(imcImpact)%. Se recomienda una pérdida de peso moderada para optimizar las probabilidades de concepción."
                 }
-                analysis += "   • Recomendación: Pérdida peso hasta IMC 20-25\n"
             }
-            analysis += "\n"
+            analysis += "\n\n"
         }
         
-        // Factor paridad
+        // ANÁLISIS DE PARIDAD - SI ES RELEVANTE
         let parityFactor = FertilityCalculations.calculateParityFactor(profile.previousPregnancies)
         if profile.previousPregnancies > 0 {
-            analysis += "🤱 PARIDAD REPRODUCTIVA:\n"
+            analysis += "**Historial Reproductivo:** "
             let improvement = Int((parityFactor - 1.0) * 100)
-            analysis += "   • ✅ MULTÍPARA (\(profile.previousPregnancies) embarazos previos)\n"
-            analysis += "   • Mejora fertilidad +\(improvement)% por funcionalidad uterina probada\n"
-            analysis += "   • Mejor receptividad endometrial y penetración cervical\n"
-            analysis += "\n"
+            analysis += "Su historial de \(profile.previousPregnancies) embarazo\(profile.previousPregnancies > 1 ? "s" : "") previo\(profile.previousPregnancies > 1 ? "s" : "") es un factor positivo que puede mejorar su fertilidad en aproximadamente \(improvement)%. Esto se debe a que la funcionalidad uterina ya ha sido probada, mejorando la receptividad endometrial."
+            analysis += "\n\n"
         }
-        // Nota: Nulípara no se muestra porque es el baseline (sin impacto)
         
-        // Factor AMH (Reserva Ovárica)
+        // ANÁLISIS DE RESERVA OVÁRICA - SI ESTÁ DISPONIBLE
         if let amhValue = profile.amhValue {
-            analysis += "🧪 RESERVA OVÁRICA (AMH: \(String(format: "%.1f", amhValue)) ng/mL):\n"
+            analysis += "**Reserva Ovárica (AMH \(String(format: "%.1f", amhValue)) ng/mL):** "
             let amhFactor = FertilityCalculations.calculateAMHFactor(amhValue)
             let amhImpact = Int((1.0 - amhFactor) * 100)
             
             if amhValue >= 1.5 {
-                analysis += "   • ✅ RESERVA NORMAL - Sin impacto negativo\n"
+                analysis += "Su reserva ovárica se encuentra en el rango normal, lo que es muy favorable para la concepción. No se observan limitaciones significativas en este aspecto."
             } else if amhValue >= 1.0 {
-                analysis += "   • ⚠️ RESERVA DISMINUIDA - Reducción \(amhImpact)%\n"
-                analysis += "   • Ventana reproductiva limitada, no retrasar tratamiento\n"
+                analysis += "Su reserva ovárica muestra una disminución leve, lo que puede reducir su fertilidad en aproximadamente \(amhImpact)%. Se recomienda no retrasar la búsqueda del embarazo, ya que la ventana reproductiva puede estar limitada."
             } else if amhValue >= 0.5 {
-                analysis += "   • 🚨 RESERVA BAJA - Reducción \(amhImpact)%\n"
-                analysis += "   • FIV con protocolo alta respuesta, CoQ10 600mg/día\n"
+                analysis += "Su reserva ovárica está baja, lo que puede reducir significativamente su fertilidad en aproximadamente \(amhImpact)%. Se recomienda considerar tratamientos de reproducción asistida con protocolos de alta respuesta y suplementación con CoQ10."
             } else {
-                analysis += "   • 🔴 RESERVA CRÍTICA - Reducción \(amhImpact)%\n"
-                analysis += "   • URGENCIA: FIV inmediata + acumulación óvulos, considerar ovodonación\n"
+                analysis += "Su reserva ovárica es crítica, lo que puede reducir su fertilidad en aproximadamente \(amhImpact)%. Se requiere una evaluación reproductiva urgente y la consideración de tratamientos especializados, incluyendo la posibilidad de ovodonación."
             }
-            analysis += "\n"
+            analysis += "\n\n"
         }
         
-        // Análisis de ciclo menstrual
+        // ANÁLISIS DE CICLO MENSTRUAL - SI ESTÁ DISPONIBLE
         if let cycleLength = profile.cycleLength {
-            analysis += "📅 FACTOR CICLO MENSTRUAL (\(Int(cycleLength)) días):\n"
+            analysis += "**Ciclo Menstrual (\(Int(cycleLength)) días):** "
             let cycleFactor = calculateCycleFactor(Int(cycleLength))
             let cycleImpact = Int((1.0 - cycleFactor) * 100)
             
             if cycleLength >= 21 && cycleLength <= 35 {
-                analysis += "• Ciclo regular: Sin impacto ✅\n"
+                analysis += "Su ciclo menstrual se encuentra en el rango normal, lo que es favorable para la concepción. No se observan alteraciones significativas que afecten la fertilidad."
             } else if cycleLength >= 36 && cycleLength <= 42 {
-                analysis += "• Oligomenorrea leve: Reducción \(cycleImpact)% ⚠️\n"
-                analysis += "• Recomendación: Monitoreo ovulación\n"
+                analysis += "Su ciclo muestra oligomenorrea leve, lo que puede reducir su fertilidad en aproximadamente \(cycleImpact)%. Se recomienda un monitoreo de la ovulación para optimizar las probabilidades de concepción."
             } else if cycleLength > 42 {
-                analysis += "• Oligomenorrea moderada-severa: Reducción \(cycleImpact)% 🚨\n"
-                analysis += "• Recomendación: Inducción ovulación\n"
+                analysis += "Su ciclo muestra oligomenorrea moderada a severa, lo que puede reducir significativamente su fertilidad en aproximadamente \(cycleImpact)%. Se recomienda considerar tratamientos de inducción de ovulación."
             } else {
-                analysis += "• Ciclos cortos: Posible fase lútea corta ⚠️\n"
+                analysis += "Su ciclo es más corto de lo normal, lo que podría indicar una fase lútea corta. Se recomienda una evaluación más detallada de la ovulación."
             }
-            analysis += "\n"
+            analysis += "\n\n"
         }
         
-        // Análisis de IMC
-        analysis += "⚖️ FACTOR PESO (IMC: \(String(format: "%.1f", profile.bmi))):\n"
-        let bmiFactor = calculateBMIFactor(profile.bmi)
-        let bmiImpact = Int((1.0 - bmiFactor) * 100)
-        
-        if profile.bmi >= 18.5 && profile.bmi <= 24.9 {
-            analysis += "• Peso normal: Sin impacto ✅\n"
-        } else if profile.bmi >= 25 && profile.bmi <= 29.9 {
-            analysis += "• Sobrepeso: Reducción \(bmiImpact)% ⚠️\n"
-        } else if profile.bmi >= 30 {
-            analysis += "• Obesidad: Reducción \(bmiImpact)% 🚨\n"
-            analysis += "• Recomendación: Pérdida peso >5-10%\n"
-        } else {
-            analysis += "• Bajo peso: Reducción \(bmiImpact)% ⚠️\n"
+        // ANÁLISIS DE TSH - SI ESTÁ DISPONIBLE
+        if let tshValue = profile.tshValue {
+            analysis += "**Función Tiroidea (TSH \(String(format: "%.2f", tshValue)) mIU/L):** "
+            let tshFactor = calculateTSHFactor(tshValue)
+            let tshImpact = Int((1.0 - tshFactor) * 100)
+            
+            if tshValue <= 2.5 {
+                analysis += "Su función tiroidea se encuentra en el rango óptimo para la fertilidad. Los niveles de TSH son ideales para la concepción y no representan un factor limitante."
+            } else if tshValue <= 4.0 {
+                analysis += "Su TSH muestra un hipotiroidismo subclínico leve, lo que puede reducir su fertilidad en aproximadamente \(tshImpact)%. Se recomienda consultar con un endocrinólogo para optimizar la función tiroidea antes de buscar el embarazo."
+            } else if tshValue <= 4.5 {
+                analysis += "Su TSH indica hipotiroidismo leve, lo que puede reducir significativamente su fertilidad en aproximadamente \(tshImpact)%. Es fundamental normalizar la función tiroidea antes de iniciar tratamientos reproductivos."
+            } else {
+                analysis += "Su TSH indica hipotiroidismo moderado a severo, lo que puede reducir su fertilidad en aproximadamente \(tshImpact)%. Requiere tratamiento endocrinológico urgente antes de considerar cualquier intervención reproductiva."
+            }
+            analysis += "\n\n"
         }
-        analysis += "\n"
         
-        // Análisis de interacciones críticas
+        // ANÁLISIS DE PROLACTINA - SI ESTÁ DISPONIBLE
+        if let prolactinValue = profile.prolactinValue {
+            analysis += "**Prolactina (\(String(format: "%.1f", prolactinValue)) ng/mL):** "
+            let prolactinFactor = calculateProlactinFactor(prolactinValue)
+            let prolactinImpact = Int((1.0 - prolactinFactor) * 100)
+            
+            if prolactinValue < 25 {
+                analysis += "Sus niveles de prolactina se encuentran en el rango normal. No se observan alteraciones que afecten la fertilidad."
+            } else if prolactinValue <= 50 {
+                analysis += "Sus niveles de prolactina están elevados (hiperprolactinemia leve), lo que puede reducir su fertilidad en aproximadamente \(prolactinImpact)%. Se recomienda confirmar con una segunda muestra y evaluar causas secundarias."
+            } else if prolactinValue <= 100 {
+                analysis += "Sus niveles de prolactina indican hiperprolactinemia moderada, lo que puede reducir significativamente su fertilidad en aproximadamente \(prolactinImpact)%. Requiere evaluación endocrinológica y posible tratamiento con cabergolina."
+            } else {
+                analysis += "Sus niveles de prolactina indican hiperprolactinemia severa, lo que puede reducir su fertilidad en aproximadamente \(prolactinImpact)%. Requiere evaluación urgente para descartar prolactinoma y tratamiento especializado."
+            }
+            analysis += "\n\n"
+        }
+        
+        // ANÁLISIS DE HOMA-IR - SI ESTÁ DISPONIBLE
+        if let homaIRValue = profile.homaIRValue {
+            analysis += "**Resistencia Insulínica (HOMA-IR \(String(format: "%.2f", homaIRValue))):** "
+            let homaFactor = calculateHOMAFactor(homaIRValue)
+            let homaImpact = Int((1.0 - homaFactor) * 100)
+            
+            if homaIRValue < 1.8 {
+                analysis += "Su sensibilidad a la insulina se encuentra en el rango normal. No se observan alteraciones metabólicas que afecten la fertilidad."
+            } else if homaIRValue < 2.5 {
+                analysis += "Su HOMA-IR sugiere posible resistencia insulínica límite, lo que puede reducir su fertilidad en aproximadamente \(homaImpact)%. Se recomienda optimizar la dieta y el ejercicio físico."
+            } else if homaIRValue < 3.5 {
+                analysis += "Su HOMA-IR confirma resistencia insulínica, lo que puede reducir significativamente su fertilidad en aproximadamente \(homaImpact)%. Requiere manejo metabólico integral, especialmente si presenta SOP."
+            } else {
+                analysis += "Su HOMA-IR indica resistencia insulínica severa, lo que puede reducir su fertilidad en aproximadamente \(homaImpact)%. Requiere tratamiento metabólico urgente y posible uso de metformina."
+            }
+            analysis += "\n\n"
+        }
+        
+        // ANÁLISIS DE PATOLOGÍAS UTERINAS
+        if profile.myomaType != .none {
+            analysis += "**Miomas Uterinos:** Se ha detectado la presencia de miomas uterinos (\(profile.myomaType.displayName)), lo que puede afectar la implantación embrionaria y aumentar el riesgo de complicaciones durante el embarazo. Se recomienda evaluación ginecológica especializada para determinar el tamaño, localización y necesidad de tratamiento quirúrgico antes de buscar el embarazo.\n\n"
+        }
+        
+        if profile.polypType != .none {
+            analysis += "**Pólipos Endometriales:** La presencia de pólipos endometriales (\(profile.polypType.displayName)) puede interferir con la implantación embrionaria y reducir las tasas de éxito reproductivo. Se recomienda histeroscopía diagnóstica y posible polipectomía antes de iniciar tratamientos de fertilidad.\n\n"
+        }
+        
+        if profile.adenomyosisType != .none {
+            analysis += "**Adenomiosis:** Esta condición (\(profile.adenomyosisType.displayName)) puede afectar significativamente la receptividad endometrial y la implantación embrionaria. Se recomienda evaluación especializada y posible tratamiento médico antes de considerar tratamientos reproductivos.\n\n"
+        }
+        
+        if profile.endometriosisStage > 0 {
+            analysis += "**Endometriosis:** Se ha detectado endometriosis en estadio \(profile.endometriosisStage). Esta patología puede afectar múltiples aspectos de la fertilidad, incluyendo la ovulación, la calidad ovocitaria y la implantación. Se recomienda evaluación laparoscópica y tratamiento específico según la severidad de la enfermedad.\n\n"
+        }
+        
+        if profile.hasPcos {
+            analysis += "**Síndrome de Ovarios Poliquísticos (SOP):** Esta condición metabólica y endocrina puede afectar significativamente la ovulación y la fertilidad."
+            
+            // Agregar información detallada si está disponible
+            var sopDetails: [String] = []
+            
+            if profile.hirsutismSeverity != .none {
+                sopDetails.append("hirsutismo \(profile.hirsutismSeverity.displayName.lowercased())")
+            }
+            
+            if profile.acneSeverity != .none {
+                sopDetails.append("acné \(profile.acneSeverity.displayName.lowercased())")
+            }
+            
+            if profile.ovarianMorphology != .notEvaluated {
+                sopDetails.append("morfología ovárica \(profile.ovarianMorphology.displayName.lowercased())")
+            }
+            
+            if !sopDetails.isEmpty {
+                analysis += " Se han identificado manifestaciones específicas: \(sopDetails.joined(separator: ", "))."
+            }
+            
+            analysis += " Se recomienda manejo integral que incluya optimización del peso, control metabólico y posible inducción de ovulación.\n\n"
+        }
+        
+        // ANÁLISIS DE PERMEABILIDAD TUBÁRICA - SI SE HA REALIZADO
+        // Solo mostrar si el usuario ha especificado que se realizó el estudio
+        if profile.hsgResult != .normal {
+            analysis += "**Permeabilidad Tubárica (HSG):** "
+            switch profile.hsgResult {
+            case .normal:
+                analysis += "La histerosalpingografía muestra permeabilidad tubárica normal. Las trompas de Falopio están funcionales y no representan un factor limitante para la concepción."
+            case .unilateral:
+                analysis += "La histerosalpingografía muestra obstrucción unilateral. Aunque es posible el embarazo espontáneo, se recomienda considerar tratamientos de reproducción asistida para optimizar las probabilidades."
+            case .bilateral:
+                analysis += "La histerosalpingografía muestra obstrucción tubárica bilateral. Esto representa una indicación directa para fertilización in vitro (FIV), ya que no es posible la concepción espontánea."
+            }
+            analysis += "\n\n"
+        }
+        
+        // ANÁLISIS DE CIRUGÍAS PÉLVICAS - SI SE HA REALIZADO
+        if profile.hasPelvicSurgery {
+            analysis += "**Historial Quirúrgico Pélvico:** "
+            if profile.numberOfPelvicSurgeries == 1 {
+                analysis += "Se ha registrado \(profile.numberOfPelvicSurgeries) cirugía pélvica previa. Esto puede afectar la anatomía reproductiva y requerir evaluación especializada, especialmente si la infertilidad persiste por más de 12 meses."
+            } else {
+                analysis += "Se han registrado \(profile.numberOfPelvicSurgeries) cirugías pélvicas previas. El historial quirúrgico múltiple puede afectar significativamente la fertilidad y representa una indicación para evaluación reproductiva anticipada."
+            }
+            analysis += "\n\n"
+        }
+        
+        // ANÁLISIS DE DURACIÓN DE INFERTILIDAD
+        if let infertilityDuration = profile.infertilityDuration, infertilityDuration > 0 {
+            analysis += "**Duración de Infertilidad (\(String(format: "%.1f", infertilityDuration)) años):** "
+            if infertilityDuration < 1.0 {
+                analysis += "El tiempo de búsqueda del embarazo es relativamente corto. Se recomienda continuar con el seguimiento estándar si su edad es menor a 35 años."
+            } else if infertilityDuration < 2.0 {
+                analysis += "La duración de la infertilidad sugiere la necesidad de una evaluación más exhaustiva. Se recomienda completar estudios diagnósticos y considerar tratamientos de reproducción asistida."
+            } else {
+                analysis += "La duración prolongada de la infertilidad (\(String(format: "%.1f", infertilityDuration)) años) indica la necesidad de intervención reproductiva especializada. Se recomienda considerar FIV como opción de primera línea."
+            }
+            analysis += "\n\n"
+        }
+        
+        // ANÁLISIS DE FACTOR MASCULINO - SI ESTÁ DISPONIBLE
+        if let spermConcentration = profile.spermConcentration {
+            analysis += "**Factor Masculino:** "
+            let maleFactorSeverity: String
+            if spermConcentration >= 15 && profile.spermProgressiveMotility ?? 0 >= 32 && profile.spermNormalMorphology ?? 0 >= 4 {
+                maleFactorSeverity = "La evaluación del factor masculino muestra parámetros seminales normales. No se observan alteraciones que afecten la fertilidad desde el punto de vista masculino."
+            } else if spermConcentration >= 10 && profile.spermProgressiveMotility ?? 0 >= 25 {
+                maleFactorSeverity = "Se ha detectado una alteración leve en los parámetros seminales. Esto puede reducir ligeramente las probabilidades de concepción espontánea, pero no representa una contraindicación para tratamientos de baja complejidad."
+            } else if spermConcentration >= 5 && profile.spermProgressiveMotility ?? 0 >= 15 {
+                maleFactorSeverity = "Se han detectado alteraciones moderadas en los parámetros seminales. Esto puede afectar significativamente las probabilidades de concepción espontánea y se recomienda considerar tratamientos de reproducción asistida."
+            } else {
+                maleFactorSeverity = "Se han detectado alteraciones severas en los parámetros seminales. Esto representa una indicación directa para tratamientos de reproducción asistida, preferiblemente FIV con ICSI."
+            }
+            analysis += maleFactorSeverity
+            analysis += "\n\n"
+        }
+        
+        // ANÁLISIS DE INTERACCIONES CRÍTICAS - SI EXISTEN
         if interactions.ageCriticalFailure > 0 {
-            analysis += "🚨 INTERACCIÓN CRÍTICA:\n"
-            analysis += "• Fallo ovárico inminente detectado\n"
-            analysis += "• Requiere evaluación urgente para ovodonación\n\n"
+            analysis += "**⚠️ Factor Crítico Detectado:** Se ha identificado un riesgo de fallo ovárico inminente. Esto requiere una evaluación reproductiva urgente y la consideración de opciones como la ovodonación.\n\n"
         } else if interactions.ageAmhSynergy > 0 {
-            analysis += "⚠️ INTERACCIÓN SIGNIFICATIVA:\n"
-            analysis += "• Edad + baja reserva ovárica\n"
-            analysis += "• Ventana reproductiva limitada\n\n"
+            analysis += "**⚠️ Factor de Riesgo:** La combinación de su edad con una reserva ovárica disminuida limita significativamente su ventana reproductiva. Se recomienda no retrasar la búsqueda del embarazo.\n\n"
         } else if interactions.scopInsulinResistance > 0 {
-            analysis += "💊 INTERACCIÓN METABÓLICA:\n"
-            analysis += "• SOP + resistencia insulínica\n"
-            analysis += "• Requiere manejo metabólico integral\n\n"
+            analysis += "**⚠️ Factor Metabólico:** Se ha detectado una interacción entre síndrome de ovarios poliquísticos y resistencia insulínica. Esto requiere un manejo metabólico integral para optimizar la fertilidad.\n\n"
+        } else if interactions.endometriosisMale > 0 {
+            analysis += "**⚠️ Factor Combinado:** Se ha detectado una interacción entre endometriosis y factor masculino. Esta combinación puede afectar significativamente las probabilidades de concepción espontánea.\n\n"
+        } else if interactions.multipleSurgeries > 0 {
+            analysis += "**⚠️ Factor Quirúrgico:** El historial de múltiples cirugías pélvicas puede afectar significativamente la anatomía reproductiva y requerir evaluación especializada.\n\n"
+        } else if interactions.thyroidAutoimmune > 0 {
+            analysis += "**⚠️ Factor Inmunológico:** Se ha detectado una posible condición autoinmune tiroidea que puede afectar la fertilidad. Requiere evaluación endocrinológica especializada.\n\n"
         }
         
-        // Conclusión
-        analysis += "🎯 CONCLUSIÓN:\n"
+        // CONCLUSIÓN PERSONALIZADA
+        analysis += "**Conclusión Clínica:** "
         analysis += category.description
+        analysis += " Esta evaluación integral se basa en evidencia científica actualizada y está diseñada para guiar las decisiones reproductivas de manera informada y personalizada. Se han analizado todos los factores disponibles en su perfil reproductivo."
         
         return analysis
     }

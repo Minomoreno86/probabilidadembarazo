@@ -80,16 +80,69 @@ struct PCOSPathology {
             severity += 0.1 // Sin datos AMH: asumir elevada
         }
         
-        // 5. Determinar fenotipo (simplificado)
+        // 5. Manifestaciones androgénicas (nuevas propiedades)
+        switch profile.hirsutismSeverity {
+        case .severe:
+            severity += 0.2 // Hirsutismo severo: fuerte indicador de hiperandrogenismo
+        case .moderate:
+            severity += 0.15 // Hirsutismo moderado: indicador de hiperandrogenismo
+        case .mild:
+            severity += 0.1 // Hirsutismo leve: indicador leve de hiperandrogenismo
+        case .none:
+            break // Sin hirsutismo
+        }
+        
+        switch profile.acneSeverity {
+        case .severe:
+            severity += 0.1 // Acné severo: indicador de hiperandrogenismo
+        case .moderate:
+            severity += 0.05 // Acné moderado: indicador leve
+        case .mild, .none:
+            break // Sin impacto significativo
+        }
+        
+        // 6. Morfología ovárica (nuevas propiedades)
+        switch profile.ovarianMorphology {
+        case .polycystic:
+            severity += 0.2 // Ovarios poliquísticos confirmados: criterio diagnóstico
+        case .normal:
+            severity += 0.0 // Ovarios normales: no contribuye a severidad
+        case .notEvaluated:
+            severity += 0.1 // Sin evaluación: asumir posible morfología poliquística
+        }
+        
+        // 7. Determinar fenotipo (mejorado con nuevas propiedades)
         let phenotype: PCOSPhenotype = {
-            if severity >= 0.5 {
-                return .A // Fenotipo clásico severo
-            } else if severity >= 0.4 {
-                return .B // Sin ovarios poliquísticos
-            } else if severity >= 0.3 {
-                return .D // No androgénico
+            // Verificar si hay hiperandrogenismo (hirsutismo o acné)
+            let hasHyperandrogenism = profile.hirsutismSeverity != .none || profile.acneSeverity == .severe || profile.acneSeverity == .moderate
+            
+            // Verificar si hay anovulación (ciclos irregulares)
+            let hasAnovulation = (profile.cycleLength ?? 28) > 35
+            
+            // Verificar si hay ovarios poliquísticos
+            let hasPolycysticOvaries = profile.ovarianMorphology == .polycystic || 
+                                      (profile.amhValue ?? 0) > 4.0
+            
+            // Clasificación según criterios Rotterdam
+            if hasHyperandrogenism && hasAnovulation && hasPolycysticOvaries {
+                return .A // Fenotipo A - Clásico: Hiperandrogenismo + Anovulación + Ovarios poliquísticos
+            } else if hasHyperandrogenism && hasAnovulation {
+                return .B // Fenotipo B - Sin ovarios: Hiperandrogenismo + Anovulación
+            } else if hasHyperandrogenism && hasPolycysticOvaries {
+                return .C // Fenotipo C - Ovulatorio: Hiperandrogenismo + Ovarios poliquísticos
+            } else if hasAnovulation && hasPolycysticOvaries {
+                return .D // Fenotipo D - No androgénico: Anovulación + Ovarios poliquísticos
             } else {
-                return .C // Ovulatorio
+                // Si no cumple criterios claros, usar severidad
+                if severity >= 0.5 {
+                    return .A
+                } else if severity >= 0.4 {
+                    return .B
+                } else if severity >= 0.3 {
+                    return .D
+                } else {
+                    return .C
+                }
             }
         }()
         
