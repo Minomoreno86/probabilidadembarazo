@@ -25,6 +25,9 @@ struct SettingsView: View {
     @AppStorage("userSpecialty") private var userSpecialty: String = ""
     @AppStorage("userInstitution") private var userInstitution: String = ""
     
+    // Estado para actualizar la vista cuando cambien los datos del usuario
+    @State private var currentUserData: UserData?
+    
     // Apariencia
     @AppStorage("isDarkMode") private var isDarkMode: Bool = false
     
@@ -49,8 +52,13 @@ struct SettingsView: View {
                     }
                 }
         }
-
+        .onAppear {
+            loadUserData()
         }
+        .onChange(of: authFlowManager.isAuthenticated) { isAuthenticated in
+            loadUserData()
+        }
+    }
     
     // MARK: - 📋 LISTA DE CONFIGURACIÓN
     private var settingsListView: some View {
@@ -89,13 +97,24 @@ struct SettingsView: View {
                 )
             
             VStack(spacing: 4) {
-                Text(userFullName.isEmpty ? "Usuario" : userFullName)
+                // Usar datos del AuthenticationFlowManager si están disponibles
+                let displayName = currentUserData?.displayName ?? (userFullName.isEmpty ? "Usuario" : userFullName)
+                let displayEmail = currentUserData?.email ?? (userEmail.isEmpty ? "No conectado" : userEmail)
+                
+                Text(displayName)
                     .font(.title2.bold())
                     .foregroundColor(.white)
                 
-                Text(userEmail.isEmpty ? "No conectado" : userEmail)
+                Text(displayEmail)
                     .font(.subheadline)
                     .foregroundColor(.white.opacity(0.7))
+                
+                // Debug info (temporal)
+                if displayName == "Usuario" || displayEmail == "No conectado" {
+                    Text("Debug: \(authFlowManager.isAuthenticated ? "Autenticado" : "No autenticado")")
+                        .font(.caption2)
+                        .foregroundColor(.orange)
+                }
                 
                 if !userSpecialty.isEmpty {
                     Text(userSpecialty)
@@ -107,6 +126,25 @@ struct SettingsView: View {
                             Capsule()
                                 .fill(Color.cyan.opacity(0.2))
                         )
+                }
+                
+                // Mostrar indicador de estado de autenticación
+                if authFlowManager.isAuthenticated {
+                    HStack(spacing: 4) {
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundColor(.green)
+                            .font(.caption)
+                        
+                        Text("Conectado")
+                            .font(.caption)
+                            .foregroundColor(.green)
+                    }
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 2)
+                    .background(
+                        Capsule()
+                            .fill(Color.green.opacity(0.2))
+                    )
                 }
             }
         }
@@ -842,6 +880,34 @@ struct SettingsView: View {
         
         // Cerrar la vista de configuración
         dismiss()
+    }
+    
+    // MARK: - 🔄 CARGAR DATOS DEL USUARIO
+    private func loadUserData() {
+        // Cargar datos del AuthenticationFlowManager
+        currentUserData = authFlowManager.currentUser
+        
+        print("🔍 Debug - AuthFlowManager isAuthenticated: \(authFlowManager.isAuthenticated)")
+        print("🔍 Debug - AuthFlowManager currentUser: \(authFlowManager.currentUser?.displayName ?? "nil")")
+        print("🔍 Debug - UserDefaults userFullName: \(UserDefaults.standard.string(forKey: "userFullName") ?? "nil")")
+        print("🔍 Debug - UserDefaults userEmail: \(UserDefaults.standard.string(forKey: "userEmail") ?? "nil")")
+        
+        // Si hay datos del usuario autenticado, actualizar los AppStorage
+        if let user = currentUserData {
+            userFullName = user.fullName
+            userEmail = user.email
+            print("✅ Datos del usuario actualizados: \(user.displayName) - \(user.email)")
+        } else {
+            // Intentar cargar desde UserDefaults directamente
+            if let storedName = UserDefaults.standard.string(forKey: "userFullName"),
+               let storedEmail = UserDefaults.standard.string(forKey: "userEmail") {
+                userFullName = storedName
+                userEmail = storedEmail
+                print("📱 Datos cargados desde UserDefaults: \(storedName) - \(storedEmail)")
+            }
+        }
+        
+        print("👤 Datos finales del usuario: \(currentUserData?.displayName ?? "No disponible")")
     }
 }
 

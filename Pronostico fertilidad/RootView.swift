@@ -21,10 +21,8 @@ struct RootView: View {
                 loadingView
                 
             case .notAuthenticated:
-                // Mostrar pantalla de login
-                SimpleLoginView()
-                    .environmentObject(themeManager)
-                    .environmentObject(authFlowManager)
+                // Mostrar pantalla de login simplificada
+                loginView
                 
             case .authenticated:
                 // Mostrar contenido principal
@@ -39,6 +37,192 @@ struct RootView: View {
             }
         }
         .animation(.easeInOut(duration: 0.5), value: authFlowManager.authenticationState)
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("AppleSignInCompleted"))) { notification in
+            if let user = notification.object as? AppleUser {
+                print("🔄 RootView - Notificación recibida: Apple Sign In completado")
+                print("🔄 RootView - Usuario autenticado: \(user.displayName)")
+                print("🔄 RootView - Datos a sincronizar:")
+                print("   - User ID: \(user.userID)")
+                print("   - Email: \(user.email)")
+                print("   - Full Name: \(user.fullName)")
+                
+                // Sincronizar con el AuthenticationFlowManager
+                authFlowManager.authenticateUser(
+                    userID: user.userID,
+                    email: user.email,
+                    fullName: user.fullName
+                )
+                
+                print("🔄 RootView - Sincronización completada")
+                print("🔄 RootView - AuthFlowManager isAuthenticated: \(authFlowManager.isAuthenticated)")
+                print("🔄 RootView - AuthFlowManager authenticationState: \(authFlowManager.authenticationState)")
+            }
+        }
+    }
+    
+    // MARK: - 🔐 PANTALLA DE LOGIN
+    private var loginView: some View {
+        NavigationView {
+            ZStack {
+                // Fondo con gradiente
+                LinearGradient(
+                    gradient: Gradient(colors: [Color.blue.opacity(0.8), Color.purple.opacity(0.6)]),
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                .ignoresSafeArea()
+                
+                VStack(spacing: 40) {
+                    // Logo
+                    VStack(spacing: 16) {
+                        ZStack {
+                            Circle()
+                                .fill(
+                                    LinearGradient(
+                                        gradient: Gradient(colors: [Color.cyan, Color.blue]),
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    )
+                                )
+                                .frame(width: 120, height: 120)
+                            
+                            Image(systemName: "stethoscope")
+                                .font(.system(size: 50, weight: .light))
+                                .foregroundColor(.white)
+                        }
+                        
+                        VStack(spacing: 8) {
+                            Text("FertilyzeAI")
+                                .font(.system(size: 32, weight: .bold, design: .rounded))
+                                .foregroundColor(.white)
+                            
+                            Text("Medical Suite")
+                                .font(.system(size: 16, weight: .medium))
+                                .foregroundColor(.white.opacity(0.8))
+                        }
+                    }
+                    
+                    // Contenido principal
+                    VStack(spacing: 32) {
+                        // Welcome
+                        VStack(spacing: 16) {
+                            Text("Bienvenido")
+                                .font(.system(size: 28, weight: .bold))
+                                .foregroundColor(.white)
+                            
+                            Text("Inicia sesión para acceder a herramientas médicas profesionales de fertilidad")
+                                .font(.system(size: 16, weight: .medium))
+                                .foregroundColor(.white.opacity(0.9))
+                                .multilineTextAlignment(.center)
+                                .lineSpacing(4)
+                        }
+                        
+                        // Login buttons
+                        VStack(spacing: 24) {
+                            // Apple Sign In Button
+                            Button(action: handleAppleSignIn) {
+                                HStack(spacing: 12) {
+                                    Image(systemName: "applelogo")
+                                        .font(.title2)
+                                        .foregroundColor(.white)
+                                    
+                                    Text("Continuar con Apple")
+                                        .font(.system(size: 18, weight: .semibold))
+                                        .foregroundColor(.white)
+                                    
+                                    Spacer()
+                                }
+                                .padding(.horizontal, 24)
+                                .padding(.vertical, 16)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 16)
+                                        .fill(Color.black)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 16)
+                                                .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                                        )
+                                )
+                            }
+                            .frame(height: 56)
+                            .cornerRadius(16)
+                            .shadow(color: Color.black.opacity(0.2), radius: 8, x: 0, y: 4)
+                            
+                            // Continue without login
+                            Button(action: continueWithoutLogin) {
+                                HStack {
+                                    Image(systemName: "arrow.right.circle.fill")
+                                        .font(.title2)
+                                    Text("Continuar sin cuenta")
+                                        .font(.system(size: 16, weight: .semibold))
+                                }
+                                .foregroundColor(.white.opacity(0.8))
+                                .padding(.vertical, 16)
+                                .padding(.horizontal, 24)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .fill(Color.white.opacity(0.1))
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 12)
+                                                .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                                        )
+                                )
+                            }
+                        }
+                        
+                        // Disclaimer
+                        VStack(spacing: 12) {
+                            HStack(spacing: 8) {
+                                Image(systemName: "exclamationmark.triangle.fill")
+                                    .foregroundColor(.orange)
+                                Text("Herramienta de apoyo diagnóstico")
+                                    .font(.system(size: 12, weight: .semibold))
+                                    .foregroundColor(.white)
+                            }
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(Color.orange.opacity(0.2))
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .stroke(Color.orange.opacity(0.4), lineWidth: 1)
+                                    )
+                            )
+                            
+                            Text("Al continuar, aceptas nuestros términos de servicio y política de privacidad")
+                                .font(.system(size: 12, weight: .medium))
+                                .foregroundColor(.white.opacity(0.7))
+                                .multilineTextAlignment(.center)
+                        }
+                    }
+                    
+                    Spacer()
+                }
+                .padding(.horizontal, 24)
+                .padding(.top, 60)
+            }
+        }
+        .onChange(of: appleSignInManager.isAuthenticated) { isAuthenticated in
+            if isAuthenticated, let user = appleSignInManager.currentUser {
+                // Sincronizar con el AuthenticationFlowManager
+                authFlowManager.authenticateUser(
+                    userID: user.userID,
+                    email: user.email,
+                    fullName: user.fullName
+                )
+            }
+        }
+    }
+    
+    // MARK: - 🔄 FUNCIONES DE LOGIN
+    private func handleAppleSignIn() {
+        print("🍎 Apple Sign In presionado!")
+        appleSignInManager.signInWithApple()
+    }
+    
+    private func continueWithoutLogin() {
+        print("➡️ Continuar sin cuenta presionado!")
+        authFlowManager.continueWithoutAccount()
     }
     
     // MARK: - ⏳ PANTALLA DE CARGA

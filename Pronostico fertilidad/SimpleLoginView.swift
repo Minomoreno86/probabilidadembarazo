@@ -8,18 +8,21 @@
 import SwiftUI
 
 struct SimpleLoginView: View {
-    @EnvironmentObject var themeManager: ThemeManager
+    @EnvironmentObject var appleSignInManager: AppleSignInManager
     @EnvironmentObject var authFlowManager: AuthenticationFlowManager
-    @Environment(\.themeColors) var colors
     @State private var animateLogo = false
     @State private var animateContent = false
     
     var body: some View {
         NavigationView {
             ZStack {
-                // Fondo con gradiente adaptativo al tema
-                colors.backgroundGradient
-                    .ignoresSafeArea()
+                // Fondo con gradiente
+                LinearGradient(
+                    gradient: Gradient(colors: [Color.blue.opacity(0.8), Color.purple.opacity(0.6)]),
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                .ignoresSafeArea()
                 
                 VStack(spacing: 40) {
                     // Logo y branding
@@ -48,6 +51,33 @@ struct SimpleLoginView: View {
                 animateContent = true
             }
         }
+        .onChange(of: appleSignInManager.isAuthenticated) { isAuthenticated in
+            print("🔄 SimpleLoginView - Estado de autenticación cambiado: \(isAuthenticated)")
+            if isAuthenticated, let user = appleSignInManager.currentUser {
+                print("🔄 SimpleLoginView - Usuario autenticado: \(user.displayName)")
+                print("🔄 SimpleLoginView - Datos a sincronizar:")
+                print("   - User ID: \(user.userID)")
+                print("   - Email: \(user.email)")
+                print("   - Full Name: \(user.fullName)")
+                
+                // Sincronizar con el AuthenticationFlowManager
+                authFlowManager.authenticateUser(
+                    userID: user.userID,
+                    email: user.email,
+                    fullName: user.fullName
+                )
+                
+                print("🔄 SimpleLoginView - Sincronización completada")
+                print("🔄 SimpleLoginView - AuthFlowManager isAuthenticated: \(authFlowManager.isAuthenticated)")
+                print("🔄 SimpleLoginView - AuthFlowManager authenticationState: \(authFlowManager.authenticationState)")
+            }
+        }
+        .onChange(of: authFlowManager.isAuthenticated) { isAuthenticated in
+            print("🔄 SimpleLoginView - AuthFlowManager isAuthenticated cambiado: \(isAuthenticated)")
+        }
+        .onChange(of: authFlowManager.authenticationState) { state in
+            print("🔄 SimpleLoginView - AuthFlowManager authenticationState cambiado: \(state)")
+        }
     }
     
     // MARK: - 🏥 LOGO SECTION
@@ -56,7 +86,13 @@ struct SimpleLoginView: View {
             // Logo animado
             ZStack {
                 Circle()
-                    .fill(colors.accentGradient)
+                    .fill(
+                        LinearGradient(
+                            gradient: Gradient(colors: [Color.cyan, Color.blue]),
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
                     .frame(width: 120, height: 120)
                     .scaleEffect(animateLogo ? 1.0 : 0.8)
                     .animation(.spring(response: 0.8, dampingFraction: 0.6), value: animateLogo)
@@ -100,7 +136,7 @@ struct SimpleLoginView: View {
     // MARK: - 🔐 LOGIN SECTION
     private var loginSection: some View {
         VStack(spacing: 24) {
-            // Apple Sign In Button - Adaptativo al tema
+            // Apple Sign In Button
             Button(action: handleAppleSignIn) {
                 HStack(spacing: 12) {
                     Image(systemName: "applelogo")
@@ -120,7 +156,7 @@ struct SimpleLoginView: View {
                         .fill(Color.black)
                         .overlay(
                             RoundedRectangle(cornerRadius: 16)
-                                .stroke(colors.border.opacity(0.3), lineWidth: 1)
+                                .stroke(Color.white.opacity(0.2), lineWidth: 1)
                         )
                 )
             }
@@ -128,7 +164,7 @@ struct SimpleLoginView: View {
             .cornerRadius(16)
             .shadow(color: Color.black.opacity(0.2), radius: 8, x: 0, y: 4)
             
-            // Botón de continuar sin login - Adaptativo al tema
+            // Botón de continuar sin login
             Button(action: continueWithoutLogin) {
                 HStack {
                     Image(systemName: "arrow.right.circle.fill")
@@ -136,15 +172,15 @@ struct SimpleLoginView: View {
                     Text("Continuar sin cuenta")
                         .font(.system(size: 16, weight: .semibold))
                 }
-                .foregroundColor(colors.text.opacity(0.8))
+                .foregroundColor(.white.opacity(0.8))
                 .padding(.vertical, 16)
                 .padding(.horizontal, 24)
                 .background(
                     RoundedRectangle(cornerRadius: 12)
-                        .fill(colors.surface.opacity(0.1))
+                        .fill(Color.white.opacity(0.1))
                         .overlay(
                             RoundedRectangle(cornerRadius: 12)
-                                .stroke(colors.border.opacity(0.3), lineWidth: 1)
+                                .stroke(Color.white.opacity(0.2), lineWidth: 1)
                         )
                 )
             }
@@ -154,28 +190,28 @@ struct SimpleLoginView: View {
     // MARK: - ⚠️ DISCLAIMER SECTION
     private var disclaimerSection: some View {
         VStack(spacing: 12) {
-            // Disclaimer temporal - Adaptativo al tema
+            // Disclaimer
             HStack(spacing: 8) {
                 Image(systemName: "exclamationmark.triangle.fill")
-                    .foregroundColor(colors.warning)
+                    .foregroundColor(.orange)
                 Text("Herramienta de apoyo diagnóstico")
                     .font(.system(size: 12, weight: .semibold))
-                    .foregroundColor(colors.text)
+                    .foregroundColor(.white)
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 8)
             .background(
                 RoundedRectangle(cornerRadius: 8)
-                    .fill(colors.warning.opacity(0.2))
+                    .fill(Color.orange.opacity(0.2))
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
-                            .stroke(colors.warning.opacity(0.4), lineWidth: 1)
+                            .stroke(Color.orange.opacity(0.4), lineWidth: 1)
                     )
             )
             
             Text("Al continuar, aceptas nuestros términos de servicio y política de privacidad")
                 .font(.system(size: 12, weight: .medium))
-                .foregroundColor(colors.textSecondary)
+                .foregroundColor(.white.opacity(0.7))
                 .multilineTextAlignment(.center)
         }
     }
@@ -183,23 +219,31 @@ struct SimpleLoginView: View {
     // MARK: - 🔄 FUNCIONES
     private func handleAppleSignIn() {
         print("🍎 Apple Sign In presionado!")
-        // Simular autenticación exitosa con Apple
-        authFlowManager.authenticateUser(
-            userID: "apple_user_123",
-            email: "usuario@apple.com",
-            fullName: "Usuario Apple"
-        )
+        // Usar el AppleSignInManager real
+        appleSignInManager.signInWithApple()
     }
     
     private func continueWithoutLogin() {
         print("➡️ Continuar sin cuenta presionado!")
-        // Continuar sin autenticación
-        authFlowManager.continueWithoutAccount()
+        
+        // Verificar si ya hay un usuario autenticado con Apple
+        if let existingUserID = UserDefaults.standard.string(forKey: "appleUserID"),
+           existingUserID != "anonymous" {
+            print("➡️ Usuario ya autenticado con Apple, usando datos existentes")
+            // Simplemente marcar como autenticado sin cambiar los datos
+            DispatchQueue.main.async {
+                self.authFlowManager.isAuthenticated = true
+                self.authFlowManager.authenticationState = .authenticated
+            }
+        } else {
+            print("➡️ Configurando acceso anónimo")
+            // Continuar sin autenticación
+            authFlowManager.continueWithoutAccount()
+        }
     }
 }
 
 // MARK: - 📱 PREVIEW
 #Preview {
     SimpleLoginView()
-        .environmentObject(ThemeManager())
 }

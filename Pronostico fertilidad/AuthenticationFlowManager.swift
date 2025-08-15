@@ -41,10 +41,15 @@ class AuthenticationFlowManager: ObservableObject {
     
     // MARK: - 🔐 AUTENTICACIÓN
     func authenticateUser(userID: String, email: String, fullName: String) {
+        print("🔐 Iniciando autenticación para: \(fullName) - \(email)")
+        
         // Guardar datos del usuario
         UserDefaults.standard.set(userID, forKey: "appleUserID")
         UserDefaults.standard.set(email, forKey: "userEmail")
         UserDefaults.standard.set(fullName, forKey: "userFullName")
+        
+        // Forzar sincronización
+        UserDefaults.standard.synchronize()
         
         // Actualizar estado
         DispatchQueue.main.async {
@@ -53,6 +58,7 @@ class AuthenticationFlowManager: ObservableObject {
         }
         
         print("🔐 Usuario autenticado exitosamente: \(fullName)")
+        print("🔐 UserDefaults guardados - userID: \(userID), email: \(email), fullName: \(fullName)")
     }
     
     // MARK: - 🚪 LOGOUT
@@ -73,15 +79,29 @@ class AuthenticationFlowManager: ObservableObject {
     
     // MARK: - 👤 ACCESO SIN CUENTA
     func continueWithoutAccount() {
-        // Marcar como autenticado sin datos específicos
-        UserDefaults.standard.set("anonymous", forKey: "appleUserID")
-        UserDefaults.standard.set("", forKey: "userEmail")
-        UserDefaults.standard.set("Usuario", forKey: "userFullName")
+        print("👤 Iniciando acceso sin cuenta...")
         
-        // Actualizar estado
-        DispatchQueue.main.async {
-            self.isAuthenticated = true
-            self.authenticationState = .authenticated
+        // Verificar si ya hay un usuario autenticado con Apple
+        if let existingUserID = UserDefaults.standard.string(forKey: "appleUserID"),
+           existingUserID != "anonymous" {
+            print("👤 Usuario ya autenticado con Apple, manteniendo datos existentes")
+            // No sobrescribir los datos del usuario autenticado
+            DispatchQueue.main.async {
+                self.isAuthenticated = true
+                self.authenticationState = .authenticated
+            }
+        } else {
+            print("👤 Configurando acceso anónimo")
+            // Marcar como autenticado sin datos específicos
+            UserDefaults.standard.set("anonymous", forKey: "appleUserID")
+            UserDefaults.standard.set("", forKey: "userEmail")
+            UserDefaults.standard.set("Usuario", forKey: "userFullName")
+            
+            // Actualizar estado
+            DispatchQueue.main.async {
+                self.isAuthenticated = true
+                self.authenticationState = .authenticated
+            }
         }
         
         print("👤 Usuario continúa sin cuenta")
@@ -92,9 +112,11 @@ class AuthenticationFlowManager: ObservableObject {
         guard let userID = UserDefaults.standard.string(forKey: "appleUserID"),
               let email = UserDefaults.standard.string(forKey: "userEmail"),
               let fullName = UserDefaults.standard.string(forKey: "userFullName") else {
+            print("🔍 Debug - No se encontraron datos de usuario en UserDefaults")
             return nil
         }
         
+        print("🔍 Debug - Datos encontrados: \(fullName) - \(email)")
         return UserData(userID: userID, email: email, fullName: fullName)
     }
     
@@ -125,7 +147,7 @@ enum AuthenticationState: Equatable {
 }
 
 // MARK: - 👤 DATOS DEL USUARIO
-struct UserData {
+struct UserData: Equatable {
     let userID: String
     let email: String
     let fullName: String
