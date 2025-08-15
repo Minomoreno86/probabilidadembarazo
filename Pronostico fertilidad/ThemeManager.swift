@@ -95,15 +95,15 @@ struct ThemeColors {
 // MARK: - 🌞 LIGHT THEME COLORS
 extension ThemeColors {
     static let light = ThemeColors(
-        primary: Color(red: 0.1, green: 0.2, blue: 0.4),
-        secondary: Color(red: 0.2, green: 0.3, blue: 0.5),
-        accent: Color.cyan,
-        background: Color(red: 0.98, green: 0.99, blue: 1.0),
-        surface: Color.white,
-        surfaceSecondary: Color(red: 0.95, green: 0.97, blue: 1.0),
-        text: Color(red: 0.1, green: 0.1, blue: 0.2),
-        textSecondary: Color(red: 0.4, green: 0.4, blue: 0.6),
-        border: Color(red: 0.9, green: 0.9, blue: 0.95),
+        primary: Color(red: 0.05, green: 0.15, blue: 0.35),
+        secondary: Color(red: 0.1, green: 0.2, blue: 0.4),
+        accent: Color(red: 0.2, green: 0.8, blue: 1.0), // Cyan brillante
+        background: Color(red: 0.4, green: 0.6, blue: 0.9),
+        surface: Color(red: 0.9, green: 0.95, blue: 1.0),
+        surfaceSecondary: Color(red: 0.85, green: 0.92, blue: 0.98),
+        text: Color(red: 0.95, green: 0.98, blue: 1.0),
+        textSecondary: Color(red: 0.8, green: 0.9, blue: 0.96),
+        border: Color(red: 0.7, green: 0.8, blue: 0.9),
         success: Color.green,
         warning: Color.orange,
         error: Color.red,
@@ -111,9 +111,11 @@ extension ThemeColors {
         
         medicalGradient: LinearGradient(
             colors: [
-                Color(red: 0.1, green: 0.2, blue: 0.4),
-                Color(red: 0.2, green: 0.3, blue: 0.5),
-                Color(red: 0.1, green: 0.25, blue: 0.45)
+                Color(red: 0.05, green: 0.2, blue: 0.6),   // Azul médico muy profundo
+                Color(red: 0.1, green: 0.25, blue: 0.65),  // Azul profundo
+                Color(red: 0.08, green: 0.22, blue: 0.62), // Azul oscuro
+                Color(red: 0.15, green: 0.3, blue: 0.7),   // Azul vibrante
+                Color(red: 0.12, green: 0.28, blue: 0.68)  // Azul dramático
             ],
             startPoint: .topLeading,
             endPoint: .bottomTrailing
@@ -121,9 +123,11 @@ extension ThemeColors {
         
         backgroundGradient: LinearGradient(
             colors: [
-                Color(red: 0.98, green: 0.99, blue: 1.0),  // Azul muy claro
-                Color(red: 0.95, green: 0.97, blue: 1.0),  // Azul claro
-                Color(red: 0.92, green: 0.95, blue: 1.0)   // Azul suave
+                Color(red: 0.4, green: 0.6, blue: 0.9),    // Azul profundo elegante
+                Color(red: 0.3, green: 0.5, blue: 0.8),    // Azul muy profundo
+                Color(red: 0.25, green: 0.4, blue: 0.75),  // Azul oscuro
+                Color(red: 0.2, green: 0.35, blue: 0.7),   // Azul muy oscuro
+                Color(red: 0.15, green: 0.3, blue: 0.65)   // Azul dramático
             ],
             startPoint: .topLeading,
             endPoint: .bottomTrailing
@@ -131,8 +135,10 @@ extension ThemeColors {
         
         cardGradient: LinearGradient(
             colors: [
-                Color.white,
-                Color(red: 0.98, green: 0.99, blue: 1.0)
+                Color(red: 0.9, green: 0.95, blue: 1.0),   // Azul muy claro elegante
+                Color(red: 0.85, green: 0.92, blue: 0.98), // Azul claro
+                Color(red: 0.8, green: 0.9, blue: 0.96),   // Azul medio
+                Color(red: 0.75, green: 0.88, blue: 0.94)  // Azul profundo
             ],
             startPoint: .topLeading,
             endPoint: .bottomTrailing
@@ -140,8 +146,10 @@ extension ThemeColors {
         
         accentGradient: LinearGradient(
             colors: [
-                Color.cyan.opacity(0.8),
-                Color.blue.opacity(0.6)
+                Color(red: 0.2, green: 0.8, blue: 1.0),     // Cyan brillante
+                Color(red: 0.1, green: 0.6, blue: 0.9),     // Azul cyan
+                Color(red: 0.15, green: 0.7, blue: 0.95),   // Cyan vibrante
+                Color(red: 0.05, green: 0.5, blue: 0.8)     // Azul profundo
             ],
             startPoint: .topLeading,
             endPoint: .bottomTrailing
@@ -213,15 +221,15 @@ extension ThemeColors {
 // MARK: - 🌸 PINK THEME COLORS (SUPERDESIGN)
 extension ThemeColors {
     static let pink = ThemeColors(
-        primary: Color(red: 0.8, green: 0.2, blue: 0.4),
-        secondary: Color(red: 0.9, green: 0.3, blue: 0.5),
-        accent: Color(red: 1.0, green: 0.4, blue: 0.7), // Rosa brillante
-        background: Color(red: 0.98, green: 0.94, blue: 0.96),
-        surface: Color(red: 1.0, green: 0.97, blue: 0.99),
-        surfaceSecondary: Color(red: 0.96, green: 0.91, blue: 0.94),
-        text: Color(red: 0.3, green: 0.1, blue: 0.2),
-        textSecondary: Color(red: 0.6, green: 0.4, blue: 0.5),
-        border: Color(red: 0.9, green: 0.8, blue: 0.85),
+        primary: Color(red: 0.7, green: 0.2, blue: 0.4),
+        secondary: Color(red: 0.6, green: 0.15, blue: 0.35),
+        accent: Color(red: 0.9, green: 0.3, blue: 0.6), // Rosa brillante oscuro
+        background: Color(red: 0.8, green: 0.6, blue: 0.7),
+        surface: Color(red: 0.9, green: 0.8, blue: 0.85),
+        surfaceSecondary: Color(red: 0.85, green: 0.75, blue: 0.8),
+        text: Color(red: 0.95, green: 0.9, blue: 0.95),
+        textSecondary: Color(red: 0.8, green: 0.7, blue: 0.8),
+        border: Color(red: 0.7, green: 0.5, blue: 0.6),
         success: Color(red: 0.2, green: 0.8, blue: 0.4),
         warning: Color(red: 1.0, green: 0.6, blue: 0.2),
         error: Color(red: 1.0, green: 0.3, blue: 0.3),
@@ -230,10 +238,11 @@ extension ThemeColors {
         // SUPERDESIGN: Gradientes espectaculares para Pink Mode
         medicalGradient: LinearGradient(
             colors: [
-                Color(red: 0.9, green: 0.3, blue: 0.5),   // Rosa intenso
-                Color(red: 0.8, green: 0.4, blue: 0.6),   // Rosa medio
-                Color(red: 0.7, green: 0.2, blue: 0.4),   // Rosa profundo
-                Color(red: 0.85, green: 0.35, blue: 0.55) // Rosa vibrante
+                Color(red: 0.7, green: 0.2, blue: 0.4),   // Rosa oscuro profundo
+                Color(red: 0.6, green: 0.15, blue: 0.35), // Rosa muy profundo
+                Color(red: 0.5, green: 0.1, blue: 0.3),   // Rosa casi púrpura
+                Color(red: 0.4, green: 0.08, blue: 0.25), // Rosa oscuro dramático
+                Color(red: 0.3, green: 0.05, blue: 0.2)   // Rosa muy oscuro
             ],
             startPoint: .topLeading,
             endPoint: .bottomTrailing
@@ -241,9 +250,11 @@ extension ThemeColors {
         
         backgroundGradient: LinearGradient(
             colors: [
-                Color(red: 0.99, green: 0.95, blue: 0.97),  // Rosa muy claro
-                Color(red: 0.96, green: 0.92, blue: 0.95),  // Rosa pastel
-                Color(red: 0.98, green: 0.94, blue: 0.96)   // Rosa suave
+                Color(red: 0.8, green: 0.6, blue: 0.7),     // Rosa oscuro elegante
+                Color(red: 0.7, green: 0.5, blue: 0.6),     // Rosa profundo
+                Color(red: 0.6, green: 0.4, blue: 0.5),     // Rosa muy profundo
+                Color(red: 0.5, green: 0.3, blue: 0.4),     // Rosa casi púrpura
+                Color(red: 0.4, green: 0.25, blue: 0.35)    // Rosa oscuro dramático
             ],
             startPoint: .topLeading,
             endPoint: .bottomTrailing
@@ -251,9 +262,10 @@ extension ThemeColors {
         
         cardGradient: LinearGradient(
             colors: [
-                Color(red: 1.0, green: 0.98, blue: 0.99),   // Blanco rosado
-                Color(red: 0.98, green: 0.95, blue: 0.97),  // Rosa muy claro
-                Color(red: 1.0, green: 0.97, blue: 0.98)    // Blanco perlado
+                Color(red: 0.9, green: 0.8, blue: 0.85),   // Rosa claro elegante
+                Color(red: 0.85, green: 0.75, blue: 0.8),  // Rosa medio
+                Color(red: 0.8, green: 0.7, blue: 0.75),   // Rosa profundo
+                Color(red: 0.75, green: 0.65, blue: 0.7)   // Rosa oscuro
             ],
             startPoint: .topLeading,
             endPoint: .bottomTrailing
@@ -261,9 +273,10 @@ extension ThemeColors {
         
         accentGradient: LinearGradient(
             colors: [
-                Color(red: 1.0, green: 0.5, blue: 0.8),     // Rosa brillante
-                Color(red: 0.9, green: 0.4, blue: 0.7),     // Rosa vibrante
-                Color(red: 1.0, green: 0.6, blue: 0.8)      // Rosa luminoso
+                Color(red: 0.9, green: 0.3, blue: 0.6),     // Rosa brillante oscuro
+                Color(red: 0.8, green: 0.2, blue: 0.5),     // Rosa vibrante profundo
+                Color(red: 0.7, green: 0.15, blue: 0.4),    // Rosa luminoso oscuro
+                Color(red: 0.6, green: 0.1, blue: 0.3)      // Rosa dramático
             ],
             startPoint: .topLeading,
             endPoint: .bottomTrailing
@@ -303,15 +316,15 @@ struct SuperDesignEffects {
             blurRadius = 20
             strokeWidth = 1.5
         case .pink:
-            fillColor = Color(red: 1.0, green: 0.95, blue: 0.98).opacity(0.8)
-            strokeColors = [Color.pink.opacity(0.4), Color(red: 1.0, green: 0.7, blue: 0.8).opacity(0.2)]
-            blurRadius = 15
-            strokeWidth = 1.2
+            fillColor = Color(red: 0.8, green: 0.6, blue: 0.7).opacity(0.9)
+            strokeColors = [Color.pink.opacity(0.6), Color(red: 0.9, green: 0.3, blue: 0.6).opacity(0.4)]
+            blurRadius = 20
+            strokeWidth = 1.5
         case .light:
-            fillColor = Color.white.opacity(0.8)
-            strokeColors = [Color.white.opacity(0.8), Color.gray.opacity(0.2)]
-            blurRadius = 10
-            strokeWidth = 1
+            fillColor = Color(red: 0.9, green: 0.95, blue: 1.0).opacity(0.9)
+            strokeColors = [Color.cyan.opacity(0.6), Color(red: 0.2, green: 0.8, blue: 1.0).opacity(0.4)]
+            blurRadius = 15
+            strokeWidth = 1.3
         }
         
         return RoundedRectangle(cornerRadius: 16)

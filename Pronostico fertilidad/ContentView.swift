@@ -12,9 +12,11 @@ struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var profiles: [FertilityProfile]
     @EnvironmentObject var themeManager: ThemeManager
+    @EnvironmentObject var appleSignInManager: AppleSignInManager
     @Environment(\.themeColors) var colors
     @State private var showingCalculator = false
     @State private var showingSettings = false
+    @State private var showingLogin = false
     @State private var currentProfile: FertilityProfile?
     @State private var animateHero = false
     @State private var animateStats = false
@@ -22,7 +24,7 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                // Fondo médico profesional con gradiente dinámico
+                // Fondo médico profesional con gradiente dinámico - Mismo método que SettingsView
                 colors.backgroundGradient
                     .ignoresSafeArea()
                 
@@ -61,6 +63,9 @@ struct ContentView: View {
         }
         .sheet(isPresented: $showingSettings) {
             SettingsView()
+        }
+        .sheet(isPresented: $showingLogin) {
+            LoginView()
         }
         .onAppear {
             withAnimation(.easeInOut(duration: 1.2)) {
@@ -105,20 +110,57 @@ struct ContentView: View {
                 
                 Spacer()
                 
-                // Configuración
-                Button(action: { showingSettings = true }) {
-                    Image(systemName: "gearshape")
-                        .font(.title3)
-                        .foregroundColor(.white)
-                        .padding(10)
-                        .background(
+                HStack(spacing: 12) {
+                    // Login/Perfil
+                    Button(action: { 
+                        if appleSignInManager.isAuthenticated {
+                            // Mostrar perfil o logout
+                        } else {
+                            showingLogin = true
+                        }
+                    }) {
+                        if appleSignInManager.isAuthenticated {
+                            // Avatar del usuario
                             Circle()
-                                .fill(.ultraThinMaterial)
+                                .fill(colors.accentGradient)
+                                .frame(width: 40, height: 40)
                                 .overlay(
-                                    Circle()
-                                        .stroke(Color.white.opacity(0.3), lineWidth: 1)
+                                    Text(appleSignInManager.currentUser?.initials ?? "U")
+                                        .font(.system(size: 16, weight: .semibold))
+                                        .foregroundColor(.white)
                                 )
-                        )
+                        } else {
+                            // Botón de login
+                            Image(systemName: "person.circle")
+                                .font(.title3)
+                                .foregroundColor(.white)
+                                .padding(10)
+                                .background(
+                                    Circle()
+                                        .fill(.ultraThinMaterial)
+                                        .overlay(
+                                            Circle()
+                                                .stroke(Color.white.opacity(0.3), lineWidth: 1)
+                                        )
+                                )
+                        }
+                    }
+                    
+                    // Configuración
+                    Button(action: { showingSettings = true }) {
+                        Image(systemName: "gearshape")
+                            .font(.title3)
+                            .foregroundColor(.white)
+                            .padding(10)
+                            .background(
+                                Circle()
+                                    .fill(.ultraThinMaterial)
+                                    .overlay(
+                                        Circle()
+                                            .stroke(Color.white.opacity(0.3), lineWidth: 1)
+                                    )
+                            )
+                    }
                 }
             }
             .padding(.horizontal, 24)

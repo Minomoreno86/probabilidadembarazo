@@ -672,17 +672,9 @@ struct SettingsView: View {
         case .dark:
             return colors.medicalGradient.ignoresSafeArea()
         case .pink:
-            return colors.medicalGradient.ignoresSafeArea()
+            return colors.backgroundGradient.ignoresSafeArea()
         case .light:
-            return LinearGradient(
-                colors: [
-                    Color(red: 0.98, green: 0.99, blue: 1.0),  // Azul muy claro
-                    Color(red: 0.95, green: 0.97, blue: 1.0),  // Azul claro
-                    Color(red: 0.92, green: 0.95, blue: 1.0)   // Azul suave
-                ],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            ).ignoresSafeArea()
+            return colors.backgroundGradient.ignoresSafeArea()
         }
     }
     

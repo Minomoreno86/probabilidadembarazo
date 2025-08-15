@@ -11,6 +11,7 @@ import SwiftData
 @main
 struct Pronostico_fertilidadApp: App {
     @StateObject private var themeManager = ThemeManager()
+    @StateObject private var appleSignInManager = AppleSignInManager()
     
     // MARK: - 🗄️ CONFIGURACIÓN DE BASE DE DATOS
     // Nota: Usando memoria temporal durante desarrollo debido a cambios en el modelo
@@ -34,8 +35,13 @@ struct Pronostico_fertilidadApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(themeManager)
+                .environmentObject(appleSignInManager)
                 .environment(\.themeColors, ThemeColors.current(themeManager.currentTheme))
                 .preferredColorScheme(themeManager.currentTheme == .dark ? .dark : .light)
+                .onAppear {
+                    // Forzar la aplicación del tema
+                    themeManager.objectWillChange.send()
+                }
         }
         .modelContainer(sharedModelContainer)
     }
