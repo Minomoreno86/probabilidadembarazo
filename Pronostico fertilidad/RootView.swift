@@ -11,6 +11,7 @@ struct RootView: View {
     @EnvironmentObject var authFlowManager: AuthenticationFlowManager
     @EnvironmentObject var themeManager: ThemeManager
     @EnvironmentObject var appleSignInManager: AppleSignInManager
+    @EnvironmentObject var userFontManager: UserFontManager
     @Environment(\.themeColors) var colors
     
     var body: some View {
@@ -30,6 +31,7 @@ struct RootView: View {
                     .environmentObject(themeManager)
                     .environmentObject(appleSignInManager)
                     .environmentObject(authFlowManager)
+                    .environmentObject(userFontManager)
                 
             case .error(let message):
                 // Mostrar error de autenticación

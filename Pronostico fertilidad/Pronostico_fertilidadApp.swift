@@ -13,6 +13,8 @@ struct Pronostico_fertilidadApp: App {
     @StateObject private var themeManager = ThemeManager()
     @StateObject private var appleSignInManager = AppleSignInManager()
     @StateObject private var authFlowManager = AuthenticationFlowManager()
+    @StateObject private var userFontManager = UserFontManager()
+    @StateObject private var siriIntentManager = SiriIntentManager.shared
     
     // MARK: - 🗄️ CONFIGURACIÓN DE BASE DE DATOS
     // Nota: Usando memoria temporal durante desarrollo debido a cambios en el modelo
@@ -38,6 +40,8 @@ struct Pronostico_fertilidadApp: App {
                 .environmentObject(themeManager)
                 .environmentObject(appleSignInManager)
                 .environmentObject(authFlowManager)
+                .environmentObject(userFontManager)
+                .environmentObject(siriIntentManager)
                 .environment(\.themeColors, ThemeColors.current(themeManager.currentTheme))
                 .preferredColorScheme(themeManager.currentTheme == .dark ? .dark : .light)
                 .onAppear {

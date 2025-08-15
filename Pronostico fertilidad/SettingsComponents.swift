@@ -377,6 +377,7 @@ extension SettingsSection {
         switch self {
         case .profile: return "Información personal y profesional"
         case .appearance: return "Tema y personalización visual"
+        case .fonts: return "Personaliza las fuentes de la app"
         case .share: return "Comparte la app en redes sociales"
         case .legal: return "Términos, políticas y avisos"
         case .info: return "Versión, soporte y contacto"

@@ -17,6 +17,7 @@ struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var themeManager: ThemeManager
     @EnvironmentObject var authFlowManager: AuthenticationFlowManager
+    @EnvironmentObject var userFontManager: UserFontManager
     @Environment(\.themeColors) var colors
     
     // Perfil de usuario
@@ -37,6 +38,7 @@ struct SettingsView: View {
     @State private var selectedSection: SettingsSection = .profile
     @State private var showingResetAlert = false
     @State private var showingAbout = false
+    @State private var showingFontSelection = false
     
     var body: some View {
         NavigationView {
@@ -60,6 +62,10 @@ struct SettingsView: View {
         }
         .onChange(of: authFlowManager.currentUser) { _, user in
             // Los datos del usuario cambiaron
+        }
+        .sheet(isPresented: $showingFontSelection) {
+            FontSelectionView()
+                .environmentObject(userFontManager)
         }
     }
     
@@ -168,6 +174,9 @@ struct SettingsView: View {
         case .appearance:
             AppearanceSettingsView(isDarkMode: $isDarkMode)
                 .environmentObject(themeManager)
+        case .fonts:
+            FontSelectionView()
+                .environmentObject(userFontManager)
         case .share:
             ShareSettingsView()
         case .legal:
@@ -263,6 +272,8 @@ struct SettingsView: View {
                     profileSection
                 case .appearance:
                     appearanceSection
+                case .fonts:
+                    fontsSection
                 case .share:
                     shareSection
                 case .legal:
@@ -371,6 +382,82 @@ struct SettingsView: View {
                 .background(
                     RoundedRectangle(cornerRadius: 8)
                         .fill(Color.cyan.opacity(0.1))
+                )
+            }
+            .padding(.horizontal, 4)
+        }
+    }
+    
+    // MARK: - 🎨 SECCIÓN TIPOGRAFÍA
+    private var fontsSection: some View {
+        VStack(spacing: 20) {
+            SettingsSectionHeader(
+                title: "Tipografía",
+                subtitle: "Personaliza las fuentes de la aplicación",
+                icon: "textformat"
+            )
+            
+            VStack(spacing: 16) {
+                SettingsActionRow(
+                    title: "Seleccionar Fuente",
+                    subtitle: "Cambia la tipografía de toda la app",
+                    icon: "textformat",
+                    action: { showFontSelection() }
+                )
+                
+                // Vista previa de la fuente actual
+                VStack(alignment: .leading, spacing: 12) {
+                    Text("Vista previa actual")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                    
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Título de ejemplo")
+                            .font(userFontManager.title)
+                            .foregroundColor(.white)
+                        
+                        Text("Texto de ejemplo con la fuente seleccionada")
+                            .font(userFontManager.body)
+                            .foregroundColor(.white.opacity(0.8))
+                        
+                        HStack {
+                            Text("Normal")
+                                .font(userFontManager.body)
+                                .foregroundColor(.white.opacity(0.7))
+                            
+                            Spacer()
+                            
+                            Text("Bold")
+                                .font(userFontManager.customBoldFont(size: 16))
+                                .foregroundColor(.white.opacity(0.7))
+                        }
+                        
+                        Text("85%")
+                            .font(userFontManager.customBoldFont(size: 28))
+                            .foregroundColor(.cyan)
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 12)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(Color.white.opacity(0.1))
+                    )
+                }
+                
+                // Información sobre las fuentes
+                HStack {
+                    Image(systemName: "info.circle")
+                        .foregroundColor(.teal)
+                    
+                    Text("Las fuentes personalizadas mejoran la legibilidad y experiencia visual")
+                        .font(.caption)
+                        .foregroundColor(.white.opacity(0.7))
+                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 8)
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(Color.teal.opacity(0.1))
                 )
             }
             .padding(.horizontal, 4)
@@ -885,6 +972,11 @@ struct SettingsView: View {
         dismiss()
     }
     
+    // MARK: Función de Selección de Fuentes
+    private func showFontSelection() {
+        showingFontSelection = true
+    }
+    
     // MARK: - 🔄 CARGAR DATOS DEL USUARIO
     private func loadUserData() {
         // Cargar datos del AuthenticationFlowManager
@@ -909,6 +1001,7 @@ struct SettingsView: View {
 enum SettingsSection: String, CaseIterable {
     case profile = "Perfil"
     case appearance = "Apariencia"
+    case fonts = "Tipografía"
     case share = "Compartir"
     case legal = "Legal"
     case info = "Información"
@@ -919,6 +1012,7 @@ enum SettingsSection: String, CaseIterable {
         switch self {
         case .profile: return "person.crop.circle.fill"
         case .appearance: return "moon.fill"
+        case .fonts: return "textformat"
         case .share: return "square.and.arrow.up.fill"
         case .legal: return "doc.text.fill"
         case .info: return "info.circle.fill"
@@ -931,6 +1025,7 @@ enum SettingsSection: String, CaseIterable {
         switch self {
         case .profile: return .blue
         case .appearance: return .purple
+        case .fonts: return .teal
         case .share: return .green
         case .legal: return .orange
         case .info: return .cyan
