@@ -384,12 +384,14 @@ struct ContentView: View {
             }
             .padding(.horizontal, 24)
             
-            // Lista de perfiles moderna
+            // Lista de perfiles moderna con funcionalidad de eliminar
             LazyVStack(spacing: 16) {
                 ForEach(profiles) { profile in
-                    ModernProfileCard(profile: profile) {
+                    SwipeableProfileCard(profile: profile) {
                         currentProfile = profile
                         showingCalculator = true
+                    } onDelete: {
+                        deleteProfile(profile)
                     }
                 }
             }
@@ -455,6 +457,14 @@ struct ContentView: View {
         modelContext.insert(newProfile)
         currentProfile = newProfile
         showingCalculator = true
+    }
+    
+    // MARK: - 🗑️ FUNCIÓN PARA ELIMINAR PERFIL
+    private func deleteProfile(_ profile: FertilityProfile) {
+        withAnimation(.easeInOut(duration: 0.3)) {
+            modelContext.delete(profile)
+            try? modelContext.save()
+        }
     }
 }
 
@@ -609,6 +619,81 @@ struct FeatureRow: View {
     }
 }
 
+// Tarjeta de perfil con funcionalidad de swipe
+struct SwipeableProfileCard: View {
+    let profile: FertilityProfile
+    let onTap: () -> Void
+    let onDelete: () -> Void
+    @State private var offset: CGFloat = 0
+    @State private var isSwiped = false
+    
+    private var completionPercentage: Double {
+        profile.completionPercentage()
+    }
+    
+    private var profileIdText: String {
+        return "Evaluación"
+    }
+    
+    var body: some View {
+        ZStack {
+            // Fondo rojo para indicar eliminación
+            HStack {
+                Spacer()
+                if offset < -50 {
+                    Text("Suelta para eliminar")
+                        .font(.caption)
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 6)
+                        .background(Color.red.opacity(0.9))
+                        .cornerRadius(10)
+                }
+            }
+            .padding(.trailing, 24)
+            
+            // Tarjeta principal
+            ModernProfileCard(profile: profile, onTap: {
+                // Solo ejecutar onTap si no hay offset (no se está haciendo swipe)
+                if offset == 0 {
+                    onTap()
+                }
+            })
+                .offset(x: offset)
+                .gesture(
+                    DragGesture()
+                        .onChanged { value in
+                            if value.translation.width < 0 {
+                                offset = value.translation.width
+                            }
+                        }
+                        .onEnded { value in
+                            print("🔄 Swipe terminado - Desplazamiento: \(value.translation.width)")
+                            if value.translation.width < -80 {
+                                // Deslizamiento completo - eliminar automáticamente
+                                print("🗑️ Eliminando automáticamente...")
+                                onDelete()
+                            } else if value.translation.width < -50 {
+                                // Deslizamiento parcial - mostrar botón de eliminar
+                                print("📱 Mostrando botón de eliminar")
+                                withAnimation(.easeInOut(duration: 0.3)) {
+                                    offset = -100
+                                    isSwiped = true
+                                }
+                            } else {
+                                // Deslizamiento insuficiente - volver a posición original
+                                print("↩️ Volviendo a posición original")
+                                withAnimation(.easeInOut(duration: 0.3)) {
+                                    offset = 0
+                                    isSwiped = false
+                                }
+                            }
+                        }
+                )
+        }
+    }
+}
+
 // Tarjeta de perfil moderna (simplificada)
 struct ModernProfileCard: View {
     let profile: FertilityProfile
@@ -623,10 +708,10 @@ struct ModernProfileCard: View {
     }
     
     var body: some View {
-        Button(action: onTap) {
-            cardContent
-        }
-        .buttonStyle(PlainButtonStyle())
+        cardContent
+            .onTapGesture {
+                onTap()
+            }
     }
     
     private var cardContent: some View {

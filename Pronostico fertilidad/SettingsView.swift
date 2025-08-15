@@ -58,6 +58,9 @@ struct SettingsView: View {
         .onChange(of: authFlowManager.isAuthenticated) { isAuthenticated in
             loadUserData()
         }
+        .onChange(of: authFlowManager.currentUser) { user in
+            print("🔄 SettingsView - Datos del usuario cambiaron: \(user?.displayName ?? "nil")")
+        }
     }
     
     // MARK: - 📋 LISTA DE CONFIGURACIÓN
@@ -97,9 +100,9 @@ struct SettingsView: View {
                 )
             
             VStack(spacing: 4) {
-                // Usar datos del AuthenticationFlowManager si están disponibles
-                let displayName = currentUserData?.displayName ?? (userFullName.isEmpty ? "Usuario" : userFullName)
-                let displayEmail = currentUserData?.email ?? (userEmail.isEmpty ? "No conectado" : userEmail)
+                // Usar datos del AuthenticationFlowManager directamente
+                let displayName = authFlowManager.currentUser?.displayName ?? "Usuario"
+                let displayEmail = authFlowManager.currentUser?.email ?? "No conectado"
                 
                 Text(displayName)
                     .font(.title2.bold())

@@ -220,7 +220,7 @@ extension AppleSignInManager: ASAuthorizationControllerDelegate {
         let finalName: String
         if userFullName.isEmpty {
             let storedName = UserDefaults.standard.string(forKey: "userFullName") ?? ""
-            finalName = storedName.isEmpty ? "Usuario Apple" : storedName
+            finalName = storedName.isEmpty ? "Usuario" : storedName
             print("🍎 Usando nombre guardado: \(finalName)")
         } else {
             finalName = userFullName
@@ -230,7 +230,7 @@ extension AppleSignInManager: ASAuthorizationControllerDelegate {
         let finalEmail: String
         if userEmail.isEmpty {
             let storedEmail = UserDefaults.standard.string(forKey: "userEmail") ?? ""
-            finalEmail = storedEmail.isEmpty ? "usuario@apple.com" : storedEmail
+            finalEmail = storedEmail.isEmpty ? "" : storedEmail
             print("🍎 Usando email guardado: \(finalEmail)")
         } else {
             finalEmail = userEmail
@@ -297,8 +297,8 @@ extension AppleSignInManager: ASAuthorizationControllerDelegate {
             // Crear usuario simulado
             let simulatedUser = AppleUser(
                 userID: "simulator_user_\(UUID().uuidString)",
-                email: "usuario.simulado@apple.com",
-                fullName: "Usuario Simulado"
+                email: "",
+                fullName: "Usuario"
             )
             
             print("🎭 Usuario simulado creado: \(simulatedUser.displayName)")
