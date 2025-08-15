@@ -135,28 +135,28 @@ struct LoginView: View {
     // MARK: - ⚠️ DISCLAIMER SECTION
     private var disclaimerSection: some View {
         VStack(spacing: 12) {
-            // Disclaimer temporal
+            // Disclaimer adaptativo al tema
             HStack(spacing: 8) {
                 Image(systemName: "exclamationmark.triangle.fill")
-                    .foregroundColor(.yellow)
+                    .foregroundColor(colors.warning)
                 Text("Herramienta de apoyo diagnóstico")
                     .font(.system(size: 12, weight: .semibold))
-                    .foregroundColor(.white)
+                    .foregroundColor(colors.text)
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 8)
             .background(
                 RoundedRectangle(cornerRadius: 8)
-                    .fill(Color.yellow.opacity(0.2))
+                    .fill(colors.warning.opacity(0.2))
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.yellow.opacity(0.4), lineWidth: 1)
+                            .stroke(colors.warning.opacity(0.4), lineWidth: 1)
                     )
             )
             
             Text("Al continuar, aceptas nuestros términos de servicio y política de privacidad")
                 .font(.system(size: 12, weight: .medium))
-                .foregroundColor(.white.opacity(0.7))
+                .foregroundColor(colors.textSecondary)
                 .multilineTextAlignment(.center)
         }
     }

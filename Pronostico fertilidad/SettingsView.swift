@@ -16,6 +16,7 @@ import AppKit
 struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var themeManager: ThemeManager
+    @EnvironmentObject var authFlowManager: AuthenticationFlowManager
     @Environment(\.themeColors) var colors
     
     // Perfil de usuario
@@ -836,15 +837,8 @@ struct SettingsView: View {
     
     // MARK: Función de Logout
     private func performLogout() {
-        // Limpiar datos del usuario
-        userFullName = ""
-        userEmail = ""
-        userSpecialty = ""
-        userInstitution = ""
-        isDarkMode = false
-        
-        // Aquí se integraría con el sistema de autenticación
-        // Por ejemplo: AuthManager.shared.logout()
+        // Usar el AuthenticationFlowManager para logout
+        authFlowManager.logout()
         
         // Cerrar la vista de configuración
         dismiss()

@@ -34,12 +34,12 @@ struct Pronostico_fertilidadApp: App {
 
     var body: some Scene {
         WindowGroup {
-            authFlowManager.initialView
+            RootView()
                 .environmentObject(themeManager)
                 .environmentObject(appleSignInManager)
                 .environmentObject(authFlowManager)
-                .environment(\.themeColors, ThemeColors.current(authFlowManager.currentTheme))
-                .preferredColorScheme(authFlowManager.currentTheme == .dark ? .dark : .light)
+                .environment(\.themeColors, ThemeColors.current(themeManager.currentTheme))
+                .preferredColorScheme(themeManager.currentTheme == .dark ? .dark : .light)
                 .onAppear {
                     // Forzar la aplicación del tema
                     themeManager.objectWillChange.send()

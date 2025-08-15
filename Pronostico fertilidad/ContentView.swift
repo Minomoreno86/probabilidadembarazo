@@ -13,10 +13,10 @@ struct ContentView: View {
     @Query private var profiles: [FertilityProfile]
     @EnvironmentObject var themeManager: ThemeManager
     @EnvironmentObject var appleSignInManager: AppleSignInManager
+    @EnvironmentObject var authFlowManager: AuthenticationFlowManager
     @Environment(\.themeColors) var colors
     @State private var showingCalculator = false
     @State private var showingSettings = false
-    @State private var showingLogin = false
     @State private var currentProfile: FertilityProfile?
     @State private var animateHero = false
     @State private var animateStats = false
@@ -63,10 +63,9 @@ struct ContentView: View {
         }
         .sheet(isPresented: $showingSettings) {
             SettingsView()
+                .environmentObject(authFlowManager)
         }
-        .sheet(isPresented: $showingLogin) {
-            SimpleLoginView()
-        }
+
         .onAppear {
             withAnimation(.easeInOut(duration: 1.2)) {
                 animateHero = true
@@ -110,42 +109,20 @@ struct ContentView: View {
                 
                 Spacer()
                 
-                HStack(spacing: 12) {
-                    // Login/Perfil - Versión de prueba
-                    Button(action: { 
-                        print("🔐 Botón de login presionado!")
-                        showingLogin = true
-                    }) {
-                        // Botón de login siempre visible para pruebas
-                        Image(systemName: "person.circle")
-                            .font(.title3)
-                            .foregroundColor(.white)
-                            .padding(10)
-                            .background(
-                                Circle()
-                                    .fill(.ultraThinMaterial)
-                                    .overlay(
-                                        Circle()
-                                            .stroke(Color.white.opacity(0.3), lineWidth: 1)
-                                    )
-                            )
-                    }
-                    
-                    // Configuración
-                    Button(action: { showingSettings = true }) {
-                        Image(systemName: "gearshape")
-                            .font(.title3)
-                            .foregroundColor(.white)
-                            .padding(10)
-                            .background(
-                                Circle()
-                                    .fill(.ultraThinMaterial)
-                                    .overlay(
-                                        Circle()
-                                            .stroke(Color.white.opacity(0.3), lineWidth: 1)
-                                    )
-                            )
-                    }
+                // Configuración
+                Button(action: { showingSettings = true }) {
+                    Image(systemName: "gearshape")
+                        .font(.title3)
+                        .foregroundColor(.white)
+                        .padding(10)
+                        .background(
+                            Circle()
+                                .fill(.ultraThinMaterial)
+                                .overlay(
+                                    Circle()
+                                        .stroke(Color.white.opacity(0.3), lineWidth: 1)
+                                )
+                        )
                 }
             }
             .padding(.horizontal, 24)
