@@ -1,26 +1,26 @@
 //
-//  LoginView.swift
+//  SimpleLoginView.swift
 //  Pronostico fertilidad
 //
-//  Pantalla de login con Apple Sign In
+//  Versión simplificada de LoginView para pruebas
 //
 
 import SwiftUI
-import AuthenticationServices
 
-struct LoginView: View {
-    @EnvironmentObject var appleSignInManager: AppleSignInManager
-    @EnvironmentObject var themeManager: ThemeManager
-    @Environment(\.themeColors) var colors
+struct SimpleLoginView: View {
     @Environment(\.dismiss) private var dismiss
-    
+    @EnvironmentObject var authFlowManager: AuthenticationFlowManager
     @State private var animateLogo = false
     @State private var animateContent = false
+    
+    private var colors: ThemeColors {
+        ThemeColors.current(authFlowManager.currentTheme)
+    }
     
     var body: some View {
         NavigationView {
             ZStack {
-                // Fondo con gradiente
+                // Fondo con gradiente adaptativo al tema
                 colors.backgroundGradient
                     .ignoresSafeArea()
                 
@@ -56,20 +56,20 @@ struct LoginView: View {
     // MARK: - 🏥 LOGO SECTION
     private var logoSection: some View {
         VStack(spacing: 16) {
-            // Logo animado
-            ZStack {
-                Circle()
-                    .fill(colors.accentGradient)
-                    .frame(width: 120, height: 120)
-                    .scaleEffect(animateLogo ? 1.0 : 0.8)
-                    .animation(.spring(response: 0.8, dampingFraction: 0.6), value: animateLogo)
-                
-                Image(systemName: "stethoscope")
-                    .font(.system(size: 50, weight: .light))
-                    .foregroundColor(.white)
-                    .scaleEffect(animateLogo ? 1.0 : 0.9)
-                    .animation(.easeInOut(duration: 1.0).delay(0.2), value: animateLogo)
-            }
+                            // Logo animado
+                ZStack {
+                    Circle()
+                        .fill(colors.accentGradient)
+                        .frame(width: 120, height: 120)
+                        .scaleEffect(animateLogo ? 1.0 : 0.8)
+                        .animation(.spring(response: 0.8, dampingFraction: 0.6), value: animateLogo)
+                    
+                    Image(systemName: "stethoscope")
+                        .font(.system(size: 50, weight: .light))
+                        .foregroundColor(.white)
+                        .scaleEffect(animateLogo ? 1.0 : 0.9)
+                        .animation(.easeInOut(duration: 1.0).delay(0.2), value: animateLogo)
+                }
             
             VStack(spacing: 8) {
                 Text("FertilyzeAI")
@@ -104,12 +104,34 @@ struct LoginView: View {
     private var loginSection: some View {
         VStack(spacing: 24) {
             // Apple Sign In Button
-            AppleSignInButton(action: handleAppleSignIn)
-                .frame(height: 56)
-                .cornerRadius(16)
-                .shadow(color: Color.black.opacity(0.2), radius: 8, x: 0, y: 4)
+            Button(action: handleAppleSignIn) {
+                HStack(spacing: 12) {
+                    Image(systemName: "applelogo")
+                        .font(.title2)
+                        .foregroundColor(.white)
+                    
+                    Text("Continuar con Apple")
+                        .font(.system(size: 18, weight: .semibold))
+                        .foregroundColor(.white)
+                    
+                    Spacer()
+                }
+                .padding(.horizontal, 24)
+                .padding(.vertical, 16)
+                .background(
+                    RoundedRectangle(cornerRadius: 16)
+                        .fill(Color.black)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 16)
+                                .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                        )
+                )
+            }
+            .frame(height: 56)
+            .cornerRadius(16)
+            .shadow(color: Color.black.opacity(0.2), radius: 8, x: 0, y: 4)
             
-            // Botón de continuar sin login (opcional)
+            // Botón de continuar sin login
             Button(action: continueWithoutLogin) {
                 HStack {
                     Image(systemName: "arrow.right.circle.fill")
@@ -163,50 +185,21 @@ struct LoginView: View {
     
     // MARK: - 🔄 FUNCIONES
     private func handleAppleSignIn() {
-        appleSignInManager.signInWithApple()
+        print("🍎 Apple Sign In presionado!")
+        // Simular autenticación exitosa
+        let mockUser = AppleUser(userID: "test123", email: "test@example.com", fullName: "Usuario Test")
+        authFlowManager.authenticateUser(mockUser)
+        dismiss()
     }
     
     private func continueWithoutLogin() {
-        // Permitir acceso sin autenticación
+        print("➡️ Continuar sin cuenta presionado!")
+        authFlowManager.continueWithoutAuthentication()
         dismiss()
-    }
-}
-
-// MARK: - 🍎 APPLE SIGN IN BUTTON
-struct AppleSignInButton: View {
-    let action: () -> Void
-    
-    var body: some View {
-        Button(action: action) {
-            HStack(spacing: 12) {
-                Image(systemName: "applelogo")
-                    .font(.title2)
-                    .foregroundColor(.white)
-                
-                Text("Continuar con Apple")
-                    .font(.system(size: 18, weight: .semibold))
-                    .foregroundColor(.white)
-                
-                Spacer()
-            }
-            .padding(.horizontal, 24)
-            .padding(.vertical, 16)
-            .background(
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(Color.black)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 16)
-                            .stroke(Color.white.opacity(0.2), lineWidth: 1)
-                    )
-            )
-        }
-        .buttonStyle(PlainButtonStyle())
     }
 }
 
 // MARK: - 📱 PREVIEW
 #Preview {
-    LoginView()
-        .environmentObject(AppleSignInManager())
-        .environmentObject(ThemeManager())
+    SimpleLoginView()
 }

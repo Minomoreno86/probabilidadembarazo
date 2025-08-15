@@ -27,6 +27,7 @@
 		7B5DFBF82E4A5AA60056B2FD /* Pronostico fertilidad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pronostico fertilidad.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B5DFC092E4A5AA60056B2FD /* Pronostico fertilidadTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Pronostico fertilidadTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B5DFC132E4A5AA70056B2FD /* Pronostico fertilidadUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Pronostico fertilidadUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7B5DFCD62E4EB4590056B2FD /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.5.sdk/System/Library/Frameworks/AuthenticationServices.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -91,6 +92,7 @@
 				7B5DFBFA2E4A5AA60056B2FD /* Pronostico fertilidad */,
 				7B5DFC0C2E4A5AA60056B2FD /* Pronostico fertilidadTests */,
 				7B5DFC162E4A5AA70056B2FD /* Pronostico fertilidadUITests */,
+				7B5DFCD52E4EB4230056B2FD /* Frameworks */,
 				7B5DFBF92E4A5AA60056B2FD /* Products */,
 			);
 			sourceTree = "<group>";
@@ -103,6 +105,14 @@
 				7B5DFC132E4A5AA70056B2FD /* Pronostico fertilidadUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		7B5DFCD52E4EB4230056B2FD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7B5DFCD62E4EB4590056B2FD /* AuthenticationServices.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

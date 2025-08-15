@@ -65,7 +65,7 @@ struct ContentView: View {
             SettingsView()
         }
         .sheet(isPresented: $showingLogin) {
-            LoginView()
+            SimpleLoginView()
         }
         .onAppear {
             withAnimation(.easeInOut(duration: 1.2)) {
@@ -111,39 +111,24 @@ struct ContentView: View {
                 Spacer()
                 
                 HStack(spacing: 12) {
-                    // Login/Perfil
+                    // Login/Perfil - Versión de prueba
                     Button(action: { 
-                        if appleSignInManager.isAuthenticated {
-                            // Mostrar perfil o logout
-                        } else {
-                            showingLogin = true
-                        }
+                        print("🔐 Botón de login presionado!")
+                        showingLogin = true
                     }) {
-                        if appleSignInManager.isAuthenticated {
-                            // Avatar del usuario
-                            Circle()
-                                .fill(colors.accentGradient)
-                                .frame(width: 40, height: 40)
-                                .overlay(
-                                    Text(appleSignInManager.currentUser?.initials ?? "U")
-                                        .font(.system(size: 16, weight: .semibold))
-                                        .foregroundColor(.white)
-                                )
-                        } else {
-                            // Botón de login
-                            Image(systemName: "person.circle")
-                                .font(.title3)
-                                .foregroundColor(.white)
-                                .padding(10)
-                                .background(
-                                    Circle()
-                                        .fill(.ultraThinMaterial)
-                                        .overlay(
-                                            Circle()
-                                                .stroke(Color.white.opacity(0.3), lineWidth: 1)
-                                        )
-                                )
-                        }
+                        // Botón de login siempre visible para pruebas
+                        Image(systemName: "person.circle")
+                            .font(.title3)
+                            .foregroundColor(.white)
+                            .padding(10)
+                            .background(
+                                Circle()
+                                    .fill(.ultraThinMaterial)
+                                    .overlay(
+                                        Circle()
+                                            .stroke(Color.white.opacity(0.3), lineWidth: 1)
+                                    )
+                            )
                     }
                     
                     // Configuración
