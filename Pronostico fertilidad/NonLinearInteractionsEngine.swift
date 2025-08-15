@@ -239,6 +239,8 @@ class NonLinearInteractionsEngine {
         // Deshabilitada hasta implementar grosor endometrial
         return nil
         
+        // TODO: Implementar cuando tengamos datos de grosor endometrial
+        /*
         return ClinicalInteraction(
             name: "🧬 Miomatosis submucosa + Endometrio <7 mm",
             conditions: "Mioma submucoso tipo 0 o I AND endometrio <7 mm al día 12–14",
@@ -253,6 +255,7 @@ class NonLinearInteractionsEngine {
             forcesTreatmentChange: true,
             priority: .high
         )
+        */
     }
     
     // MARK: - 📉 9. AMH <0.5 ng/mL + EDAD >40 AÑOS + FIV PREVIA FALLIDA
@@ -265,6 +268,8 @@ class NonLinearInteractionsEngine {
         // Deshabilitada hasta implementar historial de FIV
         return nil
         
+        // TODO: Implementar cuando tengamos historial de FIV
+        /*
         return ClinicalInteraction(
             name: "📉 AMH <0.5 ng/mL + Edad >40 años + FIV previa fallida",
             conditions: "AMH <0.5 AND edad >40 AND ≥1 FIV sin blastocistos",
@@ -280,6 +285,7 @@ class NonLinearInteractionsEngine {
             forcesTreatmentChange: true,
             priority: .critical
         )
+        */
     }
     
     // MARK: - 🧪 10. FRAGMENTACIÓN DE ADN ESPERMÁTICO + FALLA DE FECUNDACIÓN PREVIA
@@ -443,6 +449,8 @@ class NonLinearInteractionsEngine {
         // Deshabilitada hasta implementar fragmentación de ADN
         return nil
         
+        // TODO: Implementar cuando tengamos datos de fragmentación de ADN
+        /*
         return ClinicalInteraction(
             name: "🧓 Edad ≥40 años + Fragmentación espermática + Transferencia día 3",
             conditions: "Edad ≥40 años AND fragmentación DNA espermático >30% AND transferencia día 3",
@@ -458,6 +466,7 @@ class NonLinearInteractionsEngine {
             forcesTreatmentChange: true,
             priority: .high
         )
+        */
     }
     
     // MARK: - 📊 EVALUACIÓN COMPREHENSIVE DE INTERACCIONES

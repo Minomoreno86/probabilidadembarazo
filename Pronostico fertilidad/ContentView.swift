@@ -668,21 +668,17 @@ struct SwipeableProfileCard: View {
                             }
                         }
                         .onEnded { value in
-                            print("🔄 Swipe terminado - Desplazamiento: \(value.translation.width)")
                             if value.translation.width < -80 {
                                 // Deslizamiento completo - eliminar automáticamente
-                                print("🗑️ Eliminando automáticamente...")
                                 onDelete()
                             } else if value.translation.width < -50 {
-                                // Deslizamiento parcial - mostrar botón de eliminar
-                                print("📱 Mostrando botón de eliminar")
+                                // Deslizamiento parcial - mostrar indicador de eliminación
                                 withAnimation(.easeInOut(duration: 0.3)) {
                                     offset = -100
                                     isSwiped = true
                                 }
                             } else {
                                 // Deslizamiento insuficiente - volver a posición original
-                                print("↩️ Volviendo a posición original")
                                 withAnimation(.easeInOut(duration: 0.3)) {
                                     offset = 0
                                     isSwiped = false

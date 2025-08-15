@@ -125,7 +125,7 @@ struct AppearanceSettingsView: View {
         }
         .background(colors.backgroundGradient)
         .navigationTitle("Apariencia")
-        .onChange(of: themeManager.currentTheme) { newTheme in
+        .onChange(of: themeManager.currentTheme) { _, newTheme in
             isDarkMode = newTheme == .dark
         }
     }

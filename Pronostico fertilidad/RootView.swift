@@ -39,23 +39,12 @@ struct RootView: View {
         .animation(.easeInOut(duration: 0.5), value: authFlowManager.authenticationState)
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("AppleSignInCompleted"))) { notification in
             if let user = notification.object as? AppleUser {
-                print("🔄 RootView - Notificación recibida: Apple Sign In completado")
-                print("🔄 RootView - Usuario autenticado: \(user.displayName)")
-                print("🔄 RootView - Datos a sincronizar:")
-                print("   - User ID: \(user.userID)")
-                print("   - Email: \(user.email)")
-                print("   - Full Name: \(user.fullName)")
-                
                 // Sincronizar con el AuthenticationFlowManager
                 authFlowManager.authenticateUser(
                     userID: user.userID,
                     email: user.email,
                     fullName: user.fullName
                 )
-                
-                print("🔄 RootView - Sincronización completada")
-                print("🔄 RootView - AuthFlowManager isAuthenticated: \(authFlowManager.isAuthenticated)")
-                print("🔄 RootView - AuthFlowManager authenticationState: \(authFlowManager.authenticationState)")
             }
         }
     }
@@ -202,7 +191,7 @@ struct RootView: View {
                 .padding(.top, 60)
             }
         }
-        .onChange(of: appleSignInManager.isAuthenticated) { isAuthenticated in
+        .onChange(of: appleSignInManager.isAuthenticated) { _, isAuthenticated in
             if isAuthenticated, let user = appleSignInManager.currentUser {
                 // Sincronizar con el AuthenticationFlowManager
                 authFlowManager.authenticateUser(
@@ -216,12 +205,10 @@ struct RootView: View {
     
     // MARK: - 🔄 FUNCIONES DE LOGIN
     private func handleAppleSignIn() {
-        print("🍎 Apple Sign In presionado!")
         appleSignInManager.signInWithApple()
     }
     
     private func continueWithoutLogin() {
-        print("➡️ Continuar sin cuenta presionado!")
         authFlowManager.continueWithoutAccount()
     }
     

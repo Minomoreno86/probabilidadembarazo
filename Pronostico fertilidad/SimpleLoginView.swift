@@ -51,32 +51,15 @@ struct SimpleLoginView: View {
                 animateContent = true
             }
         }
-        .onChange(of: appleSignInManager.isAuthenticated) { isAuthenticated in
-            print("🔄 SimpleLoginView - Estado de autenticación cambiado: \(isAuthenticated)")
+        .onChange(of: appleSignInManager.isAuthenticated) { _, isAuthenticated in
             if isAuthenticated, let user = appleSignInManager.currentUser {
-                print("🔄 SimpleLoginView - Usuario autenticado: \(user.displayName)")
-                print("🔄 SimpleLoginView - Datos a sincronizar:")
-                print("   - User ID: \(user.userID)")
-                print("   - Email: \(user.email)")
-                print("   - Full Name: \(user.fullName)")
-                
                 // Sincronizar con el AuthenticationFlowManager
                 authFlowManager.authenticateUser(
                     userID: user.userID,
                     email: user.email,
                     fullName: user.fullName
                 )
-                
-                print("🔄 SimpleLoginView - Sincronización completada")
-                print("🔄 SimpleLoginView - AuthFlowManager isAuthenticated: \(authFlowManager.isAuthenticated)")
-                print("🔄 SimpleLoginView - AuthFlowManager authenticationState: \(authFlowManager.authenticationState)")
             }
-        }
-        .onChange(of: authFlowManager.isAuthenticated) { isAuthenticated in
-            print("🔄 SimpleLoginView - AuthFlowManager isAuthenticated cambiado: \(isAuthenticated)")
-        }
-        .onChange(of: authFlowManager.authenticationState) { state in
-            print("🔄 SimpleLoginView - AuthFlowManager authenticationState cambiado: \(state)")
         }
     }
     
@@ -218,25 +201,20 @@ struct SimpleLoginView: View {
     
     // MARK: - 🔄 FUNCIONES
     private func handleAppleSignIn() {
-        print("🍎 Apple Sign In presionado!")
         // Usar el AppleSignInManager real
         appleSignInManager.signInWithApple()
     }
     
     private func continueWithoutLogin() {
-        print("➡️ Continuar sin cuenta presionado!")
-        
         // Verificar si ya hay un usuario autenticado con Apple
         if let existingUserID = UserDefaults.standard.string(forKey: "appleUserID"),
            existingUserID != "anonymous" {
-            print("➡️ Usuario ya autenticado con Apple, usando datos existentes")
             // Simplemente marcar como autenticado sin cambiar los datos
             DispatchQueue.main.async {
                 self.authFlowManager.isAuthenticated = true
                 self.authFlowManager.authenticationState = .authenticated
             }
         } else {
-            print("➡️ Configurando acceso anónimo")
             // Continuar sin autenticación
             authFlowManager.continueWithoutAccount()
         }

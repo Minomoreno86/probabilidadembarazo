@@ -55,11 +55,11 @@ struct SettingsView: View {
         .onAppear {
             loadUserData()
         }
-        .onChange(of: authFlowManager.isAuthenticated) { isAuthenticated in
+        .onChange(of: authFlowManager.isAuthenticated) { _, isAuthenticated in
             loadUserData()
         }
-        .onChange(of: authFlowManager.currentUser) { user in
-            print("🔄 SettingsView - Datos del usuario cambiaron: \(user?.displayName ?? "nil")")
+        .onChange(of: authFlowManager.currentUser) { _, user in
+            // Los datos del usuario cambiaron
         }
     }
     
@@ -890,27 +890,18 @@ struct SettingsView: View {
         // Cargar datos del AuthenticationFlowManager
         currentUserData = authFlowManager.currentUser
         
-        print("🔍 Debug - AuthFlowManager isAuthenticated: \(authFlowManager.isAuthenticated)")
-        print("🔍 Debug - AuthFlowManager currentUser: \(authFlowManager.currentUser?.displayName ?? "nil")")
-        print("🔍 Debug - UserDefaults userFullName: \(UserDefaults.standard.string(forKey: "userFullName") ?? "nil")")
-        print("🔍 Debug - UserDefaults userEmail: \(UserDefaults.standard.string(forKey: "userEmail") ?? "nil")")
-        
         // Si hay datos del usuario autenticado, actualizar los AppStorage
         if let user = currentUserData {
             userFullName = user.fullName
             userEmail = user.email
-            print("✅ Datos del usuario actualizados: \(user.displayName) - \(user.email)")
         } else {
             // Intentar cargar desde UserDefaults directamente
             if let storedName = UserDefaults.standard.string(forKey: "userFullName"),
                let storedEmail = UserDefaults.standard.string(forKey: "userEmail") {
                 userFullName = storedName
                 userEmail = storedEmail
-                print("📱 Datos cargados desde UserDefaults: \(storedName) - \(storedEmail)")
             }
         }
-        
-        print("👤 Datos finales del usuario: \(currentUserData?.displayName ?? "No disponible")")
     }
 }
 

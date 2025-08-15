@@ -1035,7 +1035,6 @@ struct BMIFertilityPathology {
     
     private static func calculateWeightLossTarget(bmi: Double) -> String {
         if bmi < 18.5 {
-            let targetWeight = 20.0 // IMC objetivo mínimo
             return "Ganancia peso hasta IMC ≥20 kg/m²"
         } else if bmi >= 30 {
             let lossPercentage = min(15, max(10, Int((bmi - 25) * 2)))

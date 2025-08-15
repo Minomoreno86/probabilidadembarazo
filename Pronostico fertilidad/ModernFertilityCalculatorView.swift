@@ -1079,7 +1079,7 @@ struct OptimizedNumericField: View {
                                 )
                         )
                         .focused($isFieldFocused)
-                        .onChange(of: isFieldFocused) { focused in
+                        .onChange(of: isFieldFocused) { _, focused in
                             showSuggestions = focused && !commonValues.isEmpty
                         }
                     
