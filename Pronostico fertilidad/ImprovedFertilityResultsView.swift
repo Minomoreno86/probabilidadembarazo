@@ -1091,6 +1091,13 @@ struct SmoothTransitionsView: View {
                         .foregroundColor(.green)
                         .fontWeight(.bold)
                 }
+                
+                HStack {
+                    Text("Unidad:")
+                        .fontWeight(.semibold)
+                    Text("Probabilidad por año (con conversión a ciclo)")
+                        .foregroundColor(.secondary)
+                }
             }
             .font(.caption)
         }
@@ -1133,27 +1140,51 @@ struct SmoothTransitionsView: View {
             // Gráfico simplificado usando SwiftUI básico
             VStack(spacing: 12) {
                 // Función continua seleccionada
-                HStack {
-                    Text("Función Continua:")
-                        .font(.subheadline)
-                        .fontWeight(.semibold)
-                    Spacer()
-                    Text("\(String(format: "%.1f", getSelectedFunctionProbability(age: selectedAge) * 100))%")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .foregroundColor(selectedFunction.color)
+                VStack(spacing: 8) {
+                    HStack {
+                        Text("Función Continua (por año):")
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                        Spacer()
+                        Text("\(String(format: "%.1f", getSelectedFunctionProbability(age: selectedAge) * 100))%")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .foregroundColor(selectedFunction.color)
+                    }
+                    
+                    HStack {
+                        Text("Equivalente por ciclo:")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        Spacer()
+                        Text("\(String(format: "%.1f", smoothFunctions.convertYearlyToCycleProbability(getSelectedFunctionProbability(age: selectedAge)) * 100))%")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
                 }
                 
                 // Función discreta (actual)
-                HStack {
-                    Text("Función Discreta (Actual):")
-                        .font(.subheadline)
-                        .fontWeight(.semibold)
-                    Spacer()
-                    Text("\(String(format: "%.1f", getDiscreteProbability(age: selectedAge) * 100))%")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .foregroundColor(.red)
+                VStack(spacing: 8) {
+                    HStack {
+                        Text("Función Discreta (por año):")
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                        Spacer()
+                        Text("\(String(format: "%.1f", getDiscreteProbability(age: selectedAge) * 100))%")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .foregroundColor(.red)
+                    }
+                    
+                    HStack {
+                        Text("Equivalente por ciclo:")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        Spacer()
+                        Text("\(String(format: "%.1f", smoothFunctions.convertYearlyToCycleProbability(getDiscreteProbability(age: selectedAge)) * 100))%")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
                 }
                 
                 Divider()

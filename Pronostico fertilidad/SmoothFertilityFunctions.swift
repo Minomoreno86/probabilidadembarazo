@@ -22,7 +22,7 @@ class SmoothFertilityFunctions: ObservableObject {
     /// Parámetros de la función logística óptima (ASRM Guidelines 2024)
     private struct LogisticParameters {
         /// Factor de suavizado óptimo validado clínicamente
-        static let k: Double = 0.15
+        static let k: Double = 0.08
         /// Edad de transición principal (35 años)
         static let x0: Double = 35.0
         /// Precisión del modelo: R² = 0.943
@@ -34,11 +34,11 @@ class SmoothFertilityFunctions: ObservableObject {
     /// Parámetros de la función exponencial suavizada (ESHRE Recommendations 2024)
     private struct ExponentialParameters {
         /// Probabilidad base a los 25 años
-        static let p0: Double = 0.95
+        static let p0: Double = 0.85
         /// Tasa de decaimiento natural
-        static let lambda: Double = 0.08
+        static let lambda: Double = 0.06
         /// Factor de suavizado para variabilidad individual
-        static let smoothing: Double = 0.2
+        static let smoothing: Double = 0.1
         /// Rango para oscilaciones suaves
         static let range: Double = 20.0
         /// Precisión del modelo: R² = 0.927
@@ -51,12 +51,12 @@ class SmoothFertilityFunctions: ObservableObject {
     private struct PolynomialParameters {
         /// Coeficientes calibrados para máxima precisión
         static let coefficients: [Double] = [
-            0.95,    // a₀
-            -0.08,   // a₁
-            0.002,   // a₂
-            -0.00003, // a₃
-            0.0000002, // a₄
-            -0.000000001 // a₅
+            0.85,    // a₀ - Probabilidad base a los 18 años
+            -0.04,   // a₁ - Tasa de decaimiento lineal
+            0.001,   // a₂ - Curvatura suave
+            -0.00002, // a₃ - Ajuste fino
+            0.0000001, // a₄ - Micro-ajuste
+            -0.0000000005 // a₅ - Estabilización
         ]
         /// Precisión del modelo: R² = 0.956 (la más alta)
         static let accuracy: Double = 0.956
@@ -345,6 +345,20 @@ extension SmoothFertilityFunctions {
         }
         
         return points
+    }
+    
+    /// Convierte probabilidad anual a probabilidad por ciclo menstrual
+    /// Fórmula: P(ciclo) = 1 - (1 - P(año))^(1/12)
+    func convertYearlyToCycleProbability(_ yearlyProbability: Double) -> Double {
+        let cycleProbability = 1.0 - pow(1.0 - yearlyProbability, 1.0/12.0)
+        return max(0.0, min(1.0, cycleProbability))
+    }
+    
+    /// Convierte probabilidad por ciclo a probabilidad anual
+    /// Fórmula: P(año) = 1 - (1 - P(ciclo))^12
+    func convertCycleToYearlyProbability(_ cycleProbability: Double) -> Double {
+        let yearlyProbability = 1.0 - pow(1.0 - cycleProbability, 12.0)
+        return max(0.0, min(1.0, yearlyProbability))
     }
     
     /// Compara funciones continuas vs. discretas para demostrar la mejora
