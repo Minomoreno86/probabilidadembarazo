@@ -24,34 +24,34 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                // Fondo médico profesional con gradiente dinámico - Mismo método que SettingsView
+                // Professional medical background with dynamic gradient - Same method as SettingsView
                 colors.backgroundGradient
                     .ignoresSafeArea()
                 
                 ScrollView {
                     VStack(spacing: 0) {
-                        // Hero Section Renovado
+                        // Renovated Hero Section
                         modernHeroSection
                         
-                        // Dashboard de Estadísticas
+                        // Statistics Dashboard
                         statisticsDashboard
                         
-                        // Contenido principal
+                        // Main content
                         if profiles.isEmpty {
                             modernWelcomeView
                         } else {
                             modernProfilesView
                         }
                         
-                        // Disclaimer médico obligatorio
+                        // Mandatory medical disclaimer
                         MedicalDisclaimerView(style: .warning)
                             .padding(.horizontal, 20)
                             .padding(.top, 20)
                         
-                        // Footer con información médica
+                        // Footer with medical information
                         medicalFooter
                         
-                        // Footer con disclaimer médico
+                        // Footer with medical disclaimer
                         FooterMedicalDisclaimer()
                     }
                 }
@@ -76,10 +76,10 @@ struct ContentView: View {
         }
     }
     
-    // MARK: - 🎯 HERO SECTION MODERNO
+    // MARK: - 🎯 MODERN HERO SECTION
     private var modernHeroSection: some View {
         VStack(spacing: 24) {
-            // Navegación superior
+            // Top navigation
             HStack {
                 // Logo/Branding
                 HStack(spacing: 12) {

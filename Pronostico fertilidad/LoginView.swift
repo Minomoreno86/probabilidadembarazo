@@ -2,7 +2,7 @@
 //  LoginView.swift
 //  Pronostico fertilidad
 //
-//  Pantalla de login con Apple Sign In
+//  Pantalla de login con Passkeys y Apple Sign In
 //
 
 import SwiftUI
@@ -11,11 +11,14 @@ import AuthenticationServices
 struct LoginView: View {
     @EnvironmentObject var appleSignInManager: AppleSignInManager
     @EnvironmentObject var themeManager: ThemeManager
+    @EnvironmentObject var passkeysManager: PasskeysManager
     @Environment(\.themeColors) var colors
     @Environment(\.dismiss) private var dismiss
     
     @State private var animateLogo = false
     @State private var animateContent = false
+    @State private var showingPasskeyRegistration = false
+    @State private var userDisplayName = ""
     
     var body: some View {
         NavigationView {
@@ -49,6 +52,19 @@ struct LoginView: View {
             }
             withAnimation(.easeInOut(duration: 1.0).delay(0.3)) {
                 animateContent = true
+            }
+        }
+        .sheet(isPresented: $showingPasskeyRegistration) {
+            PasskeyRegistrationView(passkeysManager: passkeysManager)
+        }
+        .onChange(of: passkeysManager.isAuthenticated) { _, isAuthenticated in
+            if isAuthenticated {
+                dismiss()
+            }
+        }
+        .onChange(of: appleSignInManager.isAuthenticated) { _, isAuthenticated in
+            if isAuthenticated {
+                dismiss()
             }
         }
     }
@@ -92,7 +108,7 @@ struct LoginView: View {
                 .font(.system(size: 28, weight: .bold))
                 .foregroundColor(.white)
             
-            Text("Inicia sesión para acceder a herramientas médicas profesionales de fertilidad")
+            Text("Inicia sesión de forma segura con Passkeys o Apple Sign In")
                 .font(.system(size: 16, weight: .medium))
                 .foregroundColor(.white.opacity(0.9))
                 .multilineTextAlignment(.center)
@@ -103,7 +119,13 @@ struct LoginView: View {
     // MARK: - 🔐 LOGIN SECTION
     private var loginSection: some View {
         VStack(spacing: 24) {
-            // Apple Sign In Button
+            // Passkey Button (Principal)
+            PasskeyButton(action: handlePasskeyAuthentication)
+                .frame(height: 56)
+                .cornerRadius(16)
+                .shadow(color: Color.black.opacity(0.2), radius: 8, x: 0, y: 4)
+            
+            // Apple Sign In Button (Alternativa)
             AppleSignInButton(action: handleAppleSignIn)
                 .frame(height: 56)
                 .cornerRadius(16)
@@ -128,6 +150,23 @@ struct LoginView: View {
                                 .stroke(Color.white.opacity(0.2), lineWidth: 1)
                         )
                 )
+            }
+            
+            // Mensaje de error si existe
+            if let errorMessage = passkeysManager.errorMessage {
+                Text(errorMessage)
+                    .font(.system(size: 14, weight: .medium))
+                    .foregroundColor(.red)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(Color.red.opacity(0.1))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color.red.opacity(0.3), lineWidth: 1)
+                            )
+                    )
             }
         }
     }
@@ -162,6 +201,16 @@ struct LoginView: View {
     }
     
     // MARK: - 🔄 FUNCIONES
+    private func handlePasskeyAuthentication() {
+        if passkeysManager.isAuthenticated {
+            // Usuario ya autenticado, cerrar sesión
+            passkeysManager.signOut()
+        } else {
+            // Intentar autenticación con Passkey
+            passkeysManager.authenticateWithPasskey()
+        }
+    }
+    
     private func handleAppleSignIn() {
         appleSignInManager.signInWithApple()
     }
@@ -169,6 +218,51 @@ struct LoginView: View {
     private func continueWithoutLogin() {
         // Permitir acceso sin autenticación
         dismiss()
+    }
+}
+
+// MARK: - 🔐 PASSKEY BUTTON
+struct PasskeyButton: View {
+    let action: () -> Void
+    @StateObject private var passkeysManager = PasskeysManager()
+    
+    var body: some View {
+        Button(action: action) {
+            HStack(spacing: 12) {
+                if passkeysManager.isLoading {
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                        .scaleEffect(0.8)
+                } else {
+                    Image(systemName: passkeysManager.biometricIcon)
+                        .font(.title2)
+                        .foregroundColor(.white)
+                }
+                
+                Text(passkeysManager.isAuthenticated ? "Cerrar sesión" : "Iniciar con \(passkeysManager.biometricType)")
+                    .font(.system(size: 18, weight: .semibold))
+                    .foregroundColor(.white)
+                
+                Spacer()
+            }
+            .padding(.horizontal, 24)
+            .padding(.vertical, 16)
+            .background(
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(
+                        LinearGradient(
+                            gradient: Gradient(colors: [Color.blue, Color.purple]),
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 16)
+                            .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                    )
+            )
+        }
+        .buttonStyle(PlainButtonStyle())
     }
 }
 
@@ -204,9 +298,111 @@ struct AppleSignInButton: View {
     }
 }
 
+// MARK: - 📝 PASSKEY REGISTRATION VIEW
+struct PasskeyRegistrationView: View {
+    @ObservedObject var passkeysManager: PasskeysManager
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.themeColors) var colors
+    @State private var displayName = ""
+    
+    var body: some View {
+        NavigationView {
+            ZStack {
+                colors.backgroundGradient
+                    .ignoresSafeArea()
+                
+                VStack(spacing: 32) {
+                    // Header
+                    VStack(spacing: 16) {
+                        Image(systemName: "person.badge.plus")
+                            .font(.system(size: 60))
+                            .foregroundColor(colors.accent)
+                        
+                        Text("Crear Passkey")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .foregroundColor(colors.text)
+                        
+                        Text("Configura tu identidad biométrica segura")
+                            .font(.subheadline)
+                            .foregroundColor(colors.textSecondary)
+                            .multilineTextAlignment(.center)
+                    }
+                    
+                    // Formulario
+                    VStack(spacing: 20) {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("Nombre completo")
+                                .font(.system(size: 16, weight: .semibold))
+                                .foregroundColor(colors.text)
+                            
+                            TextField("Ingresa tu nombre", text: $displayName)
+                                .textFieldStyle(.roundedBorder)
+                                .autocapitalization(.words)
+                                .background(colors.surface)
+                                .cornerRadius(8)
+                        }
+                        
+                        Button(action: createPasskey) {
+                            HStack {
+                                if passkeysManager.isLoading {
+                                    ProgressView()
+                                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                                        .scaleEffect(0.8)
+                                } else {
+                                    Image(systemName: "lock.shield")
+                                        .font(.title2)
+                                }
+                                
+                                Text("Crear Passkey")
+                                    .font(.system(size: 18, weight: .semibold))
+                            }
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 16)
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(colors.accent)
+                            )
+                        }
+                        .disabled(displayName.isEmpty || passkeysManager.isLoading)
+                        .opacity(displayName.isEmpty ? 0.6 : 1.0)
+                    }
+                    
+                    Spacer()
+                }
+                .padding()
+            }
+            .navigationTitle("Nueva Cuenta")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancelar") {
+                        dismiss()
+                    }
+                    .foregroundColor(colors.accent)
+                }
+            }
+        }
+        .onChange(of: passkeysManager.isAuthenticated) { _, isAuthenticated in
+            if isAuthenticated {
+                dismiss()
+            }
+        }
+    }
+    
+    private func createPasskey() {
+        passkeysManager.registerPasskey(
+            userID: UUID().uuidString,
+            displayName: displayName
+        )
+    }
+}
+
 // MARK: - 📱 PREVIEW
 #Preview {
     LoginView()
         .environmentObject(AppleSignInManager())
         .environmentObject(ThemeManager())
+        .environmentObject(PasskeysManager())
 }

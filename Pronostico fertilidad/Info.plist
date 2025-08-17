@@ -19,5 +19,12 @@
 	<array>
 		<string>remote-notification</string>
 	</array>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>es</string>
+		<string>en</string>
+	</array>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>es</string>
 </dict>
 </plist>

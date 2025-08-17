@@ -2,7 +2,7 @@
 //  SimpleLoginView.swift
 //  Pronostico fertilidad
 //
-//  Versión simplificada de LoginView para pruebas
+//  Simplified version of LoginView for testing
 //
 
 import SwiftUI
@@ -147,7 +147,7 @@ struct SimpleLoginView: View {
             .cornerRadius(16)
             .shadow(color: Color.black.opacity(0.2), radius: 8, x: 0, y: 4)
             
-            // Botón de continuar sin login
+            // Continue without login button
             Button(action: continueWithoutLogin) {
                 HStack {
                     Image(systemName: "arrow.right.circle.fill")
@@ -215,7 +215,7 @@ struct SimpleLoginView: View {
                 self.authFlowManager.authenticationState = .authenticated
             }
         } else {
-            // Continuar sin autenticación
+            // Continue without authentication
             authFlowManager.continueWithoutAccount()
         }
     }

@@ -1,0 +1,173 @@
+/* 
+  Localizable.strings (English - Spanish Keys)
+  Pronostico fertilidad
+  
+  Created by Jorge Vasquez on 2024-12-19.
+*/
+
+// MARK: - App Branding
+"FertilyzeAI" = "FertilyzeAI";
+"Medical Suite" = "Medical Suite";
+
+// MARK: - Login & Authentication
+"Bienvenido" = "Welcome";
+"Inicia sesión de forma segura con Passkeys o Apple Sign In" = "Sign in securely with Passkeys or Apple Sign In";
+"Continuar sin cuenta" = "Continue without account";
+"Configura tu identidad biométrica segura" = "Configure your secure biometric identity";
+"Verificando autenticación..." = "Verifying authentication...";
+"Error de Autenticación" = "Authentication Error";
+
+// MARK: - Main Content
+"Pronóstico de" = "Fertility";
+"FERTILIDAD" = "PROGNOSIS";
+"Inteligencia Artificial Médica Avanzada" = "Advanced Medical Artificial Intelligence";
+"Evidencia Científica" = "Scientific Evidence";
+"IA Avanzada" = "Advanced AI";
+"Validación Médica" = "Medical Validation";
+"Métricas del Sistema" = "System Metrics";
+"Tiempo real" = "Real time";
+"Evaluaciones" = "Assessments";
+"Completadas" = "Completed";
+"Precisión" = "Accuracy";
+"Validación Clínica" = "Clinical Validation";
+"Referencias" = "References";
+"Artículos Científicos" = "Scientific Articles";
+"Algoritmos" = "Algorithms";
+"Benchmarks Clínicos" = "Clinical Benchmarks";
+
+// MARK: - Features
+"Evaluación de fertilidad con inteligencia artificial médica de última generación" = "Fertility assessment with next-generation medical artificial intelligence";
+"15 Interacciones No Lineales" = "15 Non-Linear Interactions";
+"21 Benchmarks Clínicos" = "21 Clinical Benchmarks";
+"Evidencia Científica ESHRE/ASRM" = "ESHRE/ASRM Scientific Evidence";
+"Iniciar Evaluación Avanzada" = "Start Advanced Assessment";
+
+// MARK: - Profiles
+"Mis Evaluaciones" = "My Assessments";
+"Nueva" = "New";
+"Evaluación" = "Assessment";
+"Suelta para eliminar" = "Drop to delete";
+"Creada:" = "Created:";
+"años" = "years";
+"IMC" = "BMI";
+"completo" = "complete";
+"progreso" = "progress";
+
+// MARK: - Medical Information
+"Validado Científicamente" = "Scientifically Validated";
+"Basado en guías ESHRE, ASRM, OMS y más de 847 referencias científicas" = "Based on ESHRE, ASRM, WHO guidelines and more than 847 scientific references";
+
+// MARK: - Settings
+"Configuración" = "Settings";
+"Pronóstico Fertilidad" = "Fertility Prognosis";
+"Versión 2.1.0" = "Version 2.1.0";
+"Versión 2.1.0 (Build 2024.12)" = "Version 2.1.0 (Build 2024.12)";
+"Título de ejemplo" = "Example title";
+"Versión de la Aplicación" = "App Version";
+"Navegación por voz habilitada" = "Voice navigation enabled";
+"Tamaños de texto adaptativos" = "Adaptive text sizes";
+"Sesión Activa" = "Active Session";
+"Cerrar Sesión" = "Sign Out";
+"Salir de la aplicación de forma segura" = "Exit the app securely";
+"¿Estás seguro de que deseas cerrar sesión? Se eliminarán todos los datos locales." = "Are you sure you want to sign out? All local data will be deleted.";
+"Al cerrar sesión se eliminarán todos los datos locales no sincronizados" = "When signing out, all unsynchronized local data will be deleted";
+
+// MARK: - About & Information
+"Acerca de la Aplicación" = "About the App";
+"Herramienta profesional para el cálculo de pronóstico de fertilidad basada en evidencia médica actualizada. Incluye algoritmos avanzados, interacciones no lineales y benchmarks clínicos." = "Professional tool for fertility prognosis calculation based on updated medical evidence. Includes advanced algorithms, non-linear interactions and clinical benchmarks.";
+"Referencias Médicas" = "Medical References";
+"Comparte la app con colegas médicos" = "Share the app with medical colleagues";
+"Legal y Médico" = "Legal and Medical";
+"Términos, políticas y avisos importantes" = "Terms, policies and important notices";
+"Información" = "Information";
+"Versión, soporte y redes sociales" = "Version, support and social networks";
+
+// MARK: - Medical Disclaimer
+"Aviso Médico Importante" = "Important Medical Notice";
+"Esta herramienta es de apoyo diagnóstico. Siempre consulta con un médico profesional." = "This tool is for diagnostic support. Always consult with a medical professional.";
+"Esta herramienta es de apoyo diagnóstico únicamente. Los resultados no reemplazan el criterio médico profesional. Siempre consulta con un especialista en medicina reproductiva para decisiones clínicas." = "This tool is for diagnostic support only. Results do not replace professional medical judgment. Always consult with a reproductive medicine specialist for clinical decisions.";
+"Apoyo diagnóstico - Consulta médico profesional" = "Diagnostic support - Consult medical professional";
+"© 2024 Dr. Jorge Vásquez - Medicina Reproductiva" = "© 2024 Dr. Jorge Vásquez - Reproductive Medicine";
+
+// MARK: - Calculator & Results
+"Evaluación Médica" = "Medical Assessment";
+"Análisis" = "Analysis";
+"Puntuación" = "Score";
+"Interpretación Clínica" = "Clinical Interpretation";
+"Análisis Médico Completo" = "Complete Medical Analysis";
+"Evaluación Clínica" = "Clinical Assessment";
+"Análisis médico detallado" = "Detailed medical analysis";
+"Análisis generado automáticamente" = "Automatically generated analysis";
+"Interacciones Críticas:" = "Critical Interactions:";
+"... y %d más" = "... and %d more";
+
+// MARK: - Medical Evaluations
+"Evaluación Detallada del SOP" = "Detailed PCOS Assessment";
+"Manifestaciones Androgénicas" = "Androgenic Manifestations";
+"Leve (vello en mentón)" = "Mild (chin hair)";
+"Moderado (vello en mentón + mejillas)" = "Moderate (chin + cheek hair)";
+"Moderado (acné persistente)" = "Moderate (persistent acne)";
+"Severo (acné quístico)" = "Severe (cystic acne)";
+"Evaluación Ovárica" = "Ovarian Assessment";
+"Ovarios poliquísticos (>12 folículos)" = "Polycystic ovaries (>12 follicles)";
+"Grado I (mínima)" = "Grade I (minimal)";
+"Tamaño del mioma más grande" = "Size of largest fibroid";
+"Pólipos Endometriales" = "Endometrial Polyps";
+"Sin pólipos" = "No polyps";
+"Único" = "Single";
+"Múltiples" = "Multiple";
+"Histerosalpingografía (HSG)" = "Hysterosalpingography (HSG)";
+"Obstrucción unilateral" = "Unilateral obstruction";
+"Obstrucción bilateral" = "Bilateral obstruction";
+"Método de Diagnóstico OTB" = "OTB Diagnostic Method";
+"Coagulación" = "Coagulation";
+"Salpingectomía" = "Salpingectomy";
+
+// MARK: - Fertility Calculations
+"Excelente" = "Excellent";
+"Buena" = "Good";
+"Moderada" = "Moderate";
+"Baja" = "Low";
+"Muy Baja" = "Very Low";
+"Crítica" = "Critical";
+"Fertilidad excelente. Coito programado con monitoreo." = "Excellent fertility. Timed intercourse with monitoring.";
+"Buena fertilidad. Inducción de ovulación recomendada." = "Good fertility. Ovulation induction recommended.";
+"Fertilidad moderada. IUI con estimulación controlada." = "Moderate fertility. IUI with controlled stimulation.";
+"Fertilidad baja. FIV/ICSI indicada." = "Low fertility. IVF/ICSI indicated.";
+"Fertilidad muy baja. FIV/ICSI con PGT-A." = "Very low fertility. IVF/ICSI with PGT-A.";
+"Fertilidad crítica. Técnicas reproductivas avanzadas." = "Critical fertility. Advanced reproductive techniques.";
+
+// MARK: - Interactions & Visualization
+"Factores que se potencian entre sí" = "Factors that enhance each other";
+"Críticas" = "Critical";
+"Visualización de cómo interactúan los factores" = "Visualization of how factors interact";
+"Esto significa que los factores actúan de forma independiente y las probabilidades calculadas no requieren ajustes adicionales." = "This means that factors act independently and calculated probabilities do not require additional adjustments.";
+
+// MARK: - Font Selection
+"Personaliza la Tipografía" = "Customize Typography";
+"Análisis de Fertilidad" = "Fertility Analysis";
+"Herramienta de apoyo diagnóstico" = "Diagnostic support tool";
+"Resultado del pronóstico: 85%" = "Prognosis result: 85%";
+"Información médica importante que debe ser legible para todos los usuarios." = "Important medical information that must be readable for all users.";
+
+// MARK: - Passkeys & Authentication
+"Autenticación cancelada" = "Authentication cancelled";
+"Error de autenticación" = "Authentication error";
+"Respuesta inválida" = "Invalid response";
+"No se pudo procesar la autenticación" = "Could not process authentication";
+"Error desconocido" = "Unknown error";
+"Usuario Passkey" = "Passkey User";
+"Face ID" = "Face ID";
+"Touch ID" = "Touch ID";
+"Biometría" = "Biometrics";
+"Autenticación" = "Authentication";
+
+// MARK: - General UI
+"Al continuar, aceptas nuestros términos de servicio y política de privacidad" = "By continuing, you accept our terms of service and privacy policy";
+"Esta herramienta es de apoyo diagnóstico. Siempre consulta con criterio médico profesional." = "This tool is for diagnostic support. Always consult with professional medical judgment.";
+
+// MARK: - Profile Count
+"%d evaluación" = "%d assessment";
+"%d evaluaciones" = "%d assessments";
+"completada" = "completed";
+"completadas" = "completed";

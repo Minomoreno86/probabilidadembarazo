@@ -2,12 +2,12 @@ import Foundation
 import AppIntents
 import SwiftUI
 
-// MARK: - 🎯 Comandos de Siri para Pronóstico de Fertilidad
+// MARK: - 🎯 Siri Commands for Fertility Prognosis
 
 @available(iOS 16.0, *)
 struct CalcularFertilidadIntent: AppIntent {
     static var title: LocalizedStringResource = "Calcular Fertilidad"
-    static var description: LocalizedStringResource = "Inicia una nueva evaluación de fertilidad"
+            static var description: LocalizedStringResource = "Start a new fertility assessment"
     
     func perform() async throws -> some IntentResult {
         // Navegar a la calculadora de fertilidad
@@ -30,11 +30,11 @@ struct MostrarEvaluacionesIntent: AppIntent {
 
 @available(iOS 16.0, *)
 struct NuevaEvaluacionIntent: AppIntent {
-    static var title: LocalizedStringResource = "Nueva Evaluación"
-    static var description: LocalizedStringResource = "Crea una nueva evaluación de fertilidad"
+            static var title: LocalizedStringResource = "New Assessment"
+        static var description: LocalizedStringResource = "Create a new fertility assessment"
     
     func perform() async throws -> some IntentResult {
-        // Navegar a nueva evaluación
+        // Navigate to new assessment
         NotificationCenter.default.post(name: NSNotification.Name("NewEvaluation"), object: nil)
         return .result()
     }
@@ -43,7 +43,7 @@ struct NuevaEvaluacionIntent: AppIntent {
 @available(iOS 16.0, *)
 struct ResultadosRecientesIntent: AppIntent {
     static var title: LocalizedStringResource = "Resultados Recientes"
-    static var description: LocalizedStringResource = "Muestra los resultados más recientes"
+            static var description: LocalizedStringResource = "Show the most recent results"
     
     func perform() async throws -> some IntentResult {
         // Navegar a resultados recientes
@@ -52,11 +52,11 @@ struct ResultadosRecientesIntent: AppIntent {
     }
 }
 
-// MARK: - 📊 Comando con Parámetros
+    // MARK: - 📊 Command with Parameters
 @available(iOS 16.0, *)
 struct EvaluarFertilidadConParametrosIntent: AppIntent {
     static var title: LocalizedStringResource = "Evaluar Fertilidad"
-    static var description: LocalizedStringResource = "Evalúa la fertilidad con parámetros específicos"
+            static var description: LocalizedStringResource = "Evaluate fertility with specific parameters"
     
     @Parameter(title: "Edad")
     var edad: Int
@@ -72,7 +72,7 @@ struct EvaluarFertilidadConParametrosIntent: AppIntent {
     }
     
     func perform() async throws -> some IntentResult {
-        // Crear evaluación con parámetros
+        // Create assessment with parameters
         let parametros = [
             "edad": edad,
             "tiempoIntentando": tiempoIntentando
@@ -91,7 +91,7 @@ struct PronosticoFertilidadShortcuts: AppShortcutsProvider {
             phrases: [
                 "Calcular fertilidad con \(.applicationName)",
                 "Evaluar fertilidad en \(.applicationName)",
-                "Nueva evaluación de fertilidad en \(.applicationName)"
+                "New fertility assessment in \(.applicationName)"
             ],
             shortTitle: "Calcular Fertilidad",
             systemImageName: "heart.fill"
@@ -111,11 +111,11 @@ struct PronosticoFertilidadShortcuts: AppShortcutsProvider {
         AppShortcut(
             intent: NuevaEvaluacionIntent(),
             phrases: [
-                "Nueva evaluación en \(.applicationName)",
-                "Crear evaluación de fertilidad en \(.applicationName)",
-                "Iniciar evaluación en \(.applicationName)"
+                            "New assessment in \(.applicationName)",
+            "Create fertility assessment in \(.applicationName)",
+            "Start assessment in \(.applicationName)"
             ],
-            shortTitle: "Nueva Evaluación",
+                          shortTitle: "New Assessment",
             systemImageName: "plus.circle"
         )
         
@@ -123,10 +123,10 @@ struct PronosticoFertilidadShortcuts: AppShortcutsProvider {
             intent: ResultadosRecientesIntent(),
             phrases: [
                 "Resultados recientes en \(.applicationName)",
-                "Últimos resultados de fertilidad en \(.applicationName)",
+                "Latest fertility results in \(.applicationName)",
                 "Ver resultados recientes en \(.applicationName)"
             ],
-            shortTitle: "Resultados Recientes",
+                          shortTitle: "Recent Results",
             systemImageName: "chart.bar.fill"
         )
         

@@ -14,6 +14,7 @@ import AppKit
 
 // MARK: - 👤 VISTA DE PERFIL
 struct ProfileSettingsView: View {
+    @Environment(\.themeColors) var colors
     @Binding var userFullName: String
     @Binding var userEmail: String
     @Binding var userSpecialty: String
@@ -35,7 +36,7 @@ struct ProfileSettingsView: View {
                     
                     Text("Perfil Profesional")
                         .font(.title2.bold())
-                        .foregroundColor(.white)
+                        .foregroundColor(colors.text)
                 }
                 .padding(.top, 20)
                 
@@ -80,22 +81,11 @@ struct ProfileSettingsView: View {
                 Spacer(minLength: 20)
             }
         }
-        .background(medicalGradient)
+        .background(colors.medicalGradient)
         .navigationTitle("Perfil")
     }
     
-    private var medicalGradient: some View {
-        LinearGradient(
-            colors: [
-                Color(red: 0.1, green: 0.2, blue: 0.4),
-                Color(red: 0.2, green: 0.3, blue: 0.5),
-                Color(red: 0.1, green: 0.25, blue: 0.45)
-            ],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-        .ignoresSafeArea()
-    }
+
 }
 
 // MARK: - 🎨 VISTA DE APARIENCIA
@@ -434,74 +424,97 @@ struct AppearanceSettingsView: View {
 
 // MARK: - 📱 VISTA DE COMPARTIR
 struct ShareSettingsView: View {
+    @EnvironmentObject var themeManager: ThemeManager
+    @Environment(\.themeColors) var colors
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 24) {
-                VStack(spacing: 20) {
-                    Image(systemName: "square.and.arrow.up.fill")
-                        .font(.system(size: 60))
-                        .foregroundColor(.green)
-                        .padding(.top, 20)
-                    
-                    Text("Compartir")
-                        .font(.title2.bold())
-                        .foregroundColor(.white)
-                    
-                    Text("Comparte la app con colegas médicos")
-                        .font(.subheadline)
-                        .foregroundColor(.white.opacity(0.7))
-                        .multilineTextAlignment(.center)
-                }
+                // Header con icono animado según el tema
+                headerSection
                 
-                VStack(spacing: 16) {
-                    SettingsActionRow(
-                        title: "Compartir en WhatsApp",
-                        subtitle: "Recomienda la app a colegas médicos",
-                        icon: "message.fill",
-                        action: { shareOnWhatsApp() }
-                    )
-                    
-                    SettingsActionRow(
-                        title: "Compartir en Instagram",
-                        subtitle: "Publica en tu historia profesional",
-                        icon: "camera.fill",
-                        action: { shareOnInstagram() }
-                    )
-                    
-                    SettingsActionRow(
-                        title: "Compartir en TikTok",
-                        subtitle: "Crea contenido educativo médico",
-                        icon: "video.fill",
-                        action: { shareOnTikTok() }
-                    )
-                    
-                    SettingsActionRow(
-                        title: "Compartir Enlace",
-                        subtitle: "Copia enlace de descarga",
-                        icon: "link",
-                        action: { shareAppLink() }
-                    )
-                }
-                .padding(.horizontal, 20)
+                // Opciones de compartir
+                sharingOptionsSection
                 
                 Spacer(minLength: 20)
             }
+            .padding(.horizontal, 20)
         }
-        .background(medicalGradient)
+        .background(colors.backgroundGradient)
         .navigationTitle("Compartir")
     }
     
-    private var medicalGradient: some View {
-        LinearGradient(
-            colors: [
-                Color(red: 0.1, green: 0.2, blue: 0.4),
-                Color(red: 0.2, green: 0.3, blue: 0.5),
-                Color(red: 0.1, green: 0.25, blue: 0.45)
-            ],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-        .ignoresSafeArea()
+    // MARK: - Header Section
+    private var headerSection: some View {
+        VStack(spacing: 20) {
+            // Icono animado con efectos especiales del tema
+            ZStack {
+                switch themeManager.currentTheme {
+                case .dark:
+                    SuperDesignEffects.neonGlow(color: .green, intensity: 1.2)
+                        .frame(width: 80, height: 80)
+                case .pink:
+                    SuperDesignEffects.pinkGlow(intensity: 1.0)
+                        .frame(width: 80, height: 80)
+                case .light:
+                    Circle()
+                        .fill(colors.accentGradient)
+                        .frame(width: 80, height: 80)
+                }
+                
+                Image(systemName: "square.and.arrow.up.fill")
+                    .font(.system(size: 40, weight: .medium))
+                    .foregroundColor(
+                        themeManager.currentTheme == .dark ? .black : 
+                        themeManager.currentTheme == .pink ? .white : .white
+                    )
+            }
+            .padding(.top, 20)
+            
+            VStack(spacing: 8) {
+                Text("Compartir")
+                    .font(.title2.bold())
+                    .foregroundColor(colors.text)
+                
+                Text("Comparte la app con colegas médicos")
+                    .font(.subheadline)
+                    .foregroundColor(colors.textSecondary)
+                    .multilineTextAlignment(.center)
+            }
+        }
+    }
+    
+    // MARK: - Sharing Options Section
+    private var sharingOptionsSection: some View {
+        VStack(spacing: 16) {
+            SettingsActionRow(
+                title: "Compartir en WhatsApp",
+                subtitle: "Recomienda la app a colegas médicos",
+                icon: "message.fill",
+                action: { shareOnWhatsApp() }
+            )
+            
+            SettingsActionRow(
+                title: "Compartir en Instagram",
+                subtitle: "Publica en tu historia profesional",
+                icon: "camera.fill",
+                action: { shareOnInstagram() }
+            )
+            
+            SettingsActionRow(
+                title: "Compartir en TikTok",
+                subtitle: "Crea contenido educativo médico",
+                icon: "video.fill",
+                action: { shareOnTikTok() }
+            )
+            
+            SettingsActionRow(
+                title: "Compartir Enlace",
+                subtitle: "Copia enlace de descarga",
+                icon: "link",
+                action: { shareAppLink() }
+            )
+        }
     }
     
     // MARK: Funciones de Compartir
@@ -573,83 +586,115 @@ struct ShareSettingsView: View {
 
 // MARK: - 📋 VISTA LEGAL
 struct LegalSettingsView: View {
+    @EnvironmentObject var themeManager: ThemeManager
+    @Environment(\.themeColors) var colors
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 24) {
-                VStack(spacing: 20) {
-                    Image(systemName: "doc.text.fill")
-                        .font(.system(size: 60))
-                        .foregroundColor(.orange)
-                        .padding(.top, 20)
-                    
-                    Text("Legal y Médico")
-                        .font(.title2.bold())
-                        .foregroundColor(.white)
-                    
-                    Text("Términos, políticas y avisos importantes")
-                        .font(.subheadline)
-                        .foregroundColor(.white.opacity(0.7))
-                        .multilineTextAlignment(.center)
-                }
+                // Header con icono animado según el tema
+                headerSection
                 
-                VStack(spacing: 16) {
-                    SettingsActionRow(
-                        title: "Política de Privacidad",
-                        subtitle: "Cómo protegemos tus datos médicos",
-                        icon: "lock.doc.fill",
-                        action: { showPrivacyPolicy() }
-                    )
-                    
-                    SettingsActionRow(
-                        title: "Términos de Servicio",
-                        subtitle: "Condiciones de uso de la aplicación",
-                        icon: "doc.plaintext.fill",
-                        action: { showTermsOfService() }
-                    )
-                    
-                    SettingsActionRow(
-                        title: "Aviso Médico",
-                        subtitle: "Disclaimer y limitaciones profesionales",
-                        icon: "stethoscope",
-                        action: { showMedicalDisclaimer() }
-                    )
-                    
-                    // Información importante
-                    HStack {
-                        Image(systemName: "exclamationmark.triangle.fill")
-                            .foregroundColor(.orange)
-                        
-                        Text("Esta herramienta es de apoyo diagnóstico. Siempre consulta con criterio médico profesional.")
-                            .font(.caption)
-                            .foregroundColor(.white.opacity(0.7))
-                    }
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 12)
-                    .background(
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(Color.orange.opacity(0.1))
-                    )
-                }
-                .padding(.horizontal, 20)
+                // Opciones legales
+                legalOptionsSection
+                
+                // Información importante
+                importantInfoSection
                 
                 Spacer(minLength: 20)
             }
+            .padding(.horizontal, 20)
         }
-        .background(medicalGradient)
+        .background(colors.backgroundGradient)
         .navigationTitle("Legal")
     }
     
-    private var medicalGradient: some View {
-        LinearGradient(
-            colors: [
-                Color(red: 0.1, green: 0.2, blue: 0.4),
-                Color(red: 0.2, green: 0.3, blue: 0.5),
-                Color(red: 0.1, green: 0.25, blue: 0.45)
-            ],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
+    // MARK: - Header Section
+    private var headerSection: some View {
+        VStack(spacing: 20) {
+            // Icono animado con efectos especiales del tema
+            ZStack {
+                switch themeManager.currentTheme {
+                case .dark:
+                    SuperDesignEffects.neonGlow(color: .orange, intensity: 1.2)
+                        .frame(width: 80, height: 80)
+                case .pink:
+                    SuperDesignEffects.pinkGlow(intensity: 1.0)
+                        .frame(width: 80, height: 80)
+                case .light:
+                    Circle()
+                        .fill(colors.accentGradient)
+                        .frame(width: 80, height: 80)
+                }
+                
+                Image(systemName: "doc.text.fill")
+                    .font(.system(size: 40, weight: .medium))
+                    .foregroundColor(
+                        themeManager.currentTheme == .dark ? .black : 
+                        themeManager.currentTheme == .pink ? .white : .white
+                    )
+            }
+            .padding(.top, 20)
+            
+            VStack(spacing: 8) {
+                Text("Legal y Médico")
+                    .font(.title2.bold())
+                    .foregroundColor(colors.text)
+                
+                Text("Términos, políticas y avisos importantes")
+                    .font(.subheadline)
+                    .foregroundColor(colors.textSecondary)
+                    .multilineTextAlignment(.center)
+            }
+        }
+    }
+    
+    // MARK: - Legal Options Section
+    private var legalOptionsSection: some View {
+        VStack(spacing: 16) {
+            SettingsActionRow(
+                title: "Política de Privacidad",
+                subtitle: "Cómo protegemos tus datos médicos",
+                icon: "lock.doc.fill",
+                action: { showPrivacyPolicy() }
+            )
+            
+            SettingsActionRow(
+                title: "Términos de Servicio",
+                subtitle: "Condiciones de uso de la aplicación",
+                icon: "doc.plaintext.fill",
+                action: { showTermsOfService() }
+            )
+            
+            SettingsActionRow(
+                title: "Aviso Médico",
+                subtitle: "Disclaimer y limitaciones profesionales",
+                icon: "stethoscope",
+                action: { showMedicalDisclaimer() }
+            )
+        }
+    }
+    
+    // MARK: - Important Info Section
+    private var importantInfoSection: some View {
+        HStack {
+            Image(systemName: "exclamationmark.triangle.fill")
+                .foregroundColor(.orange)
+            
+            Text("Esta herramienta es de apoyo diagnóstico. Siempre consulta con criterio médico profesional.")
+                .font(.caption)
+                .foregroundColor(colors.textSecondary)
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(colors.surface.opacity(0.5))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(colors.border, lineWidth: 0.5)
+                )
         )
-        .ignoresSafeArea()
     }
     
     // MARK: Funciones Legales

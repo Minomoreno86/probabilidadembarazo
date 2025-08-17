@@ -9,6 +9,7 @@ import SwiftUI
 
 // MARK: - 📝 CAMPO DE TEXTO DE CONFIGURACIÓN
 struct SettingsTextField: View {
+    @Environment(\.themeColors) var colors
     let title: String
     let subtitle: String
     let icon: String
@@ -20,17 +21,17 @@ struct SettingsTextField: View {
             HStack(spacing: 12) {
                 Image(systemName: icon)
                     .font(.system(size: 16, weight: .medium))
-                    .foregroundColor(.cyan)
+                    .foregroundColor(colors.accent)
                     .frame(width: 24)
                 
                 VStack(alignment: .leading, spacing: 2) {
                     Text(title)
                         .font(.system(size: 15, weight: .semibold))
-                        .foregroundColor(.white)
+                        .foregroundColor(colors.text)
                     
                     Text(subtitle)
                         .font(.system(size: 12))
-                        .foregroundColor(.white.opacity(0.6))
+                        .foregroundColor(colors.textSecondary)
                 }
                 
                 Spacer()
@@ -38,29 +39,29 @@ struct SettingsTextField: View {
             
             TextField(placeholder, text: $text)
                 .font(.system(size: 14, weight: .medium))
-                .foregroundColor(.white)
+                .foregroundColor(colors.text)
                 .padding(.horizontal, 16)
                 .padding(.vertical, 12)
                 .background(
                     RoundedRectangle(cornerRadius: 10)
-                        .fill(Color.white.opacity(0.1))
+                        .fill(colors.surface.opacity(0.5))
                         .overlay(
                             RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                                .stroke(colors.border, lineWidth: 1)
                         )
                 )
         }
         .padding(.vertical, 8)
         .padding(.horizontal, 16)
         .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(Color.black.opacity(0.2))
+            SuperDesignEffects.glassmorphism(for: AppTheme.light)
         )
     }
 }
 
 // MARK: - 🔘 FILA DE TOGGLE
 struct SettingsToggleRow: View {
+    @Environment(\.themeColors) var colors
     let title: String
     let subtitle: String
     let icon: String
@@ -70,17 +71,17 @@ struct SettingsToggleRow: View {
         HStack(spacing: 12) {
             Image(systemName: icon)
                 .font(.system(size: 16, weight: .medium))
-                .foregroundColor(isOn ? .green : .white.opacity(0.6))
+                .foregroundColor(isOn ? .green : colors.textSecondary)
                 .frame(width: 24)
             
             VStack(alignment: .leading, spacing: 2) {
                 Text(title)
                     .font(.system(size: 15, weight: .semibold))
-                    .foregroundColor(.white)
+                    .foregroundColor(colors.text)
                 
                 Text(subtitle)
                     .font(.system(size: 12))
-                    .foregroundColor(.white.opacity(0.6))
+                    .foregroundColor(colors.textSecondary)
             }
             
             Spacer()
@@ -91,14 +92,14 @@ struct SettingsToggleRow: View {
         .padding(.vertical, 12)
         .padding(.horizontal, 16)
         .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(Color.black.opacity(0.2))
+            SuperDesignEffects.glassmorphism(for: AppTheme.light)
         )
     }
 }
 
 // MARK: - 📋 FILA DE PICKER
 struct SettingsPickerRow: View {
+    @Environment(\.themeColors) var colors
     let title: String
     let subtitle: String
     let icon: String
@@ -110,17 +111,17 @@ struct SettingsPickerRow: View {
             HStack(spacing: 12) {
                 Image(systemName: icon)
                     .font(.system(size: 16, weight: .medium))
-                    .foregroundColor(.purple)
+                    .foregroundColor(colors.accent)
                     .frame(width: 24)
                 
                 VStack(alignment: .leading, spacing: 2) {
                     Text(title)
                         .font(.system(size: 15, weight: .semibold))
-                        .foregroundColor(.white)
+                        .foregroundColor(colors.text)
                     
                     Text(subtitle)
                         .font(.system(size: 12))
-                        .foregroundColor(.white.opacity(0.6))
+                        .foregroundColor(colors.textSecondary)
                 }
                 
                 Spacer()
@@ -137,14 +138,14 @@ struct SettingsPickerRow: View {
         .padding(.vertical, 12)
         .padding(.horizontal, 16)
         .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(Color.black.opacity(0.2))
+            SuperDesignEffects.glassmorphism(for: AppTheme.light)
         )
     }
 }
 
 // MARK: - ⚡ FILA DE ACCIÓN
 struct SettingsActionRow: View {
+    @Environment(\.themeColors) var colors
     let title: String
     let subtitle: String
     let icon: String
@@ -164,30 +165,29 @@ struct SettingsActionRow: View {
             HStack(spacing: 12) {
                 Image(systemName: icon)
                     .font(.system(size: 16, weight: .medium))
-                    .foregroundColor(isDestructive ? .red : .orange)
+                    .foregroundColor(isDestructive ? .red : colors.accent)
                     .frame(width: 24)
                 
                 VStack(alignment: .leading, spacing: 2) {
                     Text(title)
                         .font(.system(size: 15, weight: .semibold))
-                        .foregroundColor(isDestructive ? .red : .white)
+                        .foregroundColor(isDestructive ? .red : colors.text)
                     
                     Text(subtitle)
                         .font(.system(size: 12))
-                        .foregroundColor(.white.opacity(0.6))
+                        .foregroundColor(colors.textSecondary)
                 }
                 
                 Spacer()
                 
                 Image(systemName: "chevron.right")
                     .font(.system(size: 12, weight: .medium))
-                    .foregroundColor(.white.opacity(0.4))
+                    .foregroundColor(colors.textSecondary)
             }
             .padding(.vertical, 12)
             .padding(.horizontal, 16)
             .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .fill(Color.black.opacity(0.2))
+                SuperDesignEffects.glassmorphism(for: AppTheme.light)
             )
         }
         .buttonStyle(PlainButtonStyle())

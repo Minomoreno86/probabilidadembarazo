@@ -52,8 +52,16 @@ struct ImprovedFertilityResultsView: View {
             .navigationTitle("Análisis de Fertilidad")
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
-                    Button("Compartir") {
-                        shareResults()
+                    Menu {
+                        Button(action: shareResults) {
+                            Label("Compartir", systemImage: "square.and.arrow.up")
+                        }
+                        
+                        Button(action: exportPDF) {
+                            Label("Exportar PDF", systemImage: "doc.text.fill")
+                        }
+                    } label: {
+                        Image(systemName: "ellipsis.circle")
                     }
                 }
                 
@@ -659,6 +667,22 @@ struct ImprovedFertilityResultsView: View {
             activityItems: [shareText],
             applicationActivities: nil
         )
+        
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let rootViewController = windowScene.windows.first?.rootViewController {
+            rootViewController.present(activityVC, animated: true)
+        }
+        #endif
+    }
+    
+    // MARK: - Función de Exportación PDF
+    private func exportPDF() {
+        #if os(iOS)
+        let pdfManager = PDFExportManager()
+        
+        guard let activityVC = pdfManager.sharePDF(profile: profile, result: result) else {
+            return
+        }
         
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
            let rootViewController = windowScene.windows.first?.rootViewController {

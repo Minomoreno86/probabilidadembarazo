@@ -177,20 +177,26 @@ struct SettingsView: View {
         case .fonts:
             FontSelectionView()
                 .environmentObject(userFontManager)
+                .environmentObject(themeManager)
         case .share:
             ShareSettingsView()
+                .environmentObject(themeManager)
         case .legal:
             LegalSettingsView()
+                .environmentObject(themeManager)
         case .info:
             InfoSettingsView()
+                .environmentObject(themeManager)
         case .accessibility:
             AccessibilitySettingsView()
+                .environmentObject(themeManager)
         case .logout:
             LogoutSettingsView(
                 userFullName: userFullName,
                 showingLogoutAlert: $showingLogoutAlert,
                 performLogout: performLogout
             )
+            .environmentObject(themeManager)
         }
     }
 

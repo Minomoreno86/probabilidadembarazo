@@ -14,92 +14,119 @@ import AppKit
 
 // MARK: - ℹ️ VISTA DE INFORMACIÓN
 struct InfoSettingsView: View {
+    @EnvironmentObject var themeManager: ThemeManager
+    @Environment(\.themeColors) var colors
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 24) {
-                VStack(spacing: 20) {
-                    Image(systemName: "info.circle.fill")
-                        .font(.system(size: 60))
-                        .foregroundColor(.cyan)
-                        .padding(.top, 20)
-                    
-                    Text("Información")
-                        .font(.title2.bold())
-                        .foregroundColor(.white)
-                    
-                    Text("Versión, soporte y redes sociales")
-                        .font(.subheadline)
-                        .foregroundColor(.white.opacity(0.7))
-                        .multilineTextAlignment(.center)
-                }
+                // Header con icono animado según el tema
+                headerSection
                 
-                VStack(spacing: 16) {
-                    // Información de la versión
-                    HStack {
-                        Image(systemName: "app.badge.fill")
-                            .foregroundColor(.cyan)
-                            .frame(width: 32)
-                        
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text("Versión de la Aplicación")
-                                .font(.system(size: 16, weight: .semibold))
-                                .foregroundColor(.white)
-                            
-                            Text("2.1.0 (Build 2024.12)")
-                                .font(.system(size: 13))
-                                .foregroundColor(.white.opacity(0.6))
-                        }
-                        
-                        Spacer()
-                    }
-                    .padding(.vertical, 16)
-                    .padding(.horizontal, 20)
-                    .background(
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(Color.black.opacity(0.2))
-                    )
-                    
-                    SettingsActionRow(
-                        title: "Soporte Técnico",
-                        subtitle: "Contacta con nuestro equipo de ayuda",
-                        icon: "headphones",
-                        action: { contactSupport() }
-                    )
-                    
-                    SettingsActionRow(
-                        title: "Síguenos en Instagram",
-                        subtitle: "@drjorgevazquez - Contenido médico profesional",
-                        icon: "camera.fill",
-                        action: { openInstagram() }
-                    )
-                    
-                    SettingsActionRow(
-                        title: "Síguenos en TikTok",
-                        subtitle: "@fertilidadrjorgevasquez - Videos educativos",
-                        icon: "video.fill",
-                        action: { openTikTok() }
-                    )
-                }
-                .padding(.horizontal, 20)
+                // Información de versión
+                versionInfoSection
+                
+                // Opciones de información
+                infoOptionsSection
                 
                 Spacer(minLength: 20)
             }
+            .padding(.horizontal, 20)
         }
-        .background(medicalGradient)
+        .background(colors.backgroundGradient)
         .navigationTitle("Información")
     }
     
-    private var medicalGradient: some View {
-        LinearGradient(
-            colors: [
-                Color(red: 0.1, green: 0.2, blue: 0.4),
-                Color(red: 0.2, green: 0.3, blue: 0.5),
-                Color(red: 0.1, green: 0.25, blue: 0.45)
-            ],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
+    // MARK: - Header Section
+    private var headerSection: some View {
+        VStack(spacing: 20) {
+            // Icono animado con efectos especiales del tema
+            ZStack {
+                switch themeManager.currentTheme {
+                case .dark:
+                    SuperDesignEffects.neonGlow(color: .cyan, intensity: 1.2)
+                        .frame(width: 80, height: 80)
+                case .pink:
+                    SuperDesignEffects.pinkGlow(intensity: 1.0)
+                        .frame(width: 80, height: 80)
+                case .light:
+                    Circle()
+                        .fill(colors.accentGradient)
+                        .frame(width: 80, height: 80)
+                }
+                
+                Image(systemName: "info.circle.fill")
+                    .font(.system(size: 40, weight: .medium))
+                    .foregroundColor(
+                        themeManager.currentTheme == .dark ? .black : 
+                        themeManager.currentTheme == .pink ? .white : .white
+                    )
+            }
+            .padding(.top, 20)
+            
+            VStack(spacing: 8) {
+                Text("Información")
+                    .font(.title2.bold())
+                    .foregroundColor(colors.text)
+                
+                Text("Versión, soporte y redes sociales")
+                    .font(.subheadline)
+                    .foregroundColor(colors.textSecondary)
+                    .multilineTextAlignment(.center)
+            }
+        }
+    }
+    
+    // MARK: - Version Info Section
+    private var versionInfoSection: some View {
+        HStack {
+            Image(systemName: "app.badge.fill")
+                .foregroundColor(.cyan)
+                .frame(width: 32)
+            
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Versión de la Aplicación")
+                    .font(.system(size: 16, weight: .semibold))
+                    .foregroundColor(colors.text)
+                
+                Text("2.1.0 (Build 2024.12)")
+                    .font(.system(size: 13))
+                    .foregroundColor(colors.textSecondary)
+            }
+            
+            Spacer()
+        }
+        .padding(.vertical, 16)
+        .padding(.horizontal, 20)
+        .background(
+            SuperDesignEffects.glassmorphism(for: themeManager.currentTheme)
         )
-        .ignoresSafeArea()
+    }
+    
+    // MARK: - Info Options Section
+    private var infoOptionsSection: some View {
+        VStack(spacing: 16) {
+            SettingsActionRow(
+                title: "Soporte Técnico",
+                subtitle: "Contacta con nuestro equipo de ayuda",
+                icon: "headphones",
+                action: { contactSupport() }
+            )
+            
+            SettingsActionRow(
+                title: "Síguenos en Instagram",
+                subtitle: "@drjorgevazquez - Contenido médico profesional",
+                icon: "camera.fill",
+                action: { openInstagram() }
+            )
+            
+            SettingsActionRow(
+                title: "Síguenos en TikTok",
+                subtitle: "@fertilidadrjorgevasquez - Videos educativos",
+                icon: "video.fill",
+                action: { openTikTok() }
+            )
+        }
     }
     
     // MARK: Funciones de Información
@@ -148,118 +175,151 @@ struct InfoSettingsView: View {
 
 // MARK: - ♿ VISTA DE ACCESIBILIDAD
 struct AccessibilitySettingsView: View {
+    @EnvironmentObject var themeManager: ThemeManager
+    @Environment(\.themeColors) var colors
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 24) {
-                VStack(spacing: 20) {
-                    Image(systemName: "accessibility")
-                        .font(.system(size: 60))
-                        .foregroundColor(.indigo)
-                        .padding(.top, 20)
-                    
-                    Text("Accesibilidad")
-                        .font(.title2.bold())
-                        .foregroundColor(.white)
-                    
-                    Text("Compatibilidad con iOS y funciones de asistencia")
-                        .font(.subheadline)
-                        .foregroundColor(.white.opacity(0.7))
-                        .multilineTextAlignment(.center)
-                }
+                // Header con icono animado según el tema
+                headerSection
                 
-                VStack(spacing: 16) {
-                    // Información de compatibilidad
-                    VStack(spacing: 12) {
-                        HStack {
-                            Image(systemName: "checkmark.circle.fill")
-                                .foregroundColor(.green)
-                            
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text("VoiceOver Compatible")
-                                    .font(.system(size: 15, weight: .semibold))
-                                    .foregroundColor(.white)
-                                
-                                Text("Navegación por voz habilitada")
-                                    .font(.system(size: 12))
-                                    .foregroundColor(.white.opacity(0.6))
-                            }
-                            
-                            Spacer()
-                        }
-                        .padding(.vertical, 12)
-                        .padding(.horizontal, 16)
-                        .background(
-                            RoundedRectangle(cornerRadius: 12)
-                                .fill(Color.green.opacity(0.1))
-                        )
-                        
-                        HStack {
-                            Image(systemName: "checkmark.circle.fill")
-                                .foregroundColor(.green)
-                            
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text("Dynamic Type")
-                                    .font(.system(size: 15, weight: .semibold))
-                                    .foregroundColor(.white)
-                                
-                                Text("Tamaños de texto adaptativos")
-                                    .font(.system(size: 12))
-                                    .foregroundColor(.white.opacity(0.6))
-                            }
-                            
-                            Spacer()
-                        }
-                        .padding(.vertical, 12)
-                        .padding(.horizontal, 16)
-                        .background(
-                            RoundedRectangle(cornerRadius: 12)
-                                .fill(Color.green.opacity(0.1))
-                        )
-                    }
-                    
-                    SettingsActionRow(
-                        title: "Configurar Accesibilidad iOS",
-                        subtitle: "Abrir configuración del sistema",
-                        icon: "gear",
-                        action: { openAccessibilitySettings() }
-                    )
-                    
-                    // Información adicional
-                    HStack {
-                        Image(systemName: "info.circle")
-                            .foregroundColor(.indigo)
-                        
-                        Text("Esta app es totalmente compatible con todas las funciones de accesibilidad de iOS")
-                            .font(.caption)
-                            .foregroundColor(.white.opacity(0.7))
-                    }
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 12)
-                    .background(
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(Color.indigo.opacity(0.1))
-                    )
-                }
-                .padding(.horizontal, 20)
+                // Información de compatibilidad
+                compatibilityInfoSection
+                
+                // Opciones de accesibilidad
+                accessibilityOptionsSection
+                
+                // Información adicional
+                additionalInfoSection
                 
                 Spacer(minLength: 20)
             }
+            .padding(.horizontal, 20)
         }
-        .background(medicalGradient)
+        .background(colors.backgroundGradient)
         .navigationTitle("Accesibilidad")
     }
     
-    private var medicalGradient: some View {
-        LinearGradient(
-            colors: [
-                Color(red: 0.1, green: 0.2, blue: 0.4),
-                Color(red: 0.2, green: 0.3, blue: 0.5),
-                Color(red: 0.1, green: 0.25, blue: 0.45)
-            ],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
+    // MARK: - Header Section
+    private var headerSection: some View {
+        VStack(spacing: 20) {
+            // Icono animado con efectos especiales del tema
+            ZStack {
+                switch themeManager.currentTheme {
+                case .dark:
+                    SuperDesignEffects.neonGlow(color: .indigo, intensity: 1.2)
+                        .frame(width: 80, height: 80)
+                case .pink:
+                    SuperDesignEffects.pinkGlow(intensity: 1.0)
+                        .frame(width: 80, height: 80)
+                case .light:
+                    Circle()
+                        .fill(colors.accentGradient)
+                        .frame(width: 80, height: 80)
+                }
+                
+                Image(systemName: "accessibility")
+                    .font(.system(size: 40, weight: .medium))
+                    .foregroundColor(
+                        themeManager.currentTheme == .dark ? .black : 
+                        themeManager.currentTheme == .pink ? .white : .white
+                    )
+            }
+            .padding(.top, 20)
+            
+            VStack(spacing: 8) {
+                Text("Accesibilidad")
+                    .font(.title2.bold())
+                    .foregroundColor(colors.text)
+                
+                Text("Compatibilidad con iOS y funciones de asistencia")
+                    .font(.subheadline)
+                    .foregroundColor(colors.textSecondary)
+                    .multilineTextAlignment(.center)
+            }
+        }
+    }
+    
+    // MARK: - Compatibility Info Section
+    private var compatibilityInfoSection: some View {
+        VStack(spacing: 12) {
+            HStack {
+                Image(systemName: "checkmark.circle.fill")
+                    .foregroundColor(.green)
+                
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("VoiceOver Compatible")
+                        .font(.system(size: 15, weight: .semibold))
+                        .foregroundColor(colors.text)
+                    
+                    Text("Navegación por voz habilitada")
+                        .font(.system(size: 12))
+                        .foregroundColor(colors.textSecondary)
+                }
+                
+                Spacer()
+            }
+            .padding(.vertical, 12)
+            .padding(.horizontal, 16)
+            .background(
+                SuperDesignEffects.glassmorphism(for: themeManager.currentTheme)
+            )
+            
+            HStack {
+                Image(systemName: "checkmark.circle.fill")
+                    .foregroundColor(.green)
+                
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Dynamic Type")
+                        .font(.system(size: 15, weight: .semibold))
+                        .foregroundColor(colors.text)
+                    
+                    Text("Tamaños de texto adaptativos")
+                        .font(.system(size: 12))
+                        .foregroundColor(colors.textSecondary)
+                }
+                
+                Spacer()
+            }
+            .padding(.vertical, 12)
+            .padding(.horizontal, 16)
+            .background(
+                SuperDesignEffects.glassmorphism(for: themeManager.currentTheme)
+            )
+        }
+    }
+    
+    // MARK: - Accessibility Options Section
+    private var accessibilityOptionsSection: some View {
+        SettingsActionRow(
+            title: "Configurar Accesibilidad iOS",
+            subtitle: "Abrir configuración del sistema",
+            icon: "gear",
+            action: { openAccessibilitySettings() }
         )
-        .ignoresSafeArea()
+    }
+    
+    // MARK: - Additional Info Section
+    private var additionalInfoSection: some View {
+        HStack {
+            Image(systemName: "info.circle")
+                .foregroundColor(.indigo)
+            
+            Text("Esta app es totalmente compatible con todas las funciones de accesibilidad de iOS")
+                .font(.caption)
+                .foregroundColor(colors.textSecondary)
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(colors.surface.opacity(0.5))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(colors.border, lineWidth: 0.5)
+                )
+        )
     }
     
     // MARK: Funciones de Accesibilidad
@@ -279,6 +339,8 @@ struct AccessibilitySettingsView: View {
 
 // MARK: - 🚪 VISTA DE LOGOUT
 struct LogoutSettingsView: View {
+    @EnvironmentObject var themeManager: ThemeManager
+    @Environment(\.themeColors) var colors
     let userFullName: String
     @Binding var showingLogoutAlert: Bool
     let performLogout: () -> Void
@@ -286,100 +348,23 @@ struct LogoutSettingsView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 24) {
-                VStack(spacing: 20) {
-                    Image(systemName: "rectangle.portrait.and.arrow.right.fill")
-                        .font(.system(size: 60))
-                        .foregroundColor(.red)
-                        .padding(.top, 20)
-                    
-                    Text("Cerrar Sesión")
-                        .font(.title2.bold())
-                        .foregroundColor(.white)
-                    
-                    Text("Salir de la aplicación de forma segura")
-                        .font(.subheadline)
-                        .foregroundColor(.white.opacity(0.7))
-                        .multilineTextAlignment(.center)
-                }
+                // Header con icono animado según el tema
+                headerSection
                 
-                VStack(spacing: 16) {
-                    // Información del usuario actual
-                    if !userFullName.isEmpty {
-                        HStack {
-                            Circle()
-                                .fill(Color.red.opacity(0.2))
-                                .frame(width: 60, height: 60)
-                                .overlay(
-                                    Image(systemName: "person.fill")
-                                        .font(.title2)
-                                        .foregroundColor(.red)
-                                )
-                            
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text("Sesión Activa")
-                                    .font(.system(size: 16, weight: .semibold))
-                                    .foregroundColor(.white)
-                                
-                                Text(userFullName)
-                                    .font(.system(size: 14))
-                                    .foregroundColor(.white.opacity(0.6))
-                            }
-                            
-                            Spacer()
-                        }
-                        .padding(.vertical, 16)
-                        .padding(.horizontal, 20)
-                        .background(
-                            RoundedRectangle(cornerRadius: 12)
-                                .fill(Color.black.opacity(0.2))
-                        )
-                    }
-                    
-                    // Advertencia sobre logout
-                    HStack {
-                        Image(systemName: "exclamationmark.triangle.fill")
-                            .foregroundColor(.orange)
-                        
-                        Text("Al cerrar sesión se eliminarán todos los datos locales no sincronizados")
-                            .font(.caption)
-                            .foregroundColor(.white.opacity(0.7))
-                    }
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 12)
-                    .background(
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(Color.orange.opacity(0.1))
-                    )
-                    
-                    // Botón de logout
-                    Button(action: { showingLogoutAlert = true }) {
-                        HStack {
-                            Image(systemName: "rectangle.portrait.and.arrow.right.fill")
-                                .font(.system(size: 16, weight: .medium))
-                            
-                            Text("Cerrar Sesión")
-                                .font(.system(size: 16, weight: .semibold))
-                        }
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 16)
-                        .background(
-                            RoundedRectangle(cornerRadius: 12)
-                                .fill(Color.red.opacity(0.8))
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .stroke(Color.red, lineWidth: 1)
-                                )
-                        )
-                    }
-                    .buttonStyle(PlainButtonStyle())
-                }
-                .padding(.horizontal, 20)
+                // Información del usuario
+                userInfoSection
+                
+                // Advertencia
+                warningSection
+                
+                // Botón de logout
+                logoutButtonSection
                 
                 Spacer(minLength: 20)
             }
+            .padding(.horizontal, 20)
         }
-        .background(medicalGradient)
+        .background(colors.backgroundGradient)
         .navigationTitle("Cerrar Sesión")
         .alert("Cerrar Sesión", isPresented: $showingLogoutAlert) {
             Button("Cancelar", role: .cancel) { }
@@ -391,17 +376,126 @@ struct LogoutSettingsView: View {
         }
     }
     
-    private var medicalGradient: some View {
-        LinearGradient(
-            colors: [
-                Color(red: 0.1, green: 0.2, blue: 0.4),
-                Color(red: 0.2, green: 0.3, blue: 0.5),
-                Color(red: 0.1, green: 0.25, blue: 0.45)
-            ],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
+    // MARK: - Header Section
+    private var headerSection: some View {
+        VStack(spacing: 20) {
+            // Icono animado con efectos especiales del tema
+            ZStack {
+                switch themeManager.currentTheme {
+                case .dark:
+                    SuperDesignEffects.neonGlow(color: .red, intensity: 1.2)
+                        .frame(width: 80, height: 80)
+                case .pink:
+                    SuperDesignEffects.pinkGlow(intensity: 1.0)
+                        .frame(width: 80, height: 80)
+                case .light:
+                    Circle()
+                        .fill(colors.accentGradient)
+                        .frame(width: 80, height: 80)
+                }
+                
+                Image(systemName: "rectangle.portrait.and.arrow.right.fill")
+                    .font(.system(size: 40, weight: .medium))
+                    .foregroundColor(
+                        themeManager.currentTheme == .dark ? .black : 
+                        themeManager.currentTheme == .pink ? .white : .white
+                    )
+            }
+            .padding(.top, 20)
+            
+            VStack(spacing: 8) {
+                Text("Cerrar Sesión")
+                    .font(.title2.bold())
+                    .foregroundColor(colors.text)
+                
+                Text("Salir de la aplicación de forma segura")
+                    .font(.subheadline)
+                    .foregroundColor(colors.textSecondary)
+                    .multilineTextAlignment(.center)
+            }
+        }
+    }
+    
+    // MARK: - User Info Section
+    private var userInfoSection: some View {
+        Group {
+            if !userFullName.isEmpty {
+                HStack {
+                    Circle()
+                        .fill(Color.red.opacity(0.2))
+                        .frame(width: 60, height: 60)
+                        .overlay(
+                            Image(systemName: "person.fill")
+                                .font(.title2)
+                                .foregroundColor(.red)
+                        )
+                    
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Sesión Activa")
+                            .font(.system(size: 16, weight: .semibold))
+                            .foregroundColor(colors.text)
+                        
+                        Text(userFullName)
+                            .font(.system(size: 14))
+                            .foregroundColor(colors.textSecondary)
+                    }
+                    
+                    Spacer()
+                }
+                .padding(.vertical, 16)
+                .padding(.horizontal, 20)
+                .background(
+                    SuperDesignEffects.glassmorphism(for: themeManager.currentTheme)
+                )
+            }
+        }
+    }
+    
+    // MARK: - Warning Section
+    private var warningSection: some View {
+        HStack {
+            Image(systemName: "exclamationmark.triangle.fill")
+                .foregroundColor(.orange)
+            
+            Text("Al cerrar sesión se eliminarán todos los datos locales no sincronizados")
+                .font(.caption)
+                .foregroundColor(colors.textSecondary)
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(colors.surface.opacity(0.5))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(colors.border, lineWidth: 0.5)
+                )
         )
-        .ignoresSafeArea()
+    }
+    
+    // MARK: - Logout Button Section
+    private var logoutButtonSection: some View {
+        Button(action: { showingLogoutAlert = true }) {
+            HStack {
+                Image(systemName: "rectangle.portrait.and.arrow.right.fill")
+                    .font(.system(size: 16, weight: .medium))
+                
+                Text("Cerrar Sesión")
+                    .font(.system(size: 16, weight: .semibold))
+            }
+            .foregroundColor(.white)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 16)
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(Color.red.opacity(0.8))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(Color.red, lineWidth: 1)
+                    )
+            )
+        }
+        .buttonStyle(PlainButtonStyle())
     }
 }
 

@@ -12,6 +12,7 @@ import SwiftData
 struct Pronostico_fertilidadApp: App {
     @StateObject private var themeManager = ThemeManager()
     @StateObject private var appleSignInManager = AppleSignInManager()
+    @StateObject private var passkeysManager = PasskeysManager()
     @StateObject private var authFlowManager = AuthenticationFlowManager()
     @StateObject private var userFontManager = UserFontManager()
     @StateObject private var siriIntentManager = SiriIntentManager.shared
@@ -39,6 +40,7 @@ struct Pronostico_fertilidadApp: App {
             RootView()
                 .environmentObject(themeManager)
                 .environmentObject(appleSignInManager)
+                .environmentObject(passkeysManager)
                 .environmentObject(authFlowManager)
                 .environmentObject(userFontManager)
                 .environmentObject(siriIntentManager)
