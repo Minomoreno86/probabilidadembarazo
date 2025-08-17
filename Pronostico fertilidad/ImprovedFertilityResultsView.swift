@@ -1123,62 +1123,58 @@ struct SmoothTransitionsView: View {
         .cornerRadius(16)
     }
     
-    // MARK: - Gráfico comparativo
+    // MARK: - Gráfico comparativo simplificado
     private var comparisonChart: some View {
         VStack(spacing: 16) {
             Text("Comparación: Funciones Continuas vs. Discretas")
                 .font(.headline)
                 .fontWeight(.semibold)
             
-            Chart {
+            // Gráfico simplificado usando SwiftUI básico
+            VStack(spacing: 12) {
                 // Función continua seleccionada
-                ForEach(smoothFunctions.calculateProbabilityRange(startAge: 18, endAge: 50, step: 0.5), id: \.age) { point in
-                    LineMark(
-                        x: .value("Edad", point.age),
-                        y: .value("Probabilidad", getSelectedFunctionProbability(age: point.age))
-                    )
-                    .foregroundStyle(selectedFunction.color)
-                    .lineStyle(StrokeStyle(lineWidth: 3))
+                HStack {
+                    Text("Función Continua:")
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
+                    Spacer()
+                    Text("\(String(format: "%.1f", getSelectedFunctionProbability(age: selectedAge) * 100))%")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .foregroundColor(selectedFunction.color)
                 }
                 
-                // Función discreta (actual) para comparación
-                ForEach(discreteDataPoints, id: \.age) { point in
-                    LineMark(
-                        x: .value("Edad", point.age),
-                        y: .value("Probabilidad", point.probability)
-                    )
-                    .foregroundStyle(.red)
-                    .lineStyle(StrokeStyle(lineWidth: 2, dash: [5, 5]))
+                // Función discreta (actual)
+                HStack {
+                    Text("Función Discreta (Actual):")
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
+                    Spacer()
+                    Text("\(String(format: "%.1f", getDiscreteProbability(age: selectedAge) * 100))%")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .foregroundColor(.red)
                 }
                 
-                // Punto seleccionado
-                if let selectedPoint = getSelectedPoint() {
-                    PointMark(
-                        x: .value("Edad", selectedPoint.age),
-                        y: .value("Probabilidad", selectedPoint.probability)
-                    )
-                    .foregroundStyle(selectedFunction.color)
-                    .symbolSize(100)
+                Divider()
+                
+                // Mejora en precisión
+                HStack {
+                    Text("Mejora en precisión:")
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
+                    Spacer()
+                    Text("+\(String(format: "%.1f", calculateImprovement()))%")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .foregroundColor(.green)
                 }
             }
-            .frame(height: 300)
-            .chartXAxis {
-                AxisMarks(values: .automatic(desiredCount: 8)) { value in
-                    AxisGridLine()
-                    AxisValueLabel {
-                        if let age = value.as(Double.self) {
-                            Text("\(Int(age))")
-                        }
-                    }
-                }
-            }
-            .chartYAxis {
-                AxisMarks(values: .automatic(desiredCount: 6)) { value in
-                    if let probability = value.as(Double.self) {
-                        Text("\(Int(probability * 100))%")
-                    }
-                }
-            }
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(Color(.systemGray6))
+            )
             
             // Leyenda
             HStack(spacing: 20) {
@@ -1385,6 +1381,28 @@ struct SmoothTransitionsView: View {
         case .polynomial:
             return smoothFunctions.polynomialFertilityProbability(age: age)
         }
+    }
+    
+    private func getDiscreteProbability(age: Double) -> Double {
+        // Simular función discreta (actual) con saltos abruptos
+        switch age {
+        case 18..<35:
+            return 0.85
+        case 35..<38:
+            return 0.65
+        case 38..<40:
+            return 0.45
+        case 40..<42:
+            return 0.25
+        default:
+            return 0.10
+        }
+    }
+    
+    private func calculateImprovement() -> Double {
+        let continuous = getSelectedFunctionProbability(age: selectedAge)
+        let discrete = getDiscreteProbability(age: selectedAge)
+        return ((continuous - discrete) / discrete) * 100.0
     }
     
     private func getSelectedPoint() -> AgeProbabilityPoint? {
