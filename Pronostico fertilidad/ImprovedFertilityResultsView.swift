@@ -56,6 +56,14 @@ struct ImprovedFertilityResultsView: View {
                         Text("Transiciones")
                     }
                     .tag(4)
+                
+                // Pestaña 6: Simulador de Tratamientos (Nueva)
+                TreatmentSimulatorView(profile: profile)
+                    .tabItem {
+                        Image(systemName: "cross.case.fill")
+                        Text("Simulador")
+                    }
+                    .tag(5)
             }
             .navigationTitle("Análisis de Fertilidad")
             .toolbar {
@@ -501,6 +509,76 @@ struct ImprovedFertilityResultsView: View {
                 }
                 .padding(.horizontal)
                 
+                // Botón para ir al Simulador de Tratamientos
+                VStack(spacing: 12) {
+                    HStack {
+                        Image(systemName: "cross.case.fill")
+                            .font(.title2)
+                            .foregroundColor(.purple)
+                        
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("¿Quieres ver recomendaciones de tratamiento?")
+                                .font(.headline)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.primary)
+                            
+                            Text("Simula diferentes opciones terapéuticas basadas en tu perfil")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                        }
+                        
+                        Spacer()
+                        
+                        Button(action: {
+                            selectedTab = 5 // Ir a la pestaña Simulador
+                        }) {
+                            HStack(spacing: 8) {
+                                Text("Ver Simulador")
+                                    .font(.subheadline)
+                                    .fontWeight(.semibold)
+                                
+                                Image(systemName: "arrow.right.circle.fill")
+                                    .font(.title3)
+                            }
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 10)
+                            .background(
+                                LinearGradient(
+                                    colors: [.purple, .blue],
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                )
+                            )
+                            .clipShape(Capsule())
+                            .shadow(color: .purple.opacity(0.3), radius: 8, x: 0, y: 4)
+                        }
+                    }
+                    .padding(16)
+                    .background(
+                        RoundedRectangle(cornerRadius: 16)
+                            .fill(
+                                LinearGradient(
+                                    colors: [.purple.opacity(0.1), .blue.opacity(0.05)],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
+                            )
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .stroke(
+                                        LinearGradient(
+                                            colors: [.purple.opacity(0.3), .blue.opacity(0.3)],
+                                            startPoint: .topLeading,
+                                            endPoint: .bottomTrailing
+                                        ),
+                                        lineWidth: 1
+                                    )
+                            )
+                    )
+                }
+                .padding(.horizontal)
+                
                 // Factores clave destacados
                 VStack(alignment: .leading, spacing: 12) {
                     HStack {
@@ -878,80 +956,295 @@ struct RecommendationRowView: View {
 extension ImprovedFertilityResultsView {
     
     private var interactionsPreviewCard: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            HStack {
-                Text("🔄 Interacciones No Lineales")
-                    .font(.headline)
-                    .fontWeight(.semibold)
-                
-                Spacer()
-                
-                NavigationLink(destination: InteractionsVisualizationView(interactionsReport: result.interactionsReport)) {
-                    HStack {
-                        Text("Ver Detalles")
-                        Image(systemName: "chevron.right")
-                    }
-                    .font(.caption)
-                    .foregroundColor(.blue)
-                }
+        VStack(spacing: 16) {
+            // Header simplificado
+            interactionsHeader
+            
+            // Métricas principales
+            interactionsMetrics
+            
+            // Alertas importantes
+            if result.interactionsReport.forcesTreatmentChange {
+                treatmentChangeAlert
             }
             
-            // Resumen rápido
-            HStack {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("\(result.interactionsReport.detectedInteractions.count) interacciones detectadas")
-                        .font(.subheadline)
-                        .fontWeight(.medium)
-                    
-                    if result.interactionsReport.forcesTreatmentChange {
-                        Text("⚠️ Cambio de tratamiento requerido")
-                            .font(.caption)
-                            .foregroundColor(.red)
-                    }
-                }
-                
-                Spacer()
-                
-                VStack(alignment: .trailing, spacing: 4) {
-                    Text("Probabilidad ajustada:")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                    
-                    Text("\(String(format: "%.0f", result.interactionsReport.finalMultiplier * 100))%")
-                        .font(.title3)
-                        .fontWeight(.bold)
-                        .foregroundColor(multiplierColor(result.interactionsReport.finalMultiplier))
-                }
+            // Distribución por prioridad
+            if result.interactionsReport.hasInteractions {
+                priorityDistribution
             }
             
             // Preview de interacciones críticas
             if result.interactionsReport.criticalInteractionsCount > 0 {
-                VStack(alignment: .leading, spacing: 6) {
-                    Text("😨 Interacciones Críticas:")
+                criticalInteractionsPreview
+            }
+        }
+        .padding(16)
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(colors.background)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 16)
+                        .stroke(colors.primary.opacity(0.1), lineWidth: 1)
+                )
+        )
+        .shadow(color: colors.primary.opacity(0.1), radius: 10, x: 0, y: 5)
+    }
+    
+    // MARK: - Componentes de la tarjeta de interacciones
+    
+    private var interactionsHeader: some View {
+        HStack {
+            HStack(spacing: 10) {
+                Image(systemName: "network")
+                    .font(.title2)
+                    .foregroundColor(colors.primary)
+                    .frame(width: 28, height: 28)
+                    .background(
+                        Circle()
+                            .fill(colors.primary.opacity(0.1))
+                    )
+                
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("🔄 Interacciones No Lineales")
+                        .font(.headline)
+                        .fontWeight(.semibold)
+                        .foregroundColor(colors.text)
+                    
+                    Text("Factores que se combinan de manera compleja")
                         .font(.caption)
+                        .foregroundColor(colors.secondary)
+                }
+            }
+            
+            Spacer()
+            
+            NavigationLink(destination: InteractionsVisualizationView(interactionsReport: result.interactionsReport)) {
+                HStack(spacing: 6) {
+                    Text("Ver Detalles")
+                        .font(.subheadline)
                         .fontWeight(.medium)
-                        .foregroundColor(.red)
                     
-                    ForEach(result.interactionsReport.detectedInteractions.filter { $0.priority == .critical }.prefix(2), id: \.name) { interaction in
-                        Text("• \(interaction.name)")
+                    Image(systemName: "chevron.right.circle.fill")
+                        .font(.title3)
+                }
+                .foregroundColor(colors.primary)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 6)
+                .background(
+                    RoundedRectangle(cornerRadius: 16)
+                        .fill(colors.primary.opacity(0.1))
+                )
+            }
+        }
+    }
+    
+    private var interactionsMetrics: some View {
+        HStack(spacing: 16) {
+            // Total de interacciones
+            VStack(spacing: 6) {
+                Text("\(result.interactionsReport.detectedInteractions.count)")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .foregroundColor(colors.primary)
+                
+                Text("Interacciones")
+                    .font(.caption)
+                    .foregroundColor(colors.secondary)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 10)
+            .background(
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(colors.background)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(colors.primary.opacity(0.2), lineWidth: 1)
+                    )
+            )
+            
+            // Multiplicador final
+            VStack(spacing: 6) {
+                Text("\(String(format: "%.0f", result.interactionsReport.finalMultiplier * 100))%")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .foregroundColor(multiplierColor(result.interactionsReport.finalMultiplier))
+                
+                Text("Probabilidad")
+                    .font(.caption)
+                    .foregroundColor(colors.secondary)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 10)
+            .background(
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(colors.background)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(multiplierColor(result.interactionsReport.finalMultiplier).opacity(0.3), lineWidth: 1)
+                    )
+            )
+        }
+    }
+    
+    private var treatmentChangeAlert: some View {
+        HStack(spacing: 10) {
+            Image(systemName: "exclamationmark.triangle.fill")
+                .font(.title3)
+                .foregroundColor(.red)
+            
+            VStack(alignment: .leading, spacing: 3) {
+                Text("⚠️ Cambio de Tratamiento Requerido")
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.red)
+                
+                if let reason = result.interactionsReport.treatmentChangeReason {
+                    Text(reason)
+                        .font(.caption)
+                        .foregroundColor(colors.secondary)
+                        .lineLimit(2)
+                }
+            }
+            
+            Spacer()
+        }
+        .padding(12)
+        .background(
+            RoundedRectangle(cornerRadius: 10)
+                .fill(Color.red.opacity(0.1))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(Color.red.opacity(0.3), lineWidth: 1)
+                )
+        )
+    }
+    
+    private var priorityDistribution: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("📊 Distribución por Prioridad:")
+                .font(.subheadline)
+                .fontWeight(.semibold)
+                .foregroundColor(colors.text)
+            
+            HStack(spacing: 12) {
+                // Críticas
+                if result.interactionsReport.criticalInteractionsCount > 0 {
+                    priorityIndicator(
+                        count: result.interactionsReport.criticalInteractionsCount,
+                        label: "Críticas",
+                        color: .red,
+                        icon: "exclamationmark.triangle.fill"
+                    )
+                }
+                
+                // Altas
+                if result.interactionsReport.highPriorityInteractionsCount > 0 {
+                    priorityIndicator(
+                        count: result.interactionsReport.highPriorityInteractionsCount,
+                        label: "Altas",
+                        color: .orange,
+                        icon: "exclamationmark.circle.fill"
+                    )
+                }
+                
+                // Moderadas
+                let moderateCount = result.interactionsReport.detectedInteractions.count - 
+                                 result.interactionsReport.criticalInteractionsCount - 
+                                 result.interactionsReport.highPriorityInteractionsCount
+                if moderateCount > 0 {
+                    priorityIndicator(
+                        count: moderateCount,
+                        label: "Moderadas",
+                        color: .yellow,
+                        icon: "info.circle.fill"
+                    )
+                }
+            }
+        }
+    }
+    
+    private var criticalInteractionsPreview: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                Image(systemName: "exclamationmark.triangle.fill")
+                    .font(.title3)
+                    .foregroundColor(.red)
+                
+                Text("Interacciones Críticas:")
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.red)
+            }
+            
+            VStack(alignment: .leading, spacing: 6) {
+                ForEach(result.interactionsReport.detectedInteractions.filter { $0.priority == .critical }.prefix(2), id: \.name) { interaction in
+                    HStack(spacing: 6) {
+                        Circle()
+                            .fill(.red)
+                            .frame(width: 5, height: 5)
+                        
+                        Text(interaction.name)
                             .font(.caption)
-                            .foregroundColor(.secondary)
-                            .lineLimit(1)
+                            .foregroundColor(colors.text)
+                            .lineLimit(2)
                     }
-                    
-                    if result.interactionsReport.criticalInteractionsCount > 2 {
+                }
+                
+                if result.interactionsReport.criticalInteractionsCount > 2 {
+                    HStack(spacing: 6) {
+                        Circle()
+                            .fill(.red.opacity(0.5))
+                            .frame(width: 5, height: 5)
+                        
                         Text("... y \(result.interactionsReport.criticalInteractionsCount - 2) más")
                             .font(.caption)
-                            .foregroundColor(.secondary)
+                            .foregroundColor(colors.secondary)
                             .italic()
                     }
                 }
             }
+            .padding(.leading, 12)
         }
-        .padding()
-        .background(Color.orange.opacity(0.1))
-        .cornerRadius(12)
-        .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: 2)
+        .padding(12)
+        .background(
+            RoundedRectangle(cornerRadius: 10)
+                .fill(Color.red.opacity(0.05))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(Color.red.opacity(0.2), lineWidth: 1)
+                )
+        )
+    }
+    
+    // MARK: - Helper para indicador de prioridad
+    private func priorityIndicator(count: Int, label: String, color: Color, icon: String) -> some View {
+        VStack(spacing: 4) {
+            HStack(spacing: 4) {
+                Image(systemName: icon)
+                    .font(.caption2)
+                    .foregroundColor(color)
+                
+                Text("\(count)")
+                    .font(.title3)
+                    .fontWeight(.bold)
+                    .foregroundColor(color)
+            }
+            
+            Text(label)
+                .font(.caption2)
+                .foregroundColor(colors.secondary)
+                .multilineTextAlignment(.center)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 8)
+        .background(
+            RoundedRectangle(cornerRadius: 8)
+                .fill(color.opacity(0.1))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(color.opacity(0.3), lineWidth: 1)
+                )
+        )
     }
     
     // MARK: - 🎨 HELPER FUNCTIONS
