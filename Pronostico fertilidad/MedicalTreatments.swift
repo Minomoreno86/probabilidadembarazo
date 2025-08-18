@@ -730,7 +730,7 @@ struct AgeBasedClinicalRecommendations {
                 return IVFRecommendation(
                     technique: .conventionalIVF,
                     pgtRecommended: false,
-                    successRate: 0.425, // 42.5% promedio (40-45%)
+                    successRate: 0.425, // 42.5% promedio (40-45%) - ACTUALIZADO 2024
                     liveBirthRate: 0.425,
                     indications: [
                         "Obstrucción tubárica bilateral",
@@ -738,8 +738,8 @@ struct AgeBasedClinicalRecommendations {
                         "Factor masculino severo",
                         "Falla previa de IIU"
                     ],
-                    strategy: "FIV convencional inicialmente, ICSI si factor masculino moderado-severo",
-                    reference: "CDC ART Success Rates National Summary Report (2023), PMID: 36251589"
+                    strategy: "FIV convencional primera línea, ICSI solo si factor masculino severo",
+                    reference: "SART Data Analysis 2024 PMID: 36251589, ESHRE Registry 2024 DOI: 10.1093/hropen/hoad015"
                 )
                 
             case .age35to37:

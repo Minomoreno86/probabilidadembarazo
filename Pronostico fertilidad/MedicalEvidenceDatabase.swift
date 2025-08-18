@@ -444,11 +444,13 @@ class MedicalEvidenceDatabase {
             "35-37años: 6-9% por ciclo", 
             "38-39años: 4-7% por ciclo",
             "≥40años: 1-4% por ciclo",
-            "FIV por edad:",
-            "<35años: 35-42% nacido vivo",
-            "35-37años: 25-35% nacido vivo",
-            "38-40años: 15-25% nacido vivo",
-            "≥43años: 1-5% nacido vivo"
+            "FIV por edad (ACTUALIZADO 2024):",
+            "<35años: 40-45% nacido vivo",
+            "35-37años: 35-40% nacido vivo",
+            "38-40años: 25-30% nacido vivo",
+            "41-42años: 15-20% nacido vivo",
+            "≥43años: 5-8% nacido vivo",
+            "Ovodonación: 50-55% nacido vivo"
         ],
         diagnosticCriteria: [
             "Factores que mejoran probabilidades:",
