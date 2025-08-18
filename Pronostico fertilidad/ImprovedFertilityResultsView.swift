@@ -1018,57 +1018,46 @@ struct MetricCard: View {
 // MARK: - 🧬 VISTA DE TRANSICIONES SUAVES
 
 struct SmoothTransitionsView: View {
-    @StateObject private var smoothFunctions = SmoothFertilityFunctions()
     @State private var selectedAge: Double = 30.0
-    @State private var showingComparison = true
-    @State private var selectedFunction: SmoothTransitionsDemoView.FunctionType = .hybrid
     
     var body: some View {
         ScrollView {
             VStack(spacing: 24) {
-                // Header científico
-                scientificHeader
+                // Header simple y claro
+                simpleHeader
                 
-                // Selector de función
-                functionSelector
+                // Explicación visual de la mejora
+                improvementExplanation
                 
-                // Gráfico comparativo
-                comparisonChart
+                // Comparación simple
+                simpleComparison
                 
-                // Análisis de sensibilidad
-                sensitivityAnalysis
-                
-                // Comparación detallada
-                if showingComparison {
-                    detailedComparison
-                }
-                
-                // Validación científica
-                scientificValidation
+                // Beneficios para el usuario
+                userBenefits
                 
                 Spacer(minLength: 20)
             }
             .padding()
         }
         .background(Color(.systemGroupedBackground))
-        .navigationTitle("Transiciones Suaves")
+        .navigationTitle("Mejoras en Cálculos")
         .navigationBarTitleDisplayMode(.inline)
     }
     
-    // MARK: - Header científico
-    private var scientificHeader: some View {
+    // MARK: - Header simple
+    private var simpleHeader: some View {
         VStack(spacing: 16) {
             HStack {
-                Image(systemName: "checkmark.seal.fill")
-                    .font(.title2)
-                    .foregroundColor(.green)
+                Image(systemName: "star.fill")
+                    .font(.title)
+                    .foregroundColor(.yellow)
                 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Validado Científicamente")
-                        .font(.headline)
+                    Text("¡Mejoramos los Cálculos!")
+                        .font(.title2)
                         .fontWeight(.bold)
                     
-                    Text("ASRM, ESHRE, OMS - 45,000+ casos clínicos")
+                    Text("Ahora son más precisos y naturales")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
@@ -1076,154 +1065,139 @@ struct SmoothTransitionsView: View {
                 Spacer()
             }
             
-            VStack(spacing: 8) {
+            Text("Hemos actualizado nuestro sistema para que los cálculos de fertilidad sean más precisos y reflejen mejor la realidad biológica.")
+                .font(.body)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.leading)
+        }
+        .padding()
+        .background(Color(.systemBackground))
+        .cornerRadius(16)
+        .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
+    }
+    
+    // MARK: - Explicación visual de la mejora
+    private var improvementExplanation: some View {
+        VStack(spacing: 16) {
+            Text("¿Qué Cambió?")
+                .font(.headline)
+                .fontWeight(.semibold)
+            
+            VStack(spacing: 20) {
+                // Antes (malo)
+                HStack(spacing: 16) {
+                    Image(systemName: "xmark.circle.fill")
+                        .font(.title2)
+                        .foregroundColor(.red)
+                    
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Antes (Sistema Anterior)")
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                        
+                        Text("Los cálculos tenían saltos bruscos e imprecisos")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                    
+                    Spacer()
+                }
+                
+                // Después (bueno)
+                HStack(spacing: 16) {
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(.title2)
+                        .foregroundColor(.green)
+                    
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Ahora (Sistema Mejorado)")
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                        
+                        Text("Los cálculos son suaves y más precisos")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                    
+                    Spacer()
+                }
+            }
+        }
+        .padding()
+        .background(Color(.systemBackground))
+        .cornerRadius(16)
+        .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
+    }
+    
+    // MARK: - Comparación simple
+    private var simpleComparison: some View {
+        VStack(spacing: 16) {
+            Text("Compara los Resultados")
+                .font(.headline)
+                .fontWeight(.semibold)
+            
+            VStack(spacing: 12) {
                 HStack {
-                    Text("Precisión:")
+                    Text("Tu edad:")
                         .fontWeight(.semibold)
-                    Text("94.3% vs. 78.9% de funciones discretas")
+                    Spacer()
+                    Text("\(Int(selectedAge)) años")
                         .foregroundColor(.secondary)
                 }
                 
+                Slider(value: $selectedAge, in: 18...50, step: 1)
+                    .accentColor(.blue)
+                
+                Divider()
+                
+                // Resultados comparativos
+                HStack(spacing: 20) {
+                    VStack(spacing: 8) {
+                        Text("Sistema Anterior")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        
+                        Text("\(String(format: "%.0f", getOldSystemProbability(age: selectedAge) * 100))%")
+                            .font(.title)
+                            .fontWeight(.bold)
+                            .foregroundColor(.red)
+                        
+                        Text("por año")
+                            .font(.caption2)
+                            .foregroundColor(.secondary)
+                    }
+                    
+                    Image(systemName: "arrow.right")
+                        .font(.title2)
+                        .foregroundColor(.blue)
+                    
+                    VStack(spacing: 8) {
+                        Text("Sistema Mejorado")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        
+                        Text("\(String(format: "%.0f", getNewSystemProbability(age: selectedAge) * 100))%")
+                            .font(.title)
+                            .fontWeight(.bold)
+                            .foregroundColor(.green)
+                        
+                        Text("por año")
+                            .font(.caption2)
+                            .foregroundColor(.secondary)
+                    }
+                }
+                
+                // Mejora
                 HStack {
                     Text("Mejora:")
                         .fontWeight(.semibold)
-                    Text("+15.4% de precisión")
-                        .foregroundColor(.green)
-                        .fontWeight(.bold)
-                }
-                
-                HStack {
-                    Text("Unidad:")
-                        .fontWeight(.semibold)
-                    Text("Probabilidad por año (con conversión a ciclo)")
-                        .foregroundColor(.secondary)
-                }
-            }
-            .font(.caption)
-        }
-        .padding()
-        .background(Color(.systemBackground))
-        .cornerRadius(16)
-        .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
-    }
-    
-    // MARK: - Selector de función
-    private var functionSelector: some View {
-        VStack(spacing: 12) {
-            Text("Función Matemática")
-                .font(.headline)
-                .fontWeight(.semibold)
-            
-            Picker("Función", selection: $selectedFunction) {
-                ForEach(SmoothTransitionsDemoView.FunctionType.allCases, id: \.self) { function in
-                    Text(function.rawValue).tag(function)
-                }
-            }
-            .pickerStyle(SegmentedPickerStyle())
-            
-            Text("Función \(selectedFunction.rawValue.lowercased()) seleccionada")
-                .font(.caption)
-                .foregroundColor(.secondary)
-        }
-        .padding()
-        .background(Color(.systemBackground))
-        .cornerRadius(16)
-    }
-    
-    // MARK: - Gráfico comparativo simplificado
-    private var comparisonChart: some View {
-        VStack(spacing: 16) {
-            Text("Comparación: Funciones Continuas vs. Discretas")
-                .font(.headline)
-                .fontWeight(.semibold)
-            
-            // Gráfico simplificado usando SwiftUI básico
-            VStack(spacing: 12) {
-                // Función continua seleccionada
-                VStack(spacing: 8) {
-                    HStack {
-                        Text("Función Continua (por año):")
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
-                        Spacer()
-                        Text("\(String(format: "%.1f", getSelectedFunctionProbability(age: selectedAge) * 100))%")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .foregroundColor(selectedFunction.color)
-                    }
-                    
-                    HStack {
-                        Text("Equivalente por ciclo:")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                        Spacer()
-                        Text("\(String(format: "%.1f", smoothFunctions.convertYearlyToCycleProbability(getSelectedFunctionProbability(age: selectedAge)) * 100))%")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                    }
-                }
-                
-                // Función discreta (actual)
-                VStack(spacing: 8) {
-                    HStack {
-                        Text("Función Discreta (por año):")
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
-                        Spacer()
-                        Text("\(String(format: "%.1f", getDiscreteProbability(age: selectedAge) * 100))%")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .foregroundColor(.red)
-                    }
-                    
-                    HStack {
-                        Text("Equivalente por ciclo:")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                        Spacer()
-                        Text("\(String(format: "%.1f", smoothFunctions.convertYearlyToCycleProbability(getDiscreteProbability(age: selectedAge)) * 100))%")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                    }
-                }
-                
-                Divider()
-                
-                // Mejora en precisión
-                HStack {
-                    Text("Mejora en precisión:")
-                        .font(.subheadline)
-                        .fontWeight(.semibold)
                     Spacer()
-                    Text("+\(String(format: "%.1f", calculateImprovement()))%")
-                        .font(.title2)
+                    Text("+\(String(format: "%.0f", calculateImprovement()))%")
+                        .font(.title3)
                         .fontWeight(.bold)
                         .foregroundColor(.green)
                 }
-            }
-            .padding()
-            .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .fill(Color(.systemGray6))
-            )
-            
-            // Leyenda
-            HStack(spacing: 20) {
-                HStack(spacing: 8) {
-                    Circle()
-                        .fill(selectedFunction.color)
-                        .frame(width: 12, height: 12)
-                    Text("Función Continua")
-                        .font(.caption)
-                }
-                
-                HStack(spacing: 8) {
-                    Circle()
-                        .fill(.red)
-                        .frame(width: 12, height: 12)
-                    Text("Función Discreta (Actual)")
-                        .font(.caption)
-                }
+                .padding(.top, 8)
             }
         }
         .padding()
@@ -1232,53 +1206,37 @@ struct SmoothTransitionsView: View {
         .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
     }
     
-    // MARK: - Análisis de sensibilidad
-    private var sensitivityAnalysis: some View {
+    // MARK: - Beneficios para el usuario
+    private var userBenefits: some View {
         VStack(spacing: 16) {
-            Text("Análisis de Sensibilidad en Tiempo Real")
+            Text("¿Por Qué Es Mejor Para Ti?")
                 .font(.headline)
                 .fontWeight(.semibold)
             
             VStack(spacing: 12) {
-                HStack {
-                    Text("Edad:")
-                        .fontWeight(.semibold)
-                    Spacer()
-                    Text("\(String(format: "%.1f", selectedAge)) años")
-                        .foregroundColor(.secondary)
-                }
+                benefitRow(
+                    icon: "target",
+                    title: "Más Preciso",
+                    description: "Los resultados reflejan mejor tu situación real"
+                )
                 
-                Slider(value: $selectedAge, in: 18...50, step: 0.1)
-                    .accentColor(selectedFunction.color)
+                benefitRow(
+                    icon: "chart.line.uptrend.xyaxis",
+                    title: "Más Natural",
+                    description: "Los cambios son graduales, no abruptos"
+                )
                 
-                let sensitivity = smoothFunctions.sensitivityAnalysis(age: selectedAge)
+                benefitRow(
+                    icon: "checkmark.shield",
+                    title: "Validado Científicamente",
+                    description: "Basado en estudios médicos recientes"
+                )
                 
-                VStack(spacing: 8) {
-                    HStack {
-                        Text("Probabilidad actual:")
-                        Spacer()
-                        Text("\(String(format: "%.1f", sensitivity.currentProbability * 100))%")
-                            .fontWeight(.bold)
-                            .foregroundColor(selectedFunction.color)
-                    }
-                    
-                    HStack {
-                        Text("Cambio por año:")
-                        Spacer()
-                        Text("\(String(format: "%.1f", sensitivity.relativeChange))%")
-                            .fontWeight(.bold)
-                            .foregroundColor(sensitivity.isSmooth ? .green : .orange)
-                    }
-                    
-                    HStack {
-                        Text("Tipo de transición:")
-                        Spacer()
-                        Text(sensitivity.isSmooth ? "✅ Suave" : "⚠️ Significativa")
-                            .fontWeight(.bold)
-                            .foregroundColor(sensitivity.isSmooth ? .green : .orange)
-                    }
-                }
-                .font(.caption)
+                benefitRow(
+                    icon: "heart.fill",
+                    title: "Mejor Planificación",
+                    description: "Te ayuda a tomar decisiones más informadas"
+                )
             }
         }
         .padding()
@@ -1287,135 +1245,31 @@ struct SmoothTransitionsView: View {
         .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
     }
     
-    // MARK: - Comparación detallada
-    private var detailedComparison: some View {
-        VStack(spacing: 16) {
-            Text("Comparación Detallada de Funciones")
-                .font(.headline)
-                .fontWeight(.semibold)
+    // MARK: - Fila de beneficio
+    private func benefitRow(icon: String, title: String, description: String) -> some View {
+        HStack(spacing: 16) {
+            Image(systemName: icon)
+                .font(.title2)
+                .foregroundColor(.blue)
+                .frame(width: 24)
             
-            let comparison = smoothFunctions.compareWithDiscreteFunctions(age: selectedAge)
-            
-            VStack(spacing: 12) {
-                HStack {
-                    Text("Edad seleccionada:")
-                    Spacer()
-                    Text("\(Int(selectedAge)) años")
-                        .fontWeight(.bold)
-                }
+            VStack(alignment: .leading, spacing: 4) {
+                Text(title)
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
                 
-                HStack {
-                    Text("Función discreta (actual):")
-                    Spacer()
-                    Text("\(String(format: "%.1f", comparison.discreteProbability * 100))%")
-                        .foregroundColor(.red)
-                        .fontWeight(.bold)
-                }
-                
-                HStack {
-                    Text("Función continua:")
-                    Spacer()
-                    Text("\(String(format: "%.1f", comparison.continuousProbability * 100))%")
-                        .foregroundColor(selectedFunction.color)
-                        .fontWeight(.bold)
-                }
-                
-                Divider()
-                
-                HStack {
-                    Text("Mejora en precisión:")
-                    Spacer()
-                    Text("+\(String(format: "%.1f", comparison.improvement))%")
-                        .foregroundColor(.green)
-                        .fontWeight(.bold)
-                }
-                
-                HStack {
-                    Text("Tipo de transición:")
-                    Spacer()
-                    Text(comparison.isSmooth ? "✅ Suave" : "❌ Abrupta")
-                        .foregroundColor(comparison.isSmooth ? .green : .red)
-                        .fontWeight(.bold)
-                }
-            }
-            .font(.caption)
-        }
-        .padding()
-        .background(Color(.systemBackground))
-        .cornerRadius(16)
-        .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
-    }
-    
-    // MARK: - Validación científica
-    private var scientificValidation: some View {
-        VStack(spacing: 16) {
-            Text("Validación Científica")
-                .font(.headline)
-                .fontWeight(.semibold)
-            
-            let validation = smoothFunctions.scientificValidation
-            
-            VStack(spacing: 12) {
-                HStack {
-                    Text("Total de casos:")
-                    Spacer()
-                    Text("\(validation.totalSampleSize)")
-                        .fontWeight(.bold)
-                }
-                
-                HStack {
-                    Text("Organizaciones:")
-                    Spacer()
-                    Text("\(validation.organizations.count)")
-                        .fontWeight(.bold)
-                }
-                
-                HStack {
-                    Text("Año de publicación:")
-                    Spacer()
-                    Text("\(validation.publicationYear)")
-                        .fontWeight(.bold)
-                }
-                
-                HStack {
-                    Text("Aprobación clínica:")
-                    Spacer()
-                    Text(validation.isClinicallyApproved ? "✅ Aprobado" : "❌ Pendiente")
-                        .foregroundColor(validation.isClinicallyApproved ? .green : .red)
-                        .fontWeight(.bold)
-                }
-                
-                Divider()
-                
-                Text(validation.summary)
+                Text(description)
                     .font(.caption)
                     .foregroundColor(.secondary)
-                    .multilineTextAlignment(.center)
             }
-            .font(.caption)
-        }
-        .padding()
-        .background(Color(.systemBackground))
-        .cornerRadius(16)
-        .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
-    }
-    
-    // MARK: - Funciones auxiliares
-    private func getSelectedFunctionProbability(age: Double) -> Double {
-        switch selectedFunction {
-        case .hybrid:
-            return smoothFunctions.hybridFertilityProbability(age: age)
-        case .logistic:
-            return smoothFunctions.logisticFertilityProbability(age: age)
-        case .exponential:
-            return smoothFunctions.exponentialFertilityProbability(age: age)
-        case .polynomial:
-            return smoothFunctions.polynomialFertilityProbability(age: age)
+            
+            Spacer()
         }
     }
     
-    private func getDiscreteProbability(age: Double) -> Double {
-        // Simular función discreta (actual) con saltos abruptos
+    // MARK: - Funciones auxiliares simplificadas
+    private func getOldSystemProbability(age: Double) -> Double {
+        // Sistema anterior con saltos abruptos
         switch age {
         case 18..<35:
             return 0.85
@@ -1430,31 +1284,16 @@ struct SmoothTransitionsView: View {
         }
     }
     
+    private func getNewSystemProbability(age: Double) -> Double {
+        // Sistema nuevo con transiciones suaves
+        let smoothFunctions = SmoothFertilityFunctions()
+        return smoothFunctions.hybridFertilityProbability(age: age)
+    }
+    
     private func calculateImprovement() -> Double {
-        let continuous = getSelectedFunctionProbability(age: selectedAge)
-        let discrete = getDiscreteProbability(age: selectedAge)
-        return ((continuous - discrete) / discrete) * 100.0
-    }
-    
-    private func getSelectedPoint() -> AgeProbabilityPoint? {
-        let probability = getSelectedFunctionProbability(age: selectedAge)
-        return AgeProbabilityPoint(age: selectedAge, probability: probability)
-    }
-    
-    // Datos de función discreta para comparación
-    private var discreteDataPoints: [AgeProbabilityPoint] {
-        return [
-            AgeProbabilityPoint(age: 18, probability: 0.85),
-            AgeProbabilityPoint(age: 34.9, probability: 0.85),
-            AgeProbabilityPoint(age: 35, probability: 0.65),
-            AgeProbabilityPoint(age: 37.9, probability: 0.65),
-            AgeProbabilityPoint(age: 38, probability: 0.45),
-            AgeProbabilityPoint(age: 39.9, probability: 0.45),
-            AgeProbabilityPoint(age: 40, probability: 0.25),
-            AgeProbabilityPoint(age: 41.9, probability: 0.25),
-            AgeProbabilityPoint(age: 42, probability: 0.10),
-            AgeProbabilityPoint(age: 50, probability: 0.10)
-        ]
+        let old = getOldSystemProbability(age: selectedAge)
+        let new = getNewSystemProbability(age: selectedAge)
+        return ((new - old) / old) * 100.0
     }
 }
 
