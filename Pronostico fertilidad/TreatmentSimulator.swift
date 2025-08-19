@@ -422,16 +422,11 @@ class TreatmentSimulator {
         return impacts
     }
     
-    /// Calcula probabilidad base por edad
+    /// Calcula probabilidad base por edad usando transiciones suaves
     private func calculateAgeBaseProbability(_ age: Double) -> Double {
-        // Usar la misma lógica que en FertilityCalculations
-        if age < 25 { return 0.25 }
-        else if age < 30 { return 0.22 }
-        else if age < 35 { return 0.18 }
-        else if age < 38 { return 0.15 }
-        else if age < 40 { return 0.10 }
-        else if age < 43 { return 0.05 }
-        else { return 0.02 }
+        // Usar función híbrida calibrada con evidencia científica
+        let smoothFunctions = SmoothFertilityFunctions()
+        return smoothFunctions.hybridFertilityProbability(age: age)
     }
     
     /// Calcula factor TSH

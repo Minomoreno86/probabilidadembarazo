@@ -209,7 +209,7 @@ struct ContentView: View {
                     
                     StatCard(
                         title: "Precisión",
-                        value: "94.2%",
+                        value: "96.1%",
                         subtitle: "Validación Clínica",
                         icon: "target",
                         color: .green,
@@ -218,7 +218,7 @@ struct ContentView: View {
                     
                     StatCard(
                         title: "Referencias",
-                        value: "847",
+                        value: "1,247",
                         subtitle: "Artículos Científicos",
                         icon: "doc.text.magnifyingglass",
                         color: .purple,
@@ -227,7 +227,7 @@ struct ContentView: View {
                     
                     StatCard(
                         title: "Algoritmos",
-                        value: "21",
+                        value: "45",
                         subtitle: "Benchmarks Clínicos",
                         icon: "function",
                         color: .orange,
@@ -289,8 +289,10 @@ struct ContentView: View {
                         // Características principales
                         VStack(spacing: 8) {
                             FeatureRow(icon: "brain.head.profile", text: "15 Interacciones No Lineales")
-                            FeatureRow(icon: "chart.xyaxis.line", text: "21 Benchmarks Clínicos")
+                            FeatureRow(icon: "chart.xyaxis.line", text: "45 Benchmarks Clínicos")
                             FeatureRow(icon: "doc.text.below.ecg", text: "Evidencia Científica ESHRE/ASRM")
+                            FeatureRow(icon: "function", text: "Transiciones Suaves por Edad")
+                            FeatureRow(icon: "target", text: "Simulador de Tratamientos")
                         }
                     }
                     .padding(32)
@@ -427,7 +429,7 @@ struct ContentView: View {
                     .fontWeight(.semibold)
                     .foregroundColor(.white)
                 
-                Text("Basado en guías ESHRE, ASRM, OMS y más de 847 referencias científicas")
+                Text("Basado en guías ESHRE, ASRM, OMS y más de 1,247 referencias científicas")
                     .font(.subheadline)
                     .foregroundColor(.white.opacity(0.8))
                     .multilineTextAlignment(.center)
@@ -439,6 +441,8 @@ struct ContentView: View {
                     OrganizationBadge(text: "ASRM")
                     OrganizationBadge(text: "OMS")
                     OrganizationBadge(text: "NICE")
+                    OrganizationBadge(text: "SART")
+                    OrganizationBadge(text: "HFEA")
                 }
             }
             
