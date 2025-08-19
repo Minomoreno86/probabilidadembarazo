@@ -11,6 +11,8 @@
 
 import Foundation
 
+// Importar sistema de manejo de errores médicos
+
 // MARK: - 🧮 CALCULADORA PRINCIPAL DE FACTORES
 
 struct FertilityCalculations {
@@ -22,6 +24,9 @@ struct FertilityCalculations {
     /// Validado en 45,000+ casos clínicos con precisión del 96.1% vs 78.9% funciones discretas
     /// FUNCIÓN MATEMÁTICA PROFESIONAL: Segmentos calibrados con evidencia médica + transiciones suaves
     static func calculateAgeFactor(_ age: Double) -> Double {
+        // 🧬 VALIDACIÓN DE ENTRADA (PREPARADO PARA INTEGRACIÓN)
+        // TODO: Integrar con MedicalRangeValidators.validateAge(age)
+        
         // 🧬 FUNCIÓN SEGMENTADA CONTINUA VALIDADA CIENTÍFICAMENTE
         // Basado en ESHRE Guidelines 2023, ASRM 2024, OMS 2024
         // Segmentos que reflejan la evidencia médica real con transiciones suaves
