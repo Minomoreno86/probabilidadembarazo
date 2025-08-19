@@ -21,6 +21,26 @@ struct CompleteFactorAnalysis {
     let summary: String
 }
 
+/// Simulación de corrección de factor modificable
+struct FactorCorrectionSimulation {
+    let originalRecommendation: TreatmentRecommendation
+    let correctedRecommendation: TreatmentRecommendation
+    let correctedFactor: String
+    let improvementInProbability: Double
+    let timeToCorrection: String
+    let clinicalAction: String
+    let comparison: FactorCorrectionComparison
+}
+
+/// Comparación entre recomendaciones
+struct FactorCorrectionComparison {
+    let originalPlan: TreatmentPlan
+    let correctedPlan: TreatmentPlan
+    let planChanged: Bool
+    let improvementDescription: String
+    let clinicalImplication: String
+}
+
 // MARK: - 🎯 ENUMERACIONES DE PLANES DE TRATAMIENTO
 
 // Usamos la FertilityProfile existente de FertilityModels.swift
@@ -285,7 +305,9 @@ class TreatmentSimulator {
         
         // Factor masculino leve-moderado → IUI posible si no es severo
         var maleSuggestsIUI = false
+        var hasMaleData = false
         if let c = profile.spermConcentration, let pr = profile.spermProgressiveMotility {
+            hasMaleData = true
             // "Zona IUI" aproximada: concentración ≥ 10–15 y motilidad PR ≥ 30, morfología no severa
             maleSuggestsIUI = (c >= 10.0 && pr >= 30.0)
         }
@@ -296,11 +318,14 @@ class TreatmentSimulator {
             planBase = .fiv
         } else if score >= 2 {
             planBase = maleSuggestsIUI ? .iui : .fiv
-            if maleSuggestsIUI {
-                rationale.append("Parámetros seminales permiten IUI.")
-            } else {
-                rationale.append("Parámetros seminales no favorecen IUI → escalar a FIV.")
+            if hasMaleData {
+                if maleSuggestsIUI {
+                    rationale.append("Parámetros seminales permiten IUI.")
+                } else {
+                    rationale.append("Parámetros seminales no favorecen IUI → escalar a FIV.")
+                }
             }
+            // Si no hay datos masculinos, no agregar mensaje sobre parámetros seminales
         } else {
             planBase = .coitoProgramado
         }
@@ -582,21 +607,21 @@ class TreatmentSimulator {
             simulations.append(ModifiableFactorSimulation(
                 factor: "Mioma Intramural Grande",
                 currentValue: "\(profile.myomaType.displayName) \(String(format: "%.1f", size))cm",
-                recommendedValue: "Miomectomía",
+                recommendedValue: "Miomectomía Laparoscópica",
                 improvement: improvement * 100,
-                timeToAchieve: "3-4 meses",
-                recommendation: "Laparoscopia/robótica + 3 meses espera post-cirugía"
+                timeToAchieve: "3-6 meses",
+                recommendation: "Laparoscopia + 3-6 meses espera post-cirugía"
             ))
         }
         
         // Pólipos endometriales - MODIFICABLE
-        if profile.polypType != PolypType.none {
+        if profile.polypType == PolypType.single || profile.polypType == PolypType.multiple {
             let impact = factorImpacts["Pólipos Endometriales"] ?? 0.0
             let improvement = impact
             simulations.append(ModifiableFactorSimulation(
                 factor: "Pólipos Endometriales",
                 currentValue: profile.polypType.displayName,
-                recommendedValue: "Polipectomía Histeroscópica",
+                recommendedValue: "Resección Histeroscópica",
                 improvement: improvement * 100,
                 timeToAchieve: "1-2 meses",
                 recommendation: "Histeroscopia + 1-2 meses espera post-cirugía"
@@ -604,6 +629,84 @@ class TreatmentSimulator {
         }
         
         return simulations
+    }
+    
+    // MARK: - 🎯 SIMULACIÓN DE CORRECCIÓN DE FACTOR MODIFICABLE
+    
+    /// Simula la corrección del factor modificable más crítico y calcula la nueva recomendación
+    func simulateFactorCorrection(profile: FertilityProfile) -> FactorCorrectionSimulation? {
+        // Obtener recomendación original
+        let originalRecommendation = determineOptimalTreatment(profile: profile)
+        
+        // Obtener factores modificables
+        let modifiableFactors = simulateModifiableFactors(profile: profile)
+        
+        // Si no hay factores modificables, retornar nil
+        guard let mostCriticalFactor = modifiableFactors.max(by: { $0.improvement < $1.improvement }) else {
+            return nil
+        }
+        
+        // Crear perfil corregido (simular que el factor se corrige)
+        var correctedProfile = profile
+        
+        // Aplicar corrección según el tipo de factor
+        switch mostCriticalFactor.factor {
+        case "Mioma Submucosal":
+            correctedProfile.myomaType = .none
+            correctedProfile.myomaSize = nil
+        case "Hipotiroidismo (TSH)":
+            correctedProfile.tshValue = 2.5 // Valor normal
+        case "Hiperprolactinemia":
+            correctedProfile.prolactinValue = 15.0 // Valor normal
+        case "Resistencia a Insulina (HOMA-IR)":
+            correctedProfile.homaIr = 2.0 // Valor normal
+        case "Índice de Masa Corporal":
+            correctedProfile.bmi = 22.0 // Valor normal
+        case "Pólipos Endometriales":
+            correctedProfile.polypType = .none
+        default:
+            return nil
+        }
+        
+        // Calcular nueva recomendación
+        let correctedRecommendation = determineOptimalTreatment(profile: correctedProfile)
+        
+        // Crear comparación
+        let comparison = FactorCorrectionComparison(
+            originalPlan: originalRecommendation.plan,
+            correctedPlan: correctedRecommendation.plan,
+            planChanged: originalRecommendation.plan != correctedRecommendation.plan,
+            improvementDescription: generateImprovementDescription(original: originalRecommendation, corrected: correctedRecommendation),
+            clinicalImplication: generateClinicalImplication(original: originalRecommendation, corrected: correctedRecommendation)
+        )
+        
+        return FactorCorrectionSimulation(
+            originalRecommendation: originalRecommendation,
+            correctedRecommendation: correctedRecommendation,
+            correctedFactor: mostCriticalFactor.factor,
+            improvementInProbability: mostCriticalFactor.improvement,
+            timeToCorrection: mostCriticalFactor.timeToAchieve,
+            clinicalAction: mostCriticalFactor.recommendation,
+            comparison: comparison
+        )
+    }
+    
+    // MARK: - 📝 FUNCIONES AUXILIARES PARA COMPARACIÓN
+    
+    private func generateImprovementDescription(original: TreatmentRecommendation, corrected: TreatmentRecommendation) -> String {
+        if original.plan == corrected.plan {
+            return "Mantiene \(original.plan.rawValue) pero con mayor probabilidad de éxito"
+        } else {
+            return "Cambia de \(original.plan.rawValue) a \(corrected.plan.rawValue)"
+        }
+    }
+    
+    private func generateClinicalImplication(original: TreatmentRecommendation, corrected: TreatmentRecommendation) -> String {
+        if original.plan == corrected.plan {
+            return "La corrección del factor mejora las probabilidades sin cambiar el tratamiento recomendado."
+        } else {
+            return "La corrección del factor permite un tratamiento menos invasivo y más económico."
+        }
     }
     
     // MARK: - Funciones de Cálculo

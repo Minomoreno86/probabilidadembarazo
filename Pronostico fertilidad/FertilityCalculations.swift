@@ -312,6 +312,7 @@ extension FertilityCalculations {
         factors.parity = calculateParityFactor(profile.previousPregnancies)
         
         // Factor masculino (incluyendo nuevas variables)
+        // SOLO calcular si hay datos masculinos reales
         if profile.spermConcentration != nil || profile.spermProgressiveMotility != nil || profile.spermNormalMorphology != nil {
             let (_, baseMaleImpact) = MaleFactorPathology.evaluateMaleFactor(profile: profile)
             
@@ -321,6 +322,9 @@ extension FertilityCalculations {
             let seminalCultureFactor = calculateSeminalCultureFactor(profile.seminalCulturePositive)
             
             factors.male = baseMaleImpact * dnaFragmentationFactor * varicoceleFactor * seminalCultureFactor
+        } else {
+            // Si no hay datos masculinos, NO incluir en el cálculo
+            factors.male = 1.0  // Neutro (no afecta el cálculo)
         }
         
         // Factor tubárico

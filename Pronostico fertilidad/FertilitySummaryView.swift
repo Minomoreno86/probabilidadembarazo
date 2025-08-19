@@ -70,7 +70,7 @@ struct FertilitySummaryView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .padding()
-                .background(colors.cardBackground)
+                .background(colors.surface)
                 .cornerRadius(12)
                 
                 // Probabilidad Mensual
@@ -86,12 +86,12 @@ struct FertilitySummaryView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .padding()
-                .background(colors.cardBackground)
+                .background(colors.surface)
                 .cornerRadius(12)
             }
         }
         .padding()
-        .background(colors.surfaceBackground)
+        .background(colors.surface)
         .cornerRadius(16)
     }
     
@@ -150,7 +150,7 @@ struct FertilitySummaryView: View {
             }
         }
         .padding()
-        .background(colors.surfaceBackground)
+        .background(colors.surface)
         .cornerRadius(16)
     }
     
@@ -181,7 +181,7 @@ struct FertilitySummaryView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .padding()
-                .background(colors.cardBackground)
+                .background(colors.surface)
                 .cornerRadius(12)
                 
                 // Confianza
@@ -197,12 +197,12 @@ struct FertilitySummaryView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .padding()
-                .background(colors.cardBackground)
+                .background(colors.surface)
                 .cornerRadius(12)
             }
         }
         .padding()
-        .background(colors.surfaceBackground)
+        .background(colors.surface)
         .cornerRadius(16)
     }
     
@@ -239,11 +239,11 @@ struct FertilitySummaryView: View {
                 .foregroundColor(.secondary)
             }
             .padding()
-            .background(colors.cardBackground)
+            .background(colors.surface)
             .cornerRadius(12)
         }
         .padding()
-        .background(colors.surfaceBackground)
+        .background(colors.surface)
         .cornerRadius(16)
     }
     
@@ -307,18 +307,6 @@ struct FertilitySummaryView: View {
 // MARK: - 🔧 PREVIEW
 
 #Preview {
-    FertilitySummaryView(
-        result: ImprovedFertilityEngine.ComprehensiveFertilityResult(
-            annualProbability: 0.75,
-            monthlyProbability: 0.15,
-            keyFactors: [
-                ("Edad", 0.20, "Edad 30 años"),
-                ("AMH", 0.75, "AMH 1.0 ng/mL")
-            ],
-            detailedAnalysis: "Análisis detallado...",
-            recommendations: ["Recomendación 1", "Recomendación 2"]
-        ),
-        profile: FertilityProfile()
-    )
-    .environmentObject(ThemeManager())
+    Text("FertilitySummaryView Preview")
+        .environmentObject(ThemeManager())
 }

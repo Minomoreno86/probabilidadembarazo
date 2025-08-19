@@ -7,6 +7,8 @@ struct TreatmentSimulatorView: View {
 	@State private var simulations: [ModifiableFactorSimulation] = []
 	@State private var nonModifiableFactors: [NonModifiableFactor] = []
 	@State private var completeAnalysis: CompleteFactorAnalysis?
+	@State private var factorCorrectionSimulation: FactorCorrectionSimulation?
+	@State private var showingCorrectionSimulation = false
 	@Environment(\.themeColors) var colors
 	
 	var body: some View {
@@ -17,6 +19,7 @@ struct TreatmentSimulatorView: View {
 				recommendationSection
 				modifiableFactorsSection
 				nonModifiableFactorsSection
+				correctionSimulationSection
 				Spacer(minLength: 20)
 			}
 			.padding()
@@ -232,5 +235,128 @@ struct TreatmentSimulatorView: View {
 		simulations = simulator.simulateModifiableFactors(profile: profile)
 		nonModifiableFactors = simulator.identifyNonModifiableFactors(profile: profile)
 		completeAnalysis = simulator.generateCompleteFactorAnalysis(profile: profile)
+	}
+	
+	// MARK: - 🎯 NUEVA SECCIÓN: SIMULACIÓN DE CORRECCIÓN
+	
+	private var correctionSimulationSection: some View {
+		VStack(alignment: .leading, spacing: 12) {
+			HStack {
+				Image(systemName: "wand.and.stars")
+					.foregroundColor(.purple)
+				Text("Simulación de Corrección")
+					.font(.headline)
+					.fontWeight(.semibold)
+				Spacer()
+			}
+			
+			if let correction = factorCorrectionSimulation {
+				VStack(spacing: 16) {
+					// Factor que se corrige
+					HStack {
+						Image(systemName: "target")
+							.foregroundColor(.green)
+						Text("Factor a corregir: \(correction.correctedFactor)")
+							.font(.subheadline)
+							.fontWeight(.semibold)
+						Spacer()
+					}
+					
+					// Comparación de recomendaciones
+					VStack(spacing: 12) {
+						HStack {
+							Text("Recomendación Previa:")
+								.font(.subheadline)
+								.fontWeight(.medium)
+							Spacer()
+							Text(correction.originalRecommendation.plan.rawValue)
+								.font(.subheadline)
+								.fontWeight(.bold)
+								.foregroundColor(.red)
+						}
+						
+						HStack {
+							Text("Recomendación Corregida:")
+								.font(.subheadline)
+								.fontWeight(.medium)
+							Spacer()
+							Text(correction.correctedRecommendation.plan.rawValue)
+								.font(.subheadline)
+								.fontWeight(.bold)
+								.foregroundColor(.green)
+						}
+						
+						// Indicador de cambio
+						if correction.comparison.planChanged {
+							HStack {
+								Image(systemName: "arrow.right.circle.fill")
+									.foregroundColor(.green)
+								Text("¡Cambio de tratamiento!")
+									.font(.subheadline)
+									.fontWeight(.bold)
+									.foregroundColor(.green)
+								Spacer()
+							}
+							.padding(.vertical, 8)
+							.padding(.horizontal, 12)
+							.background(Color.green.opacity(0.1))
+							.cornerRadius(8)
+						}
+					}
+					
+					// Detalles de la corrección
+					VStack(alignment: .leading, spacing: 8) {
+						Text("Mejora en probabilidad: \(String(format: "%.1f", correction.improvementInProbability))%")
+							.font(.caption)
+							.fontWeight(.medium)
+						
+						Text("Tiempo para corrección: \(correction.timeToCorrection)")
+							.font(.caption)
+							.fontWeight(.medium)
+						
+						Text("Acción clínica: \(correction.clinicalAction)")
+							.font(.caption)
+							.fontWeight(.medium)
+							.foregroundColor(.blue)
+					}
+					
+					// Implicación clínica
+					Text(correction.comparison.clinicalImplication)
+						.font(.caption)
+						.foregroundColor(.secondary)
+						.padding(12)
+						.background(colors.surface)
+						.cornerRadius(8)
+				}
+				.padding(16)
+				.background(colors.surface)
+				.cornerRadius(12)
+				.shadow(color: colors.border.opacity(0.2), radius: 4, x: 0, y: 2)
+			} else {
+				VStack(spacing: 8) {
+					Text("No se identificaron factores modificables para simular.")
+						.font(.caption)
+						.foregroundColor(.secondary)
+					
+					Button(action: {
+						factorCorrectionSimulation = simulator.simulateFactorCorrection(profile: profile)
+						showingCorrectionSimulation = true
+					}) {
+						HStack {
+							Image(systemName: "play.circle.fill")
+							Text("Simular Corrección")
+						}
+						.font(.subheadline)
+						.fontWeight(.medium)
+						.foregroundColor(.white)
+						.padding(.horizontal, 16)
+						.padding(.vertical, 8)
+						.background(Color.purple)
+						.cornerRadius(8)
+					}
+					.disabled(simulations.isEmpty)
+				}
+			}
+		}
 	}
 }

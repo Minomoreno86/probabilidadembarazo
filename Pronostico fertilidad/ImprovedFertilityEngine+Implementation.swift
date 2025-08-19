@@ -672,14 +672,10 @@ extension ImprovedFertilityEngine {
         // IMC - SIEMPRE mostrar
         keyFactors["IMC (\(String(format: "%.1f", profile.bmi)))"] = factors.bmi
         
-        // Ciclo menstrual - ¡FALTABA! 
-        if let cycleLength = profile.cycleLength, factors.cycle > 0 {
-            if factors.cycle != 1.0 {
-                let cycleImpact = Int((1.0 - factors.cycle) * 100)
-                keyFactors["Ciclo Menstrual (\(Int(cycleLength)) días, -\(cycleImpact)%)"] = factors.cycle
-            } else {
-                keyFactors["Ciclo Menstrual (\(Int(cycleLength)) días, normal)"] = factors.cycle
-            }
+        // Ciclo menstrual - SOLO mostrar si está alterado
+        if let cycleLength = profile.cycleLength, factors.cycle > 0 && factors.cycle != 1.0 {
+            let cycleImpact = Int((1.0 - factors.cycle) * 100)
+            keyFactors["Ciclo Menstrual (\(Int(cycleLength)) días, -\(cycleImpact)%)"] = factors.cycle
         }
         
         // Factores hormonales y patológicos (solo si están alterados)
@@ -724,7 +720,7 @@ extension ImprovedFertilityEngine {
             keyFactors["Cirugías Pélvicas Previas"] = factors.pelvicSurgery 
         }
         
-        // Factor masculino
+        // Factor masculino - SOLO si hay datos masculinos reales
         if factors.male > 0 && factors.male < 1.0 { 
             keyFactors["Factor Masculino"] = factors.male 
         }
@@ -1068,7 +1064,7 @@ extension ImprovedFertilityEngine {
             ))
         }
         
-        // 📅 CICLOS MENSTRUALES Y FERTILIDAD - SOLO SI HAY DATOS EXPLÍCITOS
+         // 📅 CICLOS MENSTRUALES Y FERTILIDAD - SOLO SI HAY DATOS EXPLÍCITOS
         if let cycleLength = profile.cycleLength, cycleLength != 28.0 { // Solo si no es el valor por defecto
             let cycleRecommendation = MenstrualCyclePathology.generateComprehensiveRecommendation(cycleLength: cycleLength)
             let cyclePattern = cycleRecommendation.pattern

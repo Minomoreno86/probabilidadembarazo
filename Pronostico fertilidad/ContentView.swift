@@ -53,6 +53,52 @@ struct ContentView: View {
                         
                         // Footer with medical disclaimer
                         FooterMedicalDisclaimer()
+                        
+                        // MARK: - 🧪 BOTÓN DE TESTING (SOLO PARA DESARROLLO)
+                        #if DEBUG
+                        VStack(spacing: 16) {
+                            Divider()
+                                .background(Color.white.opacity(0.3))
+                            
+                            Text("🧪 Herramientas de Desarrollo")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                            
+                            Button(action: {
+                                // Ejecutar tests desde la consola
+                                print("\n🚀 EJECUTANDO TESTS DESDE LA APLICACIÓN...")
+                                print("Para ver los resultados, revisa la consola de Xcode")
+                                print("O ejecuta: TestLauncher.runAllTests() en el código")
+                            }) {
+                                HStack {
+                                    Image(systemName: "testtube.2")
+                                    Text("Ejecutar Tests")
+                                }
+                                .font(.subheadline)
+                                .fontWeight(.medium)
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 20)
+                                .padding(.vertical, 12)
+                                .background(Color.orange)
+                                .cornerRadius(10)
+                            }
+                            
+                            Text("Los tests se ejecutan en la consola de Xcode")
+                                .font(.caption)
+                                .foregroundColor(.white.opacity(0.7))
+                        }
+                        .padding()
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(.ultraThinMaterial)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                                )
+                        )
+                        .padding(.horizontal, 20)
+                        .padding(.top, 20)
+                        #endif
                     }
                 }
                 .ignoresSafeArea(edges: .top)

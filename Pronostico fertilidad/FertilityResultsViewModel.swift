@@ -140,7 +140,7 @@ class FertilityResultsViewModel: ObservableObject {
         isLoading = true
         
         Task {
-            let shareText = generateShareText()
+            _ = generateShareText()
             await MainActor.run {
                 self.isLoading = false
                 // Aquí se implementaría la lógica de compartir
@@ -252,24 +252,24 @@ class FertilityResultsViewModel: ObservableObject {
     
     /// Cuenta factores favorables
     var favorableFactorsCount: Int {
-        result.keyFactors.compactMap { factor in
-            let color = factorColor(for: factor.impact, factorName: factor.name)
+        result.keyFactors.compactMap { key, value in
+            let color = factorColor(for: value, factorName: key)
             return color == .green ? 1 : nil
         }.count
     }
     
     /// Cuenta factores neutrales/moderados
     var neutralFactorsCount: Int {
-        result.keyFactors.compactMap { factor in
-            let color = factorColor(for: factor.impact, factorName: factor.name)
+        result.keyFactors.compactMap { key, value in
+            let color = factorColor(for: value, factorName: key)
             return color == .orange ? 1 : nil
         }.count
     }
     
     /// Cuenta factores críticos
     var criticalFactorsCount: Int {
-        result.keyFactors.compactMap { factor in
-            let color = factorColor(for: factor.impact, factorName: factor.name)
+        result.keyFactors.compactMap { key, value in
+            let color = factorColor(for: value, factorName: key)
             return color == .red ? 1 : nil
         }.count
     }
@@ -306,7 +306,7 @@ extension FertilityResultsViewModel {
     /// Valida que los datos estén completos
     var hasCompleteData: Bool {
         // Verificar que los datos principales estén presentes
-        return profile.age > 0 && profile.medicalFactors.amh > 0
+        return profile.age > 0 && (profile.amhValue ?? 0) > 0
     }
     
     /// Obtiene el nivel de confianza de los datos
@@ -315,9 +315,9 @@ extension FertilityResultsViewModel {
         var totalFactors = 0
         
         if profile.age > 0 { confidence += 1.0; totalFactors += 1 }
-        if profile.medicalFactors.amh > 0 { confidence += 1.0; totalFactors += 1 }
-        if profile.medicalFactors.tsh > 0 { confidence += 0.5; totalFactors += 1 }
-        if profile.medicalFactors.bmi > 0 { confidence += 0.5; totalFactors += 1 }
+        if (profile.amhValue ?? 0) > 0 { confidence += 1.0; totalFactors += 1 }
+        if (profile.tshValue ?? 0) > 0 { confidence += 0.5; totalFactors += 1 }
+        if profile.bmi > 0 { confidence += 0.5; totalFactors += 1 }
         
         return totalFactors > 0 ? confidence / Double(totalFactors) : 0.0
     }
