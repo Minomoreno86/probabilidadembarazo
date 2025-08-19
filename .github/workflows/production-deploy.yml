@@ -1,0 +1,316 @@
+name: 🚀 Deployment a Producción
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'  # Solo cuando se crea un tag de versión
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Versión a desplegar'
+        required: true
+        default: '1.0.0'
+      environment:
+        description: 'Ambiente de deployment'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+          - staging
+          - production
+
+env:
+  XCODE_VERSION: '16.0'
+  IOS_VERSION: '18.5'
+
+jobs:
+  validate-release:
+    name: ✅ Validar Release
+    runs-on: macos-latest
+    
+    steps:
+    - name: 📥 Checkout código
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Necesario para tags
+        
+    - name: 🏷️ Obtener Versión
+      id: get-version
+      run: |
+        if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          echo "version=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+        else
+          # Extraer versión del tag
+          VERSION=${GITHUB_REF#refs/tags/}
+          echo "version=${VERSION#v}" >> $GITHUB_OUTPUT
+        fi
+        
+    - name: 🔍 Validar Cambios
+      run: |
+        echo "🔍 Validando cambios para versión ${{ steps.get-version.outputs.version }}..."
+        
+        # Verificar que no haya cambios sin commitear
+        if [ -n "$(git status --porcelain)" ]; then
+          echo "❌ Hay cambios sin commitear"
+          git status
+          exit 1
+        fi
+        
+        # Verificar que el tag esté en main
+        if [ "${{ github.ref }}" != "refs/heads/main" ] && [ "${{ github.event_name }}" != "workflow_dispatch" ]; then
+          echo "❌ El tag debe estar en la rama main"
+          exit 1
+        fi
+        
+        echo "✅ Validación exitosa"
+        
+    - name: 📋 Generar Changelog
+      run: |
+        echo "📋 Generando changelog..."
+        
+        # Obtener commits desde el último tag
+        PREVIOUS_TAG=$(git describe --tags --abbrev=0 HEAD~1 2>/dev/null || echo "")
+        
+        if [ -n "$PREVIOUS_TAG" ]; then
+          echo "## 📋 Cambios desde $PREVIOUS_TAG" > changelog.md
+          echo "" >> changelog.md
+          git log --oneline --no-merges $PREVIOUS_TAG..HEAD >> changelog.md
+        else
+          echo "## 📋 Cambios iniciales" > changelog.md
+          echo "" >> changelog.md
+          git log --oneline --no-merges >> changelog.md
+        fi
+        
+        echo "✅ Changelog generado"
+        cat changelog.md
+
+  build-production:
+    name: 🏗️ Build de Producción
+    runs-on: macos-latest
+    needs: validate-release
+    
+    steps:
+    - name: 📥 Checkout código
+      uses: actions/checkout@v4
+      
+    - name: 🍎 Setup Xcode
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: ${{ env.XCODE_VERSION }}
+        
+    - name: 🔐 Setup Code Signing
+      uses: apple-actions/import-codesigning-certs@v1
+      
+    - name: 🏗️ Build de Producción
+      run: |
+        echo "🏗️ Construyendo versión de producción..."
+        
+        # Build para archivo
+        xcodebuild archive \
+          -project "Pronostico fertilidad.xcodeproj" \
+          -scheme "Pronostico fertilidad" \
+          -configuration Release \
+          -archivePath "PronosticoFertilidad.xcarchive" \
+          -destination generic/platform=iOS \
+          | xcpretty --color --simple
+          
+        echo "✅ Build de producción completado"
+        
+    - name: 📦 Exportar IPA
+      run: |
+        echo "📦 Exportando IPA..."
+        
+        # Crear exportOptions.plist dinámico
+        cat > exportOptions.plist << EOF
+        <?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+        <plist version="1.0">
+        <dict>
+            <key>method</key>
+            <string>app-store</string>
+            <key>teamID</key>
+            <string>\${{ secrets.APP_STORE_TEAM_ID }}</string>
+            <key>signingStyle</key>
+            <string>automatic</string>
+            <key>stripSwiftSymbols</key>
+            <true/>
+            <key>uploadBitcode</key>
+            <false/>
+            <key>uploadSymbols</key>
+            <true/>
+            <key>compileBitcode</key>
+            <false/>
+            <key>thinning</key>
+            <string>&lt;none&gt;</string>
+        </dict>
+        </plist>
+        EOF
+        
+        # Exportar IPA
+        xcodebuild -exportArchive \
+          -archivePath "PronosticoFertilidad.xcarchive" \
+          -exportPath "export" \
+          -exportOptionsPlist "exportOptions.plist" \
+          | xcpretty --color --simple
+          
+        echo "✅ IPA exportado exitosamente"
+        
+    - name: 💾 Subir Artefactos
+      uses: actions/upload-artifact@v4
+      with:
+        name: production-build
+        path: |
+          export/
+          PronosticoFertilidad.xcarchive
+          changelog.md
+
+  deploy-testflight:
+    name: 📱 Deploy a TestFlight
+    runs-on: macos-latest
+    needs: build-production
+    if: github.event.inputs.environment == 'staging' || github.event_name != 'workflow_dispatch'
+    
+    steps:
+    - name: 📥 Download Build
+      uses: actions/download-artifact@v4
+      with:
+        name: production-build
+        
+    - name: 🚀 Subir a TestFlight
+      uses: apple-actions/upload-testflight@v1
+      with:
+        app-path: export/Pronostico\ fertilidad.ipa
+        api-key: ${{ secrets.APP_STORE_CONNECT_API_KEY }}
+        api-key-id: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+        api-issuer-id: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+        
+    - name: 📧 Notificar TestFlight
+      run: |
+        echo "📧 Notificando deployment a TestFlight..."
+        echo "✅ App subida a TestFlight exitosamente"
+        echo "🏷️ Versión: ${{ needs.validate-release.outputs.version }}"
+
+  deploy-app-store:
+    name: 🏪 Deploy a App Store
+    runs-on: macos-latest
+    needs: [build-production, deploy-testflight]
+    if: github.event.inputs.environment == 'production' || github.event_name != 'workflow_dispatch'
+    
+    steps:
+    - name: 📥 Download Build
+      uses: actions/download-artifact@v4
+      with:
+        name: production-build
+        
+    - name: 🏪 Subir a App Store Connect
+      uses: apple-actions/upload-testflight@v1
+      with:
+        app-path: export/Pronostico\ fertilidad.ipa
+        api-key: ${{ secrets.APP_STORE_CONNECT_API_KEY }}
+        api-key-id: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+        api-issuer-id: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+        
+    - name: 📝 Crear Release en GitHub
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: "v${{ needs.validate-release.outputs.version }}"
+        release_name: "🚀 Release v${{ needs.validate-release.outputs.version }}"
+        body: |
+          ## 🎉 Nueva Versión de Producción
+          
+          **Versión:** ${{ needs.validate-release.outputs.version }}
+          **Fecha:** $(date)
+          
+          ## 📋 Cambios Incluidos
+          
+          $(cat changelog.md)
+          
+          ## 📱 Disponible en
+          - ✅ TestFlight (Testing)
+          - 🏪 App Store (Próximamente)
+          
+          ## 🔍 Detalles Técnicos
+          - Build: ${{ github.sha }}
+          - Branch: ${{ github.ref_name }}
+          - Autor: ${{ github.actor }}
+          
+        draft: false
+        prerelease: false
+        
+    - name: 📧 Notificar Producción
+      run: |
+        echo "🏪 Notificando deployment a producción..."
+        echo "✅ App subida a App Store Connect exitosamente"
+        echo "🏷️ Versión: ${{ needs.validate-release.outputs.version }}"
+
+  post-deployment:
+    name: 📊 Post-Deployment
+    runs-on: ubuntu-latest
+    needs: [deploy-testflight, deploy-app-store]
+    if: always()
+    
+    steps:
+    - name: 📥 Download Artefactos
+      uses: actions/download-artifact@v4
+      with:
+        name: production-build
+        
+    - name: 📊 Generar Reporte de Deployment
+      run: |
+        echo "📊 Generando reporte de deployment..."
+        
+        echo "# 🚀 Reporte de Deployment" > deployment-report.md
+        echo "" >> deployment-report.md
+        echo "## 📱 Información de la App" >> deployment-report.md
+        echo "- **Nombre:** Pronóstico Fertilidad" >> deployment-report.md
+        echo "- **Versión:** ${{ needs.validate-release.outputs.version }}" >> deployment-report.md
+        echo "- **Build:** ${{ github.sha }}" >> deployment-report.md
+        echo "- **Fecha:** $(date)" >> deployment-report.md
+        echo "" >> deployment-report.md
+        echo "## ✅ Estado de Deployment" >> deployment-report.md
+        echo "- **TestFlight:** ${{ needs.deploy-testflight.result == 'success' && '✅ Exitoso' || '❌ Falló' }}" >> deployment-report.md
+        echo "- **App Store:** ${{ needs.deploy-app-store.result == 'success' && '✅ Exitoso' || '❌ Falló' }}" >> deployment-report.md
+        echo "" >> deployment-report.md
+        echo "## 📋 Changelog" >> deployment-report.md
+        echo "" >> deployment-report.md
+        cat changelog.md >> deployment-report.md
+        
+    - name: 💾 Subir Reporte
+      uses: actions/upload-artifact@v4
+      with:
+        name: deployment-report
+        path: deployment-report.md
+        
+    - name: 📧 Notificar por Email
+      if: always()
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: smtp.gmail.com
+        server_port: 587
+        username: ${{ secrets.EMAIL_USERNAME }}
+        password: ${{ secrets.EMAIL_PASSWORD }}
+        subject: "🚀 Deployment Completado - v${{ needs.validate-release.outputs.version }}"
+        to: ${{ secrets.NOTIFICATION_EMAIL }}
+        from: "Deployment Bot <${{ secrets.EMAIL_USERNAME }}>"
+        body: |
+          ## 🚀 Deployment Completado
+          
+          **App:** Pronóstico Fertilidad
+          **Versión:** ${{ needs.validate-release.outputs.version }}
+          **Fecha:** $(date)
+          
+          ### 📱 Estado:
+          - TestFlight: ${{ needs.deploy-testflight.result == 'success' && '✅ Exitoso' || '❌ Falló' }}
+          - App Store: ${{ needs.deploy-app-store.result == 'success' && '✅ Exitoso' || '❌ Falló' }}
+          
+          ### 📋 Changelog:
+          $(cat changelog.md)
+          
+          ### 🔍 Detalles:
+          - Build: ${{ github.sha }}
+          - Branch: ${{ github.ref_name }}
+          - Autor: ${{ github.actor }}
+          
+          📊 [Ver reporte completo](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})
