@@ -12,13 +12,20 @@ struct ImprovedFertilityResultsView: View {
     let result: ImprovedFertilityEngine.ComprehensiveFertilityResult
     let profile: FertilityProfile
     
+    @StateObject private var viewModel: FertilityResultsViewModel
     @State private var selectedTab = 0
+    
+    init(result: ImprovedFertilityEngine.ComprehensiveFertilityResult, profile: FertilityProfile) {
+        self.result = result
+        self.profile = profile
+        self._viewModel = StateObject(wrappedValue: FertilityResultsViewModel(result: result, profile: profile))
+    }
     
     var body: some View {
         NavigationView {
             TabView(selection: $selectedTab) {
                 // Pestaña 1: Resumen
-                summaryView
+                FertilitySummaryView(result: result, profile: profile)
                     .tabItem {
                         Image(systemName: "chart.pie.fill")
                         Text("Resumen")
@@ -34,7 +41,7 @@ struct ImprovedFertilityResultsView: View {
                     .tag(1)
                 
                 // Pestaña 3: Factores
-                factorsView
+                FertilityFactorsView(result: result, profile: profile)
                     .tabItem {
                         Image(systemName: "list.bullet.rectangle")
                         Text("Factores")
@@ -49,7 +56,7 @@ struct ImprovedFertilityResultsView: View {
                     }
                     .tag(3)
                 
-                // Pestaña 5: Simulador de Tratamientos (Nueva)
+                // Pestaña 5: Simulador de Tratamientos
                 TreatmentSimulatorView(profile: profile)
                     .tabItem {
                         Image(systemName: "cross.case.fill")
@@ -61,11 +68,11 @@ struct ImprovedFertilityResultsView: View {
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Menu {
-                        Button(action: shareResults) {
+                        Button(action: { viewModel.shareResults() }) {
                             Label("Compartir", systemImage: "square.and.arrow.up")
                         }
                         
-                        Button(action: exportPDF) {
+                        Button(action: { viewModel.exportPDF() }) {
                             Label("Exportar PDF", systemImage: "doc.text.fill")
                         }
                     } label: {
@@ -82,210 +89,9 @@ struct ImprovedFertilityResultsView: View {
         }
     }
     
-    // MARK: - Vista de Resumen
-    private var summaryView: some View {
-        ScrollView {
-            VStack(spacing: 24) {
-                // Disclaimer médico crítico
-                MedicalDisclaimerView(style: .critical)
-                
-                // Tarjeta principal de probabilidad
-                probabilityCard
-                
-                // Indicadores de calidad
-                qualityIndicators
-                
-                // Categoría y confianza
-                categoryAndConfidence
-                
-                // Interacciones no lineales
-                if result.interactionsReport.hasInteractions {
-                    interactionsPreviewCard
-                }
-                
-                // Citaciones y bibliografía científica
-                VStack(spacing: 16) {
-                    Text("📚 Evidencia Científica")
-                        .font(.headline)
-                        .fontWeight(.semibold)
-                    
-                    VStack(alignment: .leading, spacing: 12) {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("Función Segmentada Continua - 100% Validez Médica")
-                                .font(.subheadline)
-                                .fontWeight(.semibold)
-                            
-                            Text("ESHRE Guidelines 2023 - Validación Final")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                            
-                            Text("Fertility and Sterility, 2024")
-                                .font(.caption)
-                                .foregroundColor(.blue)
-                            
-                            Text("100% precisión con ESHRE Guidelines 2023")
-                                .font(.caption2)
-                                .foregroundColor(.green)
-                        }
-                        .padding()
-                        .background(Color(.systemGray6))
-                        .cornerRadius(8)
-                        
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("Transiciones Suaves de Fertilidad por Edad")
-                                .font(.subheadline)
-                                .fontWeight(.semibold)
-                            
-                            Text("SmoothFertilityFunctions - Validación Científica")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                            
-                            Text("Función Híbrida Calibrada, 2024")
-                                .font(.caption)
-                                .foregroundColor(.blue)
-                            
-                            Text("Basado en ESHRE Guidelines 2023 + ASRM 2024")
-                                .font(.caption2)
-                                .foregroundColor(.green)
-                        }
-                        .padding()
-                        .background(Color(.systemGray6))
-                        .cornerRadius(8)
-                        
-                        Divider()
-                        
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text("📊 Metodología:")
-                                .font(.subheadline)
-                                .fontWeight(.semibold)
-                            
-                            Text("• Función segmentada continua con 100% validez médica")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                            
-                            Text("• Segmentos: 18-24 (estable), 25-29 (lento), 30-34 (moderado)")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                            
-                            Text("• Segmentos: 35-37 (rápido), 38-40 (muy rápido), ≥41 (crítico)")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                        }
-                    }
-                }
-                .padding()
-                .background(Color(.systemBackground))
-                .cornerRadius(16)
-                .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
-                
-                Spacer(minLength: 20)
-            }
-            .padding()
-            .overlay(
-                // Disclaimer flotante
-                FloatingMedicalDisclaimer(),
-                alignment: .bottom
-            )
-        }
-        .background(colors.backgroundGradient.ignoresSafeArea())
-    }
+
     
-    private var probabilityCard: some View {
-        ZStack {
-            // Fondo con gradiente
-            RoundedRectangle(cornerRadius: 24)
-                .fill(LinearGradient(
-                    colors: [
-                        probabilityColor.opacity(0.1),
-                        probabilityColor.opacity(0.05),
-                        colors.surface
-                    ],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                ))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 24)
-                        .stroke(probabilityColor.opacity(0.2), lineWidth: 1)
-                )
-            
-            VStack(spacing: 20) {
-                // Icono médico
-                Image(systemName: "heart.text.square.fill")
-                    .font(.system(size: 40))
-                    .foregroundColor(probabilityColor)
-                
-                // Título
-                Text("Probabilidad de Fertilidad")
-                    .font(.title2)
-                    .fontWeight(.bold)
-                    .foregroundColor(.primary)
-                
-                // Probabilidades principales
-                HStack(spacing: 40) {
-                    VStack(spacing: 12) {
-                        ZStack {
-                            Circle()
-                                .stroke(probabilityColor.opacity(0.2), lineWidth: 8)
-                                .frame(width: 80, height: 80)
-                            
-                            Circle()
-                                .trim(from: 0, to: result.annualProbability)
-                                .stroke(
-                                    LinearGradient(
-                                        colors: [probabilityColor, probabilityColor.opacity(0.7)],
-                                        startPoint: .topLeading,
-                                        endPoint: .bottomTrailing
-                                    ),
-                                    style: StrokeStyle(lineWidth: 8, lineCap: .round)
-                                )
-                                .frame(width: 80, height: 80)
-                                .rotationEffect(.degrees(-90))
-                                .animation(.easeInOut(duration: 1.5), value: result.annualProbability)
-                            
-                            VStack {
-                                Text("\(Int(result.annualProbability * 100))%")
-                                    .font(.system(size: 18, weight: .bold, design: .rounded))
-                                    .foregroundColor(probabilityColor)
-                                Text("Anual")
-                                    .font(.caption2)
-                                    .foregroundColor(.secondary)
-                            }
-                        }
-                    }
-                    
-                    VStack(spacing: 12) {
-                        ZStack {
-                            Circle()
-                                .stroke(probabilityColor.opacity(0.2), lineWidth: 6)
-                                .frame(width: 60, height: 60)
-                            
-                            Circle()
-                                .trim(from: 0, to: result.monthlyProbability)
-                                .stroke(
-                                    LinearGradient(
-                                        colors: [probabilityColor, probabilityColor.opacity(0.7)],
-                                        startPoint: .topLeading,
-                                        endPoint: .bottomTrailing
-                                    ),
-                                    style: StrokeStyle(lineWidth: 6, lineCap: .round)
-                                )
-                                .frame(width: 60, height: 60)
-                                .rotationEffect(.degrees(-90))
-                                .animation(.easeInOut(duration: 1.5), value: result.monthlyProbability)
-                            
-                            VStack {
-                                Text("\(Int(result.monthlyProbability * 100))%")
-                                    .font(.system(size: 14, weight: .bold, design: .rounded))
-                                    .foregroundColor(probabilityColor)
-                                Text("Mensual")
-                                    .font(.caption2)
-                                    .foregroundColor(.secondary)
-                            }
-                        }
-                    }
-                }
-                
-                // Categoría
+
                 Text(result.category.rawValue)
                     .font(.title3)
                     .fontWeight(.semibold)
@@ -679,124 +485,7 @@ struct ImprovedFertilityResultsView: View {
         .background(colors.backgroundGradient)
     }
     
-    // MARK: - Vista de Factores (SUPERDESIGN)
-    private var factorsView: some View {
-        ScrollView {
-            LazyVStack(spacing: 20) {
-                // Header con título y estadísticas
-                VStack(spacing: 16) {
-                    HStack {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("🎯 Factores de Fertilidad")
-                                .font(.title)
-                                .fontWeight(.bold)
-                                .foregroundColor(colors.text)
-                            
-                            Text("Análisis detallado de cada factor")
-                                .font(.subheadline)
-                                .foregroundColor(colors.textSecondary)
-                        }
-                        
-                        Spacer()
-                        
-                        // Estadísticas rápidas
-                        VStack(alignment: .trailing, spacing: 4) {
-                            Text("\(result.keyFactors.count)")
-                                .font(.title2)
-                                .fontWeight(.bold)
-                                .foregroundColor(colors.primary)
-                            
-                            Text("Factores")
-                                .font(.caption)
-                                .foregroundColor(colors.textSecondary)
-                        }
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 8)
-                        .background(colors.primary.opacity(0.1))
-                        .cornerRadius(12)
-                    }
-                    
-                    // Barra de progreso general
-                    VStack(alignment: .leading, spacing: 8) {
-                        HStack {
-                            Text("Impacto General")
-                                .font(.subheadline)
-                                .fontWeight(.semibold)
-                            
-                            Spacer()
-                            
-                            Text("\(Int(calculateOverallImpact() * 100))%")
-                                .font(.subheadline)
-                                .fontWeight(.bold)
-                                .foregroundColor(overallImpactColor)
-                        }
-                        
-                        ProgressView(value: abs(calculateOverallImpact()), total: 1.0)
-                            .progressViewStyle(LinearProgressViewStyle(tint: overallImpactColor))
-                            .scaleEffect(y: 2)
-                    }
-                }
-                .padding(.horizontal)
-                
-                // Grid de factores con superdesign
-                LazyVGrid(columns: [
-                    GridItem(.flexible(), spacing: 16),
-                    GridItem(.flexible(), spacing: 16)
-                ], spacing: 16) {
-                    ForEach(Array(result.keyFactors.keys.sorted()), id: \.self) { factor in
-                        if let impact = result.keyFactors[factor] {
-                            SuperFactorCard(
-                                factor: factor,
-                                impact: impact,
-                                colors: colors
-                            )
-                        }
-                    }
-                }
-                .padding(.horizontal)
-                
-                // Resumen de categorías
-                VStack(spacing: 16) {
-                    Text("📊 Resumen por Categoría")
-                        .font(.headline)
-                        .fontWeight(.semibold)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    
-                    LazyVGrid(columns: [
-                        GridItem(.flexible()),
-                        GridItem(.flexible()),
-                        GridItem(.flexible())
-                    ], spacing: 12) {
-                        CategorySummaryCard(
-                            title: "Favorables",
-                            count: favorableFactorsCount,
-                            color: .green,
-                            icon: "arrow.up.circle.fill"
-                        )
-                        
-                        CategorySummaryCard(
-                            title: "Neutros",
-                            count: neutralFactorsCount,
-                            color: .orange,
-                            icon: "minus.circle.fill"
-                        )
-                        
-                        CategorySummaryCard(
-                            title: "Críticos",
-                            count: criticalFactorsCount,
-                            color: .red,
-                            icon: "exclamationmark.triangle.fill"
-                        )
-                    }
-                }
-                .padding(.horizontal)
-                
-                Spacer(minLength: 30)
-            }
-            .padding(.vertical)
-        }
-        .background(
-            LinearGradient(
+
                 gradient: Gradient(colors: [
                     colors.background,
                     colors.background.opacity(0.8),
