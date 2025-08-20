@@ -313,8 +313,12 @@ struct ModernFertilityCalculatorView: View {
                 subtitle: "Años cumplidos",
                 icon: "calendar",
                 value: Binding(
-                    get: { String(format: "%.0f", profile.age) },
-                    set: { profile.age = Double($0) ?? profile.age }
+                    get: { 
+                        profile.age == 0 ? "" : String(Int(profile.age))
+                    },
+                    set: { 
+                        profile.age = Double($0) ?? profile.age 
+                    }
                 ),
                 color: .blue
             )
@@ -326,7 +330,9 @@ struct ModernFertilityCalculatorView: View {
                 subtitle: "Kilogramos",
                 icon: "scalemass",
                 value: Binding(
-                    get: { String(format: "%.1f", profile.weight) },
+                    get: { 
+                        profile.weight == 0 ? "" : String(format: "%.0f", profile.weight)
+                    },
                     set: { 
                         profile.weight = Double($0) ?? profile.weight
                         profile.updateBMI()
@@ -342,7 +348,9 @@ struct ModernFertilityCalculatorView: View {
                 subtitle: "Centímetros",
                 icon: "ruler",
                 value: Binding(
-                    get: { String(format: "%.0f", profile.height) },
+                    get: { 
+                        profile.height == 0 ? "" : String(Int(profile.height))
+                    },
                     set: { 
                         profile.height = Double($0) ?? profile.height
                         profile.updateBMI()
@@ -406,8 +414,15 @@ struct ModernFertilityCalculatorView: View {
                 subtitle: "Días (normal: 21-35)",
                 icon: "calendar.circle",
                 value: Binding(
-                    get: { String(format: "%.0f", profile.cycleLength ?? 28) },
-                    set: { profile.cycleLength = Double($0) }
+                    get: { 
+                        if let cycle = profile.cycleLength, cycle > 0 {
+                            return String(Int(cycle))
+                        }
+                        return ""
+                    },
+                    set: { 
+                        profile.cycleLength = Double($0).flatMap { $0 > 0 ? $0 : nil }
+                    }
                 ),
                 color: .pink
             )
@@ -418,8 +433,17 @@ struct ModernFertilityCalculatorView: View {
                 subtitle: "Años",
                 icon: "clock",
                 value: Binding(
-                    get: { String(format: "%.1f", profile.infertilityDuration ?? 1.0) },
-                    set: { profile.infertilityDuration = Double($0) }
+                    get: { 
+                        if let duration = profile.infertilityDuration, duration > 0 {
+                            // Solo mostrar decimal si es necesario
+                            return duration.truncatingRemainder(dividingBy: 1) == 0 ? 
+                                String(Int(duration)) : String(format: "%.1f", duration)
+                        }
+                        return ""
+                    },
+                    set: { 
+                        profile.infertilityDuration = Double($0).flatMap { $0 > 0 ? $0 : nil }
+                    }
                 ),
                 color: .pink
             )
@@ -1250,6 +1274,7 @@ struct FormField: View {
     @Binding var value: String
     let color: Color
     @Environment(\.themeColors) var colors
+    @FocusState private var isFocused: Bool
     
     var body: some View {
         HStack(spacing: 12) {
@@ -1276,22 +1301,42 @@ struct FormField: View {
             
             Spacer()
             
-            // Campo de entrada compacto
-            TextField("0", text: $value)
-                .font(.system(size: 15, weight: .medium))
-                .foregroundColor(.white)
-                .multilineTextAlignment(.trailing)
-                .frame(width: 60)
-                .padding(.horizontal, 8)
-                .padding(.vertical, 6)
-                .background(
-                    RoundedRectangle(cornerRadius: 8)
-                        .fill(colors.surface.opacity(0.8))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(color.opacity(0.3), lineWidth: 1)
-                        )
-                )
+            // Campo de entrada optimizado
+            HStack(spacing: 8) {
+                TextField("", text: $value)
+                    .font(.system(size: 15, weight: .medium))
+                    .foregroundColor(.white)
+                    .multilineTextAlignment(.trailing)
+                    .frame(width: 60)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 6)
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(colors.surface.opacity(isFocused ? 0.9 : 0.8))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(isFocused ? color : color.opacity(0.3), lineWidth: isFocused ? 2 : 1)
+                            )
+                    )
+                    .focused($isFocused)
+                    .keyboardType(.decimalPad)
+                    .textInputAutocapitalization(.never)
+                    .disableAutocorrection(true)
+                
+                // Botón de limpieza rápida
+                if !value.isEmpty {
+                    Button(action: {
+                        value = ""
+                        isFocused = false
+                    }) {
+                        Image(systemName: "xmark.circle.fill")
+                            .font(.system(size: 16))
+                            .foregroundColor(.white.opacity(0.6))
+                    }
+                    .transition(.opacity.combined(with: .scale))
+                }
+            }
+            .animation(.easeInOut(duration: 0.2), value: value.isEmpty)
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 10)
@@ -1300,9 +1345,10 @@ struct FormField: View {
                 .fill(colors.surface.opacity(0.8))
                 .overlay(
                     RoundedRectangle(cornerRadius: 12)
-                        .stroke(Color.white.opacity(0.1), lineWidth: 1)
+                        .stroke(isFocused ? color.opacity(0.5) : Color.white.opacity(0.1), lineWidth: 1)
                 )
         )
+        .animation(.easeInOut(duration: 0.2), value: isFocused)
     }
 }
 

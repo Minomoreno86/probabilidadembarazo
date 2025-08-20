@@ -65,7 +65,7 @@ struct ImprovedFertilityResultsView: View {
                     .tag(4)
                 
                 // Pestaña 6: Modo de Pensamiento Médico
-                MedicalThinkingView()
+                MedicalThinkingView(fertilityProfile: profile)
                     .tabItem {
                         Image(systemName: "brain.head.profile")
                         Text("Pensamiento")

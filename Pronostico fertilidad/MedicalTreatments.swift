@@ -670,18 +670,28 @@ struct AgeBasedClinicalRecommendations {
                 )
                 
             case .age35to37:
+                // 🚨 CORRECCIÓN CRÍTICA: AMH < 0.5 requiere FIV inmediata
+                let hasCriticalAMH = (amh ?? 0) < 0.5
+                let hasGoodReserve = (amh ?? 0) > 1.2 && (cfa ?? 0) > 7
+                
                 return IUIRecommendation(
-                    isRecommended: true,
-                    maxCycles: 3,
-                    successRate: 0.125, // 12.5% promedio (10-15%)
-                    conditions: [
-                        "Buena reserva ovárica",
+                    isRecommended: !hasCriticalAMH && hasGoodReserve,
+                    maxCycles: hasCriticalAMH ? 0 : (hasGoodReserve ? 3 : 0),
+                    successRate: hasCriticalAMH ? 0.02 : 0.125, // 2% si AMH crítico, 12.5% normal
+                    conditions: hasCriticalAMH ? [
+                        "AMH crítico <0.5 ng/mL - FIV inmediata requerida",
+                        "No recomendado IIU por baja reserva ovárica",
+                        "Considerar ovodonación si AMH <0.3 ng/mL"
+                    ] : [
+                        "Buena reserva ovárica (AMH >1.2 ng/mL)",
                         "Permeabilidad tubárica",
                         "Sin factor masculino significativo",
                         "Pronóstico individualizado"
                     ],
-                    stimulationType: "Estimulación ovárica moderada preferida",
-                    reference: "NICE Fertility Problems Assessment (2024), PMID: 36746012"
+                    stimulationType: hasCriticalAMH ? "No aplicable - FIV requerida" : "Estimulación ovárica moderada preferida",
+                    reference: hasCriticalAMH ? 
+                        "ESHRE Guideline Poor Ovarian Response (2024), DOI: 10.1093/hropen/hoad030" :
+                        "NICE Fertility Problems Assessment (2024), PMID: 36746012"
                 )
                 
             case .age38to40:

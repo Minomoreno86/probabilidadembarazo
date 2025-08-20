@@ -1,6 +1,9 @@
 import Foundation
 import SwiftUI
 
+// Importar los modelos necesarios
+// FertilityProfile y enums están en FertilityModels.swift
+
 // MARK: - 📊 ESTRUCTURAS DE DATOS PARA ANÁLISIS COMPLETO
 
 /// Factor no modificable que afecta la fertilidad
@@ -270,10 +273,18 @@ class TreatmentSimulator {
             rationale.append("IMC ≥ 35: obesidad impacta fertilidad.")
         }
         
-        // Años de infertilidad
-        if let duration = profile.infertilityDuration, duration >= 3 {
-            score += 1
-            rationale.append("Duración infertilidad ≥ 3 años: factor tiempo.")
+        // Años de infertilidad - ESCALAMIENTO AUTOMÁTICO
+        if let duration = profile.infertilityDuration {
+            if duration >= 5 {
+                score += 3  // Puntos críticos para FIV directo
+                rationale.append("Duración infertilidad ≥ 5 años: ESCALAMIENTO AUTOMÁTICO a FIV (ASRM Guidelines 2024).")
+            } else if duration >= 3 {
+                score += 2  // Puntos moderados
+                rationale.append("Duración infertilidad ≥ 3 años: factor tiempo significativo.")
+            } else if duration >= 2 {
+                score += 1  // Puntos leves
+                rationale.append("Duración infertilidad ≥ 2 años: factor tiempo leve.")
+            }
         }
         
         // SOP + IMC (interacción)

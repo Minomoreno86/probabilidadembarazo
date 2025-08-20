@@ -19,6 +19,9 @@ struct FertilityFactorsView: View {
     let result: ImprovedFertilityEngine.ComprehensiveFertilityResult
     let profile: FertilityProfile
     
+    @State private var showingTooltip = false
+    @State private var selectedFactor: (String, Double)?
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 24) {
@@ -37,6 +40,34 @@ struct FertilityFactorsView: View {
             .padding()
         }
         .accessibilityIdentifier("fertility_factors_view")
+        .overlay(
+            // Tooltip overlay
+            Group {
+                if showingTooltip, let selectedFactor = selectedFactor {
+                    Color.black.opacity(0.3)
+                        .ignoresSafeArea()
+                        .onTapGesture {
+                            withAnimation(.easeInOut(duration: 0.3)) {
+                                showingTooltip = false
+                                self.selectedFactor = nil
+                            }
+                        }
+                    
+                    FactorTooltip(
+                        factor: selectedFactor.0,
+                        value: selectedFactor.1,
+                        profile: profile
+                    )
+                    .transition(.scale.combined(with: .opacity))
+                    .onTapGesture {
+                        withAnimation(.easeInOut(duration: 0.3)) {
+                            showingTooltip = false
+                            self.selectedFactor = nil
+                        }
+                    }
+                }
+            }
+        )
     }
     
     // MARK: - 📈 HEADER DE IMPACTO
@@ -99,7 +130,13 @@ struct FertilityFactorsView: View {
                     SuperFactorCard(
                         factor: factor.key,
                         impact: factor.value,
-                        colors: colors
+                        colors: colors,
+                        onLongPress: {
+                            withAnimation(.easeInOut(duration: 0.3)) {
+                                selectedFactor = (factor.key, factor.value)
+                                showingTooltip = true
+                            }
+                        }
                     )
                 }
             }
@@ -269,6 +306,7 @@ struct SuperFactorCard: View {
     let factor: String
     let impact: Double
     let colors: ThemeColors
+    let onLongPress: () -> Void
     @State private var isAnimating = false
         
     var body: some View {
@@ -364,6 +402,9 @@ struct SuperFactorCard: View {
         .shadow(color: factorColor.opacity(0.2), radius: 8, x: 0, y: 4)
         .onAppear {
             isAnimating = true
+        }
+        .onLongPressGesture {
+            onLongPress()
         }
     }
     
@@ -548,6 +589,275 @@ struct CategorySummaryCard: View {
 
 
 // MARK: - 🔧 PREVIEW
+
+// MARK: - 🎯 TOOLTIP INTERACTIVO
+
+struct FactorTooltip: View {
+    let factor: String
+    let value: Double
+    let profile: FertilityProfile
+    @Environment(\.themeColors) var colors
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            // Header con icono y título
+            HStack {
+                Image(systemName: factorIcon)
+                    .foregroundColor(factorColor)
+                    .font(.title2)
+                Text(factorDisplayName)
+                    .font(.headline)
+                    .fontWeight(.bold)
+                    .foregroundColor(colors.text)
+                Spacer()
+            }
+            
+            // Valor actual
+            HStack {
+                Text("Tu valor:")
+                    .font(.subheadline)
+                    .foregroundColor(colors.textSecondary)
+                Spacer()
+                Text(valueDisplay)
+                    .font(.title3)
+                    .fontWeight(.bold)
+                    .foregroundColor(factorColor)
+            }
+            
+            // Rango normal
+            HStack {
+                Text("Rango normal:")
+                    .font(.caption)
+                    .foregroundColor(colors.textSecondary)
+                Spacer()
+                Text(normalRange)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+            
+            Divider()
+                .background(colors.textSecondary.opacity(0.3))
+            
+            // Explicación simple
+            VStack(alignment: .leading, spacing: 4) {
+                Text("¿Qué significa?")
+                    .font(.caption)
+                    .fontWeight(.semibold)
+                    .foregroundColor(colors.text)
+                Text(simpleExplanation)
+                    .font(.caption)
+                    .foregroundColor(colors.textSecondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            
+            // Referencia
+            HStack {
+                Spacer()
+                Text("📚 \(reference)")
+                    .font(.caption2)
+                    .foregroundColor(.blue)
+            }
+        }
+        .padding(16)
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(colors.surface)
+                .shadow(color: .black.opacity(0.2), radius: 12, x: 0, y: 6)
+        )
+        .frame(maxWidth: 300)
+    }
+    
+    private var factorDisplayName: String {
+        factor.capitalized.replacingOccurrences(of: "_", with: " ")
+    }
+    
+    private var factorIcon: String {
+        switch factor.lowercased() {
+        case "edad", "age":
+            return "person.circle.fill"
+        case "bmi":
+            return "scalemass.fill"
+        case "amh", "antimulleriana":
+            return "drop.fill"
+        case "tsh":
+            return "brain.head.profile"
+        case "prolactina", "prolactin":
+            return "drop.circle.fill"
+        case "homa", "homa_ir":
+            return "heart.fill"
+        case "ciclo", "cycle":
+            return "calendar.circle.fill"
+        case "infertilidad", "infertility":
+            return "clock.circle.fill"
+        case "sop", "pcos":
+            return "leaf.circle.fill"
+        case "hsg":
+            return "waveform.path.ecg"
+        case "endometriosis":
+            return "flame.circle.fill"
+        case "adenomiosis":
+            return "square.circle.fill"
+        case "mioma", "myoma":
+            return "circle.circle.fill"
+        case "polipo", "polyp":
+            return "diamond.circle.fill"
+        default:
+            return "chart.bar.circle.fill"
+        }
+    }
+    
+    private var factorColor: Color {
+        if factor.contains("Edad") {
+            if value >= 0.20 {
+                return .green
+            } else if value >= 0.15 {
+                return .green
+            } else if value >= 0.10 {
+                return .orange
+            } else {
+                return .red
+            }
+        } else if factor.contains("AMH") || factor.contains("Reserva Ovárica") {
+            if value >= 1.0 {
+                return .green
+            } else if value >= 0.75 {
+                return .orange
+            } else if value >= 0.4 {
+                return .orange
+            } else {
+                return .red
+            }
+        } else if factor.contains("Prolactina") || factor.contains("prolactin") {
+            // Prolactina: <25 normal, 25-50 moderado, >50 crítico
+            if value < 25 {
+                return .green
+            } else if value < 50 {
+                return .orange
+            } else {
+                return .red
+            }
+        } else {
+            if value >= 0.95 {
+                return .green
+            } else if value >= 0.8 {
+                return .orange
+            } else {
+                return .red
+            }
+        }
+    }
+    
+    private var valueDisplay: String {
+        if factor.contains("Edad") {
+            return "\(Int(profile.age)) años"
+        } else if factor.contains("AMH") {
+            return String(format: "%.1f ng/mL", value)
+        } else if factor.contains("TSH") {
+            return String(format: "%.1f mUI/L", value)
+        } else if factor.contains("BMI") {
+            return String(format: "%.1f", value)
+        } else {
+            return String(format: "%.2f", value)
+        }
+    }
+    
+    private var normalRange: String {
+        switch factor.lowercased() {
+        case "edad", "age":
+            return "18-35 años"
+        case "amh", "antimulleriana":
+            return "1.0-4.0 ng/mL"
+        case "tsh":
+            return "0.4-4.0 mUI/L"
+        case "bmi":
+            return "18.5-24.9"
+        case "prolactina", "prolactin":
+            return "<25 ng/mL"
+        case "homa", "homa_ir":
+            return "<2.5"
+        case "ciclo", "cycle":
+            return "21-35 días"
+        case "infertilidad", "infertility":
+            return "<2 años"
+        default:
+            return "Variable"
+        }
+    }
+    
+    private var simpleExplanation: String {
+        switch factor.lowercased() {
+        case "edad", "age":
+            return "La fertilidad disminuye gradualmente después de los 30 años. Tu probabilidad mensual está en rango moderado."
+        case "amh", "antimulleriana":
+            return "AMH indica la cantidad de óvulos disponibles. Tu nivel sugiere buena reserva ovárica."
+        case "tsh":
+            return "TSH controla la función tiroidea. Tu nivel está en rango normal, favorable para la fertilidad."
+        case "bmi":
+            return "El IMC afecta la ovulación y la respuesta a tratamientos. Tu valor está en rango saludable."
+        case "prolactina", "prolactin":
+            if value > 25 {
+                return "La prolactina elevada puede afectar la ovulación. Tu nivel está por encima del rango normal."
+            } else {
+                return "La prolactina elevada puede afectar la ovulación. Tu nivel está en rango normal."
+            }
+        case "homa", "homa_ir":
+            return "HOMA-IR mide la resistencia a la insulina. Tu valor indica buen metabolismo."
+        case "ciclo", "cycle":
+            return "La duración del ciclo menstrual refleja la función ovárica. Tu ciclo está en rango normal."
+        case "infertilidad", "infertility":
+            return "El tiempo de infertilidad es un factor importante para decidir tratamientos."
+        case "sop", "pcos":
+            return "El SOP puede afectar la ovulación y la respuesta a tratamientos."
+        case "hsg":
+            return "La HSG evalúa la permeabilidad de las trompas de Falopio."
+        case "endometriosis":
+            return "La endometriosis puede afectar la fertilidad y la implantación."
+        case "adenomiosis":
+            return "La adenomiosis puede afectar la implantación del embrión."
+        case "mioma", "myoma":
+            return "Los miomas pueden afectar la implantación y el desarrollo del embarazo."
+        case "polipo", "polyp":
+            return "Los pólipos pueden afectar la implantación del embrión."
+        default:
+            return "Este factor influye en la probabilidad de embarazo."
+        }
+    }
+    
+    private var reference: String {
+        switch factor.lowercased() {
+        case "edad", "age":
+            return "ASRM 2024"
+        case "amh", "antimulleriana":
+            return "ESHRE 2023"
+        case "tsh":
+            return "Endocrine Society 2024"
+        case "bmi":
+            return "WHO 2024"
+        case "prolactina", "prolactin":
+            return "Endocrine Society 2024"
+        case "homa", "homa_ir":
+            return "ADA 2024"
+        case "ciclo", "cycle":
+            return "ACOG 2024"
+        case "infertilidad", "infertility":
+            return "ASRM 2024"
+        case "sop", "pcos":
+            return "ESHRE 2023"
+        case "hsg":
+            return "ACOG 2024"
+        case "endometriosis":
+            return "ESHRE 2023"
+        case "adenomiosis":
+            return "ESHRE 2023"
+        case "mioma", "myoma":
+            return "ACOG 2024"
+        case "polipo", "polyp":
+            return "ACOG 2024"
+        default:
+            return "Guías Clínicas"
+        }
+    }
+}
 
 #Preview {
     Text("FertilityFactorsView Preview")

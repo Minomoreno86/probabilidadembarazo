@@ -786,27 +786,55 @@ extension ImprovedFertilityEngine {
             hasOtherFactors: factors.endometriosis < 1.0 || factors.male < 1.0 || factors.hsg < 1.0
         )
         
+        // Declarar variables antes del debug log
+        let hasAdverseFactors = factors.bmi < 1.0 || factors.amh < 1.0 || factors.endometriosis < 1.0 || factors.male < 1.0 || factors.hsg < 1.0 || factors.pcos < 1.0
+        
+        let hasSpecificIVFIndications = 
+            factors.hsg >= 1.0 ||           // Obstrucción tubárica bilateral
+            factors.endometriosis >= 1.0 || // Endometriosis severa
+            (factors.male >= 1.0 && (profile.spermConcentration ?? 15) < 5) || // Oligozoospermia severa
+            (profile.age >= 40) ||          // Edad materna muy avanzada
+            ((profile.amhValue ?? 2.0) < 0.5) // AMH crítico
+
+        // 🔍 DEBUG LOG TEMPORAL PARA RECOMENDACIONES
+        print("🔍 DEBUG RECOMENDACIONES PERSONALIZADAS:")
+        print("   - Edad: \(profile.age)")
+        print("   - AMH: \(profile.amhValue ?? 0.0)")
+        print("   - Duración infertilidad: \(profile.infertilityDuration ?? 0)")
+        print("   - Recomendación principal: \(ageBasedRec.primaryRecommendation)")
+        print("   - Has adverse factors: \(hasAdverseFactors)")
+        print("   - Has specific IVF indications: \(hasSpecificIVFIndications)")
+        
         // ✅ CORRECCIÓN: Recomendación principal basada en INDICACIONES ESPECÍFICAS, no solo probabilidad
         switch ageBasedRec.primaryRecommendation {
         case .lowComplexity:
-            let iuiRec = ageBasedRec.iuiRecommendation
-            recommendations.append(Recommendation(
-                title: "Tratamiento de Baja Complejidad",
-                description: "\(iuiRec.recommendation). \(iuiRec.stimulationType)",
-                priority: .medium,
-                category: .reproductive,
-                evidenceLevel: .A
-            ))
+            print("   - CASO: Recomendando baja complejidad")
+            
+            // 🚨 CORRECCIÓN CRÍTICA: Si AMH < 1.0, NUNCA recomendar baja complejidad
+            if let amh = profile.amhValue, amh < 1.0 {
+                print("   - OVERRIDE: AMH crítico < 1.0, escalando a FIV")
+                let ivfRec = ageBasedRec.ivfRecommendation
+                recommendations.append(Recommendation(
+                    title: "FIV INMEDIATA - AMH Crítico",
+                    description: "AMH \(amh) ng/mL requiere FIV inmediata. Considerar ovodonación si AMH <0.3 ng/mL. \(ivfRec.strategy)",
+                    priority: .critical,
+                    category: .reproductive,
+                    evidenceLevel: .A
+                ))
+            } else {
+                let iuiRec = ageBasedRec.iuiRecommendation
+                recommendations.append(Recommendation(
+                    title: "Tratamiento de Baja Complejidad",
+                    description: "\(iuiRec.recommendation). \(iuiRec.stimulationType)",
+                    priority: .medium,
+                    category: .reproductive,
+                    evidenceLevel: .A
+                ))
+            }
             
         case .highComplexity:
             // ✅ SOLO FIV/ICSI si hay indicaciones específicas
-            let hasSpecificIVFIndications = 
-                factors.hsg >= 1.0 ||           // Obstrucción tubárica bilateral
-                factors.otb >= 0.9 ||           // OTB bilateral
-                factors.male >= 0.75 ||         // Factor masculino severo
-                factors.endometriosis >= 0.7 || // Endometriosis severa
-                (factors.amh < 0.5 && profile.age > 38) || // Baja reserva crítica + edad
-                profile.age > 42                // Edad crítica
+            // hasSpecificIVFIndications ya declarado arriba
             
             if hasSpecificIVFIndications {
             let ivfRec = ageBasedRec.ivfRecommendation
@@ -858,7 +886,7 @@ extension ImprovedFertilityEngine {
         }
         
         // 🎯 FILTRAR: Solo recomendaciones relevantes para el perfil específico
-        let hasAdverseFactors = factors.bmi < 1.0 || factors.amh < 1.0 || factors.endometriosis < 1.0 || factors.male < 1.0 || factors.hsg < 1.0 || factors.pcos < 1.0
+        // hasAdverseFactors ya declarado arriba
         
         // Solo counseling si hay factores adversos o edad >30
         if profile.age > 30 || hasAdverseFactors {

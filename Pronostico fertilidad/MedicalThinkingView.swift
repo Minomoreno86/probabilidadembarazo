@@ -8,69 +8,176 @@ struct MedicalThinkingView: View {
     @State private var thinkingResult: MedicalThinkingResult?
     @State private var showingThinkingMode = false
     
+    // Recibir el perfil de fertilidad desde la vista padre
+    let fertilityProfile: FertilityProfile
+    
+    init(fertilityProfile: FertilityProfile) {
+        self.fertilityProfile = fertilityProfile
+    }
+    
     var body: some View {
-        VStack(spacing: 20) {
-            // Header
-            VStack(spacing: 10) {
-                HStack {
-                    Image(systemName: "brain.head.profile")
-                        .font(.title)
-                        .foregroundColor(.blue)
+        ScrollView {
+            LazyVStack(spacing: 20) {
+                // Header
+                VStack(spacing: 10) {
+                    HStack {
+                        Image(systemName: "brain.head.profile")
+                            .font(.title)
+                            .foregroundColor(.blue)
+                        
+                        Text("Modo de Pensamiento Médico")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                        
+                        Spacer()
+                    }
                     
-                    Text("Modo de Pensamiento Médico")
-                        .font(.title2)
-                        .fontWeight(.bold)
+                    Text("Análisis paso a paso con evidencia científica")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                }
+                .padding()
+                .background(Color(uiColor: .systemBackground))
+                .cornerRadius(12)
+                .shadow(radius: 2)
+                
+                // Información del perfil del paciente
+                VStack(spacing: 8) {
+                    HStack {
+                        Image(systemName: "person.circle.fill")
+                            .foregroundColor(.green)
+                            .font(.title2)
+                        
+                        Text("Perfil del Paciente")
+                            .font(.headline)
+                            .fontWeight(.semibold)
+                        
+                        Spacer()
+                    }
                     
-                    Spacer()
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Edad: \(Int(fertilityProfile.age)) años")
+                            .font(.subheadline)
+                        if let amh = fertilityProfile.amhValue {
+                            Text("AMH: \(amh, specifier: "%.2f") ng/mL")
+                                .font(.subheadline)
+                        }
+                        if let tsh = fertilityProfile.tshValue {
+                            Text("TSH: \(tsh, specifier: "%.2f") mIU/L")
+                                .font(.subheadline)
+                        }
+                        Text("BMI: \(fertilityProfile.bmi, specifier: "%.1f")")
+                            .font(.subheadline)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .padding()
+                .background(Color(uiColor: .systemBackground))
+                .cornerRadius(12)
+                .shadow(radius: 2)
+                
+                // Botón para activar modo de pensamiento
+                Button(action: {
+                    print("🔍 DEBUG: Botón presionado!")
+                    activateThinkingMode()
+                }) {
+                    HStack {
+                        if showingThinkingMode {
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                                .scaleEffect(0.8)
+                        } else {
+                            Image(systemName: "brain")
+                                .font(.title2)
+                        }
+                        Text(showingThinkingMode ? "Analizando..." : "Activar Análisis Profundo")
+                            .font(.headline)
+                            .fontWeight(.semibold)
+                    }
+                    .foregroundColor(.white)
+                    .padding(.vertical, 16)
+                    .padding(.horizontal, 20)
+                    .frame(maxWidth: .infinity)
+                    .background(
+                        LinearGradient(
+                            gradient: Gradient(colors: showingThinkingMode ? [Color.gray, Color.gray.opacity(0.8)] : [Color.blue, Color.blue.opacity(0.8)]),
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
+                    .cornerRadius(12)
+                    .shadow(color: showingThinkingMode ? .gray.opacity(0.3) : .blue.opacity(0.3), radius: 8, x: 0, y: 4)
+                    .scaleEffect(showingThinkingMode ? 0.98 : 1.0)
+                    .animation(.easeInOut(duration: 0.1), value: showingThinkingMode)
+                }
+                .disabled(showingThinkingMode)
+                
+                // Mensaje de estado
+                if showingThinkingMode {
+                    VStack(spacing: 12) {
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle(tint: .blue))
+                            .scaleEffect(1.2)
+                        
+                        Text("Ejecutando análisis médico profundo...")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                            .multilineTextAlignment(.center)
+                    }
+                    .padding()
+                    .background(Color(uiColor: .systemBackground))
+                    .cornerRadius(12)
+                    .shadow(radius: 2)
                 }
                 
-                Text("Análisis paso a paso con evidencia científica")
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
+                // Resultados del modo de pensamiento
+                if let result = thinkingResult {
+                    VStack(spacing: 16) {
+                        // Indicador de éxito
+                        HStack {
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundColor(.green)
+                                .font(.title2)
+                            
+                            Text("¡Análisis Completado!")
+                                .font(.headline)
+                                .fontWeight(.bold)
+                                .foregroundColor(.green)
+                            
+                            Spacer()
+                        }
+                        .padding()
+                        .background(Color.green.opacity(0.1))
+                        .cornerRadius(12)
+                        
+                        // Vista de resultados
+                        ThinkingResultView(result: result)
+                    }
+                }
             }
             .padding()
-            .background(Color(uiColor: .systemBackground))
-            .cornerRadius(12)
-            .shadow(radius: 2)
-            
-            // Botón para activar modo de pensamiento
-            Button(action: {
-                activateThinkingMode()
-            }) {
-                HStack {
-                    Image(systemName: "brain")
-                        .font(.title2)
-                    Text("Activar Análisis Profundo")
-                        .font(.headline)
-                }
-                .foregroundColor(.white)
-                .padding()
-                .frame(maxWidth: .infinity)
-                .background(Color.blue)
-                .cornerRadius(12)
-            }
-            .disabled(showingThinkingMode)
-            
-            // Resultados del modo de pensamiento
-            if let result = thinkingResult {
-                ThinkingResultView(result: result)
-            }
-            
-            Spacer()
         }
-        .padding()
         .background(Color(uiColor: .systemGroupedBackground))
         .navigationTitle("Pensamiento Médico")
         .navigationBarTitleDisplayMode(.inline)
+        .refreshable {
+            // Permitir pull-to-refresh
+            if !showingThinkingMode {
+                activateThinkingMode()
+            }
+        }
     }
     
     private func activateThinkingMode() {
+        print("🔍 DEBUG: Botón presionado - iniciando análisis...")
         showingThinkingMode = true
         
-        // Simular procesamiento
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            thinkingResult = thinkingEngine.analyzeWithThinkingMode()
+        // Simular procesamiento con indicador visual
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            print("🔍 DEBUG: Generando resultado del análisis...")
+            thinkingResult = thinkingEngine.analyzeWithThinkingMode(profile: fertilityProfile)
             showingThinkingMode = false
+            print("🔍 DEBUG: Análisis completado - resultado: \(thinkingResult != nil ? "SUCCESS" : "FAILED")")
         }
     }
 }
@@ -458,6 +565,6 @@ struct FollowUpPlanCard: View {
 
 #Preview {
     NavigationView {
-        MedicalThinkingView()
+        MedicalThinkingView(fertilityProfile: FertilityProfile(age: 30, height: 165, weight: 65, amhValue: 2.5, tshValue: 2.0))
     }
 }
