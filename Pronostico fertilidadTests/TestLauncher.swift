@@ -100,12 +100,14 @@ struct PerformanceTestRunner {
         
         for i in 0..<iterations {
             let profile = FertilityProfile(
-                age: 25 + (i % 20),  // Edades variadas
-                height: 160 + (i % 20),
-                weight: 55 + (i % 30),
-                tshValue: 2.0 + Double(i % 10),
-                amhValue: 0.5 + Double(i % 5)
+                age: Double(25 + (i % 20)),  // Edades variadas
+                height: Double(160 + (i % 20)),
+                weight: Double(55 + (i % 30))
             )
+            
+            // Establecer valores después de la inicialización
+            profile.tshValue = 2.0 + Double(i % 10)
+            profile.amhValue = 0.5 + Double(i % 5)
             
             let _ = engine.analyzeComprehensiveFertility(from: profile)
         }
@@ -142,10 +144,14 @@ struct PerformanceTestRunner {
         let startTime = Date()
         
         for i in 0..<iterations {
-            let profile = FertilityProfile()
-            profile.age = 25 + (i % 20)
+            let profile = FertilityProfile(
+                age: Double(25 + (i % 20)),
+                height: 165.0,
+                weight: 65.0
+            )
+            
+            // Establecer valores después de la inicialización
             profile.tshValue = 5.0 + Double(i % 10)
-            profile.bmi = 22.0 + Double(i % 15)
             profile.amhValue = 0.5 + Double(i % 5)
             
             let _ = simulator.determineOptimalTreatment(profile: profile)
@@ -184,7 +190,7 @@ struct PerformanceTestRunner {
         let startTime = Date()
         
         for i in 0..<iterations {
-            let age = 18 + (i % 28)  // Edades 18-45
+            let age = Double(18 + (i % 28))  // Edades 18-45
             let bmi = 18.0 + Double(i % 25)  // IMC 18-43
             let tsh = 0.1 + Double(i % 20)  // TSH 0.1-20.0
             
