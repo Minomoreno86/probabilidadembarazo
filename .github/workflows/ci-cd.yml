@@ -1,316 +1,189 @@
-name: 🚀 CI/CD - Pronóstico Fertilidad
+name: 🚀 CI/CD - Pronostico Fertilidad
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main, develop, feature/* ]
   pull_request:
     branches: [ main, develop ]
   workflow_dispatch: # Permite ejecutar manualmente
 
 env:
   XCODE_VERSION: '16.0'
-  IOS_VERSION: '18.5'
+  IOS_VERSION: '18.6'
   DEVICE: 'iPhone 16'
 
 jobs:
-  # 🧪 TESTS UNITARIOS E INTEGRACIÓN
-  unit-tests:
-    name: 🧪 Tests Unitarios e Integración
+  # 🧪 JOB DE TESTS Y VALIDACIÓN
+  test-and-validate:
+    name: 🧪 Tests & Validación
     runs-on: macos-latest
     
     steps:
-    - name: 📥 Checkout código
-      uses: actions/checkout@v4
+      - name: 📥 Checkout código
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Para code coverage completo
       
-    - name: 🍎 Setup Xcode
-      uses: maxim-lobanov/setup-xcode@v1
-      with:
-        xcode-version: ${{ env.XCODE_VERSION }}
-        
-    - name: 📱 Setup iOS Simulator
-      uses: apple-actions/import-codesigning-certs@v1
+      - name: 🍎 Configurar Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: ${{ env.XCODE_VERSION }}
       
-    - name: 🧪 Ejecutar Tests Unitarios
-      run: |
-        echo "🚀 Ejecutando tests unitarios..."
-        xcodebuild test \
-          -project "Pronostico fertilidad.xcodeproj" \
-          -scheme "Pronostico fertilidad" \
-          -destination "platform=iOS Simulator,name=${{ env.DEVICE }},OS=${{ env.IOS_VERSION }}" \
-          -enableCodeCoverage YES \
-          -resultBundlePath "TestResults.xcresult" \
-          | xcpretty --color --simple
-        
-    - name: 📊 Generar Reporte de Cobertura
-      run: |
-        echo "📊 Generando reporte de cobertura..."
-        xcrun xccov view --report --json TestResults.xcresult > coverage.json
-        
-    - name: 💾 Subir Reportes de Test
-      uses: actions/upload-artifact@v4
-      with:
-        name: test-results
-        path: |
-          TestResults.xcresult
-          coverage.json
-          
-    - name: 📈 Comentar Cobertura en PR
-      if: github.event_name == 'pull_request'
-      uses: romeovs/lcov-reporter-action@v0.3.1
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        lcov-file: coverage.info
+      - name: 📱 Listar simuladores disponibles
+        run: |
+          xcrun simctl list devices available
+          echo "Simuladores iOS disponibles:"
+          xcrun simctl list devices | grep "iPhone"
+      
+      - name: 🔧 Instalar dependencias
+        run: |
+          echo "Instalando dependencias..."
+          # Aquí puedes agregar comandos para instalar dependencias si las hay
+          echo "Dependencias instaladas ✅"
+      
+      - name: 🧪 Ejecutar Tests Unitarios
+        run: |
+          echo "🧪 Ejecutando tests unitarios..."
+          xcodebuild test \
+            -project "Pronostico fertilidad.xcodeproj" \
+            -scheme "Pronostico fertilidad" \
+            -destination "platform=iOS Simulator,name=${{ env.DEVICE }},OS=${{ env.IOS_VERSION }}" \
+            -only-testing:Pronostico_fertilidadTests \
+            -enableCodeCoverage YES \
+            -resultBundlePath "TestResults.xcresult" \
+            | xcpretty
+      
+      - name: 🧪 Ejecutar Tests UI
+        run: |
+          echo "🧪 Ejecutando tests UI..."
+          xcodebuild test \
+            -project "Pronostico fertilidad.xcodeproj" \
+            -scheme "Pronostico fertilidad" \
+            -destination "platform=iOS Simulator,name=${{ env.DEVICE }},OS=${{ env.IOS_VERSION }}" \
+            -only-testing:Pronostico_fertilidadUITests \
+            -enableCodeCoverage YES \
+            -resultBundlePath "UITestResults.xcresult" \
+            | xcpretty
+      
+      - name: 📊 Generar Code Coverage
+        run: |
+          echo "📊 Generando reporte de code coverage..."
+          xcrun xccov view --report --files-for-target "Pronostico fertilidad" TestResults.xcresult
+          xcrun xccov view --report --files-for-target "Pronostico fertilidad" UITestResults.xcresult
+      
+      - name: 📦 Subir resultados de tests
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: |
+            TestResults.xcresult
+            UITestResults.xcresult
+          retention-days: 30
+      
+      - name: 📈 Reporte de Code Coverage
+        uses: romeovs/lcov-reporter-action@v0.3.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          lcov-file: coverage.info
+      
+      - name: 📧 Notificar resultados
+        if: always()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "🧪 Tests Pronostico Fertilidad - ${{ job.status }}"
+          to: ${{ secrets.EMAIL_TO }}
+          from: "GitHub Actions"
+          body: |
+            Tests ejecutados para Pronostico Fertilidad
+            
+            Estado: ${{ job.status }}
+            Branch: ${{ github.ref_name }}
+            Commit: ${{ github.sha }}
+            
+            Ver detalles: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
-  # 🎨 TESTS DE UI
-  ui-tests:
-    name: 🎨 Tests de UI
+  # 🏗️ JOB DE BUILD Y ANÁLISIS
+  build-and-analyze:
+    name: 🏗️ Build & Análisis
     runs-on: macos-latest
-    needs: unit-tests
+    needs: test-and-validate
     
     steps:
-    - name: 📥 Checkout código
-      uses: actions/checkout@v4
+      - name: 📥 Checkout código
+        uses: actions/checkout@v4
       
-    - name: 🍎 Setup Xcode
-      uses: maxim-lobanov/setup-xcode@v1
-      with:
-        xcode-version: ${{ env.XCODE_VERSION }}
-        
-    - name: 📱 Setup iOS Simulator
-      uses: apple-actions/import-codesigning-certs@v1
+      - name: 🍎 Configurar Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: ${{ env.XCODE_VERSION }}
       
-    - name: 🎨 Ejecutar Tests de UI
-      run: |
-        echo "🎨 Ejecutando tests de UI..."
-        xcodebuild test \
-          -project "Pronostico fertilidad.xcodeproj" \
-          -scheme "Pronostico fertilidadUITests" \
-          -destination "platform=iOS Simulator,name=${{ env.DEVICE }},OS=${{ env.IOS_VERSION }}" \
-          -resultBundlePath "UITestResults.xcresult" \
-          | xcpretty --color --simple
-        
-    - name: 💾 Subir Resultados de UI Tests
-      uses: actions/upload-artifact@v4
-      with:
-        name: ui-test-results
-        path: UITestResults.xcresult
+      - name: 🔍 Análisis estático del código
+        run: |
+          echo "🔍 Ejecutando análisis estático..."
+          xcodebuild analyze \
+            -project "Pronostico fertilidad.xcodeproj" \
+            -scheme "Pronostico fertilidad" \
+            -destination "platform=iOS Simulator,name=${{ env.DEVICE }},OS=${{ env.IOS_VERSION }}" \
+            | xcpretty
+      
+      - name: 🏗️ Build de la aplicación
+        run: |
+          echo "🏗️ Construyendo aplicación..."
+          xcodebuild build \
+            -project "Pronostico fertilidad.xcodeproj" \
+            -scheme "Pronostico fertilidad" \
+            -destination "platform=iOS Simulator,name=${{ env.DEVICE }},OS=${{ env.IOS_VERSION }}" \
+            -configuration Debug \
+            | xcpretty
+      
+      - name: 📱 Build para simulador
+        run: |
+          echo "📱 Construyendo para simulador..."
+          xcodebuild build \
+            -project "Pronostico fertilidad.xcodeproj" \
+            -scheme "Pronostico fertilidad" \
+            -destination "platform=iOS Simulator,name=${{ env.DEVICE }},OS=${{ env.IOS_VERSION }}" \
+            -configuration Release \
+            | xcpretty
 
-  # 🏗️ BUILD Y VALIDACIÓN
-  build:
-    name: 🏗️ Build y Validación
+  # 🚀 JOB DE DESPLIEGUE (OPCIONAL)
+  deploy:
+    name: 🚀 Despliegue
     runs-on: macos-latest
-    needs: [unit-tests, ui-tests]
-    
-    steps:
-    - name: 📥 Checkout código
-      uses: actions/checkout@v4
-      
-    - name: 🍎 Setup Xcode
-      uses: maxim-lobanov/setup-xcode@v1
-      with:
-        xcode-version: ${{ env.XCODE_VERSION }}
-        
-    - name: 🔐 Setup Code Signing
-      uses: apple-actions/import-codesigning-certs@v1
-      
-    - name: 🏗️ Build para Simulador
-      run: |
-        echo "🏗️ Construyendo para simulador..."
-        xcodebuild build \
-          -project "Pronostico fertilidad.xcodeproj" \
-          -scheme "Pronostico fertilidad" \
-          -destination "platform=iOS Simulator,name=${{ env.DEVICE }},OS=${{ env.IOS_VERSION }}" \
-          -configuration Debug \
-          | xcpretty --color --simple
-          
-    - name: 🏗️ Build para Dispositivo
-      run: |
-        echo "🏗️ Construyendo para dispositivo..."
-        xcodebuild build \
-          -project "Pronostico fertilidad.xcodeproj" \
-          -scheme "Pronostico fertilidad" \
-          -configuration Release \
-          -destination generic/platform=iOS \
-          | xcpretty --color --simple
-          
-    - name: 🔍 Validar Build
-      run: |
-        echo "🔍 Validando build..."
-        if [ -d "build" ]; then
-          echo "✅ Build exitoso"
-          ls -la build/
-        else
-          echo "❌ Build falló"
-          exit 1
-        fi
-
-  # 📱 DEPLOYMENT A TESTFLIGHT
-  deploy-testflight:
-    name: 📱 Deploy a TestFlight
-    runs-on: macos-latest
-    needs: build
+    needs: [test-and-validate, build-and-analyze]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     
     steps:
-    - name: 📥 Checkout código
-      uses: actions/checkout@v4
+      - name: 📥 Checkout código
+        uses: actions/checkout@v4
       
-    - name: 🍎 Setup Xcode
-      uses: maxim-lobanov/setup-xcode@v1
-      with:
-        xcode-version: ${{ env.XCODE_VERSION }}
-        
-    - name: 🔐 Setup Code Signing
-      uses: apple-actions/import-codesigning-certs@v1
+      - name: 🍎 Configurar Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: ${{ env.XCODE_VERSION }}
       
-    - name: 📱 Build para TestFlight
-      run: |
-        echo "📱 Construyendo para TestFlight..."
-        xcodebuild archive \
-          -project "Pronostico fertilidad.xcodeproj" \
-          -scheme "Pronostico fertilidad" \
-          -configuration Release \
-          -archivePath "PronosticoFertilidad.xcarchive" \
-          -destination generic/platform=iOS \
-          | xcpretty --color --simple
-          
-    - name: 📦 Exportar IPA
-      run: |
-        echo "📦 Exportando IPA..."
-        xcodebuild -exportArchive \
-          -archivePath "PronosticoFertilidad.xcarchive" \
-          -exportPath "export" \
-          -exportOptionsPlist "exportOptions.plist" \
-          | xcpretty --color --simple
-          
-    - name: 🚀 Subir a TestFlight
-      uses: apple-actions/upload-testflight@v1
-      with:
-        app-path: export/Pronostico\ fertilidad.ipa
-        api-key: ${{ secrets.APP_STORE_CONNECT_API_KEY }}
-        api-key-id: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
-        api-issuer-id: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
-
-  # 🔍 ANÁLISIS DE CÓDIGO
-  code-analysis:
-    name: 🔍 Análisis de Código
-    runs-on: macos-latest
-    
-    steps:
-    - name: 📥 Checkout código
-      uses: actions/checkout@v4
-      
-    - name: 🍎 Setup Xcode
-      uses: maxim-lobanov/setup-xcode@v1
-      with:
-        xcode-version: ${{ env.XCODE_VERSION }}
-        
-    - name: 🔍 Analizar Código
-      run: |
-        echo "🔍 Analizando código..."
-        xcodebuild analyze \
-          -project "Pronostico fertilidad.xcodeproj" \
-          -scheme "Pronostico fertilidad" \
-          -destination "platform=iOS Simulator,name=${{ env.DEVICE }},OS=${{ env.IOS_VERSION }}" \
-          | xcpretty --color --simple
-
-  # 📊 REPORTES Y NOTIFICACIONES
-  reports:
-    name: 📊 Reportes y Notificaciones
-    runs-on: macos-latest
-    needs: [unit-tests, ui-tests, build, code-analysis]
-    if: always()
-    
-    steps:
-    - name: 📥 Checkout código
-      uses: actions/checkout@v4
-      
-    - name: 📊 Generar Reporte de Calidad
-      run: |
-        echo "📊 Generando reporte de calidad..."
-        echo "# 📊 Reporte de Calidad - $(date)" > quality-report.md
-        echo "" >> quality-report.md
-        echo "## 🧪 Tests" >> quality-report.md
-        echo "- Unitarios: ✅ Completados" >> quality-report.md
-        echo "- UI: ✅ Completados" >> quality-report.md
-        echo "" >> quality-report.md
-        echo "## 🏗️ Build" >> quality-report.md
-        echo "- Simulador: ✅ Exitoso" >> quality-report.md
-        echo "- Dispositivo: ✅ Exitoso" >> quality-report.md
-        echo "" >> quality-report.md
-        echo "## 🔍 Análisis" >> quality-report.md
-        echo "- Código: ✅ Analizado" >> quality-report.md
-        echo "" >> quality-report.md
-        echo "## 📱 Deployment" >> quality-report.md
-        if [ "${{ github.ref }}" = "refs/heads/main" ]; then
-          echo "- TestFlight: ✅ Desplegado" >> quality-report.md
-        else
-          echo "- TestFlight: ⏸️ Solo en main" >> quality-report.md
-        fi
-        
-    - name: 💾 Subir Reporte
-      uses: actions/upload-artifact@v4
-      with:
-        name: quality-report
-        path: quality-report.md
-        
-    - name: 📧 Notificar por Email (opcional)
-      if: failure()
-      uses: dawidd6/action-send-mail@v3
-      with:
-        server_address: smtp.gmail.com
-        server_port: 587
-        username: ${{ secrets.EMAIL_USERNAME }}
-        password: ${{ secrets.EMAIL_PASSWORD }}
-        subject: "❌ CI/CD Falló - Pronóstico Fertilidad"
-        to: ${{ secrets.NOTIFICATION_EMAIL }}
-        from: "CI/CD Bot <${{ secrets.EMAIL_USERNAME }}>"
-        body: |
-          El pipeline de CI/CD ha fallado en el commit ${{ github.sha }}
-          
-          Revisa los logs en: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          
-          Branch: ${{ github.ref_name }}
-          Commit: ${{ github.sha }}
-          Autor: ${{ github.actor }}
-
-  # 🚀 DEPLOYMENT AUTOMÁTICO
-  auto-deploy:
-    name: 🚀 Deployment Automático
-    runs-on: macos-latest
-    needs: [unit-tests, ui-tests, build]
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    
-    steps:
-    - name: 📥 Checkout código
-      uses: actions/checkout@v4
-      
-    - name: 🏷️ Crear Tag de Release
-      run: |
-        echo "🏷️ Creando tag de release..."
-        VERSION=$(date +"%Y.%m.%d")
-        git tag -a "v$VERSION" -m "Release automático v$VERSION"
-        git push origin "v$VERSION"
-        
-    - name: 📝 Crear Release en GitHub
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: "v${{ steps.get-version.outputs.version }}"
-        release_name: "Release v${{ steps.get-version.outputs.version }}"
-        body: |
-          🚀 Release automático generado por CI/CD
-          
-          ## ✅ Cambios incluidos:
-          - Tests unitarios pasando
-          - Tests de UI pasando
-          - Build exitoso
-          - Análisis de código limpio
-          
-          ## 📱 Disponible en:
-          - TestFlight (automático)
-          - GitHub Releases
-          
-        draft: false
-        prerelease: false
+      - name: 🏷️ Crear Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ github.run_number }}
+          release_name: Release v${{ github.run_number }}
+          body: |
+            🚀 Release automático de Pronostico Fertilidad
+            
+            ## Cambios incluidos:
+            - Tests ejecutados exitosamente
+            - Build validado
+            - Análisis estático completado
+            
+            ## Detalles técnicos:
+            - Branch: ${{ github.ref_name }}
+            - Commit: ${{ github.sha }}
+            - Workflow: ${{ github.workflow }}
+          draft: false
+          prerelease: false

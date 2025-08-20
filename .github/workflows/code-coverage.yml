@@ -1,218 +1,106 @@
-name: 📊 Code Coverage Analysis
+name: 📊 Code Coverage
 
 on:
-  push:
-    branches: [ main, develop ]
   pull_request:
     branches: [ main, develop ]
-  schedule:
-    # Ejecutar análisis de cobertura semanalmente
-    - cron: '0 2 * * 1'
   workflow_dispatch:
 
 env:
   XCODE_VERSION: '16.0'
-  IOS_VERSION: '18.5'
+  IOS_VERSION: '18.6'
   DEVICE: 'iPhone 16'
-  COVERAGE_THRESHOLD: 90
 
 jobs:
-  analyze-coverage:
+  code-coverage:
     name: 📊 Análisis de Code Coverage
     runs-on: macos-latest
     
     steps:
-    - name: 📥 Checkout código
-      uses: actions/checkout@v4
+      - name: 📥 Checkout código
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Para coverage completo
       
-    - name: 🍎 Setup Xcode
-      uses: maxim-lobanov/setup-xcode@v1
-      with:
-        xcode-version: ${{ env.XCODE_VERSION }}
-        
-    - name: 📱 Setup iOS Simulator
-      uses: apple-actions/import-codesigning-certs@v1
+      - name: 🍎 Configurar Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: ${{ env.XCODE_VERSION }}
       
-    - name: 🧪 Ejecutar Tests con Cobertura
-      run: |
-        echo "🧪 Ejecutando tests con cobertura habilitada..."
-        
-        # Ejecutar tests unitarios
-        xcodebuild test \
-          -project "Pronostico fertilidad.xcodeproj" \
-          -scheme "Pronostico fertilidad" \
-          -destination "platform=iOS Simulator,name=${{ env.DEVICE }},OS=${{ env.IOS_VERSION }}" \
-          -enableCodeCoverage YES \
-          -resultBundlePath "CoverageResults.xcresult" \
-          -derivedDataPath "DerivedData" \
-          | xcpretty --color --simple
-        
-        echo "✅ Tests ejecutados exitosamente"
-        
-    - name: 📊 Generar Reporte de Cobertura
-      run: |
-        echo "📊 Generando reporte de cobertura..."
-        
-        # Reporte general
-        xcrun xccov view --report --json CoverageResults.xcresult > coverage.json
-        
-        # Reporte por archivo
-        xcrun xccov view --report --files CoverageResults.xcresult > coverage-by-file.txt
-        
-        # Reporte detallado
-        xcrun xccov view --report CoverageResults.xcresult > coverage-detailed.txt
-        
-        echo "✅ Reportes generados"
-        
-    - name: 📈 Analizar Métricas de Cobertura
-      run: |
-        echo "📈 Analizando métricas de cobertura..."
-        
-        # Extraer cobertura total
-        TOTAL_COVERAGE=$(xcrun xccov view --report CoverageResults.xcresult | grep -o '[0-9]\+/[0-9]\+' | head -1)
-        
-        if [ -n "$TOTAL_COVERAGE" ]; then
-          # Calcular porcentaje
-          COVERED=$(echo $TOTAL_COVERAGE | cut -d'/' -f1)
-          TOTAL=$(echo $TOTAL_COVERAGE | cut -d'/' -f2)
-          PERCENTAGE=$(echo "scale=2; $COVERED * 100 / $TOTAL" | bc)
+      - name: 🧪 Ejecutar Tests con Coverage
+        run: |
+          echo "🧪 Ejecutando tests con coverage..."
+          xcodebuild test \
+            -project "Pronostico fertilidad.xcodeproj" \
+            -scheme "Pronostico fertilidad" \
+            -destination "platform=iOS Simulator,name=${{ env.DEVICE }},OS=${{ env.IOS_VERSION }}" \
+            -enableCodeCoverage YES \
+            -resultBundlePath "CoverageResults.xcresult" \
+            | xcpretty
+      
+      - name: 📊 Generar Reporte de Coverage
+        run: |
+          echo "📊 Generando reporte de coverage..."
           
-          echo "📊 COBERTURA TOTAL: $TOTAL_COVERAGE ($PERCENTAGE%)"
-          echo "COVERAGE_PERCENTAGE=$PERCENTAGE" >> $GITHUB_ENV
+          # Coverage general
+          echo "=== COVERAGE GENERAL ==="
+          xcrun xccov view --report CoverageResults.xcresult
           
-          # Verificar si cumple el umbral
-          if (( $(echo "$PERCENTAGE >= ${{ env.COVERAGE_THRESHOLD }}" | bc -l) )); then
-            echo "✅ Cobertura cumple el umbral del ${{ env.COVERAGE_THRESHOLD }}%"
+          # Coverage por target
+          echo "=== COVERAGE POR TARGET ==="
+          xcrun xccov view --report --files-for-target "Pronostico fertilidad" CoverageResults.xcresult
+          
+          # Coverage por archivo
+          echo "=== COVERAGE POR ARCHIVO ==="
+          xcrun xccov view --report --files-for-target "Pronostico fertilidad" CoverageResults.xcresult | head -50
+      
+      - name: 📈 Comentar Coverage en PR
+        uses: romeovs/lcov-reporter-action@v0.3.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          lcov-file: coverage.info
+      
+      - name: 📦 Subir resultados de coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-results
+          path: CoverageResults.xcresult
+          retention-days: 30
+      
+      - name: 📊 Verificar umbral de coverage
+        run: |
+          echo "📊 Verificando umbral de coverage..."
+          
+          # Extraer porcentaje de coverage
+          COVERAGE=$(xcrun xccov view --report CoverageResults.xcresult | grep "Pronostico fertilidad" | awk '{print $2}' | sed 's/%//')
+          
+          echo "Coverage actual: $COVERAGE%"
+          
+          # Verificar si cumple el umbral del 90%
+          if (( $(echo "$COVERAGE >= 90" | bc -l) )); then
+            echo "✅ Coverage cumple el umbral del 90%"
             echo "COVERAGE_PASSED=true" >> $GITHUB_ENV
           else
-            echo "❌ Cobertura NO cumple el umbral del ${{ env.COVERAGE_THRESHOLD }}%"
+            echo "❌ Coverage NO cumple el umbral del 90%"
             echo "COVERAGE_PASSED=false" >> $GITHUB_ENV
+            exit 1
           fi
-        else
-          echo "⚠️  No se pudo determinar la cobertura total"
-          echo "COVERAGE_PERCENTAGE=0" >> $GITHUB_ENV
-          echo "COVERAGE_PASSED=false" >> $GITHUB_ENV
-        fi
-        
-    - name: 📋 Generar Reporte de Cobertura
-      run: |
-        echo "📋 Generando reporte de cobertura..."
-        
-        # Crear directorio de reportes
-        mkdir -p CoverageReports
-        
-        # Reporte resumido
-        cat > CoverageReports/coverage-summary.md << EOF
-        # 📊 REPORTE DE CODE COVERAGE
-        
-        **Fecha:** $(date)
-        **Proyecto:** Pronóstico Fertilidad
-        **Branch:** ${{ github.ref_name }}
-        **Commit:** ${{ github.sha }}
-        
-        ## 📈 RESUMEN GENERAL
-        
-        ### Cobertura Total:
-        - **Líneas cubiertas:** $(cat coverage-detailed.txt | grep -o '[0-9]\+/[0-9]\+' | head -1)
-        - **Porcentaje:** ${{ env.COVERAGE_PERCENTAGE }}%
-        - **Umbral objetivo:** ${{ env.COVERAGE_THRESHOLD }}%
-        - **Estado:** ${{ env.COVERAGE_PASSED == 'true' && '✅ CUMPLE' || '❌ NO CUMPLE' }}
-        
-        ## 📁 ARCHIVOS CON MAYOR COBERTURA
-        
-        $(head -10 coverage-by-file.txt | sed 's/^/- /')
-        
-        ## 📊 ARCHIVOS CON MENOR COBERTURA
-        
-        $(tail -10 coverage-by-file.txt | sed 's/^/- /')
-        
-        ## 🎯 RECOMENDACIONES
-        
-        ### Para alcanzar ${{ env.COVERAGE_THRESHOLD }}%+ de cobertura:
-        1. **Agregar tests** para archivos con baja cobertura
-        2. **Refactorizar código** no cubierto
-        3. **Implementar mocks** para dependencias externas
-        4. **Agregar tests de edge cases**
-        
-        ## 📱 ARCHIVOS DE REPORTE
-        
-        - **JSON:** coverage.json
-        - **Por archivo:** coverage-by-file.txt
-        - **Detallado:** coverage-detailed.txt
-        
-        ## 🚀 PRÓXIMOS PASOS
-        
-        1. **Revisar reportes** generados
-        2. **Identificar archivos** con baja cobertura
-        3. **Agregar tests** faltantes
-        4. **Ejecutar análisis** nuevamente para verificar mejora
-        EOF
-        
-        echo "✅ Reporte generado en CoverageReports/coverage-summary.md"
-        
-    - name: 💾 Subir Artefactos de Cobertura
-      uses: actions/upload-artifact@v4
-      with:
-        name: code-coverage-reports
-        path: |
-          CoverageResults.xcresult
-          coverage.json
-          coverage-by-file.txt
-          coverage-detailed.txt
-          CoverageReports/
-          
-    - name: 📊 Comentar Cobertura en PR
-      if: github.event_name == 'pull_request'
-      uses: actions/github-script@v7
-      with:
-        script: |
-          const fs = require('fs');
-          const summary = fs.readFileSync('CoverageReports/coverage-summary.md', 'utf8');
-          
-          const coverageStatus = '${{ env.COVERAGE_PASSED }}' === 'true' ? '✅' : '❌';
-          const coveragePercentage = '${{ env.COVERAGE_PERCENTAGE }}';
-          const threshold = '${{ env.COVERAGE_THRESHOLD }}';
-          
-          const comment = `## 📊 Análisis de Code Coverage
-          
-          ${coverageStatus} **Cobertura actual:** ${coveragePercentage}%
-          🎯 **Objetivo:** ${threshold}%
-          
-          ${summary}
-          
-          📊 [Ver reportes completos](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})
-          `;
-          
-          github.rest.issues.createComment({
-            issue_number: context.issue.number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            body: comment
-          });
-          
-    - name: 🚨 Falla si no cumple cobertura
-      if: env.COVERAGE_PASSED == 'false'
-      run: |
-        echo "❌ La cobertura de código no cumple el umbral del ${{ env.COVERAGE_THRESHOLD }}%"
-        echo "📊 Cobertura actual: ${{ env.COVERAGE_PERCENTAGE }}%"
-        echo "🎯 Umbral requerido: ${{ env.COVERAGE_THRESHOLD }}%"
-        echo ""
-        echo "📋 Para mejorar la cobertura:"
-        echo "1. Revisa los archivos con baja cobertura"
-        echo "2. Agrega tests para código no cubierto"
-        echo "3. Refactoriza código difícil de testear"
-        echo "4. Ejecuta este workflow nuevamente"
-        exit 1
-        
-    - name: 🎉 Cobertura exitosa
-      if: env.COVERAGE_PASSED == 'true'
-      run: |
-        echo "🎉 ¡Excelente! La cobertura de código cumple el umbral"
-        echo "📊 Cobertura actual: ${{ env.COVERAGE_PERCENTAGE }}%"
-        echo "🎯 Umbral requerido: ${{ env.COVERAGE_THRESHOLD }}%"
-        echo ""
-        echo "🚀 Próximos pasos sugeridos:"
-        echo "1. Mantener la cobertura alta"
-        echo "2. Agregar tests para edge cases"
-        echo "3. Implementar tests de integración"
-        echo "4. Considerar aumentar el umbral al 95%"
+      
+      - name: 📧 Notificar resultado de coverage
+        if: always()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "📊 Code Coverage - ${{ job.status }}"
+          to: ${{ secrets.EMAIL_TO }}
+          from: "GitHub Actions"
+          body: |
+            Análisis de Code Coverage completado
+            
+            Estado: ${{ job.status }}
+            PR: ${{ github.event.pull_request.number }}
+            Branch: ${{ github.head_ref }}
+            
+            Ver detalles: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}

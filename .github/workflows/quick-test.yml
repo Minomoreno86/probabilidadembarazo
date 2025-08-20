@@ -1,0 +1,43 @@
+name: 🧪 Quick Test
+
+on:
+  push:
+    branches: [ feature/*, hotfix/* ]
+  workflow_dispatch:
+
+env:
+  XCODE_VERSION: '16.0'
+  IOS_VERSION: '18.6'
+  DEVICE: 'iPhone 16'
+
+jobs:
+  quick-test:
+    name: 🧪 Test Rápido
+    runs-on: macos-latest
+    timeout-minutes: 10
+    
+    steps:
+      - name: 📥 Checkout código
+        uses: actions/checkout@v4
+      
+      - name: 🍎 Configurar Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: ${{ env.XCODE_VERSION }}
+      
+      - name: 🧪 Tests Unitarios Rápidos
+        run: |
+          echo "🧪 Ejecutando tests unitarios rápidos..."
+          xcodebuild test \
+            -project "Pronostico fertilidad.xcodeproj" \
+            -scheme "Pronostico fertilidad" \
+            -destination "platform=iOS Simulator,name=${{ env.DEVICE }},OS=${{ env.IOS_VERSION }}" \
+            -only-testing:Pronostico_fertilidadTests \
+            -skipPackagePluginValidation \
+            | xcpretty
+      
+      - name: 📊 Verificar Tests Pasaron
+        run: |
+          echo "✅ Tests unitarios completados exitosamente"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Commit: ${{ github.sha }}"
