@@ -1,0 +1,192 @@
+{
+  "source": "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/Pronostico fertilidad/SettingsDetailViews2.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Información",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 37
+        }
+      },
+      {
+        "comment": "",
+        "key": "Información",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 68
+        }
+      },
+      {
+        "comment": "",
+        "key": "Versión, soporte y redes sociales",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 72
+        }
+      },
+      {
+        "comment": "",
+        "key": "Versión de la Aplicación",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 88
+        }
+      },
+      {
+        "comment": "",
+        "key": "2.1.0 (Build 2024.12)",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 92
+        }
+      },
+      {
+        "comment": "",
+        "key": "Accesibilidad",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 201
+        }
+      },
+      {
+        "comment": "",
+        "key": "Accesibilidad",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 232
+        }
+      },
+      {
+        "comment": "",
+        "key": "Compatibilidad con iOS y funciones de asistencia",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 236
+        }
+      },
+      {
+        "comment": "",
+        "key": "VoiceOver Compatible",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 252
+        }
+      },
+      {
+        "comment": "",
+        "key": "Navegación por voz habilitada",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 256
+        }
+      },
+      {
+        "comment": "",
+        "key": "Dynamic Type",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 274
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tamaños de texto adaptativos",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 278
+        }
+      },
+      {
+        "comment": "",
+        "key": "Esta app es totalmente compatible con todas las funciones de accesibilidad de iOS",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 309
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cerrar Sesión",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 368
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cerrar Sesión",
+        "location": {
+          "startingColumn": 16,
+          "startingLine": 369
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cancelar",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 370
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cerrar Sesión",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 371
+        }
+      },
+      {
+        "comment": "",
+        "key": "¿Estás seguro de que deseas cerrar sesión? Se eliminarán todos los datos locales.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 375
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cerrar Sesión",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 407
+        }
+      },
+      {
+        "comment": "",
+        "key": "Salir de la aplicación de forma segura",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 411
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sesión Activa",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 434
+        }
+      },
+      {
+        "comment": "",
+        "key": "Al cerrar sesión se eliminarán todos los datos locales no sincronizados",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 460
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cerrar Sesión",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 483
+        }
+      }
+    ]
+  },
+  "version": 1
+}

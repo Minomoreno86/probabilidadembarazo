@@ -35,6 +35,7 @@ struct ContentView: View {
                         
                         // Statistics Dashboard
                         statisticsDashboard
+                            .accessibilityIdentifier("statistics_dashboard")
                         
                         // Main content
                         if profiles.isEmpty {
@@ -252,6 +253,7 @@ struct ContentView: View {
                         color: .cyan,
                         animate: animateStats
                     )
+                    .accessibilityIdentifier("evaluations_count")
                     
                     StatCard(
                         title: "Precisión",
@@ -261,6 +263,7 @@ struct ContentView: View {
                         color: .green,
                         animate: animateStats
                     )
+                    .accessibilityIdentifier("precision_percentage")
                     
                     StatCard(
                         title: "Referencias",
@@ -270,6 +273,7 @@ struct ContentView: View {
                         color: .purple,
                         animate: animateStats
                     )
+                    .accessibilityIdentifier("references_count")
                     
                     StatCard(
                         title: "Algoritmos",
@@ -279,6 +283,7 @@ struct ContentView: View {
                         color: .orange,
                         animate: animateStats
                     )
+                    .accessibilityIdentifier("algorithms_count")
                 }
                 .padding(.horizontal, 24)
             }
@@ -382,6 +387,7 @@ struct ContentView: View {
                     .scaleEffect(animateHero ? 1.0 : 0.95)
                     .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.5), value: animateHero)
                 }
+                .accessibilityIdentifier("start_advanced_assessment_button")
                 .padding(.horizontal, 24)
             }
         }
@@ -429,6 +435,7 @@ struct ContentView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 12))
                     .shadow(color: .pink.opacity(0.3), radius: 8, x: 0, y: 4)
                 }
+                .accessibilityIdentifier("new_assessment_button")
             }
             .padding(.horizontal, 24)
             

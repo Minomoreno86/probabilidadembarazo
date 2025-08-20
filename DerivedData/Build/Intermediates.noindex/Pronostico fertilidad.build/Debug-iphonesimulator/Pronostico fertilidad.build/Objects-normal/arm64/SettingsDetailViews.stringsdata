@@ -1,0 +1,160 @@
+{
+  "source": "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/Pronostico fertilidad/SettingsDetailViews.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Perfil",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 85
+        }
+      },
+      {
+        "comment": "",
+        "key": "Perfil Profesional",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 37
+        }
+      },
+      {
+        "comment": "",
+        "key": "Apariencia",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 117
+        }
+      },
+      {
+        "comment": "",
+        "key": "Personaliza tu Experiencia",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 151
+        }
+      },
+      {
+        "comment": "",
+        "key": "Elige el tema que mejor se adapte a tu trabajo",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 155
+        }
+      },
+      {
+        "comment": "",
+        "key": "Selecciona tu Tema",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 166
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vista Previa",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 261
+        }
+      },
+      {
+        "comment": "",
+        "key": "85%",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 289
+        }
+      },
+      {
+        "comment": "",
+        "key": "Análisis de Fertilidad",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 278
+        }
+      },
+      {
+        "comment": "",
+        "key": "Herramienta de apoyo diagnóstico",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 282
+        }
+      },
+      {
+        "comment": "",
+        "key": "Calcular",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 300
+        }
+      },
+      {
+        "comment": "",
+        "key": "Configurar",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 310
+        }
+      },
+      {
+        "comment": "",
+        "key": "Compartir",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 444
+        }
+      },
+      {
+        "comment": "",
+        "key": "Compartir",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 475
+        }
+      },
+      {
+        "comment": "",
+        "key": "Comparte la app con colegas médicos",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 479
+        }
+      },
+      {
+        "comment": "",
+        "key": "Legal",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 609
+        }
+      },
+      {
+        "comment": "",
+        "key": "Legal y Médico",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 640
+        }
+      },
+      {
+        "comment": "",
+        "key": "Términos, políticas y avisos importantes",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 644
+        }
+      },
+      {
+        "comment": "",
+        "key": "Esta herramienta es de apoyo diagnóstico. Siempre consulta con criterio médico profesional.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 684
+        }
+      }
+    ]
+  },
+  "version": 1
+}

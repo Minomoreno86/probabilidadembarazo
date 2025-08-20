@@ -1,0 +1,184 @@
+{
+  "source": "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/Pronostico fertilidad/ContentView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "🧪 Herramientas de Desarrollo",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 64
+        }
+      },
+      {
+        "comment": "",
+        "key": "Los tests se ejecutan en la consola de Xcode",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 87
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ejecutar Tests",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 76
+        }
+      },
+      {
+        "comment": "",
+        "key": "FertilyzeAI",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 147
+        }
+      },
+      {
+        "comment": "",
+        "key": "Medical Suite",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 151
+        }
+      },
+      {
+        "comment": "",
+        "key": "FERTILIDAD",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 192
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pronóstico de",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 187
+        }
+      },
+      {
+        "comment": "",
+        "key": "Inteligencia Artificial Médica Avanzada",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 202
+        }
+      },
+      {
+        "comment": "",
+        "key": "Métricas del Sistema",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 227
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tiempo real",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 234
+        }
+      },
+      {
+        "comment": "",
+        "key": "¡Bienvenida al Futuro!",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 328
+        }
+      },
+      {
+        "comment": "",
+        "key": "Evaluación de fertilidad con inteligencia artificial médica de última generación",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 333
+        }
+      },
+      {
+        "comment": "",
+        "key": "Iniciar Evaluación Avanzada",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 360
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mis Evaluaciones",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 403
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld evaluación%@ completada%@",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 408
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nueva",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 421
+        }
+      },
+      {
+        "comment": "",
+        "key": "© 2024 FertilyzeAI Medical Suite - Uso Profesional",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 503
+        }
+      },
+      {
+        "comment": "",
+        "key": "Validado Científicamente",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 480
+        }
+      },
+      {
+        "comment": "",
+        "key": "Basado en guías ESHRE, ASRM, OMS y más de 1,247 referencias científicas",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 485
+        }
+      },
+      {
+        "comment": "",
+        "key": "Suelta para eliminar",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 701
+        }
+      },
+      {
+        "comment": "",
+        "key": "Creada: %@",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 794
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld%%",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 815
+        }
+      }
+    ]
+  },
+  "version": 1
+}

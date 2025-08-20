@@ -194,9 +194,9 @@ struct PerformanceTestRunner {
             let bmi = 18.0 + Double(i % 25)  // IMC 18-43
             let tsh = 0.1 + Double(i % 20)  // TSH 0.1-20.0
             
-            let _ = FertilityCalculations.calculateAgeFactor(age: age)
-            let _ = FertilityCalculations.calculateBMIFactor(bmi: bmi)
-            let _ = FertilityCalculations.calculateTSHFactor(tsh: tsh)
+            let _ = FertilityCalculations.calculateAgeFactor(age)
+            let _ = FertilityCalculations.calculateBMIFactor(bmi)
+            let _ = FertilityCalculations.calculateTSHFactor(tsh)
         }
         
         let endTime = Date()

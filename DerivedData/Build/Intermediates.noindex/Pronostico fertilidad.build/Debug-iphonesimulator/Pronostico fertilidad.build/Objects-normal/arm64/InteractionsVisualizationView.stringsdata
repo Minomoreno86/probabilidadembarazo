@@ -1,0 +1,288 @@
+{
+  "source": "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/Pronostico fertilidad/InteractionsVisualizationView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "🔄 Interacciones No Lineales",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 47
+        }
+      },
+      {
+        "comment": "",
+        "key": "Interacciones Detectadas",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 65
+        }
+      },
+      {
+        "comment": "",
+        "key": "Factores que se potencian entre sí",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 69
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 80
+        }
+      },
+      {
+        "comment": "",
+        "key": "Total",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 84
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@%%",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 92
+        }
+      },
+      {
+        "comment": "",
+        "key": "Probabilidad Final",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 96
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 104
+        }
+      },
+      {
+        "comment": "",
+        "key": "Críticas",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 108
+        }
+      },
+      {
+        "comment": "",
+        "key": "🕸️ Diagrama de Red",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 156
+        }
+      },
+      {
+        "comment": "",
+        "key": "Visualización de cómo interactúan los factores",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 160
+        }
+      },
+      {
+        "comment": "",
+        "key": "📈 Impacto de Multiplicadores",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 178
+        }
+      },
+      {
+        "comment": "",
+        "key": "Efecto acumulativo sobre la probabilidad base",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 182
+        }
+      },
+      {
+        "comment": "",
+        "key": "Interacción",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 190
+        }
+      },
+      {
+        "comment": "",
+        "key": "Multiplicador",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 191
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld%%",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 203
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@%%",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 231
+        }
+      },
+      {
+        "comment": "",
+        "key": "📋 Detalles de Interacciones",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 249
+        }
+      },
+      {
+        "comment": "",
+        "key": "✅ Sin Interacciones Detectadas",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 272
+        }
+      },
+      {
+        "comment": "",
+        "key": "No se encontraron interacciones no lineales significativas en este perfil.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 276
+        }
+      },
+      {
+        "comment": "",
+        "key": "Esto significa que los factores actúan de forma independiente y las probabilidades calculadas no requieren ajustes adicionales.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 281
+        }
+      },
+      {
+        "comment": "",
+        "key": "👤",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 374
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@%%",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 395
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@%%",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 468
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cambio obligatorio",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 474
+        }
+      },
+      {
+        "comment": "",
+        "key": "Detalle de Interacción",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 613
+        }
+      },
+      {
+        "comment": "",
+        "key": "Multiplicador:",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 536
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ (%@%%)",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 538
+        }
+      },
+      {
+        "comment": "",
+        "key": "📚 Referencias",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 572
+        }
+      },
+      {
+        "comment": "",
+        "key": "• %@",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 577
+        }
+      },
+      {
+        "comment": "",
+        "key": "Prioridad",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 586
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cambio de Tratamiento",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 598
+        }
+      },
+      {
+        "comment": "",
+        "key": "Obligatorio",
+        "location": {
+          "startingColumn": 70,
+          "startingLine": 601
+        }
+      },
+      {
+        "comment": "",
+        "key": "Opcional",
+        "location": {
+          "startingColumn": 86,
+          "startingLine": 601
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cerrar",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 616
+        }
+      }
+    ]
+  },
+  "version": 1
+}

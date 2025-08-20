@@ -24,6 +24,7 @@ struct TreatmentSimulatorView: View {
 			}
 			.padding()
 		}
+		.accessibilityIdentifier("treatment_simulator_view")
 		.background(colors.backgroundGradient)
 		.onAppear(perform: compute)
 	}

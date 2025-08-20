@@ -1,0 +1,6 @@
+Target dependency graph (3 targets)
+Target 'Pronostico fertilidadTests' in project 'Pronostico fertilidad'
+➜ Explicit dependency on target 'Pronostico fertilidad' in project 'Pronostico fertilidad'
+Target 'Pronostico fertilidadUITests' in project 'Pronostico fertilidad'
+➜ Explicit dependency on target 'Pronostico fertilidad' in project 'Pronostico fertilidad'
+Target 'Pronostico fertilidad' in project 'Pronostico fertilidad' (no dependencies)

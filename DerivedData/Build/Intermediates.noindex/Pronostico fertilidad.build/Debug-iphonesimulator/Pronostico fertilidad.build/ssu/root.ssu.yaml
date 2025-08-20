@@ -1,0 +1,103 @@
+apiVersion: ssu/v1
+nlu:
+  shortcuts:
+    bundleIdentifier: Dr-Jorge-Vasquez.Pronostico-fertilidad
+    intents:
+    - metadata:
+        name: CalcularFertilidadIntent_0
+        title: Calcular Fertilidad
+      corpuses:
+        training:
+        - locale: en
+          utterances:
+          - '{${+prefix} }Calcular fertilidad con ${+applicationName}'
+          - '{${+prefix} }Evaluar fertilidad en ${+applicationName}'
+          - '{${+prefix} }New fertility assessment in ${+applicationName}'
+        - locale: es
+          utterances:
+          - '{${+prefix} }Calcular fertilidad con ${+applicationName}'
+          - '{${+prefix} }Evaluar fertilidad en ${+applicationName}'
+          - '{${+prefix} }New fertility assessment in ${+applicationName}'
+    - metadata:
+        name: MostrarEvaluacionesIntent_1
+        title: Mostrar Evaluaciones
+      corpuses:
+        training:
+        - locale: en
+          utterances:
+          - '{${+prefix} }Mostrar mis evaluaciones en ${+applicationName}'
+          - '{${+prefix} }Ver evaluaciones de fertilidad en ${+applicationName}'
+          - '{${+prefix} }Historial de evaluaciones en ${+applicationName}'
+        - locale: es
+          utterances:
+          - '{${+prefix} }Mostrar mis evaluaciones en ${+applicationName}'
+          - '{${+prefix} }Ver evaluaciones de fertilidad en ${+applicationName}'
+          - '{${+prefix} }Historial de evaluaciones en ${+applicationName}'
+    - metadata:
+        name: NuevaEvaluacionIntent_2
+        title: New Assessment
+      corpuses:
+        training:
+        - locale: en
+          utterances:
+          - '{${+prefix} }New assessment in ${+applicationName}'
+          - '{${+prefix} }Create fertility assessment in ${+applicationName}'
+          - '{${+prefix} }Start assessment in ${+applicationName}'
+        - locale: es
+          utterances:
+          - '{${+prefix} }New assessment in ${+applicationName}'
+          - '{${+prefix} }Create fertility assessment in ${+applicationName}'
+          - '{${+prefix} }Start assessment in ${+applicationName}'
+    - metadata:
+        name: ResultadosRecientesIntent_3
+        title: Resultados Recientes
+      corpuses:
+        training:
+        - locale: en
+          utterances:
+          - '{${+prefix} }Resultados recientes en ${+applicationName}'
+          - '{${+prefix} }Latest fertility results in ${+applicationName}'
+          - '{${+prefix} }Ver resultados recientes en ${+applicationName}'
+        - locale: es
+          utterances:
+          - '{${+prefix} }Resultados recientes en ${+applicationName}'
+          - '{${+prefix} }Latest fertility results in ${+applicationName}'
+          - '{${+prefix} }Ver resultados recientes en ${+applicationName}'
+    - metadata:
+        name: +negative
+      corpuses:
+        training:
+        - locale: en
+          utterances:
+          - '{${+prefix} }${+standardAppShortcutNegatives}'
+        - locale: es
+          utterances:
+          - '{${+prefix} }${+standardAppShortcutNegatives}'
+variables:
+- name: +applicationName
+  type: ssu/expansion
+  definitions:
+  - locale: en
+    synomyms:
+    - Pronóstico Fertilidad
+  - locale: es
+    synomyms:
+    - Pronóstico Fertilidad
+- name: +prefix
+  type: ssu/expansion
+  definitions:
+  - locale: en
+    synomyms:
+      $ref: ssu://Resources/prefix/en.yaml
+  - locale: es
+    synomyms:
+      $ref: ssu://Resources/prefix/es.yaml
+- name: +standardAppShortcutNegatives
+  type: ssu/expansion
+  definitions:
+  - locale: en
+    synomyms:
+      $ref: ssu://Resources/standardAppShortcutNegatives/en.yaml
+  - locale: es
+    synomyms:
+      $ref: ssu://Resources/standardAppShortcutNegatives/es.yaml

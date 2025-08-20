@@ -11,7 +11,7 @@ echo "=========================================="
 # Configuración
 PROJECT_NAME="Pronostico fertilidad"
 SCHEME_NAME="Pronostico fertilidad"
-DESTINATION="platform=iOS Simulator,name=iPhone 16,OS=18.5"
+DESTINATION="platform=iOS Simulator,name=iPhone 16,OS=18.6"
 COVERAGE_DIR="CoverageResults"
 REPORT_DIR="CoverageReports"
 
@@ -29,8 +29,7 @@ xcodebuild test \
     -destination "$DESTINATION" \
     -enableCodeCoverage YES \
     -resultBundlePath "$COVERAGE_DIR" \
-    -derivedDataPath "DerivedData" \
-    | xcpretty --color --simple
+    -derivedDataPath "DerivedData"
 
 # Verificar que los tests pasaron
 if [ $? -eq 0 ]; then

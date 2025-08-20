@@ -1,0 +1,24 @@
+{
+  "source": "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/Pronostico fertilidad/ThemeManager.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Light Theme",
+        "location": {
+          "startingColumn": 1,
+          "startingLine": 407
+        }
+      },
+      {
+        "comment": "",
+        "key": "Dark Theme",
+        "location": {
+          "startingColumn": 1,
+          "startingLine": 407
+        }
+      }
+    ]
+  },
+  "version": 1
+}

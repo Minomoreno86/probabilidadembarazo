@@ -1,0 +1,144 @@
+{
+  "source": "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/Pronostico fertilidad/LoginView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "FertilyzeAI",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 91
+        }
+      },
+      {
+        "comment": "",
+        "key": "Medical Suite",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 95
+        }
+      },
+      {
+        "comment": "",
+        "key": "Bienvenido",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 107
+        }
+      },
+      {
+        "comment": "",
+        "key": "Inicia sesión de forma segura con Passkeys o Apple Sign In",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 111
+        }
+      },
+      {
+        "comment": "",
+        "key": "Continuar sin cuenta",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 139
+        }
+      },
+      {
+        "comment": "",
+        "key": "Al continuar, aceptas nuestros términos de servicio y política de privacidad",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 196
+        }
+      },
+      {
+        "comment": "",
+        "key": "Herramienta de apoyo diagnóstico",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 181
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cerrar sesión",
+        "location": {
+          "startingColumn": 56,
+          "startingLine": 242
+        }
+      },
+      {
+        "comment": "",
+        "key": "Iniciar con %@",
+        "location": {
+          "startingColumn": 75,
+          "startingLine": 242
+        }
+      },
+      {
+        "comment": "",
+        "key": "Continuar con Apple",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 280
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nueva Cuenta",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 376
+        }
+      },
+      {
+        "comment": "",
+        "key": "Crear Passkey",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 321
+        }
+      },
+      {
+        "comment": "",
+        "key": "Configura tu identidad biométrica segura",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 326
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nombre completo",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 335
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ingresa tu nombre",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 339
+        }
+      },
+      {
+        "comment": "",
+        "key": "Crear Passkey",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 357
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cancelar",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 380
+        }
+      }
+    ]
+  },
+  "version": 1
+}

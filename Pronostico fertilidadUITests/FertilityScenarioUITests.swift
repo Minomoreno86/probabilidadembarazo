@@ -268,7 +268,7 @@ final class FertilityScenarioUITests: XCTestCase {
     // MARK: - 🔧 FUNCIONES AUXILIARES
     
     private func navigateToCalculator() throws {
-        let calculatorButton = app.buttons.containing(.staticText, identifier: "Iniciar").firstMatch
+        let calculatorButton = app.buttons.containing(.staticText, identifier: "Iniciar Evaluación Avanzada").firstMatch
         
         if !calculatorButton.exists {
             let alternativeButton = app.buttons["Comenzar Análisis"]
@@ -278,50 +278,107 @@ final class FertilityScenarioUITests: XCTestCase {
             calculatorButton.tap()
         }
         
-        let calculatorTitle = app.navigationBars.firstMatch
-        XCTAssertTrue(calculatorTitle.waitForExistence(timeout: 5), "Debe navegar a calculadora")
+        // Verificar que se abre la calculadora (como sheet modal)
+        let calculatorView = app.otherElements["ModernFertilityCalculatorView"]
+        XCTAssertTrue(calculatorView.waitForExistence(timeout: 5), "Debe abrirse la calculadora")
+        
+        print("✅ Navegación a calculadora exitosa")
     }
     
     private func fillPatientData(age: String, height: String, weight: String) {
+        // Llenar datos en la sección Demografía
         let ageField = app.textFields["Edad"]
         if ageField.waitForExistence(timeout: 5) {
             ageField.tap()
             ageField.typeText(age)
+            
+            // Verificar que se aceptó el valor
+            XCTAssertEqual(ageField.value as? String, age, "La edad debe establecerse correctamente")
         }
         
         let heightField = app.textFields["Altura (cm)"]
         if heightField.waitForExistence(timeout: 5) {
             heightField.tap()
             heightField.typeText(height)
+            
+            // Verificar que se aceptó el valor
+            XCTAssertEqual(heightField.value as? String, height, "La altura debe establecerse correctamente")
         }
         
         let weightField = app.textFields["Peso (kg)"]
         if weightField.waitForExistence(timeout: 5) {
             weightField.tap()
             weightField.typeText(weight)
+            
+            // Verificar que se aceptó el valor
+            XCTAssertEqual(weightField.value as? String, weight, "El peso debe establecerse correctamente")
         }
         
         // Ocultar teclado
         app.tap()
+        
+        print("✅ Datos del paciente llenados correctamente: Edad=\(age), Altura=\(height), Peso=\(weight)")
     }
     
     private func fillCompletePatientData() {
+        // Llenar datos básicos en Demografía
         fillPatientData(age: "32", height: "165", weight: "65")
         
-        // Datos adicionales
-        let tshField = app.textFields["TSH"]
-        if tshField.waitForExistence(timeout: 5) {
-            tshField.tap()
-            tshField.typeText("3.5")
+        // Navegar a la sección Laboratorio y llenar datos adicionales
+        let laboratoryTab = app.buttons["Laboratorio"]
+        if laboratoryTab.waitForExistence(timeout: 5) {
+            laboratoryTab.tap()
+            
+            // TSH
+            let tshField = app.textFields["TSH"]
+            if tshField.waitForExistence(timeout: 5) {
+                tshField.tap()
+                tshField.typeText("3.5")
+                
+                // Verificar que se aceptó el valor
+                XCTAssertEqual(tshField.value as? String, "3.5", "El TSH debe establecerse correctamente")
+            }
+            
+            // AMH
+            let amhField = app.textFields["AMH"]
+            if amhField.waitForExistence(timeout: 5) {
+                amhField.tap()
+                amhField.typeText("2.0")
+                
+                // Verificar que se aceptó el valor
+                XCTAssertEqual(amhField.value as? String, "2.0", "El AMH debe establecerse correctamente")
+            }
         }
         
-        let amhField = app.textFields["AMH"]
-        if amhField.waitForExistence(timeout: 5) {
-            amhField.tap()
-            amhField.typeText("2.0")
+        // Navegar a la sección Ginecología y llenar datos adicionales
+        let gynecologyTab = app.buttons["Ginecología"]
+        if gynecologyTab.waitForExistence(timeout: 5) {
+            gynecologyTab.tap()
+            
+            // Duración del ciclo
+            let cycleField = app.textFields["Duración del Ciclo"]
+            if cycleField.waitForExistence(timeout: 5) {
+                cycleField.tap()
+                cycleField.typeText("28")
+                
+                // Verificar que se aceptó el valor
+                XCTAssertEqual(cycleField.value as? String, "28", "La duración del ciclo debe establecerse correctamente")
+            }
+            
+            // Duración de infertilidad
+            let infertilityField = app.textFields["Duración de Infertilidad"]
+            if infertilityField.waitForExistence(timeout: 5) {
+                infertilityField.tap()
+                infertilityField.typeText("2")
+                
+                // Verificar que se aceptó el valor
+                XCTAssertEqual(infertilityField.value as? String, "2", "La duración de infertilidad debe establecerse correctamente")
+            }
         }
         
         app.tap() // Ocultar teclado
+        
+        print("✅ Datos completos del paciente llenados correctamente")
     }
     
     private func executeCalculation() {
@@ -331,21 +388,34 @@ final class FertilityScenarioUITests: XCTestCase {
     }
     
     private func navigateToSimulator() throws {
+        // Primero debe estar en la pantalla de resultados
+        let resultsTitle = app.staticTexts["Resultados del Análisis"]
+        XCTAssertTrue(resultsTitle.waitForExistence(timeout: 5), "Debe estar en la pantalla de resultados")
+        
+        // Buscar el tab del simulador
         let simulatorTab = app.buttons["Simulador"]
         XCTAssertTrue(simulatorTab.waitForExistence(timeout: 5), "Debe existir tab simulador")
         simulatorTab.tap()
         
+        // Verificar que se muestre el simulador
         let simulatorTitle = app.staticTexts["Simulador de Tratamientos"]
         XCTAssertTrue(simulatorTitle.waitForExistence(timeout: 5), "Debe mostrar simulador")
+        
+        print("✅ Navegación al simulador exitosa")
     }
     
     private func testAllResultTabs() throws {
+        // Verificar que estemos en la pantalla de resultados
+        let resultsTitle = app.staticTexts["Resultados del Análisis"]
+        XCTAssertTrue(resultsTitle.waitForExistence(timeout: 5), "Debe estar en la pantalla de resultados")
+        
         // Resumen
         let summaryTab = app.buttons["Resumen"]
         if summaryTab.waitForExistence(timeout: 5) {
             summaryTab.tap()
             let probabilityText = app.staticTexts.containing(.staticText, identifier: "%").firstMatch
             XCTAssertTrue(probabilityText.waitForExistence(timeout: 5), "Debe mostrar probabilidades")
+            print("✅ Tab Resumen funciona correctamente")
         }
         
         // Factores
@@ -354,6 +424,7 @@ final class FertilityScenarioUITests: XCTestCase {
             factorsTab.tap()
             let factorsContent = app.staticTexts["Análisis de Factores"]
             XCTAssertTrue(factorsContent.waitForExistence(timeout: 5), "Debe mostrar factores")
+            print("✅ Tab Factores funciona correctamente")
         }
         
         // Análisis
@@ -362,7 +433,10 @@ final class FertilityScenarioUITests: XCTestCase {
             analysisTab.tap()
             let analysisContent = app.staticTexts.containing(.staticText, identifier: "Evidencia").firstMatch
             XCTAssertTrue(analysisContent.waitForExistence(timeout: 5), "Debe mostrar análisis")
+            print("✅ Tab Análisis funciona correctamente")
         }
+        
+        print("✅ Todos los tabs de resultados funcionan correctamente")
     }
     
     private func clearField(_ field: XCUIElement) {

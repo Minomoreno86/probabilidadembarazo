@@ -39,6 +39,7 @@ struct FertilitySummaryView: View {
             }
             .padding()
         }
+        .accessibilityIdentifier("fertility_summary_view")
     }
     
     // MARK: - 🎯 TARJETA DE PROBABILIDAD

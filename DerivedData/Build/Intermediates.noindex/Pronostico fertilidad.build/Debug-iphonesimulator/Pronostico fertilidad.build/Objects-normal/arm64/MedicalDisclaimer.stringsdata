@@ -1,0 +1,32 @@
+{
+  "source": "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/Pronostico fertilidad/MedicalDisclaimer.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Aviso Médico Importante",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 29
+        }
+      },
+      {
+        "comment": "",
+        "key": "Apoyo diagnóstico - Consulta médico profesional",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 127
+        }
+      },
+      {
+        "comment": "",
+        "key": "© 2024 Dr. Jorge Vásquez - Medicina Reproductiva",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 165
+        }
+      }
+    ]
+  },
+  "version": 1
+}

@@ -1,0 +1,136 @@
+{
+  "source": "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/Pronostico fertilidad/SiriIntents.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Calcular Fertilidad",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 9
+        }
+      },
+      {
+        "comment": "",
+        "key": "Start a new fertility assessment",
+        "location": {
+          "startingColumn": 63,
+          "startingLine": 10
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mostrar Evaluaciones",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 21
+        }
+      },
+      {
+        "comment": "",
+        "key": "Muestra mis evaluaciones de fertilidad",
+        "location": {
+          "startingColumn": 55,
+          "startingLine": 22
+        }
+      },
+      {
+        "comment": "",
+        "key": "New Assessment",
+        "location": {
+          "startingColumn": 57,
+          "startingLine": 33
+        }
+      },
+      {
+        "comment": "",
+        "key": "Create a new fertility assessment",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 34
+        }
+      },
+      {
+        "comment": "",
+        "key": "Resultados Recientes",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 45
+        }
+      },
+      {
+        "comment": "",
+        "key": "Show the most recent results",
+        "location": {
+          "startingColumn": 63,
+          "startingLine": 46
+        }
+      },
+      {
+        "comment": "",
+        "key": "Evaluar Fertilidad",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 58
+        }
+      },
+      {
+        "comment": "",
+        "key": "Evaluate fertility with specific parameters",
+        "location": {
+          "startingColumn": 63,
+          "startingLine": 59
+        }
+      },
+      {
+        "comment": "",
+        "key": "Edad",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 61
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tiempo intentando concebir (meses)",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 64
+        }
+      },
+      {
+        "comment": "",
+        "key": "Calcular Fertilidad",
+        "location": {
+          "startingColumn": 25,
+          "startingLine": 96
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mis Evaluaciones",
+        "location": {
+          "startingColumn": 25,
+          "startingLine": 107
+        }
+      },
+      {
+        "comment": "",
+        "key": "New Assessment",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 118
+        }
+      },
+      {
+        "comment": "",
+        "key": "Recent Results",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 129
+        }
+      }
+    ]
+  },
+  "version": 1
+}

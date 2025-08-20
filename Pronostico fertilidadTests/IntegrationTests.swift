@@ -54,11 +54,11 @@ struct IntegrationTestRunner {
             age: 32,
             height: 160,
             weight: 70,
-            tshValue: 6.5,
-            amhValue: 0.8,
             cycleLength: 40,
             insulinValue: 18.0,
             glucoseValue: 95.0,
+            amhValue: 0.8,
+            tshValue: 6.5,
             prolactinValue: 25.0
         )
         
@@ -97,9 +97,9 @@ struct IntegrationTestRunner {
         let expectedFactors = ["Edad", "IMC", "TSH", "AMH", "Ciclo", "HOMA-IR"]
         
         for expectedFactor in expectedFactors {
-            if !factorNames.contains(where: { $0.key.contains(expectedFactor) }) {
-                print("❌ Factor faltante: \(expectedFactor)")
-                allPassed = false
+            if !factorNames.contains(where: { $0.contains(expectedFactor) }) {
+                print("❌ Factor esperado '\(expectedFactor)' no encontrado en factores clave")
+                return false
             }
         }
         
@@ -134,7 +134,9 @@ struct IntegrationTestRunner {
         print("🎯 Tratamiento recomendado: \(recommendation.plan)")
         print("📝 Razonamiento: \(recommendation.rationale.joined(separator: ", "))")
         
-        if recommendation.plan == .unknown {
+        if recommendation.plan == .coitoProgramado || recommendation.plan == .iui || recommendation.plan == .fiv || recommendation.plan == .icsi || recommendation.plan == .evaluarOvodonacion {
+            print("✅ Tratamiento: PASÓ - se determinó correctamente")
+        } else {
             print("❌ Tratamiento: Falló - no se pudo determinar")
             allPassed = false
         }
@@ -188,8 +190,8 @@ struct IntegrationTestRunner {
             age: 30,
             height: 165,
             weight: 65,
-            tshValue: 5.5,
-            amhValue: 1.5
+            amhValue: 1.5,
+            tshValue: 5.5
         )
         
         // Simular persistencia (en una app real esto iría a Core Data o UserDefaults)
@@ -247,8 +249,8 @@ struct IntegrationTestRunner {
             age: 25,
             height: 160,
             weight: 55,
-            tshValue: 2.5,
-            amhValue: 2.0
+            amhValue: 2.0,
+            tshValue: 2.5
         )
         
         // Verificar que los datos sean válidos
@@ -272,8 +274,8 @@ struct IntegrationTestRunner {
             age: 18,
             height: 140,
             weight: 40,
-            tshValue: 0.1,
-            amhValue: 0.1
+            amhValue: 0.1,
+            tshValue: 0.1
         )
         
         // Verificar que los datos límite sean válidos
@@ -282,14 +284,14 @@ struct IntegrationTestRunner {
             allPassed = false
         }
         
-        if edgeProfile.tshValue <= 0 {
-            print("❌ Validación TSH límite: Falló")
-            allPassed = false
+        if (edgeProfile.tshValue ?? 0) <= 0 {
+            print("❌ TSH debe ser > 0")
+            return false
         }
         
-        if edgeProfile.amhValue <= 0 {
-            print("❌ Validación AMH límite: Falló")
-            allPassed = false
+        if (edgeProfile.amhValue ?? 0) <= 0 {
+            print("❌ AMH debe ser > 0")
+            return false
         }
         
         if allPassed {

@@ -1,0 +1,256 @@
+{
+  "source": "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/Pronostico fertilidad/SettingsView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Configuración",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 47
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cerrar",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 50
+        }
+      },
+      {
+        "comment": "",
+        "key": "Debug: %@",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 123
+        }
+      },
+      {
+        "comment": "",
+        "key": "Conectado",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 147
+        }
+      },
+      {
+        "comment": "",
+        "key": "Configuración",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 212
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pronóstico Fertilidad",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 248
+        }
+      },
+      {
+        "comment": "",
+        "key": "Versión 2.1.0",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 252
+        }
+      },
+      {
+        "comment": "",
+        "key": "Acerca de",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 256
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cerrar Sesión",
+        "location": {
+          "startingColumn": 16,
+          "startingLine": 793
+        }
+      },
+      {
+        "comment": "",
+        "key": "El modo oscuro reduce el cansancio visual durante sesiones largas",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 382
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vista previa actual",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 416
+        }
+      },
+      {
+        "comment": "",
+        "key": "Título de ejemplo",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 421
+        }
+      },
+      {
+        "comment": "",
+        "key": "Texto de ejemplo con la fuente seleccionada",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 425
+        }
+      },
+      {
+        "comment": "",
+        "key": "85%",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 441
+        }
+      },
+      {
+        "comment": "",
+        "key": "Normal",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 430
+        }
+      },
+      {
+        "comment": "",
+        "key": "Bold",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 436
+        }
+      },
+      {
+        "comment": "",
+        "key": "Las fuentes personalizadas mejoran la legibilidad y experiencia visual",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 458
+        }
+      },
+      {
+        "comment": "",
+        "key": "Esta herramienta es de apoyo diagnóstico. Siempre consulta con criterio médico profesional.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 551
+        }
+      },
+      {
+        "comment": "",
+        "key": "Versión de la Aplicación",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 583
+        }
+      },
+      {
+        "comment": "",
+        "key": "2.1.0 (Build 2024.12)",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 587
+        }
+      },
+      {
+        "comment": "",
+        "key": "VoiceOver Compatible",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 642
+        }
+      },
+      {
+        "comment": "",
+        "key": "Navegación por voz habilitada",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 646
+        }
+      },
+      {
+        "comment": "",
+        "key": "Dynamic Type",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 665
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tamaños de texto adaptativos",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 669
+        }
+      },
+      {
+        "comment": "",
+        "key": "Esta app es totalmente compatible con todas las funciones de accesibilidad de iOS",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 695
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sesión Activa",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 733
+        }
+      },
+      {
+        "comment": "",
+        "key": "Al cerrar sesión se eliminarán todos los datos locales no sincronizados",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 757
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cerrar Sesión",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 774
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cancelar",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 794
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cerrar Sesión",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 795
+        }
+      },
+      {
+        "comment": "",
+        "key": "¿Estás seguro de que deseas cerrar sesión? Se eliminarán todos los datos locales.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 799
+        }
+      }
+    ]
+  },
+  "version": 1
+}

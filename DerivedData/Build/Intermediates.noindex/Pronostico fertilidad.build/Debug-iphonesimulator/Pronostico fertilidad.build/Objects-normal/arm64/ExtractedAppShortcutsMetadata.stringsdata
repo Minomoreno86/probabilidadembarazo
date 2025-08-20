@@ -1,0 +1,56 @@
+{
+  "tables" : {
+    "AppShortcuts" : [
+      {
+        "key" : "Calcular fertilidad con ${applicationName}",
+        "values" : [
+          "Calcular fertilidad con ${applicationName}",
+          "Evaluar fertilidad en ${applicationName}",
+          "New fertility assessment in ${applicationName}"
+        ],
+        "location" : {
+          "startingLine" : 88,
+          "startingColumn" : 0
+        }
+      },
+      {
+        "key" : "Mostrar mis evaluaciones en ${applicationName}",
+        "values" : [
+          "Mostrar mis evaluaciones en ${applicationName}",
+          "Ver evaluaciones de fertilidad en ${applicationName}",
+          "Historial de evaluaciones en ${applicationName}"
+        ],
+        "location" : {
+          "startingColumn" : 0,
+          "startingLine" : 88
+        }
+      },
+      {
+        "key" : "New assessment in ${applicationName}",
+        "values" : [
+          "New assessment in ${applicationName}",
+          "Create fertility assessment in ${applicationName}",
+          "Start assessment in ${applicationName}"
+        ],
+        "location" : {
+          "startingColumn" : 0,
+          "startingLine" : 88
+        }
+      },
+      {
+        "key" : "Resultados recientes en ${applicationName}",
+        "values" : [
+          "Resultados recientes en ${applicationName}",
+          "Latest fertility results in ${applicationName}",
+          "Ver resultados recientes en ${applicationName}"
+        ],
+        "location" : {
+          "startingColumn" : 0,
+          "startingLine" : 88
+        }
+      }
+    ]
+  },
+  "version" : 1,
+  "source" : "\/Users\/jorgevasquez\/Desktop\/MisProyectos\/Pronostico fertilidad\/Pronostico fertilidad\/SiriIntents.swift"
+}

@@ -1,0 +1,448 @@
+{
+  "source": "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/Pronostico fertilidad/SmoothTransitionsDemoView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Transiciones Suaves en Fertilidad",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 66
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ocultar Comparación",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 70
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mostrar Comparación",
+        "location": {
+          "startingColumn": 73,
+          "startingLine": 70
+        }
+      },
+      {
+        "comment": "",
+        "key": "Validado Científicamente",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 90
+        }
+      },
+      {
+        "comment": "",
+        "key": "ASRM, ESHRE, OMS - 45,000+ casos clínicos",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 94
+        }
+      },
+      {
+        "comment": "",
+        "key": "Precisión:",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 104
+        }
+      },
+      {
+        "comment": "",
+        "key": "94.3% vs. 78.9% de funciones discretas",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 106
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mejora:",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 111
+        }
+      },
+      {
+        "comment": "",
+        "key": "+15.4% de precisión",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 113
+        }
+      },
+      {
+        "comment": "",
+        "key": "Función Matemática",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 130
+        }
+      },
+      {
+        "comment": "",
+        "key": "Función %@ seleccionada",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 141
+        }
+      },
+      {
+        "comment": "",
+        "key": "Función",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 134
+        }
+      },
+      {
+        "comment": "",
+        "key": "Comparación: Funciones Continuas vs. Discretas",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 154
+        }
+      },
+      {
+        "comment": "",
+        "key": "Edad",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 182
+        }
+      },
+      {
+        "comment": "",
+        "key": "Probabilidad",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 183
+        }
+      },
+      {
+        "comment": "",
+        "key": "Edad",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 162
+        }
+      },
+      {
+        "comment": "",
+        "key": "Probabilidad",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 163
+        }
+      },
+      {
+        "comment": "",
+        "key": "Edad",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 172
+        }
+      },
+      {
+        "comment": "",
+        "key": "Probabilidad",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 173
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 195
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld%%",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 205
+        }
+      },
+      {
+        "comment": "",
+        "key": "Función Continua",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 217
+        }
+      },
+      {
+        "comment": "",
+        "key": "Función Discreta (Actual)",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 225
+        }
+      },
+      {
+        "comment": "",
+        "key": "Análisis de Sensibilidad en Tiempo Real",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 240
+        }
+      },
+      {
+        "comment": "",
+        "key": "Edad:",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 246
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ años",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 249
+        }
+      },
+      {
+        "comment": "",
+        "key": "Probabilidad actual:",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 260
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@%%",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 262
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cambio por año:",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 268
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@%%",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 270
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tipo de transición:",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 276
+        }
+      },
+      {
+        "comment": "",
+        "key": "✅ Suave",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 278
+        }
+      },
+      {
+        "comment": "",
+        "key": "⚠️ Significativa",
+        "location": {
+          "startingColumn": 67,
+          "startingLine": 278
+        }
+      },
+      {
+        "comment": "",
+        "key": "Comparación Detallada de Funciones",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 296
+        }
+      },
+      {
+        "comment": "",
+        "key": "Edad seleccionada:",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 304
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld años",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 306
+        }
+      },
+      {
+        "comment": "",
+        "key": "Función discreta (actual):",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 311
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@%%",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 313
+        }
+      },
+      {
+        "comment": "",
+        "key": "Función continua:",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 319
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@%%",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 321
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mejora en precisión:",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 329
+        }
+      },
+      {
+        "comment": "",
+        "key": "+%@%%",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 331
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tipo de transición:",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 337
+        }
+      },
+      {
+        "comment": "",
+        "key": "✅ Suave",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 339
+        }
+      },
+      {
+        "comment": "",
+        "key": "❌ Abrupta",
+        "location": {
+          "startingColumn": 62,
+          "startingLine": 339
+        }
+      },
+      {
+        "comment": "",
+        "key": "Validación Científica",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 356
+        }
+      },
+      {
+        "comment": "",
+        "key": "Total de casos:",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 364
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 366
+        }
+      },
+      {
+        "comment": "",
+        "key": "Organizaciones:",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 371
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 373
+        }
+      },
+      {
+        "comment": "",
+        "key": "Año de publicación:",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 378
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 380
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aprobación clínica:",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 385
+        }
+      },
+      {
+        "comment": "",
+        "key": "✅ Aprobado",
+        "location": {
+          "startingColumn": 60,
+          "startingLine": 387
+        }
+      },
+      {
+        "comment": "",
+        "key": "❌ Pendiente",
+        "location": {
+          "startingColumn": 77,
+          "startingLine": 387
+        }
+      }
+    ]
+  },
+  "version": 1
+}

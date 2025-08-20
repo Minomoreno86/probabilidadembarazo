@@ -89,12 +89,16 @@ struct ModernFertilityCalculatorView: View {
                             switch activeSection {
                             case .demographics:
                                 demographicsForm
+                                    .accessibilityIdentifier("demographics_section")
                             case .gynecology:
                                 gynecologyForm
+                                    .accessibilityIdentifier("gynecology_section")
                             case .laboratory:
                                 laboratoryForm
+                                    .accessibilityIdentifier("laboratory_section")
                             case .maleFactor:
                                 maleFactorForm
+                                    .accessibilityIdentifier("male_factor_section")
                             }
                         }
                         .padding(.horizontal, 24)
@@ -117,6 +121,7 @@ struct ModernFertilityCalculatorView: View {
                 animateProgress = true
             }
         }
+        .accessibilityIdentifier("ModernFertilityCalculatorView")
     }
     
     // MARK: - HEADER MÉDICO
@@ -313,6 +318,7 @@ struct ModernFertilityCalculatorView: View {
                 ),
                 color: .blue
             )
+            .accessibilityIdentifier("age_field")
             
             // Peso
             FormField(
@@ -328,6 +334,7 @@ struct ModernFertilityCalculatorView: View {
                 ),
                 color: .blue
             )
+            .accessibilityIdentifier("weight_field")
             
             // Estatura
             FormField(
@@ -343,6 +350,7 @@ struct ModernFertilityCalculatorView: View {
                 ),
                 color: .blue
             )
+            .accessibilityIdentifier("height_field")
             
             // IMC calculado automáticamente
             if profile.height > 0 && profile.weight > 0 {

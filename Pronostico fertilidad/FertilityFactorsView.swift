@@ -36,6 +36,7 @@ struct FertilityFactorsView: View {
             }
             .padding()
         }
+        .accessibilityIdentifier("fertility_factors_view")
     }
     
     // MARK: - 📈 HEADER DE IMPACTO

@@ -1,0 +1,38 @@
+{
+  "" : {
+    "diagnostics" : "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/DerivedData/Build/Intermediates.noindex/Pronostico fertilidad.build/Debug-iphonesimulator/Pronostico fertilidadTests.build/Objects-normal/arm64/Pronostico fertilidadTests-master.dia",
+    "emit-module-dependencies" : "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/DerivedData/Build/Intermediates.noindex/Pronostico fertilidad.build/Debug-iphonesimulator/Pronostico fertilidadTests.build/Objects-normal/arm64/Pronostico fertilidadTests-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/DerivedData/Build/Intermediates.noindex/Pronostico fertilidad.build/Debug-iphonesimulator/Pronostico fertilidadTests.build/Objects-normal/arm64/Pronostico fertilidadTests-master-emit-module.dia",
+    "swift-dependencies" : "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/DerivedData/Build/Intermediates.noindex/Pronostico fertilidad.build/Debug-iphonesimulator/Pronostico fertilidadTests.build/Objects-normal/arm64/Pronostico fertilidadTests-master.swiftdeps"
+  },
+  "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/Pronostico fertilidadTests/IntegrationTests.swift" : {
+    "const-values" : "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/DerivedData/Build/Intermediates.noindex/Pronostico fertilidad.build/Debug-iphonesimulator/Pronostico fertilidadTests.build/Objects-normal/arm64/IntegrationTests.swiftconstvalues",
+    "dependencies" : "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/DerivedData/Build/Intermediates.noindex/Pronostico fertilidad.build/Debug-iphonesimulator/Pronostico fertilidadTests.build/Objects-normal/arm64/IntegrationTests.d",
+    "diagnostics" : "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/DerivedData/Build/Intermediates.noindex/Pronostico fertilidad.build/Debug-iphonesimulator/Pronostico fertilidadTests.build/Objects-normal/arm64/IntegrationTests.dia",
+    "index-unit-output-path" : "/Pronostico fertilidad.build/Debug-iphonesimulator/Pronostico fertilidadTests.build/Objects-normal/arm64/IntegrationTests.o",
+    "llvm-bc" : "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/DerivedData/Build/Intermediates.noindex/Pronostico fertilidad.build/Debug-iphonesimulator/Pronostico fertilidadTests.build/Objects-normal/arm64/IntegrationTests.bc",
+    "object" : "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/DerivedData/Build/Intermediates.noindex/Pronostico fertilidad.build/Debug-iphonesimulator/Pronostico fertilidadTests.build/Objects-normal/arm64/IntegrationTests.o",
+    "swift-dependencies" : "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/DerivedData/Build/Intermediates.noindex/Pronostico fertilidad.build/Debug-iphonesimulator/Pronostico fertilidadTests.build/Objects-normal/arm64/IntegrationTests.swiftdeps",
+    "swiftmodule" : "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/DerivedData/Build/Intermediates.noindex/Pronostico fertilidad.build/Debug-iphonesimulator/Pronostico fertilidadTests.build/Objects-normal/arm64/IntegrationTests~partial.swiftmodule"
+  },
+  "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/Pronostico fertilidadTests/Pronostico_fertilidadTests.swift" : {
+    "const-values" : "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/DerivedData/Build/Intermediates.noindex/Pronostico fertilidad.build/Debug-iphonesimulator/Pronostico fertilidadTests.build/Objects-normal/arm64/Pronostico_fertilidadTests.swiftconstvalues",
+    "dependencies" : "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/DerivedData/Build/Intermediates.noindex/Pronostico fertilidad.build/Debug-iphonesimulator/Pronostico fertilidadTests.build/Objects-normal/arm64/Pronostico_fertilidadTests.d",
+    "diagnostics" : "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/DerivedData/Build/Intermediates.noindex/Pronostico fertilidad.build/Debug-iphonesimulator/Pronostico fertilidadTests.build/Objects-normal/arm64/Pronostico_fertilidadTests.dia",
+    "index-unit-output-path" : "/Pronostico fertilidad.build/Debug-iphonesimulator/Pronostico fertilidadTests.build/Objects-normal/arm64/Pronostico_fertilidadTests.o",
+    "llvm-bc" : "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/DerivedData/Build/Intermediates.noindex/Pronostico fertilidad.build/Debug-iphonesimulator/Pronostico fertilidadTests.build/Objects-normal/arm64/Pronostico_fertilidadTests.bc",
+    "object" : "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/DerivedData/Build/Intermediates.noindex/Pronostico fertilidad.build/Debug-iphonesimulator/Pronostico fertilidadTests.build/Objects-normal/arm64/Pronostico_fertilidadTests.o",
+    "swift-dependencies" : "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/DerivedData/Build/Intermediates.noindex/Pronostico fertilidad.build/Debug-iphonesimulator/Pronostico fertilidadTests.build/Objects-normal/arm64/Pronostico_fertilidadTests.swiftdeps",
+    "swiftmodule" : "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/DerivedData/Build/Intermediates.noindex/Pronostico fertilidad.build/Debug-iphonesimulator/Pronostico fertilidadTests.build/Objects-normal/arm64/Pronostico_fertilidadTests~partial.swiftmodule"
+  },
+  "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/Pronostico fertilidadTests/TestLauncher.swift" : {
+    "const-values" : "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/DerivedData/Build/Intermediates.noindex/Pronostico fertilidad.build/Debug-iphonesimulator/Pronostico fertilidadTests.build/Objects-normal/arm64/TestLauncher.swiftconstvalues",
+    "dependencies" : "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/DerivedData/Build/Intermediates.noindex/Pronostico fertilidad.build/Debug-iphonesimulator/Pronostico fertilidadTests.build/Objects-normal/arm64/TestLauncher.d",
+    "diagnostics" : "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/DerivedData/Build/Intermediates.noindex/Pronostico fertilidad.build/Debug-iphonesimulator/Pronostico fertilidadTests.build/Objects-normal/arm64/TestLauncher.dia",
+    "index-unit-output-path" : "/Pronostico fertilidad.build/Debug-iphonesimulator/Pronostico fertilidadTests.build/Objects-normal/arm64/TestLauncher.o",
+    "llvm-bc" : "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/DerivedData/Build/Intermediates.noindex/Pronostico fertilidad.build/Debug-iphonesimulator/Pronostico fertilidadTests.build/Objects-normal/arm64/TestLauncher.bc",
+    "object" : "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/DerivedData/Build/Intermediates.noindex/Pronostico fertilidad.build/Debug-iphonesimulator/Pronostico fertilidadTests.build/Objects-normal/arm64/TestLauncher.o",
+    "swift-dependencies" : "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/DerivedData/Build/Intermediates.noindex/Pronostico fertilidad.build/Debug-iphonesimulator/Pronostico fertilidadTests.build/Objects-normal/arm64/TestLauncher.swiftdeps",
+    "swiftmodule" : "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/DerivedData/Build/Intermediates.noindex/Pronostico fertilidad.build/Debug-iphonesimulator/Pronostico fertilidadTests.build/Objects-normal/arm64/TestLauncher~partial.swiftmodule"
+  }
+}

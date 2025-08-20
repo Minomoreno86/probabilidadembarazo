@@ -1,0 +1,544 @@
+{
+  "source": "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/Pronostico fertilidad/ModernFertilityCalculatorView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Evaluación Médica",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 152
+        }
+      },
+      {
+        "comment": "",
+        "key": "FertilyzeAI Suite",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 157
+        }
+      },
+      {
+        "comment": "",
+        "key": "Completado: %lld%%",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 186
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 375
+        }
+      },
+      {
+        "comment": "",
+        "key": "IMC Calculado",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 365
+        }
+      },
+      {
+        "comment": "",
+        "key": "Evaluación Detallada del SOP",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 455
+        }
+      },
+      {
+        "comment": "",
+        "key": "Manifestaciones Androgénicas",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 463
+        }
+      },
+      {
+        "comment": "",
+        "key": "Hirsutismo",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 468
+        }
+      },
+      {
+        "comment": "",
+        "key": "Acné",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 477
+        }
+      },
+      {
+        "comment": "",
+        "key": "No",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 469
+        }
+      },
+      {
+        "comment": "",
+        "key": "Leve (vello en mentón)",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 470
+        }
+      },
+      {
+        "comment": "",
+        "key": "Moderado (vello en mentón + mejillas)",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 471
+        }
+      },
+      {
+        "comment": "",
+        "key": "Severo (vello facial extenso)",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 472
+        }
+      },
+      {
+        "comment": "",
+        "key": "No",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 478
+        }
+      },
+      {
+        "comment": "",
+        "key": "Leve (pocos granos)",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 479
+        }
+      },
+      {
+        "comment": "",
+        "key": "Moderado (acné persistente)",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 480
+        }
+      },
+      {
+        "comment": "",
+        "key": "Severo (acné quístico)",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 481
+        }
+      },
+      {
+        "comment": "",
+        "key": "Evaluación Ovárica",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 489
+        }
+      },
+      {
+        "comment": "",
+        "key": "Conteo folicular",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 494
+        }
+      },
+      {
+        "comment": "",
+        "key": "No me la han hecho",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 495
+        }
+      },
+      {
+        "comment": "",
+        "key": "Normal",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 496
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ovarios poliquísticos (>12 folículos)",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 497
+        }
+      },
+      {
+        "comment": "",
+        "key": "Grado de Endometriosis",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 525
+        }
+      },
+      {
+        "comment": "",
+        "key": "Endometriosis",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 519
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sin endometriosis",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 526
+        }
+      },
+      {
+        "comment": "",
+        "key": "Grado I (mínima)",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 527
+        }
+      },
+      {
+        "comment": "",
+        "key": "Grado II (leve)",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 528
+        }
+      },
+      {
+        "comment": "",
+        "key": "Grado III (moderada)",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 529
+        }
+      },
+      {
+        "comment": "",
+        "key": "Grado IV (severa)",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 530
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tipo de Mioma",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 552
+        }
+      },
+      {
+        "comment": "",
+        "key": "Miomatosis Uterina",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 546
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sin miomas",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 553
+        }
+      },
+      {
+        "comment": "",
+        "key": "Submucoso",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 554
+        }
+      },
+      {
+        "comment": "",
+        "key": "Intramural",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 555
+        }
+      },
+      {
+        "comment": "",
+        "key": "Subseroso",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 556
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tamaño del mioma más grande",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 566
+        }
+      },
+      {
+        "comment": "",
+        "key": "cm",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 585
+        }
+      },
+      {
+        "comment": "",
+        "key": "cm",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 573
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tipo de Adenomiosis",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 608
+        }
+      },
+      {
+        "comment": "",
+        "key": "Adenomiosis",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 602
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sin adenomiosis",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 609
+        }
+      },
+      {
+        "comment": "",
+        "key": "Focal",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 610
+        }
+      },
+      {
+        "comment": "",
+        "key": "Difusa",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 611
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tipo de Pólipo",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 633
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pólipos Endometriales",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 627
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sin pólipos",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 634
+        }
+      },
+      {
+        "comment": "",
+        "key": "Único",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 635
+        }
+      },
+      {
+        "comment": "",
+        "key": "Múltiples",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 636
+        }
+      },
+      {
+        "comment": "",
+        "key": "Resultado HSG",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 658
+        }
+      },
+      {
+        "comment": "",
+        "key": "Histerosalpingografía (HSG)",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 652
+        }
+      },
+      {
+        "comment": "",
+        "key": "Normal",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 659
+        }
+      },
+      {
+        "comment": "",
+        "key": "Obstrucción unilateral",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 660
+        }
+      },
+      {
+        "comment": "",
+        "key": "Obstrucción bilateral",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 661
+        }
+      },
+      {
+        "comment": "",
+        "key": "Método OTB",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 716
+        }
+      },
+      {
+        "comment": "",
+        "key": "Método de Diagnóstico OTB",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 710
+        }
+      },
+      {
+        "comment": "",
+        "key": "No especificado",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 717
+        }
+      },
+      {
+        "comment": "",
+        "key": "Clips",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 718
+        }
+      },
+      {
+        "comment": "",
+        "key": "Coagulación",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 719
+        }
+      },
+      {
+        "comment": "",
+        "key": "Salpingectomía",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 720
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 874
+        }
+      },
+      {
+        "comment": "",
+        "key": "HOMA-IR Calculado",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 864
+        }
+      },
+      {
+        "comment": "",
+        "key": "Normal: <2.5",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 867
+        }
+      },
+      {
+        "comment": "",
+        "key": "Espermatograma (OMS 2021)",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 902
+        }
+      },
+      {
+        "comment": "",
+        "key": "Analizando...",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 1026
+        }
+      },
+      {
+        "comment": "",
+        "key": "Generar Pronóstico",
+        "location": {
+          "startingColumn": 56,
+          "startingLine": 1026
+        }
+      },
+      {
+        "comment": "",
+        "key": "0",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 1280
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 1343
+        }
+      }
+    ]
+  },
+  "version": 1
+}

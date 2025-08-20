@@ -1,0 +1,248 @@
+{
+  "source": "/Users/jorgevasquez/Desktop/MisProyectos/Pronostico fertilidad/Pronostico fertilidad/TreatmentSimulatorView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Simulador de Tratamientos",
+        "location": {
+          "startingColumn": 10,
+          "startingLine": 39
+        }
+      },
+      {
+        "comment": "",
+        "key": "Recomendación personalizada + mejoras alcanzables",
+        "location": {
+          "startingColumn": 10,
+          "startingLine": 42
+        }
+      },
+      {
+        "comment": "",
+        "key": "Resumen del Análisis",
+        "location": {
+          "startingColumn": 9,
+          "startingLine": 52
+        }
+      },
+      {
+        "comment": "",
+        "key": "Recomendación Principal",
+        "location": {
+          "startingColumn": 9,
+          "startingLine": 70
+        }
+      },
+      {
+        "comment": "",
+        "key": "Calculando recomendación...",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 133
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tasa estimada: %lld%%",
+        "location": {
+          "startingColumn": 13,
+          "startingLine": 90
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tiempo estimado: %@",
+        "location": {
+          "startingColumn": 13,
+          "startingLine": 93
+        }
+      },
+      {
+        "comment": "",
+        "key": "Motivos clínicos",
+        "location": {
+          "startingColumn": 13,
+          "startingLine": 100
+        }
+      },
+      {
+        "comment": "",
+        "key": "Bibliografía",
+        "location": {
+          "startingColumn": 13,
+          "startingLine": 116
+        }
+      },
+      {
+        "comment": "",
+        "key": "• %@",
+        "location": {
+          "startingColumn": 14,
+          "startingLine": 121
+        }
+      },
+      {
+        "comment": "",
+        "key": "Factores Modificables (Simulación)",
+        "location": {
+          "startingColumn": 9,
+          "startingLine": 140
+        }
+      },
+      {
+        "comment": "",
+        "key": "No se identificaron factores modificables relevantes.",
+        "location": {
+          "startingColumn": 10,
+          "startingLine": 145
+        }
+      },
+      {
+        "comment": "",
+        "key": "Actual: %@ → Objetivo: %@",
+        "location": {
+          "startingColumn": 14,
+          "startingLine": 157
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mejora estimada: %@%% • Tiempo: %@",
+        "location": {
+          "startingColumn": 14,
+          "startingLine": 160
+        }
+      },
+      {
+        "comment": "",
+        "key": "Recomendación: %@",
+        "location": {
+          "startingColumn": 14,
+          "startingLine": 162
+        }
+      },
+      {
+        "comment": "",
+        "key": "⚠️ Factores No Modificables",
+        "location": {
+          "startingColumn": 9,
+          "startingLine": 179
+        }
+      },
+      {
+        "comment": "",
+        "key": "No se identificaron factores no modificables relevantes.",
+        "location": {
+          "startingColumn": 10,
+          "startingLine": 184
+        }
+      },
+      {
+        "comment": "",
+        "key": "Valor actual: %@",
+        "location": {
+          "startingColumn": 13,
+          "startingLine": 207
+        }
+      },
+      {
+        "comment": "",
+        "key": "Impacto: %@",
+        "location": {
+          "startingColumn": 13,
+          "startingLine": 211
+        }
+      },
+      {
+        "comment": "",
+        "key": "Implicación clínica: %@",
+        "location": {
+          "startingColumn": 13,
+          "startingLine": 219
+        }
+      },
+      {
+        "comment": "",
+        "key": "Simulación de Corrección",
+        "location": {
+          "startingColumn": 10,
+          "startingLine": 248
+        }
+      },
+      {
+        "comment": "",
+        "key": "Factor a corregir: %@",
+        "location": {
+          "startingColumn": 12,
+          "startingLine": 260
+        }
+      },
+      {
+        "comment": "",
+        "key": "Recomendación Previa:",
+        "location": {
+          "startingColumn": 13,
+          "startingLine": 269
+        }
+      },
+      {
+        "comment": "",
+        "key": "Recomendación Corregida:",
+        "location": {
+          "startingColumn": 13,
+          "startingLine": 280
+        }
+      },
+      {
+        "comment": "",
+        "key": "¡Cambio de tratamiento!",
+        "location": {
+          "startingColumn": 14,
+          "startingLine": 295
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mejora en probabilidad: %@%%",
+        "location": {
+          "startingColumn": 12,
+          "startingLine": 310
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tiempo para corrección: %@",
+        "location": {
+          "startingColumn": 12,
+          "startingLine": 314
+        }
+      },
+      {
+        "comment": "",
+        "key": "Acción clínica: %@",
+        "location": {
+          "startingColumn": 12,
+          "startingLine": 318
+        }
+      },
+      {
+        "comment": "",
+        "key": "No se identificaron factores modificables para simular.",
+        "location": {
+          "startingColumn": 11,
+          "startingLine": 338
+        }
+      },
+      {
+        "comment": "",
+        "key": "Simular Corrección",
+        "location": {
+          "startingColumn": 13,
+          "startingLine": 348
+        }
+      }
+    ]
+  },
+  "version": 1
+}
