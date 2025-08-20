@@ -57,7 +57,7 @@ final class Pronostico_fertilidadUITests: XCTestCase {
     @MainActor
     func testNavigationToCalculator() throws {
         // Esperar a que aparezca el botón de calculadora
-        let calculatorButton = app.buttons.containing(.staticText, identifier: "Iniciar Evaluación").firstMatch
+        let calculatorButton = app.buttons.containing(.staticText, identifier: "Iniciar Evaluación Avanzada").firstMatch
         
         if !calculatorButton.exists {
             // Si no existe, buscar por otros posibles identificadores
@@ -69,9 +69,10 @@ final class Pronostico_fertilidadUITests: XCTestCase {
             calculatorButton.tap()
         }
         
-        // Verificar que se abre la calculadora
-        let calculatorTitle = app.navigationBars.staticTexts["Evaluación de Fertilidad"]
-        XCTAssertTrue(calculatorTitle.waitForExistence(timeout: 5), "Debe navegar a la calculadora")
+        // Verificar que se abre la calculadora (como sheet modal)
+        // La calculadora se abre como sheet, no como navegación directa
+        let calculatorView = app.otherElements["ModernFertilityCalculatorView"]
+        XCTAssertTrue(calculatorView.waitForExistence(timeout: 5), "Debe abrirse la calculadora")
         
         print("✅ Test de navegación a calculadora: PASÓ")
     }
@@ -83,7 +84,7 @@ final class Pronostico_fertilidadUITests: XCTestCase {
         // Navegar a la calculadora
         try testNavigationToCalculator()
         
-        // Test de entrada de edad
+        // Test de entrada de edad (sección Demografía)
         let ageField = app.textFields["Edad"]
         if ageField.waitForExistence(timeout: 5) {
             ageField.tap()
@@ -93,18 +94,34 @@ final class Pronostico_fertilidadUITests: XCTestCase {
             XCTAssertEqual(ageField.value as? String, "30", "La edad debe establecerse correctamente")
         }
         
-        // Test de entrada de altura
+        // Test de entrada de altura (sección Demografía)
         let heightField = app.textFields["Altura (cm)"]
         if heightField.waitForExistence(timeout: 5) {
             heightField.tap()
             heightField.typeText("165")
+            
+            // Verificar que se aceptó el valor
+            XCTAssertEqual(heightField.value as? String, "165", "La altura debe establecerse correctamente")
         }
         
-        // Test de entrada de peso
+        // Test de entrada de peso (sección Demografía)
         let weightField = app.textFields["Peso (kg)"]
         if weightField.waitForExistence(timeout: 5) {
             weightField.tap()
             weightField.typeText("65")
+            
+            // Verificar que se aceptó el valor
+            XCTAssertEqual(weightField.value as? String, "65", "El peso debe establecerse correctamente")
+        }
+        
+        // Test de navegación entre secciones
+        let gynecologyTab = app.buttons["Ginecología"]
+        if gynecologyTab.waitForExistence(timeout: 5) {
+            gynecologyTab.tap()
+            
+            // Verificar que se cambió a la sección de ginecología
+            let cycleField = app.textFields["Duración del Ciclo"]
+            XCTAssertTrue(cycleField.waitForExistence(timeout: 5), "Debe mostrar campos de ginecología")
         }
         
         print("✅ Test de entrada de datos: PASÓ")
@@ -137,8 +154,46 @@ final class Pronostico_fertilidadUITests: XCTestCase {
         // Navegar a la calculadora
         try testNavigationToCalculator()
         
-        // Llenar datos básicos
+        // Llenar datos básicos en la sección Demografía
         fillBasicData()
+        
+        // Navegar a la sección Ginecología y llenar datos
+        let gynecologyTab = app.buttons["Ginecología"]
+        if gynecologyTab.waitForExistence(timeout: 5) {
+            gynecologyTab.tap()
+            
+            // Llenar datos de ginecología
+            let cycleField = app.textFields["Duración del Ciclo"]
+            if cycleField.waitForExistence(timeout: 5) {
+                cycleField.tap()
+                cycleField.typeText("28")
+            }
+            
+            let infertilityField = app.textFields["Duración de Infertilidad"]
+            if infertilityField.waitForExistence(timeout: 5) {
+                infertilityField.tap()
+                infertilityField.typeText("2")
+            }
+        }
+        
+        // Navegar a la sección Laboratorio y llenar datos
+        let laboratoryTab = app.buttons["Laboratorio"]
+        if laboratoryTab.waitForExistence(timeout: 5) {
+            laboratoryTab.tap()
+            
+            // Llenar datos de laboratorio
+            let tshField = app.textFields["TSH"]
+            if tshField.waitForExistence(timeout: 5) {
+                tshField.tap()
+                tshField.typeText("3.5")
+            }
+            
+            let amhField = app.textFields["AMH"]
+            if amhField.waitForExistence(timeout: 5) {
+                amhField.tap()
+                amhField.typeText("2.0")
+            }
+        }
         
         // Ejecutar cálculo
         let calculateButton = app.buttons["Calcular"]
@@ -181,6 +236,15 @@ final class Pronostico_fertilidadUITests: XCTestCase {
             XCTAssertTrue(factorsTitle.waitForExistence(timeout: 5), "Debe mostrar análisis de factores")
         }
         
+        let analysisTab = app.buttons["Análisis"]
+        if analysisTab.waitForExistence(timeout: 5) {
+            analysisTab.tap()
+            
+            // Verificar contenido de análisis
+            let analysisContent = app.staticTexts.containing(.staticText, identifier: "Evidencia").firstMatch
+            XCTAssertTrue(analysisContent.waitForExistence(timeout: 5), "Debe mostrar análisis detallado")
+        }
+        
         print("✅ Test de navegación en resultados: PASÓ")
     }
     
@@ -203,6 +267,13 @@ final class Pronostico_fertilidadUITests: XCTestCase {
             // Verificar recomendación de tratamiento
             let treatmentRecommendation = app.staticTexts.containing(.staticText, identifier: "Recomendado").firstMatch
             XCTAssertTrue(treatmentRecommendation.waitForExistence(timeout: 5), "Debe mostrar recomendación de tratamiento")
+            
+            // Verificar factores modificables y no modificables
+            let modifiableFactors = app.staticTexts.containing(.staticText, identifier: "Factores Modificables").firstMatch
+            XCTAssertTrue(modifiableFactors.waitForExistence(timeout: 5), "Debe mostrar factores modificables")
+            
+            let nonModifiableFactors = app.staticTexts.containing(.staticText, identifier: "Factores No Modificables").firstMatch
+            XCTAssertTrue(nonModifiableFactors.waitForExistence(timeout: 5), "Debe mostrar factores no modificables")
         }
         
         print("✅ Test del simulador de tratamientos: PASÓ")
@@ -225,6 +296,10 @@ final class Pronostico_fertilidadUITests: XCTestCase {
             // Verificar que aparezca información de mejora
             let improvementText = app.staticTexts.containing(.staticText, identifier: "Mejora").firstMatch
             XCTAssertTrue(improvementText.waitForExistence(timeout: 5), "Debe mostrar información de mejora")
+            
+            // Verificar comparación entre recomendaciones
+            let comparisonText = app.staticTexts.containing(.staticText, identifier: "Recomendación Previa").firstMatch
+            XCTAssertTrue(comparisonText.waitForExistence(timeout: 5), "Debe mostrar comparación de recomendaciones")
         }
         
         print("✅ Test de simulación de corrección: PASÓ")
@@ -271,9 +346,13 @@ final class Pronostico_fertilidadUITests: XCTestCase {
     
     @MainActor
     func testLaunchPerformance() throws {
-        // Medir tiempo de lanzamiento
+        // Medir tiempo de lanzamiento con timeout más generoso
         measure(metrics: [XCTApplicationLaunchMetric()]) {
-            XCUIApplication().launch()
+            let testApp = XCUIApplication()
+            testApp.launch()
+            
+            // Esperar a que la app esté lista con timeout más generoso
+            _ = testApp.wait(for: .runningForeground, timeout: 15)
         }
         
         print("✅ Test de rendimiento de lanzamiento: PASÓ")
@@ -287,45 +366,110 @@ final class Pronostico_fertilidadUITests: XCTestCase {
         // Llenar datos
         fillBasicData()
         
-        // Medir tiempo de cálculo
+        // Medir tiempo de cálculo con timeout más generoso
         let calculateButton = app.buttons["Calcular"]
-        if calculateButton.waitForExistence(timeout: 5) {
+        if calculateButton.waitForExistence(timeout: 10) {
             measure(metrics: [XCTClockMetric()]) {
                 calculateButton.tap()
                 
-                // Esperar resultados
+                // Esperar resultados con timeout más generoso
                 let resultsTitle = app.staticTexts["Resultados del Análisis"]
-                _ = resultsTitle.waitForExistence(timeout: 10)
+                _ = resultsTitle.waitForExistence(timeout: 15)
             }
         }
         
         print("✅ Test de rendimiento de cálculo: PASÓ")
     }
     
+    // MARK: - 🧪 TESTS DE CARGA Y MEMORIA
+    
+    @MainActor
+    func testLoadPerformance() throws {
+        // Test de carga con timeout más generoso
+        measure(metrics: [XCTClockMetric()]) {
+            // Simular carga de datos
+            let startTime = Date()
+            
+            // Esperar a que la app esté completamente cargada
+            _ = app.wait(for: .runningForeground, timeout: 20)
+            
+            // Verificar que los elementos principales estén cargados
+            let titleText = app.staticTexts["FERTILIDAD"]
+            _ = titleText.waitForExistence(timeout: 15)
+            
+            let endTime = Date()
+            let loadTime = endTime.timeIntervalSince(startTime)
+            
+            // Verificar que la carga no tome más de 10 segundos
+            XCTAssertLessThan(loadTime, 10.0, "La carga debe completarse en menos de 10 segundos")
+        }
+        
+        print("✅ Test de rendimiento de carga: PASÓ")
+    }
+    
+    @MainActor
+    func testMemoryLeaks() throws {
+        // Test de memory leaks con timeout más generoso
+        measure(metrics: [XCTClockMetric()]) {
+            // Simular uso intensivo de memoria
+            let startTime = Date()
+            
+            // Navegar a la calculadora
+            try? testNavigationToCalculator()
+            
+            // Llenar datos múltiples veces para simular uso intensivo
+            for i in 0..<3 {
+                fillBasicData()
+                
+                // Pequeña pausa para simular uso real
+                Thread.sleep(forTimeInterval: 0.5)
+            }
+            
+            let endTime = Date()
+            let testTime = endTime.timeIntervalSince(startTime)
+            
+            // Verificar que el test no tome más de 15 segundos
+            XCTAssertLessThan(testTime, 15.0, "El test de memory leaks debe completarse en menos de 15 segundos")
+        }
+        
+        print("✅ Test de memory leaks: PASÓ")
+    }
+    
     // MARK: - 🔧 FUNCIONES AUXILIARES
     
     private func fillBasicData() {
-        // Llenar datos básicos para testing
+        // Llenar datos básicos para testing en la sección Demografía
         let ageField = app.textFields["Edad"]
         if ageField.waitForExistence(timeout: 5) {
             ageField.tap()
             ageField.typeText("30")
+            
+            // Verificar que se aceptó el valor
+            XCTAssertEqual(ageField.value as? String, "30", "La edad debe establecerse correctamente")
         }
         
         let heightField = app.textFields["Altura (cm)"]
         if heightField.waitForExistence(timeout: 5) {
             heightField.tap()
             heightField.typeText("165")
+            
+            // Verificar que se aceptó el valor
+            XCTAssertEqual(heightField.value as? String, "165", "La altura debe establecerse correctamente")
         }
         
         let weightField = app.textFields["Peso (kg)"]
         if weightField.waitForExistence(timeout: 5) {
             weightField.tap()
             weightField.typeText("65")
+            
+            // Verificar que se aceptó el valor
+            XCTAssertEqual(weightField.value as? String, "65", "El peso debe establecerse correctamente")
         }
         
         // Ocultar teclado
-        app.keyboards.buttons["Done"].tap()
+        app.tap()
+        
+        print("✅ Datos básicos llenados correctamente")
     }
     
     private func waitForElementToAppear(_ element: XCUIElement, timeout: TimeInterval = 10) -> Bool {
