@@ -8,7 +8,7 @@ on:
   workflow_dispatch: # Permite ejecutar manualmente
 
 env:
-  XCODE_VERSION: '16.0'
+  XCODE_VERSION: '16.2.0'
   IOS_VERSION: '18.6'
   DEVICE: 'iPhone 16'
 
