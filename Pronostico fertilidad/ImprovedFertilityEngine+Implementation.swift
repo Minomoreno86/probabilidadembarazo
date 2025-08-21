@@ -674,8 +674,8 @@ extension ImprovedFertilityEngine {
         
         // Ciclo menstrual - SOLO mostrar si está alterado
         if let cycleLength = profile.cycleLength, factors.cycle > 0 && factors.cycle != 1.0 {
-            let cycleImpact = Int((1.0 - factors.cycle) * 100)
-            keyFactors["Ciclo Menstrual (\(Int(cycleLength)) días, -\(cycleImpact)%)"] = factors.cycle
+                let cycleImpact = Int((1.0 - factors.cycle) * 100)
+                keyFactors["Ciclo Menstrual (\(Int(cycleLength)) días, -\(cycleImpact)%)"] = factors.cycle
         }
         
         // Factores hormonales y patológicos (solo si están alterados)
@@ -822,14 +822,14 @@ extension ImprovedFertilityEngine {
                     evidenceLevel: .A
                 ))
             } else {
-                let iuiRec = ageBasedRec.iuiRecommendation
-                recommendations.append(Recommendation(
-                    title: "Tratamiento de Baja Complejidad",
-                    description: "\(iuiRec.recommendation). \(iuiRec.stimulationType)",
-                    priority: .medium,
-                    category: .reproductive,
-                    evidenceLevel: .A
-                ))
+            let iuiRec = ageBasedRec.iuiRecommendation
+            recommendations.append(Recommendation(
+                title: "Tratamiento de Baja Complejidad",
+                description: "\(iuiRec.recommendation). \(iuiRec.stimulationType)",
+                priority: .medium,
+                category: .reproductive,
+                evidenceLevel: .A
+            ))
             }
             
         case .highComplexity:
@@ -1092,7 +1092,7 @@ extension ImprovedFertilityEngine {
             ))
         }
         
-         // 📅 CICLOS MENSTRUALES Y FERTILIDAD - SOLO SI HAY DATOS EXPLÍCITOS
+        // 📅 CICLOS MENSTRUALES Y FERTILIDAD - SOLO SI HAY DATOS EXPLÍCITOS
         if let cycleLength = profile.cycleLength, cycleLength != 28.0 { // Solo si no es el valor por defecto
             let cycleRecommendation = MenstrualCyclePathology.generateComprehensiveRecommendation(cycleLength: cycleLength)
             let cyclePattern = cycleRecommendation.pattern
