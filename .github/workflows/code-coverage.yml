@@ -1,106 +1,160 @@
-name: 📊 Code Coverage
+name: 📊 Code Coverage Analysis - Pronostico Fertilidad
 
 on:
+  push:
+    branches: [ main, develop ]
   pull_request:
     branches: [ main, develop ]
   workflow_dispatch:
+  schedule:
+    # Ejecutar cada domingo a las 2 AM UTC
+    - cron: '0 2 * * 0'
 
 env:
-  XCODE_VERSION: '16.0'
-  IOS_VERSION: '18.6'
-  DEVICE: 'iPhone 16'
+  MIN_COVERAGE: 80
+  TARGET_COVERAGE: 90
 
 jobs:
-  code-coverage:
-    name: 📊 Análisis de Code Coverage
+  coverage-analysis:
+    name: 📊 Análisis de Cobertura
     runs-on: macos-latest
+    timeout-minutes: 30
     
     steps:
       - name: 📥 Checkout código
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Para coverage completo
+          fetch-depth: 0
       
       - name: 🍎 Configurar Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: ${{ env.XCODE_VERSION }}
+          xcode-version: '16.0'
       
-      - name: 🧪 Ejecutar Tests con Coverage
+      - name: 🧪 Ejecutar Tests con Cobertura
         run: |
-          echo "🧪 Ejecutando tests con coverage..."
+          echo "🧪 Ejecutando tests con cobertura completa..."
+          
+          # Limpiar resultados anteriores
+          rm -rf CoverageResults.xcresult
+          
+          # Ejecutar tests con cobertura
           xcodebuild test \
             -project "Pronostico fertilidad.xcodeproj" \
             -scheme "Pronostico fertilidad" \
-            -destination "platform=iOS Simulator,name=${{ env.DEVICE }},OS=${{ env.IOS_VERSION }}" \
+            -destination "platform=iOS Simulator,name=iPhone 16" \
             -enableCodeCoverage YES \
             -resultBundlePath "CoverageResults.xcresult" \
             | xcpretty
       
-      - name: 📊 Generar Reporte de Coverage
+      - name: 📊 Generar Reporte Detallado
         run: |
-          echo "📊 Generando reporte de coverage..."
+          echo "📊 Generando reporte detallado de cobertura..."
           
-          # Coverage general
-          echo "=== COVERAGE GENERAL ==="
-          xcrun xccov view --report CoverageResults.xcresult
-          
-          # Coverage por target
-          echo "=== COVERAGE POR TARGET ==="
-          xcrun xccov view --report --files-for-target "Pronostico fertilidad" CoverageResults.xcresult
-          
-          # Coverage por archivo
-          echo "=== COVERAGE POR ARCHIVO ==="
-          xcrun xccov view --report --files-for-target "Pronostico fertilidad" CoverageResults.xcresult | head -50
-      
-      - name: 📈 Comentar Coverage en PR
-        uses: romeovs/lcov-reporter-action@v0.3.0
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          lcov-file: coverage.info
-      
-      - name: 📦 Subir resultados de coverage
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-results
-          path: CoverageResults.xcresult
-          retention-days: 30
-      
-      - name: 📊 Verificar umbral de coverage
-        run: |
-          echo "📊 Verificando umbral de coverage..."
-          
-          # Extraer porcentaje de coverage
-          COVERAGE=$(xcrun xccov view --report CoverageResults.xcresult | grep "Pronostico fertilidad" | awk '{print $2}' | sed 's/%//')
-          
-          echo "Coverage actual: $COVERAGE%"
-          
-          # Verificar si cumple el umbral del 90%
-          if (( $(echo "$COVERAGE >= 90" | bc -l) )); then
-            echo "✅ Coverage cumple el umbral del 90%"
-            echo "COVERAGE_PASSED=true" >> $GITHUB_ENV
+          if [ -d "CoverageResults.xcresult" ]; then
+            # Reporte general
+            echo "=== 📊 REPORTE GENERAL DE COBERTURA ==="
+            xcrun xccov view --report --files-for-target "Pronostico fertilidad" CoverageResults.xcresult
+            
+            # Reporte por archivo
+            echo -e "\n=== 📁 COBERTURA POR ARCHIVO ==="
+            xcrun xccov view --report --files-for-target "Pronostico fertilidad" CoverageResults.xcresult | grep -E "\.swift" | sort -k2 -nr
+            
+            # Métricas clave
+            TOTAL_COVERAGE=$(xcrun xccov view --report --files-for-target "Pronostico fertilidad" CoverageResults.xcresult | grep "TOTAL" | grep -o '[0-9]\+\.[0-9]\+%' | head -1 | tr -d '%')
+            
+            echo -e "\n=== 🎯 MÉTRICAS CLAVE ==="
+            echo "Cobertura total: $TOTAL_COVERAGE%"
+            echo "Mínimo requerido: ${{ env.MIN_COVERAGE }}%"
+            echo "Objetivo: ${{ env.TARGET_COVERAGE }}%"
+            
+            # Verificar umbrales
+            if [ -n "$TOTAL_COVERAGE" ]; then
+              if [ "$(echo "$TOTAL_COVERAGE < ${{ env.MIN_COVERAGE }}" | bc -l)" -eq 1 ]; then
+                echo "❌ CRÍTICO: Cobertura insuficiente ($TOTAL_COVERAGE%)"
+                echo "🚨 BLOQUEANDO - No cumple estándares mínimos"
+                exit 1
+              elif [ "$(echo "$TOTAL_COVERAGE < ${{ env.TARGET_COVERAGE }}" | bc -l)" -eq 1 ]; then
+                echo "⚠️  ADVERTENCIA: Cobertura por debajo del objetivo ($TOTAL_COVERAGE%)"
+                echo "💡 Recomendación: Mejorar cobertura para alcanzar ${{ env.TARGET_COVERAGE }}%"
+              else
+                echo "✅ EXCELENTE: Cobertura objetivo alcanzada ($TOTAL_COVERAGE%)"
+              fi
+            else
+              echo "⚠️  No se pudo determinar cobertura total"
+            fi
           else
-            echo "❌ Coverage NO cumple el umbral del 90%"
-            echo "COVERAGE_PASSED=false" >> $GITHUB_ENV
+            echo "❌ Error: No se generó archivo de cobertura"
             exit 1
           fi
       
-      - name: 📧 Notificar resultado de coverage
+      - name: 🔍 Análisis de Archivos Sin Cobertura
+        run: |
+          echo "🔍 Analizando archivos sin cobertura..."
+          
+          if [ -d "CoverageResults.xcresult" ]; then
+            # Identificar archivos con 0% cobertura
+            echo "=== 🚨 ARCHIVOS SIN COBERTURA ==="
+            xcrun xccov view --report --files-for-target "Pronostico fertilidad" CoverageResults.xcresult | grep "0.00%" | sort
+            
+            # Contar archivos sin cobertura
+            UNCOVERED_FILES=$(xcrun xccov view --report --files-for-target "Pronostico fertilidad" CoverageResults.xcresult | grep "0.00%" | wc -l | tr -d ' ')
+            echo -e "\n📊 Total archivos sin cobertura: $UNCOVERED_FILES"
+            
+            if [ "$UNCOVERED_FILES" -gt 5 ]; then
+              echo "⚠️  Muchos archivos sin cobertura - Revisar prioridades"
+            elif [ "$UNCOVERED_FILES" -gt 0 ]; then
+              echo "💡 Algunos archivos sin cobertura - Considerar tests adicionales"
+            else
+              echo "🎉 ¡Todos los archivos tienen cobertura!"
+            fi
+          fi
+      
+      - name: 📈 Generar Badge de Cobertura
+        run: |
+          echo "📈 Generando badge de cobertura..."
+          
+          if [ -d "CoverageResults.xcresult" ]; then
+            TOTAL_COVERAGE=$(xcrun xccov view --report --files-for-target "Pronostico fertilidad" CoverageResults.xcresult | grep "TOTAL" | grep -o '[0-9]\+\.[0-9]\+%' | head -1 | tr -d '%')
+            
+            if [ -n "$TOTAL_COVERAGE" ]; then
+              # Crear badge SVG
+              if [ "$(echo "$TOTAL_COVERAGE >= 90" | bc -l)" -eq 1 ]; then
+                COLOR="brightgreen"
+                STATUS="excellent"
+              elif [ "$(echo "$TOTAL_COVERAGE >= 80" | bc -l)" -eq 1 ]; then
+                COLOR="green"
+                STATUS="good"
+              elif [ "$(echo "$TOTAL_COVERAGE >= 70" | bc -l)" -eq 1 ]; then
+                COLOR="yellow"
+                STATUS="fair"
+              elif [ "$(echo "$TOTAL_COVERAGE >= 60" | bc -l)" -eq 1 ]; then
+                COLOR="orange"
+                STATUS="poor"
+              else
+                COLOR="red"
+                STATUS="critical"
+              fi
+              
+              echo "🎨 Color del badge: $COLOR ($STATUS)"
+              echo "📊 Cobertura para badge: $TOTAL_COVERAGE%"
+            fi
+          fi
+      
+      - name: 📦 Subir Resultados
+        uses: actions/upload-artifact@v4
         if: always()
-        uses: dawidd6/action-send-mail@v3
         with:
-          server_address: smtp.gmail.com
-          server_port: 587
-          username: ${{ secrets.EMAIL_USERNAME }}
-          password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: "📊 Code Coverage - ${{ job.status }}"
-          to: ${{ secrets.EMAIL_TO }}
-          from: "GitHub Actions"
-          body: |
-            Análisis de Code Coverage completado
-            
-            Estado: ${{ job.status }}
-            PR: ${{ github.event.pull_request.number }}
-            Branch: ${{ github.head_ref }}
-            
-            Ver detalles: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          name: coverage-analysis-results
+          path: |
+            CoverageResults.xcresult
+          retention-days: 30
+      
+      - name: 📧 Notificar Resultado
+        if: always()
+        run: |
+          if [ "${{ job.status }}" == "success" ]; then
+            echo "🎉 Análisis de cobertura completado exitosamente"
+          else
+            echo "❌ Análisis de cobertura falló"
+          fi

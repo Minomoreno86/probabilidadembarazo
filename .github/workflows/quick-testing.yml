@@ -1,0 +1,111 @@
+name: 🧪 Quick Testing - Pronostico Fertilidad
+
+on:
+  push:
+    branches: [ main, develop, feature/* ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+env:
+  MIN_TEST_SUCCESS: 95
+  MIN_COVERAGE: 80
+
+jobs:
+  quick-test:
+    name: 🧪 Tests Rápidos
+    runs-on: macos-latest
+    timeout-minutes: 10
+    
+    steps:
+      - name: 📥 Checkout código
+        uses: actions/checkout@v4
+      
+      - name: 🍎 Configurar Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '16.0'
+      
+      - name: 🧪 Tests Independientes (Sin Simulador)
+        run: |
+          echo "🧪 Ejecutando tests independientes..."
+          
+          # Ejecutar test runner
+          TEST_OUTPUT=$(swift scripts/enhanced_test_runner.swift 2>&1)
+          echo "$TEST_OUTPUT"
+          
+          # Extraer métricas
+          SUCCESS_RATE=$(echo "$TEST_OUTPUT" | grep "Porcentaje de éxito:" | grep -o '[0-9]\+%' | head -1 | tr -d '%')
+          TOTAL_TESTS=$(echo "$TEST_OUTPUT" | grep "Total de tests:" | grep -o '[0-9]\+' | head -1)
+          PASSED_TESTS=$(echo "$TEST_OUTPUT" | grep "Tests pasados:" | grep -o '[0-9]\+' | head -1)
+          
+          echo "📊 MÉTRICAS EXTRAÍDAS:"
+          echo "  Total tests: $TOTAL_TESTS"
+          echo "  Tests pasados: $PASSED_TESTS"
+          echo "  Porcentaje éxito: $SUCCESS_RATE%"
+          
+          # Verificar umbral mínimo
+          if [ "$SUCCESS_RATE" -lt ${{ env.MIN_TEST_SUCCESS }} ]; then
+            echo "❌ Tests insuficientes: $SUCCESS_RATE% (mínimo: ${{ env.MIN_TEST_SUCCESS }}%)"
+            echo "🚨 BLOQUEANDO - Tests no cumplen estándares"
+            exit 1
+          else
+            echo "✅ Tests exitosos: $SUCCESS_RATE%"
+          fi
+      
+      - name: 📊 Verificar Cobertura de Código
+        run: |
+          echo "📊 Verificando cobertura de código..."
+          
+          # Compilar proyecto para análisis
+          xcodebuild build \
+            -project "Pronostico fertilidad.xcodeproj" \
+            -scheme "Pronostico fertilidad" \
+            -destination "platform=iOS Simulator,name=iPhone 16" \
+            -enableCodeCoverage YES \
+            -resultBundlePath "CoverageResults.xcresult" \
+            | xcpretty
+          
+          # Generar reporte de cobertura
+          if [ -d "CoverageResults.xcresult" ]; then
+            COVERAGE_REPORT=$(xcrun xccov view --report --files-for-target "Pronostico fertilidad" CoverageResults.xcresult)
+            echo "$COVERAGE_REPORT"
+            
+            # Extraer cobertura total
+            TOTAL_COVERAGE=$(echo "$COVERAGE_REPORT" | grep "TOTAL" | grep -o '[0-9]\+\.[0-9]\+%' | head -1 | tr -d '%')
+            
+            if [ -n "$TOTAL_COVERAGE" ]; then
+              echo "📈 Cobertura total: $TOTAL_COVERAGE%"
+              
+              # Verificar umbral mínimo
+              if [ "$(echo "$TOTAL_COVERAGE < ${{ env.MIN_COVERAGE }}" | bc -l)" -eq 1 ]; then
+                echo "❌ Cobertura insuficiente: $TOTAL_COVERAGE% (mínimo: ${{ env.MIN_COVERAGE }}%)"
+                echo "🚨 BLOQUEANDO - Cobertura insuficiente"
+                exit 1
+              else
+                echo "✅ Cobertura suficiente: $TOTAL_COVERAGE%"
+              fi
+            else
+              echo "⚠️  No se pudo extraer métrica de cobertura"
+            fi
+          else
+            echo "⚠️  No se generó archivo de cobertura"
+          fi
+      
+      - name: 📦 Subir Resultados
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: quick-test-results
+          path: |
+            CoverageResults.xcresult
+          retention-days: 7
+      
+      - name: 📧 Notificar Resultado
+        if: always()
+        run: |
+          if [ "${{ job.status }}" == "success" ]; then
+            echo "🎉 Tests exitosos - PR puede continuar"
+          else
+            echo "❌ Tests fallaron - PR bloqueado"
+          fi

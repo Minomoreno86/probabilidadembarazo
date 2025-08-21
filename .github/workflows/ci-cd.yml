@@ -53,6 +53,26 @@ jobs:
             -resultBundlePath "TestResults.xcresult" \
             | xcpretty
       
+      - name: 🧪 Ejecutar Tests Independientes (Sin Simulador)
+        run: |
+          echo "🧪 Ejecutando tests independientes..."
+          swift scripts/enhanced_test_runner.swift
+          
+          # Capturar resultado del test runner
+          TEST_OUTPUT=$(swift scripts/enhanced_test_runner.swift 2>&1)
+          echo "$TEST_OUTPUT"
+          
+          # Extraer porcentaje de éxito
+          SUCCESS_RATE=$(echo "$TEST_OUTPUT" | grep "Porcentaje de éxito:" | grep -o '[0-9]\+%' | head -1 | tr -d '%')
+          
+          # Verificar que al menos 95% de tests pasen
+          if [ "$SUCCESS_RATE" -lt 95 ]; then
+            echo "❌ Cobertura insuficiente: $SUCCESS_RATE% (mínimo requerido: 95%)"
+            exit 1
+          else
+            echo "✅ Cobertura suficiente: $SUCCESS_RATE%"
+          fi
+      
       - name: 🧪 Ejecutar Tests UI
         run: |
           echo "🧪 Ejecutando tests UI..."
@@ -70,6 +90,21 @@ jobs:
           echo "📊 Generando reporte de code coverage..."
           xcrun xccov view --report --files-for-target "Pronostico fertilidad" TestResults.xcresult
           xcrun xccov view --report --files-for-target "Pronostico fertilidad" UITestResults.xcresult
+          
+          # Extraer métricas de cobertura
+          COVERAGE_REPORT=$(xcrun xccov view --report --files-for-target "Pronostico fertilidad" TestResults.xcresult)
+          echo "$COVERAGE_REPORT"
+          
+          # Verificar cobertura mínima (80%)
+          TOTAL_COVERAGE=$(echo "$COVERAGE_REPORT" | grep "TOTAL" | grep -o '[0-9]\+\.[0-9]\+%' | head -1 | tr -d '%')
+          
+          if [ -n "$TOTAL_COVERAGE" ] && [ "$(echo "$TOTAL_COVERAGE < 80" | bc -l)" -eq 1 ]; then
+            echo "❌ Cobertura de código insuficiente: $TOTAL_COVERAGE% (mínimo requerido: 80%)"
+            echo "🚨 BLOQUEANDO PR - Cobertura insuficiente"
+            exit 1
+          else
+            echo "✅ Cobertura de código suficiente: $TOTAL_COVERAGE%"
+          fi
       
       - name: 📦 Subir resultados de tests
         uses: actions/upload-artifact@v4
