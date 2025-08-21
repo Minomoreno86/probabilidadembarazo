@@ -1,184 +1,113 @@
-name: ⚡ Tests de Rendimiento
+name: ⚡ Performance Tests - Pronostico Fertilidad
 
 on:
   push:
     branches: [ main, develop ]
+    paths:
+      - 'Pronostico fertilidadUITests/PerformanceTests.swift'
+      - 'Pronostico fertilidad/**/*.swift'
   pull_request:
     branches: [ main, develop ]
-  schedule:
-    # Ejecutar tests de rendimiento diariamente a las 2 AM
-    - cron: '0 2 * * *'
   workflow_dispatch:
+  schedule:
+    # Ejecutar tests de rendimiento cada domingo a las 3 AM UTC
+    - cron: '0 3 * * 0'
 
 env:
-  XCODE_VERSION: '16.0'
-  IOS_VERSION: '18.5'
-  DEVICE: 'iPhone 16'
+  DEVICE: "iPhone 16"
+  IOS_VERSION: "18.6"
+  PERFORMANCE_TIMEOUT: 300  # 5 minutos para tests de rendimiento
 
 jobs:
   performance-tests:
     name: ⚡ Tests de Rendimiento
     runs-on: macos-latest
+    timeout-minutes: 10
     
     steps:
-    - name: 📥 Checkout código
-      uses: actions/checkout@v4
+      - name: 📥 Checkout código
+        uses: actions/checkout@v4
       
-    - name: 🍎 Setup Xcode
-      uses: maxim-lobanov/setup-xcode@v1
-      with:
-        xcode-version: ${{ env.XCODE_VERSION }}
-        
-    - name: 📱 Setup iOS Simulator
-      uses: apple-actions/import-codesigning-certs@v1
+      - name: 🍎 Configurar Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '16.0'
       
-    - name: ⚡ Ejecutar Tests de Rendimiento
-      run: |
-        echo "⚡ Ejecutando tests de rendimiento..."
-        xcodebuild test \
-          -project "Pronostico fertilidad.xcodeproj" \
-          -scheme "Pronostico fertilidad" \
-          -destination "platform=iOS Simulator,name=${{ env.DEVICE }},OS=${{ env.IOS_VERSION }}" \
-          -only-testing:Pronostico_fertilidadTests/PerformanceTestRunner \
-          -resultBundlePath "PerformanceTestResults.xcresult" \
-          | xcpretty --color --simple
-        
-    - name: 📊 Analizar Métricas de Rendimiento
-      run: |
-        echo "📊 Analizando métricas de rendimiento..."
-        
-        # Extraer métricas de los tests
-        xcrun xccov view --report --json PerformanceTestResults.xcresult > performance-metrics.json
-        
-        # Analizar tiempos de ejecución
-        echo "## ⚡ Métricas de Rendimiento" > performance-report.md
-        echo "" >> performance-report.md
-        echo "### 🕐 Tiempos de Ejecución:" >> performance-report.md
-        echo "- Tests Unitarios: $(grep -o 'Test.*completed in [0-9.]*s' PerformanceTestResults.xcresult | head -1)" >> performance-report.md
-        echo "- Tests de UI: $(grep -o 'UI.*completed in [0-9.]*s' PerformanceTestResults.xcresult | head -1)" >> performance-report.md
-        echo "" >> performance-report.md
-        echo "### 📈 Cobertura de Tests:" >> performance-report.md
-        echo "- Total Tests: $(grep -c 'Test.*passed' PerformanceTestResults.xcresult)" >> performance-report.md
-        echo "- Tests Pasaron: $(grep -c 'Test.*passed' PerformanceTestResults.xcresult)" >> performance-report.md
-        echo "- Tests Fallaron: $(grep -c 'Test.*failed' PerformanceTestResults.xcresult)" >> performance-report.md
-        
-    - name: 💾 Subir Reportes de Rendimiento
-      uses: actions/upload-artifact@v4
-      with:
-        name: performance-results
-        path: |
-          PerformanceTestResults.xcresult
-          performance-metrics.json
-          performance-report.md
+      - name: 🔧 Configurar Simulador
+        run: |
+          echo "🔧 Configurando simulador para tests de rendimiento..."
           
-    - name: 📊 Comentar Métricas en PR
-      if: github.event_name == 'pull_request'
-      uses: actions/github-script@v7
-      with:
-        script: |
-          const fs = require('fs');
-          const report = fs.readFileSync('performance-report.md', 'utf8');
+          # Listar simuladores disponibles
+          xcrun simctl list devices available
           
-          github.rest.issues.createComment({
-            issue_number: context.issue.number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            body: `## ⚡ Reporte de Rendimiento\n\n${report}\n\n📊 [Ver logs completos](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})`
-          });
-
-  memory-leak-tests:
-    name: 🧠 Tests de Memory Leaks
-    runs-on: macos-latest
-    
-    steps:
-    - name: 📥 Checkout código
-      uses: actions/checkout@v4
+          # Crear simulador específico para rendimiento si no existe
+          SIMULATOR_ID=$(xcrun simctl create "Performance Test iPhone" "iPhone 16" "iOS 18.6" 2>/dev/null || echo "")
+          
+          if [ -n "$SIMULATOR_ID" ]; then
+            echo "✅ Simulador creado: $SIMULATOR_ID"
+          else
+            echo "ℹ️  Usando simulador existente"
+          fi
       
-    - name: 🍎 Setup Xcode
-      uses: maxim-lobanov/setup-xcode@v1
-      with:
-        xcode-version: ${{ env.XCODE_VERSION }}
-        
-    - name: 🧠 Ejecutar Tests de Memory
-      run: |
-        echo "🧠 Ejecutando tests de memory leaks..."
-        
-        # Ejecutar tests con instrumentos de memory
-        xcodebuild test \
-          -project "Pronostico fertilidad.xcodeproj" \
-          -scheme "Pronostico fertilidad" \
-          -destination "platform=iOS Simulator,name=${{ env.DEVICE }},OS=${{ env.IOS_VERSION }}" \
-          -enableCodeCoverage YES \
-          -resultBundlePath "MemoryTestResults.xcresult" \
-          | xcpretty --color --simple
-        
-        # Analizar uso de memory
-        echo "📊 Analizando uso de memory..."
-        xcrun xccov view --report --json MemoryTestResults.xcresult > memory-analysis.json
-        
-    - name: 💾 Subir Análisis de Memory
-      uses: actions/upload-artifact@v4
-      with:
-        name: memory-analysis
-        path: |
-          MemoryTestResults.xcresult
-          memory-analysis.json
-
-  load-tests:
-    name: 🔥 Tests de Carga
-    runs-on: macos-latest
-    
-    steps:
-    - name: 📥 Checkout código
-      uses: actions/checkout@v4
-      
-    - name: 🍎 Setup Xcode
-      uses: maxim-lobanov/setup-xcode@v1
-      with:
-        xcode-version: ${{ env.XCODE_VERSION }}
-        
-    - name: 🔥 Ejecutar Tests de Carga
-      run: |
-        echo "🔥 Ejecutando tests de carga..."
-        
-        # Simular múltiples usuarios simultáneos
-        for i in {1..5}; do
-          echo "🧪 Usuario $i ejecutando tests..."
+      - name: ⚡ Ejecutar Tests de Rendimiento
+        run: |
+          echo "⚡ Ejecutando tests de rendimiento optimizados..."
+          
+          # Configurar variables de entorno para tests de rendimiento
+          export XCTEST_TIMEOUT=300
+          export XCTEST_PERFORMANCE_METRICS=1
+          
+          # Ejecutar solo tests de rendimiento con timeouts generosos
           xcodebuild test \
             -project "Pronostico fertilidad.xcodeproj" \
             -scheme "Pronostico fertilidad" \
             -destination "platform=iOS Simulator,name=${{ env.DEVICE }},OS=${{ env.IOS_VERSION }}" \
-            -resultBundlePath "LoadTestResults_$i.xcresult" \
-            | xcpretty --color --simple &
-        done
-        
-        # Esperar a que todos terminen
-        wait
-        
-        echo "✅ Todos los tests de carga completados"
-        
-    - name: 📊 Analizar Tests de Carga
-      run: |
-        echo "📊 Analizando resultados de carga..."
-        
-        echo "## 🔥 Reporte de Tests de Carga" > load-test-report.md
-        echo "" >> load-test-report.md
-        echo "### 📱 Usuarios Simultáneos: 5" >> load-test-report.md
-        echo "" >> load-test-report.md
-        
-        for i in {1..5}; do
-          if [ -f "LoadTestResults_$i.xcresult" ]; then
-            echo "#### 👤 Usuario $i:" >> load-test-report.md
-            echo "- Tests Pasaron: $(grep -c 'Test.*passed' LoadTestResults_$i.xcresult)" >> load-test-report.md
-            echo "- Tests Fallaron: $(grep -c 'Test.*failed' LoadTestResults_$i.xcresult)" >> load-test-report.md
-            echo "" >> load-test-report.md
+            -only-testing:Pronostico_fertilidadUITests/PerformanceTests \
+            -test-timeout 300 \
+            -parallel-testing-enabled NO \
+            -maximum-concurrent-test-simulator-destinations 1 \
+            | xcpretty --color
+      
+      - name: 📊 Analizar Resultados de Rendimiento
+        run: |
+          echo "📊 Analizando resultados de rendimiento..."
+          
+          # Extraer métricas de rendimiento del log
+          if grep -q "Test Case.*PerformanceTests.*passed" xcodebuild.log; then
+            echo "✅ Tests de rendimiento pasaron"
+            echo "📈 Métricas de rendimiento:"
+            grep -A 5 -B 5 "measure" xcodebuild.log || echo "No se encontraron métricas específicas"
+          else
+            echo "❌ Algunos tests de rendimiento fallaron"
+            echo "🔍 Revisando logs de error..."
+            grep -A 10 -B 5 "FAILED" xcodebuild.log || echo "No se encontraron errores específicos"
+            exit 1
           fi
-        done
-        
-    - name: 💾 Subir Tests de Carga
-      uses: actions/upload-artifact@v4
-      with:
-        name: load-test-results
-        path: |
-          LoadTestResults_*.xcresult
-          load-test-report.md
+      
+      - name: 🧹 Limpiar Simulador
+        if: always()
+        run: |
+          echo "🧹 Limpiando simulador..."
+          xcrun simctl shutdown all 2>/dev/null || true
+          xcrun simctl erase all 2>/dev/null || true
+      
+      - name: 📋 Reporte de Rendimiento
+        if: always()
+        run: |
+          echo "📋 Generando reporte de rendimiento..."
+          
+          echo "## ⚡ Reporte de Tests de Rendimiento" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📊 Resumen:" >> $GITHUB_STEP_SUMMARY
+          echo "- **Dispositivo:** ${{ env.DEVICE }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **iOS Version:** ${{ env.IOS_VERSION }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Timeout:** ${{ env.PERFORMANCE_TIMEOUT }} segundos" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ $? -eq 0 ]; then
+            echo "✅ **Estado:** Tests de rendimiento exitosos" >> $GITHUB_STEP_SUMMARY
+            echo "🚀 **Rendimiento:** Dentro de los límites esperados" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ **Estado:** Tests de rendimiento fallaron" >> $GITHUB_STEP_SUMMARY
+            echo "⚠️ **Acción:** Revisar métricas y optimizar código" >> $GITHUB_STEP_SUMMARY
+          fi

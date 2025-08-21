@@ -81,6 +81,7 @@ jobs:
             -scheme "Pronostico fertilidad" \
             -destination "platform=iOS Simulator,name=${{ env.DEVICE }},OS=${{ env.IOS_VERSION }}" \
             -only-testing:Pronostico_fertilidadUITests \
+            -skip-testing:Pronostico_fertilidadUITests/PerformanceTests \
             -enableCodeCoverage YES \
             -resultBundlePath "UITestResults.xcresult" \
             | xcpretty
