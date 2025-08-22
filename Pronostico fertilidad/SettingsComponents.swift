@@ -378,6 +378,7 @@ extension SettingsSection {
         case .profile: return "Información personal y profesional"
         case .appearance: return "Tema y personalización visual"
         case .fonts: return "Personaliza las fuentes de la app"
+        case .onboarding: return "Revisa cómo funciona la aplicación"
         case .share: return "Comparte la app en redes sociales"
         case .legal: return "Términos, políticas y avisos"
         case .info: return "Versión, soporte y contacto"

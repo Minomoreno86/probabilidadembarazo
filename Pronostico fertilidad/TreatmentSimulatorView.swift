@@ -14,6 +14,9 @@ struct TreatmentSimulatorView: View {
 	var body: some View {
 		ScrollView {
 			VStack(spacing: 16) {
+				// Disclaimer médico crítico - REQUERIDO POR APPLE
+				MedicalDisclaimerView(style: .critical)
+				
 				header
 				summarySection
 				recommendationSection

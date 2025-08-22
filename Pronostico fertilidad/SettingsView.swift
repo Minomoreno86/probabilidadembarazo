@@ -39,6 +39,7 @@ struct SettingsView: View {
     @State private var showingResetAlert = false
     @State private var showingAbout = false
     @State private var showingFontSelection = false
+    @State private var showingOnboarding = false
     
     var body: some View {
         NavigationView {
@@ -178,6 +179,9 @@ struct SettingsView: View {
             FontSelectionView()
                 .environmentObject(userFontManager)
                 .environmentObject(themeManager)
+        case .onboarding:
+            // No necesita vista separada, se maneja con fullScreenCover
+            EmptyView()
         case .share:
             ShareSettingsView()
                 .environmentObject(themeManager)
@@ -267,6 +271,9 @@ struct SettingsView: View {
         .sheet(isPresented: $showingAbout) {
             AboutView()
         }
+        .fullScreenCover(isPresented: $showingOnboarding) {
+            OnboardingFlow(isPresented: $showingOnboarding)
+        }
     }
     
     // MARK: - 📋 CONTENIDO PRINCIPAL
@@ -280,6 +287,8 @@ struct SettingsView: View {
                     appearanceSection
                 case .fonts:
                     fontsSection
+                case .onboarding:
+                    onboardingSection
                 case .share:
                     shareSection
                 case .legal:
@@ -467,6 +476,51 @@ struct SettingsView: View {
                 )
             }
             .padding(.horizontal, 4)
+        }
+    }
+    
+    // MARK: - 🎓 SECCIÓN INTRODUCCIÓN
+    private var onboardingSection: some View {
+        VStack(spacing: 20) {
+            SettingsSectionHeader(
+                title: "Introducción",
+                subtitle: "Revisa cómo funciona la aplicación",
+                icon: "graduationcap.fill"
+            )
+            
+            VStack(spacing: 16) {
+                SettingsActionRow(
+                    title: "Ver Introducción Nuevamente",
+                    subtitle: "Explica qué datos se necesitan y cómo funcionan los cálculos",
+                    icon: "play.circle.fill",
+                    action: { showOnboardingFlow() }
+                )
+                
+                // Información sobre la introducción
+                VStack(alignment: .leading, spacing: 12) {
+                    Text("¿Qué incluye la introducción?")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                    
+                    VStack(alignment: .leading, spacing: 8) {
+                        BulletPoint(text: "Qué datos médicos necesitamos")
+                        BulletPoint(text: "Cómo calculamos las probabilidades")
+                        BulletPoint(text: "Qué significan los resultados")
+                        BulletPoint(text: "Limitaciones importantes")
+                        BulletPoint(text: "Política de privacidad")
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 12)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(Color.white.opacity(0.1))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .stroke(Color.mint.opacity(0.3), lineWidth: 1)
+                            )
+                    )
+                }
+            }
         }
     }
     
@@ -983,6 +1037,10 @@ struct SettingsView: View {
         showingFontSelection = true
     }
     
+    private func showOnboardingFlow() {
+        showingOnboarding = true
+    }
+    
     // MARK: - 🔄 CARGAR DATOS DEL USUARIO
     private func loadUserData() {
         // Cargar datos del AuthenticationFlowManager
@@ -1008,6 +1066,7 @@ enum SettingsSection: String, CaseIterable {
     case profile = "Perfil"
     case appearance = "Apariencia"
     case fonts = "Tipografía"
+    case onboarding = "Introducción"
     case share = "Compartir"
     case legal = "Legal"
     case info = "Información"
@@ -1019,6 +1078,7 @@ enum SettingsSection: String, CaseIterable {
         case .profile: return "person.crop.circle.fill"
         case .appearance: return "moon.fill"
         case .fonts: return "textformat"
+        case .onboarding: return "graduationcap.fill"
         case .share: return "square.and.arrow.up.fill"
         case .legal: return "doc.text.fill"
         case .info: return "info.circle.fill"
@@ -1032,6 +1092,7 @@ enum SettingsSection: String, CaseIterable {
         case .profile: return .blue
         case .appearance: return .purple
         case .fonts: return .teal
+        case .onboarding: return .mint
         case .share: return .green
         case .legal: return .orange
         case .info: return .cyan
@@ -1105,6 +1166,27 @@ struct SettingsSectionHeader: View {
             Spacer()
         }
         .padding(.bottom, 8)
+    }
+}
+
+// MARK: - Componente BulletPoint
+struct BulletPoint: View {
+    let text: String
+    
+    var body: some View {
+        HStack(alignment: .top, spacing: 8) {
+            Circle()
+                .fill(Color.mint)
+                .frame(width: 6, height: 6)
+                .padding(.top, 6)
+            
+            Text(text)
+                .font(.body)
+                .foregroundColor(.white.opacity(0.8))
+                .multilineTextAlignment(.leading)
+            
+            Spacer()
+        }
     }
 }
 

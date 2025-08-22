@@ -15,10 +15,8 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>remote-notification</string>
-	</array>
+	<!-- UIBackgroundModes removido - No se usan notificaciones remotas -->
+	<!-- La app procesa todo localmente sin conexiones externas -->
 	<key>CFBundleLocalizations</key>
 	<array>
 		<string>es</string>

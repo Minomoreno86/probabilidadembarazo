@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 
 // MARK: - Modo de Pensamiento Médico (Basado en GLM-4.5)
 // Implementa razonamiento paso a paso, evidencia médica y validación clínica
@@ -394,6 +395,118 @@ class MedicalThinkingEngine: ObservableObject {
             factors.append("Bajo peso (BMI: \(String(format: "%.1f", profile.bmi))) - Factor modificable")
         }
         
+        // Análisis de pólipos endometriales
+        if profile.polypType != .none {
+            switch profile.polypType {
+            case .single:
+                factors.append("Pólipo endometrial único - Factor modificable (ASRM 2024)")
+            case .multiple:
+                factors.append("Pólipos endometriales múltiples - Factor crítico que afecta implantación (ESHRE 2023)")
+            case .none:
+                break
+            }
+        }
+        
+        // Análisis de miomas
+        if profile.myomaType != .none {
+            switch profile.myomaType {
+            case .submucosal:
+                factors.append("Mioma submucoso - Factor crítico que afecta cavidad uterina (ASRM 2024)")
+            case .intramural:
+                factors.append("Mioma intramural - Monitoreo recomendado según tamaño")
+            case .subserosal:
+                factors.append("Mioma subseroso - Impacto mínimo en fertilidad")
+            case .none:
+                break
+            }
+        }
+        
+        // Análisis de endometriosis
+        if profile.endometriosisStage > 0 {
+            switch profile.endometriosisStage {
+            case 1:
+                factors.append("Endometriosis leve (Estadio I) - Monitoreo recomendado (ESHRE 2023)")
+            case 2:
+                factors.append("Endometriosis moderada (Estadio II) - Factor significativo (ASRM 2024)")
+            case 3:
+                factors.append("Endometriosis severa (Estadio III) - Factor crítico (ESHRE 2023)")
+            case 4:
+                factors.append("Endometriosis profunda (Estadio IV) - Factor crítico que requiere tratamiento (ASRM 2024)")
+            default:
+                break
+            }
+        }
+        
+        // Análisis de SOP
+        if profile.hasPcos {
+            factors.append("Síndrome de ovario poliquístico - Factor metabólico crítico (ESHRE 2023)")
+        }
+        
+        // 🧬 ANÁLISIS COMPLETO DEL FACTOR MASCULINO (OMS 2021)
+        
+        // Concentración espermática
+        if let concentration = profile.spermConcentration {
+            if concentration < 15 {
+                factors.append("Oligospermia severa (<15 M/mL) - Factor masculino crítico (OMS 2021)")
+            } else if concentration < 39 {
+                factors.append("Oligospermia moderada (15-39 M/mL) - Factor masculino moderado (OMS 2021)")
+            }
+        }
+        
+        // Motilidad progresiva espermática
+        if let motility = profile.spermProgressiveMotility {
+            if motility < 32 {
+                factors.append("Astenospermia severa (<32% motilidad progresiva) - Factor masculino crítico (OMS 2021)")
+            } else if motility < 40 {
+                factors.append("Astenospermia moderada (32-40% motilidad progresiva) - Factor masculino moderado (OMS 2021)")
+            }
+        }
+        
+        // Morfología normal espermática
+        if let morphology = profile.spermNormalMorphology {
+            if morphology < 4 {
+                factors.append("Teratospermia severa (<4% morfología normal) - Factor masculino crítico (OMS 2021)")
+            } else if morphology < 9 {
+                factors.append("Teratospermia moderada (4-9% morfología normal) - Factor masculino moderado (OMS 2021)")
+            }
+        }
+        
+        // Volumen seminal
+        if let volume = profile.semenVolume {
+            if volume < 1.5 {
+                factors.append("Hipovolumen seminal (<1.5 mL) - Factor masculino moderado (OMS 2021)")
+            }
+        }
+        
+        // Fragmentación de DNA espermático
+        if let dnaFrag = profile.spermDNAFragmentation {
+            if dnaFrag > 30 {
+                factors.append("Fragmentación de DNA espermático alta (>30%) - Factor masculino crítico (OMS 2021)")
+            } else if dnaFrag > 20 {
+                factors.append("Fragmentación de DNA espermático moderada (20-30%) - Factor masculino moderado (OMS 2021)")
+            }
+        }
+        
+        // Varicocele
+        if profile.hasVaricocele {
+            factors.append("Varicocele - Factor masculino estructural (OMS 2021)")
+        }
+        
+        // Cultivo seminal positivo
+        if profile.seminalCulturePositive {
+            factors.append("Cultivo seminal positivo - Factor infeccioso masculino (OMS 2021)")
+        }
+        
+        // Análisis de prolactina
+        if let prolactin = profile.prolactinValue, prolactin > 25.0 {
+            factors.append("Hiperprolactinemia (\(prolactin) ng/mL) - Factor hormonal crítico")
+        }
+        
+        // Análisis de duración de infertilidad
+        if let duration = profile.infertilityDuration, duration >= 2.0 {
+            factors.append("Infertilidad de \(duration) años - Factor temporal crítico según ASRM")
+        }
+        
         return factors.isEmpty ? ["Perfil dentro de rangos normales"] : factors
     }
     
@@ -413,6 +526,45 @@ class MedicalThinkingEngine: ObservableObject {
         // Interacción edad-ciclo menstrual
         if profile.age >= 35, let cycleLength = profile.cycleLength, cycleLength < 25 || cycleLength > 35 {
             interactions.append("• Edad-Ciclo: Alteración de función ovárica (WHO 2024)")
+        }
+        
+        // Interacción pólipos-edad
+        if profile.polypType != .none, profile.age >= 35 {
+            interactions.append("• Pólipos-Edad: Sinergia negativa para implantación (ASRM 2024)")
+        }
+        
+        // Interacción mioma-endometriosis
+        if profile.myomaType != .none, profile.endometriosisStage > 0 {
+            interactions.append("• Mioma-Endometriosis: Compromiso múltiple de cavidad uterina (ESHRE 2023)")
+        }
+        
+        // Interacción SOP-insulina
+        if profile.hasPcos, let insulin = profile.insulinValue, insulin > 25.0 {
+            interactions.append("• SOP-Insulina: Resistencia insulínica severa (ASRM 2024)")
+        }
+        
+        // Interacción factor masculino-edad femenina
+        if let spermConc = profile.spermConcentration, spermConc < 15.0, profile.age >= 35 {
+            interactions.append("• Factor dual: Oligozoospermia + edad avanzada femenina (OMS 2021)")
+        }
+        
+        // Interacción motilidad-morfología espermática
+        if let motility = profile.spermProgressiveMotility, let morphology = profile.spermNormalMorphology {
+            if motility < 32 && morphology < 4 {
+                interactions.append("• Factor masculino dual: Astenospermia + Teratospermia severa (OMS 2021)")
+            }
+        }
+        
+        // Interacción fragmentación DNA-concentración
+        if let dnaFrag = profile.spermDNAFragmentation, let concentration = profile.spermConcentration {
+            if dnaFrag > 30 && concentration < 15 {
+                interactions.append("• Factor masculino crítico: Fragmentación DNA alta + Oligospermia (OMS 2021)")
+            }
+        }
+        
+        // Interacción varicocele-fragmentación DNA
+        if profile.hasVaricocele, let dnaFrag = profile.spermDNAFragmentation, dnaFrag > 20 {
+            interactions.append("• Factor masculino estructural: Varicocele + Fragmentación DNA (OMS 2021)")
         }
         
         return interactions.isEmpty ? "No se identificaron interacciones críticas" : interactions.joined(separator: "\n")
@@ -437,6 +589,75 @@ class MedicalThinkingEngine: ObservableObject {
         if profile.bmi > 30 {
             recommendations.append("• Programa de pérdida de peso supervisado (WHO 2024)")
             recommendations.append("• Evaluación metabólica completa")
+        }
+        
+        // Recomendaciones basadas en pólipos
+        if profile.polypType != .none {
+            switch profile.polypType {
+            case .single:
+                recommendations.append("• Polipectomía histeroscópica antes de tratamiento de fertilidad (ASRM 2024)")
+                recommendations.append("• Evaluación histopatológica del pólipo")
+            case .multiple:
+                recommendations.append("• Polipectomía histeroscópica urgente - múltiples pólipos (ESHRE 2023)")
+                recommendations.append("• Reevaluación de cavidad uterina post-cirugía")
+            case .none:
+                break
+            }
+        }
+        
+        // Recomendaciones basadas en miomas
+        if profile.myomaType == .submucosal {
+            recommendations.append("• Miomectomía histeroscópica antes de tratamiento (ASRM 2024)")
+        } else if profile.myomaType == .intramural, let size = profile.myomaSize, size >= 4.0 {
+            recommendations.append("• Evaluar miomectomía laparoscópica para mioma ≥4cm (ESHRE 2023)")
+        }
+        
+        // Recomendaciones basadas en endometriosis
+        if profile.endometriosisStage >= 3 {
+            recommendations.append("• Tratamiento quirúrgico de endometriosis severa (ESHRE 2023)")
+            recommendations.append("• Considerar supresión hormonal pre-tratamiento")
+        }
+        
+        // Recomendaciones basadas en SOP
+        if profile.hasPcos {
+            recommendations.append("• Metformina para resistencia insulínica (ASRM 2024)")
+            recommendations.append("• Inducción de ovulación con letrozol")
+        }
+        
+        // Recomendaciones basadas en factor masculino
+        if let spermConc = profile.spermConcentration, spermConc < 15.0 {
+            recommendations.append("• Evaluación andrológica completa (OMS 2021)")
+            recommendations.append("• Considerar ICSI en tratamiento de alta complejidad")
+        }
+        
+        // Recomendaciones basadas en motilidad espermática
+        if let motility = profile.spermProgressiveMotility, motility < 32 {
+            recommendations.append("• Evaluación de causas de astenospermia (OMS 2021)")
+            recommendations.append("• Considerar técnicas de selección espermática avanzada")
+        }
+        
+        // Recomendaciones basadas en morfología espermática
+        if let morphology = profile.spermNormalMorphology, morphology < 4 {
+            recommendations.append("• Evaluación de causas de teratospermia (OMS 2021)")
+            recommendations.append("• Considerar ICSI con selección morfológica estricta")
+        }
+        
+        // Recomendaciones basadas en fragmentación de DNA
+        if let dnaFrag = profile.spermDNAFragmentation, dnaFrag > 30 {
+            recommendations.append("• Evaluación de causas de fragmentación DNA alta (OMS 2021)")
+            recommendations.append("• Considerar técnicas de selección espermática por fragmentación")
+        }
+        
+        // Recomendaciones basadas en varicocele
+        if profile.hasVaricocele {
+            recommendations.append("• Evaluación quirúrgica de varicocele (OMS 2021)")
+            recommendations.append("• Considerar varicocelectomía antes de tratamiento de fertilidad")
+        }
+        
+        // Recomendaciones basadas en cultivo seminal positivo
+        if profile.seminalCulturePositive {
+            recommendations.append("• Tratamiento antibiótico específico (OMS 2021)")
+            recommendations.append("• Reevaluación post-tratamiento antes de procedimientos")
         }
         
         return recommendations.isEmpty ? "Mantener estilo de vida saludable y monitoreo anual" : recommendations.joined(separator: "\n")

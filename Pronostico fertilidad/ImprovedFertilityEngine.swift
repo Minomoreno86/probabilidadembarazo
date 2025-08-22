@@ -243,4 +243,97 @@ class ImprovedFertilityEngine: ObservableObject {
             treatmentModified: interactionsReport.forcesTreatmentChange
         )
     }
+    
+    // MARK: - 🚀 VERSIÓN ASÍNCRONA OPTIMIZADA PARA RENDIMIENTO
+    
+    /**
+     * ⚡ ANÁLISIS ASÍNCRONO DE FERTILIDAD - NO BLOQUEA LA UI
+     * Ejecuta cálculos intensivos en background thread automáticamente
+     * Actualiza UI en main thread cuando los resultados estén listos
+     */
+    func analyzeComprehensiveFertilityAsync(from profile: FertilityProfile) async throws -> ComprehensiveFertilityResult {
+        
+        // ✅ EJECUTAR EN BACKGROUND THREAD AUTOMÁTICAMENTE
+        return try await Task.detached(priority: .userInitiated) {
+            
+            // 🔬 FASE 1: Convertir perfil a factores médicos
+            let medicalFactors = self.convertProfileToMedicalFactors(profile)
+            
+            // 🧬 FASE 2: Evaluar interacciones no lineales
+            let interactions = self.evaluateNonLinearInteractions(factors: medicalFactors, profile: profile)
+            
+            // ⚡ FASE 3: Calcular probabilidad con evidencia científica
+            let (probability, confidence) = self.calculateEvidenceBasedProbability(
+                factors: medicalFactors,
+                interactions: interactions
+            )
+            
+            // 🏥 FASE 4: Determinar categoría y complejidad
+            let category = self.determineFertilityCategory(probability)
+            let treatmentComplexity = self.determineTreatmentComplexity(medicalFactors, interactions, probability)
+            let urgencyLevel = self.determineUrgencyLevel(medicalFactors, interactions)
+            
+            // 💊 FASE 5: Generar recomendaciones basadas en evidencia
+            let recommendations = self.generateEvidenceBasedRecommendations(
+                profile: profile,
+                factors: medicalFactors,
+                interactions: interactions,
+                treatmentComplexity: treatmentComplexity,
+                fertilityCategory: category,
+                monthlyProbability: probability
+            )
+            
+            // 📈 FASE 6: Análisis detallado
+            let detailedAnalysis = self.generateDetailedAnalysis(
+                profile: profile,
+                probability: probability,
+                category: category,
+                interactions: interactions
+            )
+            
+            // 📊 FASE 7: Factores clave y estimación temporal
+            let keyFactors = self.generateKeyFactors(profile: profile, factors: medicalFactors)
+            let timeEstimate = self.calculateTimeToPregnancy(probability, treatmentComplexity)
+            let evidenceSources = self.getEvidenceSources(medicalFactors, interactions)
+            
+            // 🎯 FASE 8: Evaluación de técnicas de reproducción asistida
+            let (coitoRecomendacion, coitoProtocolo, coitoConfianza) = CoitoProgramado.recomendacionIA(profile: profile)
+            let (iiuRecomendacion, iiuProtocolo, iiuConfianza) = InseminacionIntrauterina.recomendacionIIU(profile: profile)
+            let (fivRecomendacion, fivTecnica, fivProtocolo, fivConfianza) = FertilizacionInVitro.recomendacionFIV(profile: profile)
+            
+            // 🔄 FASE 9: Evaluar interacciones no lineales
+            let interactionsReport = NonLinearInteractionsEngine.generateInteractionsReport(profile: profile)
+            
+            // Aplicar multiplicador de interacciones no lineales a la probabilidad
+            let finalProbability = probability * interactionsReport.finalMultiplier
+            
+            return ComprehensiveFertilityResult(
+                annualProbability: 1.0 - pow(1.0 - finalProbability, 12.0),
+                monthlyProbability: finalProbability,
+                fertilityScore: finalProbability * 100, // Para compatibilidad
+                category: category,
+                detailedAnalysis: detailedAnalysis,
+                keyFactors: keyFactors,
+                recommendations: recommendations,
+                confidenceLevel: confidence,
+                treatmentComplexity: treatmentComplexity,
+                urgencyLevel: urgencyLevel,
+                evidenceSources: evidenceSources,
+                timeToPregnancy: timeEstimate,
+                coitoProgramadoRecomendacion: coitoRecomendacion,
+                coitoProgramadoProtocolo: coitoProtocolo,
+                coitoProgramadoConfianza: coitoConfianza,
+                iiuRecomendacion: iiuRecomendacion,
+                iiuProtocolo: iiuProtocolo,
+                iiuConfianza: iiuConfianza,
+                fivRecomendacion: fivRecomendacion,
+                fivTecnica: fivTecnica,
+                fivProtocolo: fivProtocolo,
+                fivConfianza: fivConfianza,
+                interactionsReport: interactionsReport,
+                adjustedProbabilities: interactionsReport.hasInteractions,
+                treatmentModified: interactionsReport.forcesTreatmentChange
+            )
+        }.value
+    }
 }

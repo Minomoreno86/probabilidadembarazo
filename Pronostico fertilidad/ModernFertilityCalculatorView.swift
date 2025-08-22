@@ -23,6 +23,8 @@ struct ModernFertilityCalculatorView: View {
     @State private var calculationResult: ImprovedFertilityEngine.ComprehensiveFertilityResult?
     @State private var isCalculating = false
     @State private var animateProgress = false
+    @State private var showError = false
+    @State private var errorMessage = ""
     @StateObject private var improvedEngine = ImprovedFertilityEngine()
     
     init(profile: FertilityProfile?) {
@@ -115,6 +117,11 @@ struct ModernFertilityCalculatorView: View {
             if let result = calculationResult {
                 ImprovedFertilityResultsView(result: result, profile: profile)
             }
+        }
+        .alert("Error en el Cálculo", isPresented: $showError) {
+            Button("OK") { }
+        } message: {
+            Text(errorMessage.isEmpty ? "Ocurrió un error durante el cálculo" : errorMessage)
         }
         .onAppear {
             withAnimation(.easeInOut(duration: 1.0)) {
@@ -1084,23 +1091,43 @@ struct ModernFertilityCalculatorView: View {
         .padding(.bottom, 40)
     }
     
-    // MARK: - FUNCIÓN DE CÁLCULO
+    // MARK: - FUNCIÓN DE CÁLCULO OPTIMIZADA
     private func calculateFertility() {
         isCalculating = true
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            let result = improvedEngine.analyzeComprehensiveFertility(from: profile)
-            calculationResult = result
-            isCalculating = false
-            showingResults = true
-            
-            // Guardar perfil
+        // ✅ SOLUCIÓN: Ejecutar en background thread
+        Task {
             do {
-                try modelContext.save()
+                // Ejecutar cálculo intensivo en background
+                let result = try await improvedEngine.analyzeComprehensiveFertilityAsync(from: profile)
+                
+                // ✅ Actualizar UI en main thread
+                await MainActor.run {
+                    calculationResult = result
+                    isCalculating = false
+                    showingResults = true
+                }
+                
+                // Guardar perfil en background
+                try await saveProfileAsync()
+                
             } catch {
-                // Error handling - profile save failed
+                // ✅ Manejar errores en main thread
+                await MainActor.run {
+                    isCalculating = false
+                    // Mostrar error al usuario
+                    showError = true
+                    errorMessage = error.localizedDescription
+                }
             }
         }
+    }
+    
+    // ✅ FUNCIÓN ASÍNCRONA PARA GUARDAR PERFIL
+    private func saveProfileAsync() async throws {
+        try await Task.detached(priority: .utility) {
+            try self.modelContext.save()
+        }.value
     }
 }
 

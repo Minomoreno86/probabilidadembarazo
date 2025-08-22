@@ -101,6 +101,9 @@ struct ImprovedFertilityResultsView: View {
     private var analysisView: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
+                // Disclaimer médico crítico - REQUERIDO POR APPLE
+                MedicalDisclaimerView(style: .critical)
+                
                 // Header con icono médico
                 HStack {
                     Image(systemName: "stethoscope")
@@ -407,6 +410,9 @@ struct ImprovedFertilityResultsView: View {
     private var recommendationsView: some View {
         ScrollView {
             LazyVStack(spacing: 16) {
+                // Disclaimer médico crítico - REQUERIDO POR APPLE
+                MedicalDisclaimerView(style: .critical)
+                
                 Text("Recomendaciones Personalizadas")
                     .font(.title2)
                     .fontWeight(.bold)

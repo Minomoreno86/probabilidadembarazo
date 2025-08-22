@@ -186,7 +186,7 @@ class MedicalEvidenceDatabase {
         prevalence: "40-50% casos infertilidad",
         definition: "Alteraciones en la producción, función o transporte espermático que comprometen la capacidad fertilizante.",
         symptoms: [
-            "Alteraciones espermiograma",
+            "Alteraciones espermatograma",
             "Disfunción eréctil",
             "Eyaculación retrógrada",
             "Dolor/inflamación testicular",

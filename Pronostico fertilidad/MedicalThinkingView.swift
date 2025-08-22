@@ -18,6 +18,9 @@ struct MedicalThinkingView: View {
     var body: some View {
         ScrollView {
             LazyVStack(spacing: 20) {
+                // Disclaimer médico crítico - REQUERIDO POR APPLE
+                MedicalDisclaimerView(style: .critical)
+                
                 // Header
                 VStack(spacing: 10) {
                     HStack {
@@ -68,6 +71,72 @@ struct MedicalThinkingView: View {
                         }
                         Text("BMI: \(fertilityProfile.bmi, specifier: "%.1f")")
                             .font(.subheadline)
+                        
+                        // Variables ginecológicas
+                        if fertilityProfile.polypType != .none {
+                            Text("Pólipos: \(fertilityProfile.polypType.displayName)")
+                                .font(.subheadline)
+                                .foregroundColor(.orange)
+                        }
+                        if fertilityProfile.myomaType != .none {
+                            Text("Miomas: \(fertilityProfile.myomaType.rawValue)")
+                                .font(.subheadline)
+                                .foregroundColor(.red)
+                        }
+                        if fertilityProfile.endometriosisStage > 0 {
+                            Text("Endometriosis: Estadio \(fertilityProfile.endometriosisStage)")
+                                .font(.subheadline)
+                                .foregroundColor(.purple)
+                        }
+                        if fertilityProfile.hasPcos {
+                            Text("SOP: Presente")
+                                .font(.subheadline)
+                                .foregroundColor(.blue)
+                        }
+                        
+                        // Factor masculino
+                        if let spermConc = fertilityProfile.spermConcentration {
+                            Text("Concentración esperm.: \(spermConc, specifier: "%.1f") M/mL")
+                                .font(.subheadline)
+                                .foregroundColor(spermConc < 15.0 ? .red : .green)
+                        }
+                        if let motility = fertilityProfile.spermProgressiveMotility {
+                            Text("Motilidad progresiva: \(motility, specifier: "%.1f")%")
+                                .font(.subheadline)
+                                .foregroundColor(motility < 32.0 ? .red : .green)
+                        }
+                        if let morphology = fertilityProfile.spermNormalMorphology {
+                            Text("Morfología normal: \(morphology, specifier: "%.1f")%")
+                                .font(.subheadline)
+                                .foregroundColor(morphology < 4.0 ? .red : .green)
+                        }
+                        if let volume = fertilityProfile.semenVolume {
+                            Text("Volumen seminal: \(volume, specifier: "%.1f") mL")
+                                .font(.subheadline)
+                                .foregroundColor(volume < 1.5 ? .orange : .green)
+                        }
+                        if let dnaFrag = fertilityProfile.spermDNAFragmentation {
+                            Text("Fragmentación DNA: \(dnaFrag, specifier: "%.1f")%")
+                                .font(.subheadline)
+                                .foregroundColor(dnaFrag > 30.0 ? .red : .green)
+                        }
+                        if fertilityProfile.hasVaricocele {
+                            Text("Varicocele: Sí")
+                                .font(.subheadline)
+                                .foregroundColor(.red)
+                        }
+                        if fertilityProfile.seminalCulturePositive {
+                            Text("Cultivo seminal: Positivo")
+                                .font(.subheadline)
+                                .foregroundColor(.red)
+                        }
+                        
+                        // Duración de infertilidad
+                        if let duration = fertilityProfile.infertilityDuration {
+                            Text("Duración infertilidad: \(duration, specifier: "%.1f") años")
+                                .font(.subheadline)
+                                .foregroundColor(duration >= 2.0 ? .red : .green)
+                        }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }

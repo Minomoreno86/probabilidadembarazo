@@ -17,6 +17,7 @@ struct ContentView: View {
     @Environment(\.themeColors) var colors
     @State private var showingCalculator = false
     @State private var showingSettings = false
+    @State private var showingOnboarding = false
     @State private var currentProfile: FertilityProfile?
     @State private var animateHero = false
     @State private var animateStats = false
@@ -112,8 +113,17 @@ struct ContentView: View {
             SettingsView()
                 .environmentObject(authFlowManager)
         }
-
+        .fullScreenCover(isPresented: $showingOnboarding) {
+            OnboardingFlow(isPresented: $showingOnboarding)
+        }
         .onAppear {
+            // Verificar si es la primera vez que se abre la aplicación
+            if !UserDefaults.hasCompletedOnboarding {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    showingOnboarding = true
+                }
+            }
+            
             withAnimation(.easeInOut(duration: 1.2)) {
                 animateHero = true
             }
