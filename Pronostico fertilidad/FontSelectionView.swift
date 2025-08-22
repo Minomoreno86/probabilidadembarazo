@@ -33,14 +33,25 @@ struct FontSelectionView: View {
                 }
             }
             .navigationTitle("Tipografía")
+            #if os(iOS)
             .navigationBarTitleDisplayMode(.large)
+            #endif
             .toolbar {
+                #if os(iOS)
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Listo") {
                         dismiss()
                     }
                     .foregroundColor(colors.text)
                 }
+                #else
+                ToolbarItem(placement: .primaryAction) {
+                    Button("Listo") {
+                        dismiss()
+                    }
+                    .foregroundColor(colors.text)
+                }
+                #endif
             }
         }
     }
@@ -129,57 +140,43 @@ struct FontSelectionView: View {
                             )
                         
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("Análisis de Fertilidad")
-                                .font(userFontManager.title)
+                            Text("Paciente de Prueba")
+                                .font(.system(size: 16, weight: .semibold))
                                 .foregroundColor(colors.text)
                             
-                            Text("Herramienta de apoyo diagnóstico")
-                                .font(userFontManager.info)
+                            Text("Consulta de Fertilidad")
+                                .font(.system(size: 12))
                                 .foregroundColor(colors.textSecondary)
                         }
                         
                         Spacer()
                         
-                        Text("85%")
-                            .font(userFontManager.customBoldFont(size: 28))
-                            .foregroundColor(colors.accent)
+                        Text("Hoy")
+                            .font(.system(size: 12))
+                            .foregroundColor(colors.textSecondary)
                     }
                     
+                    Divider()
+                        .background(colors.border)
+                    
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Resultado del pronóstico: 85%")
-                            .font(userFontManager.data)
-                            .foregroundColor(colors.accent)
+                        Text("Resultados del Análisis")
+                            .font(.system(size: 14, weight: .medium))
+                            .foregroundColor(colors.text)
                         
-                        Text("Información médica importante que debe ser legible para todos los usuarios.")
-                            .font(userFontManager.info)
+                        Text("AMH: 2.1 ng/mL • FSH: 8.5 mIU/mL • LH: 6.2 mIU/mL")
+                            .font(.system(size: 12))
                             .foregroundColor(colors.textSecondary)
-                        
-                        HStack {
-                            Text("Texto Normal")
-                                .font(userFontManager.body)
-                                .foregroundColor(colors.text)
-                            
-                            Spacer()
-                            
-                            Text("Texto Bold")
-                                .font(userFontManager.customBoldFont(size: 16))
-                                .foregroundColor(colors.text)
-                        }
-                        
-                        Button("Botón de ejemplo") {
-                            // Acción de ejemplo
-                        }
-                        .font(userFontManager.button)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 8)
-                        .background(colors.accentGradient)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
+                            .lineLimit(2)
                     }
                 }
-                .padding()
+                .padding(16)
                 .background(
-                    SuperDesignEffects.glassmorphism(for: themeManager.currentTheme)
+                    SuperDesignEffects.glassmorphism(for: AppTheme.light)
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 16)
+                        .stroke(colors.border, lineWidth: 0.5)
                 )
             }
         }
@@ -188,37 +185,41 @@ struct FontSelectionView: View {
     // MARK: - Font Info Section
     private var fontInfoSection: some View {
         VStack(spacing: 16) {
-            let fontInfo = getFontInfoForCurrentFont()
+            Text("Características de la Fuente")
+                .font(.headline)
+                .foregroundColor(colors.text)
             
-            ForEach(fontInfo, id: \.title) { info in
-                HStack(spacing: 12) {
-                    Image(systemName: info.icon)
-                        .font(.system(size: 16, weight: .medium))
-                        .foregroundColor(colors.accent)
-                        .frame(width: 24)
-                    
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(info.title)
-                            .font(.system(size: 14, weight: .semibold))
-                            .foregroundColor(colors.text)
+            LazyVStack(spacing: 8) {
+                ForEach(getFontInfoForCurrentFont(), id: \.title) { info in
+                    HStack(spacing: 12) {
+                        Image(systemName: info.icon)
+                            .font(.system(size: 16, weight: .medium))
+                            .foregroundColor(colors.accent)
+                            .frame(width: 24)
                         
-                        Text(info.description)
-                            .font(.system(size: 12))
-                            .foregroundColor(colors.textSecondary)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(info.title)
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundColor(colors.text)
+                            
+                            Text(info.description)
+                                .font(.system(size: 12))
+                                .foregroundColor(colors.textSecondary)
+                        }
+                        
+                        Spacer()
                     }
-                    
-                    Spacer()
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 12)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(colors.surface.opacity(0.5))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .stroke(colors.border, lineWidth: 0.5)
+                            )
+                    )
                 }
-                .padding(.horizontal, 16)
-                .padding(.vertical, 12)
-                .background(
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(colors.surface.opacity(0.5))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 12)
-                                .stroke(colors.border, lineWidth: 0.5)
-                        )
-                )
             }
         }
     }

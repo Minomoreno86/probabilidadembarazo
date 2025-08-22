@@ -12,6 +12,9 @@ import CryptoKit
 import UIKit
 #endif
 
+// Importar sistemas de seguridad
+import Foundation
+
 // MARK: - 🍎 APPLE SIGN IN MANAGER
 class AppleSignInManager: NSObject, ObservableObject {
     @Published var isAuthenticated = false
@@ -96,12 +99,17 @@ class AppleSignInManager: NSObject, ObservableObject {
     
     // MARK: - 💾 GESTIÓN DE DATOS LOCALES
     private func saveUserData(_ user: AppleUser) {
-        UserDefaults.standard.set(user.userID, forKey: "appleUserID")
-        UserDefaults.standard.set(user.email, forKey: "userEmail")
-        UserDefaults.standard.set(user.fullName, forKey: "userFullName")
+        // Usar SecureUserDefaults para datos médicos sensibles
+        SecureUserDefaults.shared.secureAppleUserID = user.userID
+        SecureUserDefaults.shared.secureUserEmail = user.email
+        SecureUserDefaults.shared.secureUserFullName = user.fullName
         
-        // Forzar sincronización
-        UserDefaults.standard.synchronize()
+        // Log de auditoría
+        SecurityAuditLogger.shared.logUserAuthentication(
+            userID: user.userID,
+            method: "Apple Sign In",
+            success: true
+        )
     }
     
     private func loadLocalUserData() {

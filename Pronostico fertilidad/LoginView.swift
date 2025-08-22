@@ -338,7 +338,7 @@ struct PasskeyRegistrationView: View {
                             
                             TextField("Ingresa tu nombre", text: $displayName)
                                 .textFieldStyle(.roundedBorder)
-                                .autocapitalization(.words)
+                                .textInputAutocapitalization(.words)
                                 .background(colors.surface)
                                 .cornerRadius(8)
                         }

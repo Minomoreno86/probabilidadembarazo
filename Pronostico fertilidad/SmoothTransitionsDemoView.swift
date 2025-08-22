@@ -64,7 +64,9 @@ struct SmoothTransitionsDemoView: View {
             }
             .background(Color(.systemGroupedBackground))
             .navigationTitle("Transiciones Suaves en Fertilidad")
-            .navigationBarTitleDisplayMode(.large)
+                          #if os(iOS)
+              .navigationBarTitleDisplayMode(.large)
+              #endif
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Button(showingComparison ? "Ocultar Comparación" : "Mostrar Comparación") {

@@ -31,7 +31,9 @@ struct LanguageSelectionView: View {
                 .padding(.top, 20)
             }
         }
+        #if os(iOS)
         .navigationBarHidden(true)
+        #endif
     }
     
     // MARK: - Header Section
