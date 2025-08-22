@@ -13,48 +13,43 @@ public struct TestLauncher {
     
     /// Ejecuta todos los tests disponibles
     public static func runAllTests() {
-        print("\n" + "=".repeating(60))
-        print("🧪 SISTEMA DE TESTING - PRONÓSTICO FERTILIDAD")
-        print("=".repeating(60))
+        // Sistema de testing iniciado
         
         let startTime = Date()
         
         // Ejecutar tests unitarios
-        print("\n📋 EJECUTANDO TESTS UNITARIOS...")
+        // Ejecutando tests unitarios
         TestRunner.runAllTests()
         
         // Ejecutar tests de integración
-        print("\n📋 EJECUTANDO TESTS DE INTEGRACIÓN...")
+        // Ejecutando tests de integración
         IntegrationTestRunner.runIntegrationTests()
         
         // Ejecutar tests de rendimiento
-        print("\n📋 EJECUTANDO TESTS DE RENDIMIENTO...")
+        // Ejecutando tests de rendimiento
         PerformanceTestRunner.runPerformanceTests()
         
         let endTime = Date()
         let duration = endTime.timeIntervalSince(startTime)
         
-        print("\n" + "=".repeating(60))
-        print("🏁 EJECUCIÓN COMPLETADA")
-        print("⏱️  Tiempo total: \(String(format: "%.2f", duration)) segundos")
-        print("=".repeating(60))
+        // Ejecución completada
     }
     
     /// Ejecuta solo tests unitarios
     public static func runUnitTests() {
-        print("\n🧪 EJECUTANDO SOLO TESTS UNITARIOS...")
+        // Ejecutando solo tests unitarios
         TestRunner.runAllTests()
     }
     
     /// Ejecuta solo tests de integración
     public static func runIntegrationTests() {
-        print("\n🔗 EJECUTANDO SOLO TESTS DE INTEGRACIÓN...")
+        // Ejecutando solo tests de integración
         IntegrationTestRunner.runIntegrationTests()
     }
     
     /// Ejecuta solo tests de rendimiento
     public static func runPerformanceTests() {
-        print("\n⚡ EJECUTANDO SOLO TESTS DE RENDIMIENTO...")
+        // Ejecutando solo tests de rendimiento
         PerformanceTestRunner.runPerformanceTests()
     }
 }
@@ -63,8 +58,7 @@ public struct TestLauncher {
 struct PerformanceTestRunner {
     
     static func runPerformanceTests() {
-        print("\n⚡ INICIANDO TESTS DE RENDIMIENTO...")
-        print("=====================================")
+        // Iniciando tests de rendimiento
         
         var passedTests = 0
         var totalTests = 0
@@ -81,17 +75,12 @@ struct PerformanceTestRunner {
         if testCalculationsPerformance() { passedTests += 1 }
         totalTests += 1
         
-        print("\n📊 RESUMEN DE TESTS DE RENDIMIENTO:")
-        print("✅ Tests pasados: \(passedTests)")
-        print("❌ Tests fallidos: \(totalTests - passedTests)")
-        print("📈 Porcentaje de éxito: \(Int((Double(passedTests) / Double(totalTests)) * 100))%")
-        print("=====================================")
+        // Resumen de tests de rendimiento completado
     }
     
     // MARK: - ⚡ TEST 1: RENDIMIENTO DEL MOTOR
     private static func testEnginePerformance() -> Bool {
-        print("\n⚡ TEST 1: RENDIMIENTO DEL MOTOR")
-        print("---------------------------------")
+        // Test 1: Rendimiento del motor
         
         let engine = ImprovedFertilityEngine()
         let iterations = 100
@@ -116,27 +105,19 @@ struct PerformanceTestRunner {
         let duration = endTime.timeIntervalSince(startTime)
         let avgTime = duration / Double(iterations)
         
-        print("📊 Rendimiento del motor:")
-        print("   • Iteraciones: \(iterations)")
-        print("   • Tiempo total: \(String(format: "%.3f", duration))s")
-        print("   • Tiempo promedio: \(String(format: "%.3f", avgTime * 1000))ms")
+        // Rendimiento del motor medido
         
         // Criterio de rendimiento: menos de 10ms por análisis
         let passed = avgTime < 0.01
         
-        if passed {
-            print("✅ Test rendimiento del motor: PASÓ")
-        } else {
-            print("❌ Test rendimiento del motor: FALLÓ - muy lento")
-        }
+        // Resultado del test evaluado
         
         return passed
     }
     
     // MARK: - ⚡ TEST 2: RENDIMIENTO DEL SIMULADOR
     private static func testSimulatorPerformance() -> Bool {
-        print("\n⚡ TEST 2: RENDIMIENTO DEL SIMULADOR")
-        print("-------------------------------------")
+        // Test 2: Rendimiento del simulador
         
         let simulator = TreatmentSimulator()
         let iterations = 50
@@ -163,27 +144,19 @@ struct PerformanceTestRunner {
         let duration = endTime.timeIntervalSince(startTime)
         let avgTime = duration / Double(iterations)
         
-        print("📊 Rendimiento del simulador:")
-        print("   • Iteraciones: \(iterations)")
-        print("   • Tiempo total: \(String(format: "%.3f", duration))s")
-        print("   • Tiempo promedio: \(String(format: "%.3f", avgTime * 1000))ms")
+        // Rendimiento del simulador medido
         
         // Criterio de rendimiento: menos de 20ms por simulación completa
         let passed = avgTime < 0.02
         
-        if passed {
-            print("✅ Test rendimiento del simulador: PASÓ")
-        } else {
-            print("❌ Test rendimiento del simulador: FALLÓ - muy lento")
-        }
+        // Resultado del test evaluado
         
         return passed
     }
     
     // MARK: - ⚡ TEST 3: RENDIMIENTO DE CÁLCULOS
     private static func testCalculationsPerformance() -> Bool {
-        print("\n⚡ TEST 3: RENDIMIENTO DE CÁLCULOS")
-        print("-----------------------------------")
+        // Test 3: Rendimiento de cálculos
         
         let iterations = 1000
         
@@ -203,19 +176,12 @@ struct PerformanceTestRunner {
         let duration = endTime.timeIntervalSince(startTime)
         let avgTime = duration / Double(iterations)
         
-        print("📊 Rendimiento de cálculos:")
-        print("   • Iteraciones: \(iterations)")
-        print("   • Tiempo total: \(String(format: "%.3f", duration))s")
-        print("   • Tiempo promedio: \(String(format: "%.6f", avgTime * 1000000))μs")
+        // Rendimiento de cálculos medido
         
         // Criterio de rendimiento: menos de 1μs por cálculo
         let passed = avgTime < 0.000001
         
-        if passed {
-            print("✅ Test rendimiento de cálculos: PASÓ")
-        } else {
-            print("❌ Test rendimiento de cálculos: FALLÓ - muy lento")
-        }
+        // Resultado del test evaluado
         
         return passed
     }

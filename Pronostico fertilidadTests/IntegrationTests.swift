@@ -12,8 +12,7 @@ import Foundation
 struct IntegrationTestRunner {
     
     static func runIntegrationTests() {
-        print("\n🔗 INICIANDO TESTS DE INTEGRACIÓN...")
-        print("=====================================")
+        // Iniciando tests de integración
         
         var passedTests = 0
         var totalTests = 0
@@ -34,17 +33,12 @@ struct IntegrationTestRunner {
         if testDataValidation() { passedTests += 1 }
         totalTests += 1
         
-        print("\n📊 RESUMEN DE TESTS DE INTEGRACIÓN:")
-        print("✅ Tests pasados: \(passedTests)")
-        print("❌ Tests fallidos: \(totalTests - passedTests)")
-        print("📈 Porcentaje de éxito: \(Int((Double(passedTests) / Double(totalTests)) * 100))%")
-        print("=====================================")
+        // Resumen de tests de integración completado
     }
     
     // MARK: - 🧪 TEST 1: FLUJO COMPLETO DE ANÁLISIS
     private static func testCompleteAnalysisFlow() -> Bool {
-        print("\n🧪 TEST 1: FLUJO COMPLETO DE ANÁLISIS")
-        print("----------------------------------------")
+        // Test 1: Flujo completo de análisis
         
         var allPassed = true
         let engine = ImprovedFertilityEngine()
@@ -65,30 +59,26 @@ struct IntegrationTestRunner {
         // Ejecutar análisis completo
         let result = engine.analyzeComprehensiveFertility(from: profile)
         
-        print("📊 Resultados del análisis:")
-        print("   • Probabilidad mensual: \(result.monthlyProbability)")
-        print("   • Probabilidad anual: \(result.annualProbability)")
-        print("   • Factores clave: \(result.keyFactors.count)")
-        print("   • Análisis detallado: \(result.detailedAnalysis.count) caracteres")
+        // Resultados del análisis evaluados
         
         // Validaciones del flujo completo
         if result.monthlyProbability <= 0 || result.monthlyProbability > 1.0 {
-            print("❌ Probabilidad mensual: Falló - valor fuera de rango")
+            // Probabilidad mensual falló - valor fuera de rango
             allPassed = false
         }
         
         if result.annualProbability <= 0 || result.annualProbability > 1.0 {
-            print("❌ Probabilidad anual: Falló - valor fuera de rango")
+            // Probabilidad anual falló - valor fuera de rango
             allPassed = false
         }
         
         if result.keyFactors.count < 3 {
-            print("❌ Factores clave: Falló - muy pocos factores")
+            // Factores clave falló - muy pocos factores
             allPassed = false
         }
         
         if result.detailedAnalysis.count < 500 {
-            print("❌ Análisis detallado: Falló - muy corto")
+            // Análisis detallado falló - muy corto
             allPassed = false
         }
         
@@ -98,24 +88,19 @@ struct IntegrationTestRunner {
         
         for expectedFactor in expectedFactors {
             if !factorNames.contains(where: { $0.contains(expectedFactor) }) {
-                print("❌ Factor esperado '\(expectedFactor)' no encontrado en factores clave")
+                // Factor esperado no encontrado en factores clave
                 return false
             }
         }
         
-        if allPassed {
-            print("✅ Test flujo completo de análisis: PASÓ")
-        } else {
-            print("❌ Test flujo completo de análisis: FALLÓ")
-        }
+        // Test flujo completo de análisis evaluado
         
         return allPassed
     }
     
     // MARK: - 🧪 TEST 2: FLUJO COMPLETO DE SIMULADOR
     private static func testCompleteSimulatorFlow() -> Bool {
-        print("\n🧪 TEST 2: FLUJO COMPLETO DE SIMULADOR")
-        print("-----------------------------------------")
+        // Test 2: Flujo completo de simulador
         
         var allPassed = true
         let simulator = TreatmentSimulator()
@@ -131,57 +116,49 @@ struct IntegrationTestRunner {
         
         // Paso 1: Determinar tratamiento óptimo
         let recommendation = simulator.determineOptimalTreatment(profile: profile)
-        print("🎯 Tratamiento recomendado: \(recommendation.plan)")
-        print("📝 Razonamiento: \(recommendation.rationale.joined(separator: ", "))")
+        // Tratamiento recomendado evaluado
         
         if recommendation.plan == .coitoProgramado || recommendation.plan == .iui || recommendation.plan == .fiv || recommendation.plan == .icsi || recommendation.plan == .evaluarOvodonacion {
-            print("✅ Tratamiento: PASÓ - se determinó correctamente")
+            // Tratamiento se determinó correctamente
         } else {
-            print("❌ Tratamiento: Falló - no se pudo determinar")
+            // Tratamiento falló - no se pudo determinar
             allPassed = false
         }
         
         // Paso 2: Identificar factores modificables
         let modifiableFactors = simulator.simulateModifiableFactors(profile: profile)
-        print("🔧 Factores modificables encontrados: \(modifiableFactors.count)")
+        // Factores modificables evaluados
         
         if modifiableFactors.count < 3 {
-            print("❌ Factores modificables: Falló - muy pocos")
+            // Factores modificables falló - muy pocos
             allPassed = false
         }
         
         // Paso 3: Simular corrección del factor más crítico
         let correction = simulator.simulateFactorCorrection(profile: profile)
         if correction == nil {
-            print("❌ Simulación corrección: Falló - no se pudo simular")
+            // Simulación corrección falló - no se pudo simular
             allPassed = false
         } else {
-            print("✅ Simulación corrección: PASÓ")
-            print("   • Factor corregido: \(correction!.correctedFactor)")
-            print("   • Mejora: \(correction!.improvementInProbability)%")
-            print("   • Tiempo: \(correction!.timeToCorrection)")
+            // Simulación corrección pasó
+            // Factor corregido, mejora y tiempo evaluados
             
             // Verificar que la corrección cambie la recomendación
             if correction!.originalRecommendation.plan == correction!.correctedRecommendation.plan {
-                print("⚠️  Advertencia: La corrección no cambió el tratamiento")
+                // Advertencia: La corrección no cambió el tratamiento
             } else {
-                print("🔄 Cambio de tratamiento: \(correction!.originalRecommendation.plan) → \(correction!.correctedRecommendation.plan)")
+                // Cambio de tratamiento evaluado
             }
         }
         
-        if allPassed {
-            print("✅ Test flujo completo de simulador: PASÓ")
-        } else {
-            print("❌ Test flujo completo de simulador: FALLÓ")
-        }
+        // Test flujo completo de simulador evaluado
         
         return allPassed
     }
     
     // MARK: - 🧪 TEST 3: PERSISTENCIA DE DATOS
     private static func testDataPersistence() -> Bool {
-        print("\n🧪 TEST 3: PERSISTENCIA DE DATOS")
-        print("----------------------------------")
+        // Test 3: Persistencia de datos
         
         var allPassed = true
         
@@ -207,40 +184,35 @@ struct IntegrationTestRunner {
         
         // Verificar que los datos se mantengan
         if recoveredProfile.age != originalProfile.age {
-            print("❌ Persistencia edad: Falló")
+            // Persistencia edad falló
             allPassed = false
         }
         
         if recoveredProfile.tshValue != originalProfile.tshValue {
-            print("❌ Persistencia TSH: Falló")
+            // Persistencia TSH falló
             allPassed = false
         }
         
         if recoveredProfile.amhValue != originalProfile.amhValue {
-            print("❌ Persistencia AMH: Falló")
+            // Persistencia AMH falló
             allPassed = false
         }
         
         // Verificar que el IMC se calcule correctamente
         let expectedBMI = 65.0 / (1.65 * 1.65)
         if abs(recoveredProfile.bmi - expectedBMI) > 0.1 {
-            print("❌ Cálculo IMC: Falló - esperado: \(expectedBMI), obtenido: \(recoveredProfile.bmi)")
+            // Cálculo IMC falló
             allPassed = false
         }
         
-        if allPassed {
-            print("✅ Test persistencia de datos: PASÓ")
-        } else {
-            print("❌ Test persistencia de datos: FALLÓ")
-        }
+        // Test persistencia de datos evaluado
         
         return allPassed
     }
     
     // MARK: - 🧪 TEST 4: VALIDACIÓN DE DATOS
     private static func testDataValidation() -> Bool {
-        print("\n🧪 TEST 4: VALIDACIÓN DE DATOS")
-        print("--------------------------------")
+        // Test 4: Validación de datos
         
         var allPassed = true
         
@@ -255,17 +227,17 @@ struct IntegrationTestRunner {
         
         // Verificar que los datos sean válidos
         if validProfile.age < 18 || validProfile.age > 50 {
-            print("❌ Validación edad: Falló - fuera de rango")
+            // Validación edad falló - fuera de rango
             allPassed = false
         }
         
         if validProfile.height < 140 || validProfile.height > 200 {
-            print("❌ Validación altura: Falló - fuera de rango")
+            // Validación altura falló - fuera de rango
             allPassed = false
         }
         
         if validProfile.weight < 40 || validProfile.weight > 150 {
-            print("❌ Validación peso: Falló - fuera de rango")
+            // Validación peso falló - fuera de rango
             allPassed = false
         }
         
@@ -280,25 +252,21 @@ struct IntegrationTestRunner {
         
         // Verificar que los datos límite sean válidos
         if edgeProfile.age < 18 {
-            print("❌ Validación edad límite: Falló")
+            // Validación edad límite falló
             allPassed = false
         }
         
         if (edgeProfile.tshValue ?? 0) <= 0 {
-            print("❌ TSH debe ser > 0")
+            // TSH debe ser > 0
             return false
         }
         
         if (edgeProfile.amhValue ?? 0) <= 0 {
-            print("❌ AMH debe ser > 0")
+            // AMH debe ser > 0
             return false
         }
         
-        if allPassed {
-            print("✅ Test validación de datos: PASÓ")
-        } else {
-            print("❌ Test validación de datos: FALLÓ")
-        }
+        // Test validación de datos evaluado
         
         return allPassed
     }

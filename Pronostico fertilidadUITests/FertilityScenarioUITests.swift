@@ -61,7 +61,7 @@ final class FertilityScenarioUITests: XCTestCase {
         let treatmentText = app.staticTexts.containing(.staticText, identifier: "FIV").firstMatch
         XCTAssertTrue(treatmentText.waitForExistence(timeout: 5), "Debe recomendar FIV para mioma submucosal")
         
-        print("✅ Test escenario paciente joven con mioma: PASÓ")
+        // Test escenario paciente joven con mioma: PASÓ
     }
     
     @MainActor
@@ -92,7 +92,7 @@ final class FertilityScenarioUITests: XCTestCase {
             XCTAssertTrue(treatmentText.waitForExistence(timeout: 5), "Debe recomendar Levotiroxina")
         }
         
-        print("✅ Test escenario hipotiroidismo: PASÓ")
+        // Test escenario hipotiroidismo: PASÓ
     }
     
     @MainActor
@@ -120,7 +120,7 @@ final class FertilityScenarioUITests: XCTestCase {
         let fivText = app.staticTexts.containing(.staticText, identifier: "FIV").firstMatch
         XCTAssertTrue(fivText.waitForExistence(timeout: 5), "Debe recomendar FIV para AMH bajo")
         
-        print("✅ Test escenario AMH bajo: PASÓ")
+        // Test escenario AMH bajo: PASÓ
     }
     
     @MainActor
@@ -144,7 +144,7 @@ final class FertilityScenarioUITests: XCTestCase {
             XCTAssertTrue(obesityText.waitForExistence(timeout: 5), "Debe mencionar obesidad")
         }
         
-        print("✅ Test escenario obesidad: PASÓ")
+        // Test escenario obesidad: PASÓ
     }
     
     // MARK: - 🎯 TESTS DEL SIMULADOR DE CORRECCIÓN
@@ -185,7 +185,7 @@ final class FertilityScenarioUITests: XCTestCase {
             XCTAssertTrue(improvementText.waitForExistence(timeout: 5), "Debe mostrar mejora en porcentaje")
         }
         
-        print("✅ Test flujo de corrección de factores: PASÓ")
+        // Test flujo de corrección de factores: PASÓ
     }
     
     // MARK: - 📊 TESTS DE VALIDACIÓN DE DATOS
@@ -210,7 +210,7 @@ final class FertilityScenarioUITests: XCTestCase {
                                app.staticTexts.containing(.staticText, identifier: "válida").count > 0
             
             if hasValidation {
-                print("✅ Validación de edad detectada")
+                // Validación de edad detectada
             }
         }
         
@@ -224,7 +224,7 @@ final class FertilityScenarioUITests: XCTestCase {
             heightField.typeText("200") // Altura extrema
         }
         
-        print("✅ Test validación casos extremos: PASÓ")
+        // Test validación casos extremos: PASÓ
     }
     
     // MARK: - 🔄 TESTS DE FLUJO COMPLETO
@@ -262,7 +262,7 @@ final class FertilityScenarioUITests: XCTestCase {
             correctionButton.tap()
         }
         
-        print("✅ Test journey completo de usuario: PASÓ")
+        // Test journey completo de usuario: PASÓ
     }
     
     // MARK: - 🔧 FUNCIONES AUXILIARES
@@ -282,7 +282,7 @@ final class FertilityScenarioUITests: XCTestCase {
         let calculatorView = app.otherElements["ModernFertilityCalculatorView"]
         XCTAssertTrue(calculatorView.waitForExistence(timeout: 5), "Debe abrirse la calculadora")
         
-        print("✅ Navegación a calculadora exitosa")
+        // Navegación a calculadora exitosa
     }
     
     private func fillPatientData(age: String, height: String, weight: String) {
@@ -317,7 +317,7 @@ final class FertilityScenarioUITests: XCTestCase {
         // Ocultar teclado
         app.tap()
         
-        print("✅ Datos del paciente llenados correctamente: Edad=\(age), Altura=\(height), Peso=\(weight)")
+        // Datos del paciente llenados correctamente: Edad=\(age), Altura=\(height), Peso=\(weight)
     }
     
     private func fillCompletePatientData() {
@@ -378,7 +378,7 @@ final class FertilityScenarioUITests: XCTestCase {
         
         app.tap() // Ocultar teclado
         
-        print("✅ Datos completos del paciente llenados correctamente")
+        // Datos completos del paciente llenados correctamente
     }
     
     private func executeCalculation() {
@@ -401,7 +401,7 @@ final class FertilityScenarioUITests: XCTestCase {
         let simulatorTitle = app.staticTexts["Simulador de Tratamientos"]
         XCTAssertTrue(simulatorTitle.waitForExistence(timeout: 5), "Debe mostrar simulador")
         
-        print("✅ Navegación al simulador exitosa")
+        // Navegación al simulador exitosa
     }
     
     private func testAllResultTabs() throws {
@@ -415,7 +415,7 @@ final class FertilityScenarioUITests: XCTestCase {
             summaryTab.tap()
             let probabilityText = app.staticTexts.containing(.staticText, identifier: "%").firstMatch
             XCTAssertTrue(probabilityText.waitForExistence(timeout: 5), "Debe mostrar probabilidades")
-            print("✅ Tab Resumen funciona correctamente")
+            // Tab Resumen funciona correctamente
         }
         
         // Factores
@@ -424,7 +424,7 @@ final class FertilityScenarioUITests: XCTestCase {
             factorsTab.tap()
             let factorsContent = app.staticTexts["Análisis de Factores"]
             XCTAssertTrue(factorsContent.waitForExistence(timeout: 5), "Debe mostrar factores")
-            print("✅ Tab Factores funciona correctamente")
+            // Tab Factores funciona correctamente
         }
         
         // Análisis
@@ -433,10 +433,10 @@ final class FertilityScenarioUITests: XCTestCase {
             analysisTab.tap()
             let analysisContent = app.staticTexts.containing(.staticText, identifier: "Evidencia").firstMatch
             XCTAssertTrue(analysisContent.waitForExistence(timeout: 5), "Debe mostrar análisis")
-            print("✅ Tab Análisis funciona correctamente")
+            // Tab Análisis funciona correctamente
         }
         
-        print("✅ Todos los tabs de resultados funcionan correctamente")
+        // Todos los tabs de resultados funcionan correctamente
     }
     
     private func clearField(_ field: XCUIElement) {

@@ -62,7 +62,7 @@ final class AccessibilityUITests: XCTestCase {
             }
         }
         
-        print("✅ Test etiquetas VoiceOver: PASÓ")
+        // Test etiquetas VoiceOver: PASÓ
     }
     
     @MainActor
@@ -85,7 +85,7 @@ final class AccessibilityUITests: XCTestCase {
         
         XCTAssertTrue(hasNavigableElements, "Debe haber elementos navegables para VoiceOver")
         
-        print("✅ Test navegación VoiceOver: PASÓ")
+        // Test navegación VoiceOver: PASÓ
     }
     
     // MARK: - 🎯 TESTS DE CONTRASTE Y VISIBILIDAD
@@ -121,7 +121,7 @@ final class AccessibilityUITests: XCTestCase {
             }
         }
         
-        print("✅ Test contraste y visibilidad: PASÓ")
+        // Test contraste y visibilidad: PASÓ
     }
     
     // MARK: - 📱 TESTS DE TAMAÑO DE FUENTE DINÁMICO
@@ -141,7 +141,7 @@ final class AccessibilityUITests: XCTestCase {
             XCTAssertTrue(initialFrame.width > 0, "El texto debe tener ancho válido")
         }
         
-        print("✅ Test soporte Dynamic Type: PASÓ")
+        // Test soporte Dynamic Type: PASÓ
     }
     
     // MARK: - 🤏 TESTS DE GESTOS DE ACCESIBILIDAD
@@ -169,7 +169,7 @@ final class AccessibilityUITests: XCTestCase {
             }
         }
         
-        print("✅ Test acciones de accesibilidad: PASÓ")
+        // Test acciones de accesibilidad: PASÓ
     }
     
     // MARK: - 📝 TESTS DE FORMULARIOS ACCESIBLES
@@ -204,7 +204,7 @@ final class AccessibilityUITests: XCTestCase {
             }
         }
         
-        print("✅ Test accesibilidad de formularios: PASÓ")
+        // Test accesibilidad de formularios: PASÓ
     }
     
     // MARK: - 🎨 TESTS DE MODO OSCURO
@@ -230,7 +230,7 @@ final class AccessibilityUITests: XCTestCase {
             }
         }
         
-        print("✅ Test accesibilidad modo oscuro: PASÓ")
+        // Test accesibilidad modo oscuro: PASÓ
     }
     
     // MARK: - 📊 TESTS DE CONTENIDO MÉDICO ACCESIBLE
@@ -264,7 +264,7 @@ final class AccessibilityUITests: XCTestCase {
             }
         }
         
-        print("✅ Test accesibilidad contenido médico: PASÓ")
+        // Test accesibilidad contenido médico: PASÓ
     }
     
     // MARK: - 🚨 TESTS DE ALERTAS Y NOTIFICACIONES
@@ -299,7 +299,7 @@ final class AccessibilityUITests: XCTestCase {
             }
         }
         
-        print("✅ Test accesibilidad de alertas: PASÓ")
+        // Test accesibilidad de alertas: PASÓ
     }
     
     // MARK: - 📏 TESTS DE DISEÑO RESPONSIVO
@@ -328,7 +328,7 @@ final class AccessibilityUITests: XCTestCase {
             device.orientation = originalOrientation
         }
         
-        print("✅ Test diseño responsivo accesible: PASÓ")
+        // Test diseño responsivo accesible: PASÓ
     }
     
     // MARK: - 🔧 FUNCIONES AUXILIARES

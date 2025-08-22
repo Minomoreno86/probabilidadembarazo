@@ -51,7 +51,7 @@ final class Pronostico_fertilidadUITests: XCTestCase {
         let referencesText = app.staticTexts["1,247"]
         XCTAssertTrue(referencesText.waitForExistence(timeout: 5), "Las referencias deben aparecer")
         
-        print("✅ Test de lanzamiento: PASÓ")
+        // Test de lanzamiento: PASÓ
     }
     
     @MainActor
@@ -66,7 +66,7 @@ final class Pronostico_fertilidadUITests: XCTestCase {
         let calculatorView = app.otherElements["ModernFertilityCalculatorView"]
         XCTAssertTrue(calculatorView.waitForExistence(timeout: 10), "Debe abrirse la calculadora")
         
-        print("✅ Test de navegación a calculadora: PASÓ")
+        // Test de navegación a calculadora: PASÓ
     }
     
     // MARK: - 📝 TESTS DE ENTRADA DE DATOS
@@ -112,7 +112,7 @@ final class Pronostico_fertilidadUITests: XCTestCase {
         let cycleField = app.textFields["cycle_length_field"]
         XCTAssertTrue(cycleField.waitForExistence(timeout: 10), "Debe mostrar campos de ginecología")
         
-        print("✅ Test de entrada de datos: PASÓ")
+        // Test de entrada de datos: PASÓ
     }
     
     @MainActor
@@ -131,7 +131,7 @@ final class Pronostico_fertilidadUITests: XCTestCase {
         
         XCTAssertTrue(alertExists || errorMessageExists, "Debe mostrar validación cuando faltan datos")
         
-        print("✅ Test de validación de formulario: PASÓ")
+        // Test de validación de formulario: PASÓ
     }
     
     // MARK: - 🧮 TESTS DE CÁLCULO Y RESULTADOS
@@ -189,7 +189,7 @@ final class Pronostico_fertilidadUITests: XCTestCase {
         let monthlyProbability = app.staticTexts.containing(.staticText, identifier: "%").firstMatch
         XCTAssertTrue(monthlyProbability.waitForExistence(timeout: 10), "Debe mostrar probabilidad mensual")
         
-        print("✅ Test de flujo completo de cálculo: PASÓ")
+        // Test de flujo completo de cálculo: PASÓ
     }
     
     @MainActor
@@ -222,7 +222,7 @@ final class Pronostico_fertilidadUITests: XCTestCase {
         let analysisContent = app.staticTexts.containing(.staticText, identifier: "Evidencia").firstMatch
         XCTAssertTrue(analysisContent.waitForExistence(timeout: 10), "Debe mostrar análisis detallado")
         
-        print("✅ Test de navegación en resultados: PASÓ")
+        // Test de navegación en resultados: PASÓ
     }
     
     // MARK: - 🎯 TESTS DEL SIMULADOR DE TRATAMIENTOS
@@ -248,7 +248,7 @@ final class Pronostico_fertilidadUITests: XCTestCase {
         let nonModifiableFactors = app.staticTexts.containing(.staticText, identifier: "Factores No Modificables").firstMatch
         XCTAssertTrue(nonModifiableFactors.waitForExistence(timeout: 10), "Debe mostrar factores no modificables")
         
-        print("✅ Test del simulador de tratamientos: PASÓ")
+        // Test del simulador de tratamientos: PASÓ
     }
     
     @MainActor
@@ -274,7 +274,7 @@ final class Pronostico_fertilidadUITests: XCTestCase {
             XCTAssertTrue(comparisonText.waitForExistence(timeout: 5), "Debe mostrar comparación de recomendaciones")
         }
         
-        print("✅ Test de simulación de corrección: PASÓ")
+        // Test de simulación de corrección: PASÓ
     }
     
     // MARK: - ♿ TESTS DE ACCESIBILIDAD BÁSICOS
@@ -297,7 +297,7 @@ final class Pronostico_fertilidadUITests: XCTestCase {
             }
         }
         
-        print("✅ Test de accesibilidad básica: PASÓ")
+        // Test de accesibilidad básica: PASÓ
     }
     
     @MainActor
@@ -311,7 +311,7 @@ final class Pronostico_fertilidadUITests: XCTestCase {
             XCTAssertTrue(titleElement.isAccessibilityElement, "El título debe ser accesible")
         }
         
-        print("✅ Test de soporte VoiceOver: PASÓ")
+        // Test de soporte VoiceOver: PASÓ
     }
     
     // MARK: - ⚡ TESTS DE RENDIMIENTO UI
@@ -327,7 +327,7 @@ final class Pronostico_fertilidadUITests: XCTestCase {
             _ = testApp.wait(for: .runningForeground, timeout: 15)
         }
         
-        print("✅ Test de rendimiento de lanzamiento: PASÓ")
+        // Test de rendimiento de lanzamiento: PASÓ
     }
     
     @MainActor
@@ -350,7 +350,7 @@ final class Pronostico_fertilidadUITests: XCTestCase {
             }
         }
         
-        print("✅ Test de rendimiento de cálculo: PASÓ")
+        // Test de rendimiento de cálculo: PASÓ
     }
     
     // MARK: - 🧪 TESTS DE CARGA Y MEMORIA
@@ -376,7 +376,7 @@ final class Pronostico_fertilidadUITests: XCTestCase {
             XCTAssertLessThan(loadTime, 10.0, "La carga debe completarse en menos de 10 segundos")
         }
         
-        print("✅ Test de rendimiento de carga: PASÓ")
+        // Test de rendimiento de carga: PASÓ
     }
     
     @MainActor
@@ -404,7 +404,7 @@ final class Pronostico_fertilidadUITests: XCTestCase {
             XCTAssertLessThan(testTime, 15.0, "El test de memory leaks debe completarse en menos de 15 segundos")
         }
         
-        print("✅ Test de memory leaks: PASÓ")
+        // Test de memory leaks: PASÓ
     }
     
     // MARK: - 🔧 FUNCIONES AUXILIARES
@@ -438,7 +438,7 @@ final class Pronostico_fertilidadUITests: XCTestCase {
         // Ocultar teclado
         app.tap()
         
-        print("✅ Datos básicos llenados correctamente")
+        // Datos básicos llenados correctamente
     }
     
     private func waitForElementToAppear(_ element: XCUIElement, timeout: TimeInterval = 10) -> Bool {
