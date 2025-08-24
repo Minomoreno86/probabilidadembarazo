@@ -221,8 +221,8 @@ struct AboutView: View {
                     // Información de la app
                     VStack(alignment: .leading, spacing: 16) {
                         InfoRow(
-                            title: "Desarrollador",
-                            value: "Equipo Médico Digital"
+                                                title: localizationManager.getLocalizedString("Desarrollador"),
+                    value: localizationManager.getLocalizedString("Equipo Médico Digital")
                         )
                         
                         InfoRow(
@@ -231,12 +231,12 @@ struct AboutView: View {
                         )
                         
                         InfoRow(
-                            title: "Última Actualización",
+                            title: localizationManager.getLocalizedString("Última Actualización"),
                             value: "Diciembre 2024"
                         )
                         
                         InfoRow(
-                            title: "Compatibilidad",
+                            title: localizationManager.getLocalizedString("Compatibilidad"),
                             value: "macOS 12.0+, iOS 16.0+"
                         )
                     }
@@ -278,10 +278,10 @@ struct AboutView: View {
                 .padding(.vertical, 32)
             }
             .background(medicalGradient)
-            .navigationTitle("Acerca de")
+            .navigationTitle(localizationManager.getLocalizedString("Acerca de"))
             .toolbar {
                 ToolbarItem(placement: .automatic) {
-                    Button("Cerrar") {
+                    Button(localizationManager.getLocalizedString("Cerrar")) {
                         dismiss()
                     }
                     .foregroundColor(.white)
@@ -332,6 +332,7 @@ struct InfoRow: View {
 // MARK: - 📱 FILA DE CONFIGURACIÓN PARA LISTA
 struct SettingsRowView: View {
     let section: SettingsSection
+    @EnvironmentObject var localizationManager: LocalizationManager
     
     var body: some View {
         HStack(spacing: 16) {
@@ -351,7 +352,7 @@ struct SettingsRowView: View {
                     .font(.system(size: 16, weight: .semibold))
                     .foregroundColor(.white)
                 
-                Text(section.subtitle)
+                Text(getSubtitle(for: section))
                     .font(.system(size: 13))
                     .foregroundColor(.white.opacity(0.6))
             }
@@ -370,33 +371,30 @@ struct SettingsRowView: View {
                 .fill(Color.black.opacity(0.1))
         )
     }
-}
-
-// MARK: - 📋 EXTENSIÓN PARA SUBTÍTULOS
-extension SettingsSection {
-    var subtitle: String {
-        switch self {
-        case .profile: return "Información personal y profesional"
-        case .appearance: return "Tema y personalización visual"
-        case .fonts: return "Personaliza las fuentes de la app"
-        case .language: return "Selecciona el idioma de la aplicación"
-        case .onboarding: return "Revisa cómo funciona la aplicación"
-        case .share: return "Comparte la app en redes sociales"
-        case .legal: return "Términos, políticas y avisos"
-        case .info: return "Versión, soporte y contacto"
-        case .accessibility: return "Funciones de accesibilidad"
-        case .logout: return "Cerrar sesión de forma segura"
+    
+    private func getSubtitle(for section: SettingsSection) -> String {
+        switch section {
+        case .profile: return localizationManager.getLocalizedString("Información personal y profesional")
+        case .appearance: return localizationManager.getLocalizedString("Tema y personalización visual")
+        case .fonts: return localizationManager.getLocalizedString("Personaliza las fuentes de la app")
+        case .language: return localizationManager.getLocalizedString("Selecciona el idioma de la aplicación")
+        case .onboarding: return localizationManager.getLocalizedString("Revisa cómo funciona la aplicación")
+        case .share: return localizationManager.getLocalizedString("Comparte la app en redes sociales")
+        case .legal: return localizationManager.getLocalizedString("Términos, políticas y avisos")
+        case .info: return localizationManager.getLocalizedString("Versión, soporte y contacto")
+        case .accessibility: return localizationManager.getLocalizedString("Funciones de accesibilidad")
+        case .logout: return localizationManager.getLocalizedString("Cerrar sesión de forma segura")
         }
     }
 }
 
 #Preview {
     SettingsTextField(
-        title: "Nombre del Médico",
-        subtitle: "Aparecerá en los reportes",
+        title: "Nombre del Médico",  // Preview text - no localization needed
+        subtitle: "Aparecerá en los reportes",  // Preview text - no localization needed
         icon: "person.fill",
         text: .constant("Dr. Juan Pérez"),
-        placeholder: "Ingrese su nombre"
+        placeholder: "Ingrese su nombre"  // Preview text - no localization needed
     )
     .padding()
     .background(Color.blue.gradient)

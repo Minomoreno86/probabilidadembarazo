@@ -49,11 +49,11 @@ struct FactorCorrectionComparison {
 // Solo definimos las estructuras específicas del simulador
 
 enum TreatmentPlan: String, CaseIterable {
-    case coitoProgramado = "Coito Programado"
-    case iui = "Inseminación Intrauterina"
-    case fiv = "Fecundación In Vitro"
+    case coitoProgramado = "Coito Programado"  // Localized in enum
+    case iui = "Inseminación Intrauterina"     // Localized in enum
+    case fiv = "Fecundación In Vitro"          // Localized in enum
     case icsi = "ICSI"
-    case evaluarOvodonacion = "Evaluar Ovodonación"
+    case evaluarOvodonacion = "Evaluar Ovodonación"  // Localized in enum
     
     var description: String {
         switch self {

@@ -181,6 +181,25 @@
 "Esta app es totalmente compatible con todas las funciones de accesibilidad de iOS" = "This app is fully compatible with all iOS accessibility features";
 
 // MARK: - Settings Components
+"Desarrollador" = "Developer";
+"Equipo Médico Digital" = "Digital Medical Team";
+"Última Actualización" = "Last Update";
+"Compatibilidad" = "Compatibility";
+"Acerca de" = "About";
+"Cerrar" = "Close";
+"Información personal y profesional" = "Personal and professional information";
+"Tema y personalización visual" = "Theme and visual customization";
+"Personaliza las fuentes de la app" = "Customize app fonts";
+"Selecciona el idioma de la aplicación" = "Select application language";
+"Revisa cómo funciona la aplicación" = "Review how the application works";
+"Comparte la app en redes sociales" = "Share the app on social networks";
+"Términos, políticas y avisos" = "Terms, policies and notices";
+"Versión, soporte y contacto" = "Version, support and contact";
+"Funciones de accesibilidad" = "Accessibility features";
+"Cerrar sesión de forma segura" = "Sign out securely";
+"Nombre del Médico" = "Doctor's Name";
+"Aparecerá en los reportes" = "Will appear in reports";
+"Ingrese su nombre" = "Enter your name";
 "Medicina Reproductiva" = "Reproductive Medicine";
 "• ASRM Guidelines 2024" = "• ASRM Guidelines 2024";
 "• ESHRE Recommendations 2023" = "• ESHRE Recommendations 2023";

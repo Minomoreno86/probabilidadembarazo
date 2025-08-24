@@ -346,7 +346,7 @@ struct SettingsView: View {
             VStack(spacing: 16) {
                 SettingsTextField(
                     title: localizationManager.getLocalizedString("Nombre Completo"),
-                    subtitle: "Aparecerá en los reportes",
+                    subtitle: localizationManager.getLocalizedString("Aparecerá en los reportes"),
                     icon: "person.fill",
                     text: $userFullName,
                     placeholder: "Dr. Juan Pérez"
@@ -490,7 +490,7 @@ struct SettingsView: View {
         VStack(spacing: 20) {
             SettingsSectionHeader(
                 title: "Idioma",
-                subtitle: "Selecciona el idioma de la aplicación",
+                                    subtitle: localizationManager.getLocalizedString("Selecciona el idioma de la aplicación"),
                 icon: "globe"
             )
             
@@ -534,7 +534,7 @@ struct SettingsView: View {
         VStack(spacing: 20) {
             SettingsSectionHeader(
                 title: "Introducción",
-                subtitle: "Revisa cómo funciona la aplicación",
+                                    subtitle: localizationManager.getLocalizedString("Revisa cómo funciona la aplicación"),
                 icon: "graduationcap.fill"
             )
             
@@ -579,7 +579,7 @@ struct SettingsView: View {
         VStack(spacing: 20) {
             SettingsSectionHeader(
                 title: "Compartir",
-                subtitle: "Comparte la app en redes sociales",
+                                    subtitle: localizationManager.getLocalizedString("Comparte la app en redes sociales"),
                 icon: "square.and.arrow.up.fill"
             )
             

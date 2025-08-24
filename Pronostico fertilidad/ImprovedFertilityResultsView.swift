@@ -90,7 +90,7 @@ struct ImprovedFertilityResultsView: View {
                 }
                 
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cerrar") {
+                    Button(localizationManager.getLocalizedString("Cerrar")) {
                         dismiss()
                     }
                 }
