@@ -14,6 +14,7 @@ import SwiftUI
 
 struct FertilitySummaryView: View {
     @EnvironmentObject var themeManager: ThemeManager
+    @EnvironmentObject var localizationManager: LocalizationManager
     @Environment(\.themeColors) var colors
     
     let result: ImprovedFertilityEngine.ComprehensiveFertilityResult
@@ -50,7 +51,7 @@ struct FertilitySummaryView: View {
             HStack {
                 Image(systemName: "chart.pie.fill")
                     .foregroundColor(colors.primary)
-                Text("Probabilidad de Embarazo")
+                Text(localizationManager.getLocalizedString("Probabilidad de Embarazo"))
                     .font(.headline)
                     .fontWeight(.semibold)
                 Spacer()
@@ -60,7 +61,7 @@ struct FertilitySummaryView: View {
             HStack(spacing: 20) {
                 // Probabilidad Anual
                 VStack(spacing: 8) {
-                    Text("Anual")
+                    Text(localizationManager.getLocalizedString("Anual"))
                         .font(.caption)
                         .foregroundColor(.secondary)
                     
@@ -76,7 +77,7 @@ struct FertilitySummaryView: View {
                 
                 // Probabilidad Mensual
                 VStack(spacing: 8) {
-                    Text("Mensual")
+                    Text(localizationManager.getLocalizedString("Mensual"))
                         .font(.caption)
                         .foregroundColor(.secondary)
                     
@@ -103,7 +104,7 @@ struct FertilitySummaryView: View {
             HStack {
                 Image(systemName: "checkmark.shield.fill")
                     .foregroundColor(colors.primary)
-                Text("Indicadores de Calidad")
+                Text(localizationManager.getLocalizedString("Indicadores de Calidad"))
                     .font(.headline)
                     .fontWeight(.semibold)
                 Spacer()
@@ -112,7 +113,7 @@ struct FertilitySummaryView: View {
             HStack(spacing: 20) {
                 // Precisión
                 VStack(spacing: 4) {
-                    Text("Precisión")
+                    Text(localizationManager.getLocalizedString("Precisión"))
                         .font(.caption)
                         .foregroundColor(.secondary)
                     
@@ -125,7 +126,7 @@ struct FertilitySummaryView: View {
                 
                 // Referencias
                 VStack(spacing: 4) {
-                    Text("Referencias")
+                    Text(localizationManager.getLocalizedString("Referencias"))
                         .font(.caption)
                         .foregroundColor(.secondary)
                     
@@ -138,7 +139,7 @@ struct FertilitySummaryView: View {
                 
                 // Algoritmos
                 VStack(spacing: 4) {
-                    Text("Algoritmos")
+                    Text(localizationManager.getLocalizedString("Algoritmos"))
                         .font(.caption)
                         .foregroundColor(.secondary)
                     
@@ -162,7 +163,7 @@ struct FertilitySummaryView: View {
             HStack {
                 Image(systemName: "tag.fill")
                     .foregroundColor(colors.primary)
-                Text("Categorización")
+                Text(localizationManager.getLocalizedString("Categorización"))
                     .font(.headline)
                     .fontWeight(.semibold)
                 Spacer()
@@ -171,7 +172,7 @@ struct FertilitySummaryView: View {
             HStack(spacing: 20) {
                 // Categoría
                 VStack(spacing: 8) {
-                    Text("Categoría")
+                    Text(localizationManager.getLocalizedString("Categoría"))
                         .font(.caption)
                         .foregroundColor(.secondary)
                     
@@ -187,7 +188,7 @@ struct FertilitySummaryView: View {
                 
                 // Confianza
                 VStack(spacing: 8) {
-                    Text("Confianza")
+                    Text(localizationManager.getLocalizedString("Confianza"))
                         .font(.caption)
                         .foregroundColor(.secondary)
                     
@@ -214,27 +215,27 @@ struct FertilitySummaryView: View {
             HStack {
                 Image(systemName: "book.fill")
                     .foregroundColor(colors.primary)
-                Text("Evidencia Científica")
+                Text(localizationManager.getLocalizedString("Evidencia Científica"))
                     .font(.headline)
                     .fontWeight(.semibold)
                 Spacer()
             }
             
             VStack(alignment: .leading, spacing: 12) {
-                Text("Transiciones Suaves por Edad")
+                Text(localizationManager.getLocalizedString("Transiciones Suaves por Edad"))
                     .font(.subheadline)
                     .fontWeight(.semibold)
                     .foregroundColor(colors.primary)
                 
-                Text("Este análisis utiliza funciones matemáticas continuas validadas científicamente para modelar el declive de fertilidad relacionado con la edad, reemplazando las transiciones discretas tradicionales.")
+                Text(localizationManager.getLocalizedString("Este análisis utiliza funciones matemáticas continuas validadas científicamente para modelar el declive de fertilidad relacionado con la edad, reemplazando las transiciones discretas tradicionales."))
                     .font(.caption)
                     .foregroundColor(.secondary)
                 
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("• ESHRE Guidelines 2023: Female Fertility Assessment")
-                    Text("• ASRM Committee Opinion 2024: Age and Fertility")
-                    Text("• WHO Reproductive Health Guidelines 2024")
-                    Text("• Cochrane Database: Age-related Fertility Decline")
+                    Text(localizationManager.getLocalizedString("• ESHRE Guidelines 2023: Female Fertility Assessment"))
+                    Text(localizationManager.getLocalizedString("• ASRM Committee Opinion 2024: Age and Fertility"))
+                    Text(localizationManager.getLocalizedString("• WHO Reproductive Health Guidelines 2024"))
+                    Text(localizationManager.getLocalizedString("• Cochrane Database: Age-related Fertility Decline"))
                 }
                 .font(.caption2)
                 .foregroundColor(.secondary)
@@ -268,15 +269,15 @@ struct FertilitySummaryView: View {
         let probability = result.annualProbability
         switch probability {
         case 0.8...1.0:
-            return "Excelente"
+            return localizationManager.getLocalizedString("Excelente")
         case 0.6..<0.8:
-            return "Buena"
+            return localizationManager.getLocalizedString("Buena")
         case 0.4..<0.6:
-            return "Moderada"
+            return localizationManager.getLocalizedString("Moderada")
         case 0.2..<0.4:
-            return "Baja"
+            return localizationManager.getLocalizedString("Baja")
         default:
-            return "Muy Baja"
+            return localizationManager.getLocalizedString("Muy Baja")
         }
     }
     

@@ -17,6 +17,7 @@ struct SmoothTransitionsDemoView: View {
     @State private var selectedAge: Double = 30.0
     @State private var showingComparison = true
     @State private var selectedFunction: FunctionType = .hybrid
+    @EnvironmentObject var localizationManager: LocalizationManager
     
     enum FunctionType: String, CaseIterable {
         case hybrid = "Híbrida (Recomendada)"
@@ -63,13 +64,13 @@ struct SmoothTransitionsDemoView: View {
                 .padding()
             }
             .background(Color(.systemGroupedBackground))
-            .navigationTitle("Transiciones Suaves en Fertilidad")
+            .navigationTitle(localizationManager.getLocalizedString("Transiciones Suaves en Fertilidad"))
                           #if os(iOS)
               .navigationBarTitleDisplayMode(.large)
               #endif
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
-                    Button(showingComparison ? "Ocultar Comparación" : "Mostrar Comparación") {
+                    Button(showingComparison ? localizationManager.getLocalizedString("Ocultar Comparación") : localizationManager.getLocalizedString("Mostrar Comparación")) {
                         withAnimation(.easeInOut(duration: 0.5)) {
                             showingComparison.toggle()
                         }
@@ -89,11 +90,11 @@ struct SmoothTransitionsDemoView: View {
                     .foregroundColor(.green)
                 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Validado Científicamente")
+                    Text(localizationManager.getLocalizedString("Validado Científicamente"))
                         .font(.headline)
                         .fontWeight(.bold)
                     
-                    Text("ASRM, ESHRE, OMS - 45,000+ casos clínicos")
+                    Text(localizationManager.getLocalizedString("ASRM, ESHRE, OMS - 45,000+ casos clínicos"))
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
@@ -103,16 +104,16 @@ struct SmoothTransitionsDemoView: View {
             
             VStack(spacing: 8) {
                 HStack {
-                    Text("Precisión:")
+                    Text(localizationManager.getLocalizedString("Precisión:"))
                         .fontWeight(.semibold)
-                    Text("94.3% vs. 78.9% de funciones discretas")
+                    Text(localizationManager.getLocalizedString("94.3% vs. 78.9% de funciones discretas"))
                         .foregroundColor(.secondary)
                 }
                 
                 HStack {
-                    Text("Mejora:")
+                    Text(localizationManager.getLocalizedString("Mejora:"))
                         .fontWeight(.semibold)
-                    Text("+15.4% de precisión")
+                    Text(localizationManager.getLocalizedString("+15.4% de precisión"))
                         .foregroundColor(.green)
                         .fontWeight(.bold)
                 }
@@ -129,18 +130,18 @@ struct SmoothTransitionsDemoView: View {
     
     private var functionSelector: some View {
         VStack(spacing: 12) {
-            Text("Función Matemática")
+            Text(localizationManager.getLocalizedString("Función Matemática"))
                 .font(.headline)
                 .fontWeight(.semibold)
             
-            Picker("Función", selection: $selectedFunction) {
+            Picker(localizationManager.getLocalizedString("Función"), selection: $selectedFunction) {
                 ForEach(FunctionType.allCases, id: \.self) { function in
                     Text(function.rawValue).tag(function)
                 }
             }
             .pickerStyle(SegmentedPickerStyle())
             
-            Text("Función \(selectedFunction.rawValue.lowercased()) seleccionada")
+            Text(String(format: localizationManager.getLocalizedString("Función %@ seleccionada"), selectedFunction.rawValue.lowercased()))
                 .font(.caption)
                 .foregroundColor(.secondary)
         }
@@ -153,7 +154,7 @@ struct SmoothTransitionsDemoView: View {
     
     private var comparisonChart: some View {
         VStack(spacing: 16) {
-            Text("Comparación: Funciones Continuas vs. Discretas")
+            Text(localizationManager.getLocalizedString("Comparación: Funciones Continuas vs. Discretas"))
                 .font(.headline)
                 .fontWeight(.semibold)
             
@@ -161,8 +162,8 @@ struct SmoothTransitionsDemoView: View {
                 // Función continua seleccionada
                 ForEach(smoothFunctions.calculateProbabilityRange(startAge: 18, endAge: 50, step: 0.5), id: \.age) { point in
                     LineMark(
-                        x: .value("Edad", point.age),
-                        y: .value("Probabilidad", getSelectedFunctionProbability(age: point.age))
+                        x: .value(localizationManager.getLocalizedString("Edad"), point.age),
+                        y: .value(localizationManager.getLocalizedString("Probabilidad"), getSelectedFunctionProbability(age: point.age))
                     )
                     .foregroundStyle(selectedFunction.color)
                     .lineStyle(StrokeStyle(lineWidth: 3))
@@ -171,8 +172,8 @@ struct SmoothTransitionsDemoView: View {
                 // Función discreta (actual) para comparación
                 ForEach(discreteDataPoints, id: \.age) { point in
                     LineMark(
-                        x: .value("Edad", point.age),
-                        y: .value("Probabilidad", point.probability)
+                        x: .value(localizationManager.getLocalizedString("Edad"), point.age),
+                        y: .value(localizationManager.getLocalizedString("Probabilidad"), point.probability)
                     )
                     .foregroundStyle(.red)
                     .lineStyle(StrokeStyle(lineWidth: 2, dash: [5, 5]))
@@ -181,8 +182,8 @@ struct SmoothTransitionsDemoView: View {
                 // Punto seleccionado
                 if let selectedPoint = getSelectedPoint() {
                     PointMark(
-                        x: .value("Edad", selectedPoint.age),
-                        y: .value("Probabilidad", selectedPoint.probability)
+                        x: .value(localizationManager.getLocalizedString("Edad"), selectedPoint.age),
+                        y: .value(localizationManager.getLocalizedString("Probabilidad"), selectedPoint.probability)
                     )
                     .foregroundStyle(selectedFunction.color)
                     .symbolSize(100)
@@ -216,7 +217,7 @@ struct SmoothTransitionsDemoView: View {
                     Circle()
                         .fill(selectedFunction.color)
                         .frame(width: 12, height: 12)
-                    Text("Función Continua")
+                    Text(localizationManager.getLocalizedString("Función Continua"))
                         .font(.caption)
                 }
                 
@@ -224,7 +225,7 @@ struct SmoothTransitionsDemoView: View {
                     Circle()
                         .fill(.red)
                         .frame(width: 12, height: 12)
-                    Text("Función Discreta (Actual)")
+                    Text(localizationManager.getLocalizedString("Función Discreta (Actual)"))
                         .font(.caption)
                 }
             }
@@ -239,16 +240,16 @@ struct SmoothTransitionsDemoView: View {
     
     private var sensitivityAnalysis: some View {
         VStack(spacing: 16) {
-            Text("Análisis de Sensibilidad en Tiempo Real")
+            Text(localizationManager.getLocalizedString("Análisis de Sensibilidad en Tiempo Real"))
                 .font(.headline)
                 .fontWeight(.semibold)
             
             VStack(spacing: 12) {
                 HStack {
-                    Text("Edad:")
+                    Text(localizationManager.getLocalizedString("Edad:"))
                         .fontWeight(.semibold)
                     Spacer()
-                    Text("\(String(format: "%.1f", selectedAge)) años")
+                    Text("\(String(format: "%.1f", selectedAge)) \(localizationManager.getLocalizedString("años"))")
                         .foregroundColor(.secondary)
                 }
                 
@@ -259,7 +260,7 @@ struct SmoothTransitionsDemoView: View {
                 
                 VStack(spacing: 8) {
                     HStack {
-                        Text("Probabilidad actual:")
+                        Text(localizationManager.getLocalizedString("Probabilidad actual:"))
                         Spacer()
                         Text("\(String(format: "%.1f", sensitivity.currentProbability * 100))%")
                             .fontWeight(.bold)
@@ -267,7 +268,7 @@ struct SmoothTransitionsDemoView: View {
                     }
                     
                     HStack {
-                        Text("Cambio por año:")
+                        Text(localizationManager.getLocalizedString("Cambio por año:"))
                         Spacer()
                         Text("\(String(format: "%.1f", sensitivity.relativeChange))%")
                             .fontWeight(.bold)
@@ -275,9 +276,9 @@ struct SmoothTransitionsDemoView: View {
                     }
                     
                     HStack {
-                        Text("Tipo de transición:")
+                        Text(localizationManager.getLocalizedString("Tipo de transición:"))
                         Spacer()
-                        Text(sensitivity.isSmooth ? "✅ Suave" : "⚠️ Significativa")
+                        Text(sensitivity.isSmooth ? "✅ \(localizationManager.getLocalizedString("Suave"))" : "⚠️ \(localizationManager.getLocalizedString("Significativa"))")
                             .fontWeight(.bold)
                             .foregroundColor(sensitivity.isSmooth ? .green : .orange)
                     }
@@ -295,7 +296,7 @@ struct SmoothTransitionsDemoView: View {
     
     private var detailedComparison: some View {
         VStack(spacing: 16) {
-            Text("Comparación Detallada de Funciones")
+            Text(localizationManager.getLocalizedString("Comparación Detallada de Funciones"))
                 .font(.headline)
                 .fontWeight(.semibold)
             
@@ -303,14 +304,14 @@ struct SmoothTransitionsDemoView: View {
             
             VStack(spacing: 12) {
                 HStack {
-                    Text("Edad seleccionada:")
+                    Text(localizationManager.getLocalizedString("Edad seleccionada:"))
                     Spacer()
-                    Text("\(Int(selectedAge)) años")
+                    Text("\(Int(selectedAge)) \(localizationManager.getLocalizedString("años"))")
                         .fontWeight(.bold)
                 }
                 
                 HStack {
-                    Text("Función discreta (actual):")
+                    Text(localizationManager.getLocalizedString("Función discreta (actual):"))
                     Spacer()
                     Text("\(String(format: "%.1f", comparison.discreteProbability * 100))%")
                         .foregroundColor(.red)
@@ -318,7 +319,7 @@ struct SmoothTransitionsDemoView: View {
                 }
                 
                 HStack {
-                    Text("Función continua:")
+                    Text(localizationManager.getLocalizedString("Función continua:"))
                     Spacer()
                     Text("\(String(format: "%.1f", comparison.continuousProbability * 100))%")
                         .foregroundColor(selectedFunction.color)
@@ -328,7 +329,7 @@ struct SmoothTransitionsDemoView: View {
                 Divider()
                 
                 HStack {
-                    Text("Mejora en precisión:")
+                    Text(localizationManager.getLocalizedString("Mejora en precisión:"))
                     Spacer()
                     Text("+\(String(format: "%.1f", comparison.improvement))%")
                         .foregroundColor(.green)
@@ -336,9 +337,9 @@ struct SmoothTransitionsDemoView: View {
                 }
                 
                 HStack {
-                    Text("Tipo de transición:")
+                    Text(localizationManager.getLocalizedString("Tipo de transición:"))
                     Spacer()
-                    Text(comparison.isSmooth ? "✅ Suave" : "❌ Abrupta")
+                    Text(comparison.isSmooth ? "✅ \(localizationManager.getLocalizedString("Suave"))" : "❌ \(localizationManager.getLocalizedString("Abrupta"))")
                         .foregroundColor(comparison.isSmooth ? .green : .red)
                         .fontWeight(.bold)
                 }
@@ -355,7 +356,7 @@ struct SmoothTransitionsDemoView: View {
     
     private var scientificValidation: some View {
         VStack(spacing: 16) {
-            Text("Validación Científica")
+            Text(localizationManager.getLocalizedString("Validación Científica"))
                 .font(.headline)
                 .fontWeight(.semibold)
             
@@ -363,30 +364,30 @@ struct SmoothTransitionsDemoView: View {
             
             VStack(spacing: 12) {
                 HStack {
-                    Text("Total de casos:")
+                    Text(localizationManager.getLocalizedString("Total de casos:"))
                     Spacer()
                     Text("\(validation.totalSampleSize)")
                         .fontWeight(.bold)
                 }
                 
                 HStack {
-                    Text("Organizaciones:")
+                    Text(localizationManager.getLocalizedString("Organizaciones:"))
                     Spacer()
                     Text("\(validation.organizations.count)")
                         .fontWeight(.bold)
                 }
                 
                 HStack {
-                    Text("Año de publicación:")
+                    Text(localizationManager.getLocalizedString("Año de publicación:"))
                     Spacer()
                     Text("\(validation.publicationYear)")
                         .fontWeight(.bold)
                 }
                 
                 HStack {
-                    Text("Aprobación clínica:")
+                    Text(localizationManager.getLocalizedString("Aprobación clínica:"))
                     Spacer()
-                    Text(validation.isClinicallyApproved ? "✅ Aprobado" : "❌ Pendiente")
+                    Text(validation.isClinicallyApproved ? "✅ \(localizationManager.getLocalizedString("Aprobado"))" : "❌ \(localizationManager.getLocalizedString("Pendiente"))")
                         .foregroundColor(validation.isClinicallyApproved ? .green : .red)
                         .fontWeight(.bold)
                 }

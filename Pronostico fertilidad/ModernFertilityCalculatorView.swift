@@ -15,6 +15,7 @@ struct ModernFertilityCalculatorView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var themeManager: ThemeManager
+    @EnvironmentObject var localizationManager: LocalizationManager
     @Environment(\.themeColors) var colors
     
     @State private var profile: FertilityProfile
@@ -156,12 +157,12 @@ struct ModernFertilityCalculatorView: View {
                 
                 // Título
                 VStack(spacing: 4) {
-                    Text("Evaluación Médica")
+                    Text(localizationManager.getLocalizedString("Evaluación Médica"))
                         .font(.title2)
                         .fontWeight(.bold)
                         .foregroundColor(colors.text)
                     
-                    Text("FertilyzeAI Suite")
+                    Text(localizationManager.getLocalizedString("FertilyzeAI Suite"))
                         .font(.caption)
                         .foregroundColor(.white.opacity(0.8))
                 }
@@ -190,7 +191,7 @@ struct ModernFertilityCalculatorView: View {
             
             // Progreso
             VStack(spacing: 8) {
-                Text("Completado: \(Int(profile.completionPercentage()))%")
+                Text("\(localizationManager.getLocalizedString("Completado:")) \(Int(profile.completionPercentage()))%")
                     .font(.subheadline)
                     .fontWeight(.medium)
                     .foregroundColor(.white.opacity(0.9))
@@ -377,7 +378,7 @@ struct ModernFertilityCalculatorView: View {
                         .background(Circle().fill(.blue.opacity(0.15)))
                     
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("IMC Calculado")
+                        Text(localizationManager.getLocalizedString("IMC Calculado"))
                             .font(.system(size: 14, weight: .semibold))
                             .foregroundColor(colors.text)
                         Text(imcCategory)
@@ -483,7 +484,7 @@ struct ModernFertilityCalculatorView: View {
                     HStack {
                         Image(systemName: "circle.hexagongrid.fill")
                             .foregroundColor(.pink)
-                        Text("Evaluación Detallada del SOP")
+                        Text(localizationManager.getLocalizedString("Evaluación Detallada del SOP"))
                             .font(.headline)
                             .foregroundColor(colors.text)
                         Spacer()
@@ -491,25 +492,25 @@ struct ModernFertilityCalculatorView: View {
                     
                     // Manifestaciones androgénicas
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Manifestaciones Androgénicas")
+                        Text(localizationManager.getLocalizedString("Manifestaciones Androgénicas"))
                             .font(.subheadline)
                             .fontWeight(.semibold)
                             .foregroundColor(.white.opacity(0.9))
                         
                         Picker("Hirsutismo", selection: $profile.hirsutismSeverity) {
-                            Text("No").tag(HirsutismSeverity.none)
-                            Text("Leve (vello en mentón)").tag(HirsutismSeverity.mild)
-                            Text("Moderado (vello en mentón + mejillas)").tag(HirsutismSeverity.moderate)
-                            Text("Severo (vello facial extenso)").tag(HirsutismSeverity.severe)
+                            Text(localizationManager.getLocalizedString("No")).tag(HirsutismSeverity.none)
+                            Text(localizationManager.getLocalizedString("Leve (vello en mentón)")).tag(HirsutismSeverity.mild)
+                            Text(localizationManager.getLocalizedString("Moderado (vello en mentón + mejillas)")).tag(HirsutismSeverity.moderate)
+                            Text(localizationManager.getLocalizedString("Severo (vello facial extenso)")).tag(HirsutismSeverity.severe)
                         }
                         .pickerStyle(MenuPickerStyle())
                         .foregroundColor(.white)
                         
                         Picker("Acné", selection: $profile.acneSeverity) {
-                            Text("No").tag(AcneSeverity.none)
-                            Text("Leve (pocos granos)").tag(AcneSeverity.mild)
-                            Text("Moderado (acné persistente)").tag(AcneSeverity.moderate)
-                            Text("Severo (acné quístico)").tag(AcneSeverity.severe)
+                            Text(localizationManager.getLocalizedString("No")).tag(AcneSeverity.none)
+                            Text(localizationManager.getLocalizedString("Leve (pocos granos)")).tag(AcneSeverity.mild)
+                            Text(localizationManager.getLocalizedString("Moderado (acné persistente)")).tag(AcneSeverity.moderate)
+                            Text(localizationManager.getLocalizedString("Severo (acné quístico)")).tag(AcneSeverity.severe)
                         }
                         .pickerStyle(MenuPickerStyle())
                         .foregroundColor(.white)
@@ -517,15 +518,15 @@ struct ModernFertilityCalculatorView: View {
                     
                     // Evaluación ovárica
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Evaluación Ovárica")
+                        Text(localizationManager.getLocalizedString("Evaluación Ovárica"))
                             .font(.subheadline)
                             .fontWeight(.semibold)
                             .foregroundColor(.white.opacity(0.9))
                         
                         Picker("Conteo folicular", selection: $profile.ovarianMorphology) {
-                            Text("No me la han hecho").tag(OvarianMorphology.notEvaluated)
-                            Text("Normal").tag(OvarianMorphology.normal)
-                            Text("Ovarios poliquísticos (>12 folículos)").tag(OvarianMorphology.polycystic)
+                            Text(localizationManager.getLocalizedString("No me la han hecho")).tag(OvarianMorphology.notEvaluated)
+                            Text(localizationManager.getLocalizedString("Normal")).tag(OvarianMorphology.normal)
+                            Text(localizationManager.getLocalizedString("Ovarios poliquísticos (>12 folículos)")).tag(OvarianMorphology.polycystic)
                         }
                         .pickerStyle(MenuPickerStyle())
                         .foregroundColor(.white)
@@ -547,18 +548,18 @@ struct ModernFertilityCalculatorView: View {
                 HStack {
                     Image(systemName: "medical.thermometer")
                         .foregroundColor(.pink)
-                    Text("Endometriosis")
+                    Text(localizationManager.getLocalizedString("Endometriosis"))
                         .font(.headline)
                         .foregroundColor(colors.text)
                     Spacer()
                 }
                 
                 Picker("Grado de Endometriosis", selection: $profile.endometriosisStage) {
-                    Text("Sin endometriosis").tag(0)
-                    Text("Grado I (mínima)").tag(1)
-                    Text("Grado II (leve)").tag(2)
-                    Text("Grado III (moderada)").tag(3)
-                    Text("Grado IV (severa)").tag(4)
+                    Text(localizationManager.getLocalizedString("Sin endometriosis")).tag(0)
+                    Text(localizationManager.getLocalizedString("Grado I (mínima)")).tag(1)
+                    Text(localizationManager.getLocalizedString("Grado II (leve)")).tag(2)
+                    Text(localizationManager.getLocalizedString("Grado III (moderada)")).tag(3)
+                    Text(localizationManager.getLocalizedString("Grado IV (severa)")).tag(4)
                 }
                 .pickerStyle(MenuPickerStyle())
                 .foregroundColor(.white)
@@ -574,17 +575,17 @@ struct ModernFertilityCalculatorView: View {
                 HStack {
                     Image(systemName: "circle.fill")
                         .foregroundColor(.pink)
-                    Text("Miomatosis Uterina")
+                    Text(localizationManager.getLocalizedString("Miomatosis Uterina"))
                         .font(.headline)
                         .foregroundColor(colors.text)
                     Spacer()
                 }
                 
                 Picker("Tipo de Mioma", selection: $profile.myomaType) {
-                    Text("Sin miomas").tag(MyomaType.none)
-                    Text("Submucoso").tag(MyomaType.submucosal)
-                    Text("Intramural").tag(MyomaType.intramural)
-                    Text("Subseroso").tag(MyomaType.subserosal)
+                    Text(localizationManager.getLocalizedString("Sin miomas")).tag(MyomaType.none)
+                    Text(localizationManager.getLocalizedString("Submucoso")).tag(MyomaType.submucosal)
+                    Text(localizationManager.getLocalizedString("Intramural")).tag(MyomaType.intramural)
+                    Text(localizationManager.getLocalizedString("Subseroso")).tag(MyomaType.subserosal)
                 }
                 .pickerStyle(MenuPickerStyle())
                 .foregroundColor(.white)
@@ -594,7 +595,7 @@ struct ModernFertilityCalculatorView: View {
                     HStack {
                         Image(systemName: "ruler")
                             .foregroundColor(.pink)
-                        Text("Tamaño del mioma más grande")
+                        Text(localizationManager.getLocalizedString("Tamaño del mioma más grande"))
                             .font(.subheadline)
                             .foregroundColor(.white.opacity(0.8))
                         Spacer()
@@ -613,7 +614,7 @@ struct ModernFertilityCalculatorView: View {
                         ))
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         
-                        Text("cm")
+                        Text(localizationManager.getLocalizedString("cm"))
                             .foregroundColor(.white.opacity(0.8))
                             .font(.caption)
                     }
@@ -630,16 +631,16 @@ struct ModernFertilityCalculatorView: View {
                 HStack {
                     Image(systemName: "waveform.path.ecg")
                         .foregroundColor(.pink)
-                    Text("Adenomiosis")
+                    Text(localizationManager.getLocalizedString("Adenomiosis"))
                         .font(.headline)
                         .foregroundColor(colors.text)
                     Spacer()
                 }
                 
                 Picker("Tipo de Adenomiosis", selection: $profile.adenomyosisType) {
-                    Text("Sin adenomiosis").tag(AdenomyosisType.none)
-                    Text("Focal").tag(AdenomyosisType.focal)
-                    Text("Difusa").tag(AdenomyosisType.diffuse)
+                    Text(localizationManager.getLocalizedString("Sin adenomiosis")).tag(AdenomyosisType.none)
+                    Text(localizationManager.getLocalizedString("Focal")).tag(AdenomyosisType.focal)
+                    Text(localizationManager.getLocalizedString("Difusa")).tag(AdenomyosisType.diffuse)
                 }
                 .pickerStyle(MenuPickerStyle())
                 .foregroundColor(.white)
@@ -655,16 +656,16 @@ struct ModernFertilityCalculatorView: View {
                 HStack {
                     Image(systemName: "drop.triangle")
                         .foregroundColor(.pink)
-                    Text("Pólipos Endometriales")
+                    Text(localizationManager.getLocalizedString("Pólipos Endometriales"))
                         .font(.headline)
                         .foregroundColor(colors.text)
                     Spacer()
                 }
                 
                 Picker("Tipo de Pólipo", selection: $profile.polypType) {
-                    Text("Sin pólipos").tag(PolypType.none)
-                    Text("Único").tag(PolypType.single)
-                    Text("Múltiples").tag(PolypType.multiple)
+                    Text(localizationManager.getLocalizedString("Sin pólipos")).tag(PolypType.none)
+                    Text(localizationManager.getLocalizedString("Único")).tag(PolypType.single)
+                    Text(localizationManager.getLocalizedString("Múltiples")).tag(PolypType.multiple)
                 }
                 .pickerStyle(MenuPickerStyle())
                 .foregroundColor(.white)
@@ -680,16 +681,16 @@ struct ModernFertilityCalculatorView: View {
                 HStack {
                     Image(systemName: "xmark.circle")
                         .foregroundColor(.pink)
-                    Text("Histerosalpingografía (HSG)")
+                    Text(localizationManager.getLocalizedString("Histerosalpingografía (HSG)"))
                         .font(.headline)
                         .foregroundColor(colors.text)
                     Spacer()
                 }
                 
                 Picker("Resultado HSG", selection: $profile.hsgResult) {
-                    Text("Normal").tag(HsgResult.normal)
-                    Text("Obstrucción unilateral").tag(HsgResult.unilateral)
-                    Text("Obstrucción bilateral").tag(HsgResult.bilateral)
+                    Text(localizationManager.getLocalizedString("Normal")).tag(HsgResult.normal)
+                    Text(localizationManager.getLocalizedString("Obstrucción unilateral")).tag(HsgResult.unilateral)
+                    Text(localizationManager.getLocalizedString("Obstrucción bilateral")).tag(HsgResult.bilateral)
                 }
                 .pickerStyle(MenuPickerStyle())
                 .foregroundColor(.white)
@@ -738,17 +739,17 @@ struct ModernFertilityCalculatorView: View {
                     HStack {
                         Image(systemName: "stethoscope")
                             .foregroundColor(.pink)
-                        Text("Método de Diagnóstico OTB")
+                        Text(localizationManager.getLocalizedString("Método de Diagnóstico OTB"))
                             .font(.headline)
                             .foregroundColor(colors.text)
                         Spacer()
                     }
                     
                     Picker("Método OTB", selection: $profile.otbMethod) {
-                        Text("No especificado").tag(OtbMethod.none)
-                        Text("Clips").tag(OtbMethod.clips)
-                        Text("Coagulación").tag(OtbMethod.coagulation)
-                        Text("Salpingectomía").tag(OtbMethod.salpingectomy)
+                        Text(localizationManager.getLocalizedString("No especificado")).tag(OtbMethod.none)
+                        Text(localizationManager.getLocalizedString("Clips")).tag(OtbMethod.clips)
+                        Text(localizationManager.getLocalizedString("Coagulación")).tag(OtbMethod.coagulation)
+                        Text(localizationManager.getLocalizedString("Salpingectomía")).tag(OtbMethod.salpingectomy)
                     }
                     .pickerStyle(MenuPickerStyle())
                     .foregroundColor(.white)
@@ -769,8 +770,8 @@ struct ModernFertilityCalculatorView: View {
         VStack(spacing: 12) {
             // AMH - Optimizado
             OptimizedNumericField(
-                title: "Hormona Antimulleriana (AMH)",
-                subtitle: "Reserva ovárica",
+                title: localizationManager.getLocalizedString("Hormona Antimulleriana (AMH)"),
+                subtitle: localizationManager.getLocalizedString("Reserva ovárica"),
                 icon: "drop.circle.fill",
                 value: Binding(
                     get: { 
@@ -792,8 +793,8 @@ struct ModernFertilityCalculatorView: View {
             
             // TSH
             FormField(
-                title: "Hormona Estimulante del Tiroides (TSH)",
-                subtitle: "mUI/L - Normal: 0.4-4.0",
+                title: localizationManager.getLocalizedString("Hormona Estimulante del Tiroides (TSH)"),
+                subtitle: localizationManager.getLocalizedString("mUI/L - Normal: 0.4-4.0"),
                 icon: "waveform.path.ecg",
                 value: Binding(
                     get: { 
@@ -811,8 +812,8 @@ struct ModernFertilityCalculatorView: View {
             
             // TPO Ab
             ToggleField(
-                title: "Anticuerpos Anti-TPO",
-                subtitle: "Positivos para autoinmunidad tiroidea",
+                title: localizationManager.getLocalizedString("Anticuerpos Anti-TPO"),
+                subtitle: localizationManager.getLocalizedString("Positivos para autoinmunidad tiroidea"),
                 icon: "shield.lefthalf.filled",
                 isOn: $profile.tpoAbPositive,
                 color: .purple
@@ -820,8 +821,8 @@ struct ModernFertilityCalculatorView: View {
             
             // Prolactina
             FormField(
-                title: "Prolactina",
-                subtitle: "ng/mL - Normal: <25",
+                title: localizationManager.getLocalizedString("Prolactina"),
+                subtitle: localizationManager.getLocalizedString("ng/mL - Normal: <25"),
                 icon: "drop.triangle.fill",
                 value: Binding(
                     get: { 
@@ -839,8 +840,8 @@ struct ModernFertilityCalculatorView: View {
             
             // Insulina (opcional)
             FormField(
-                title: "Insulina Basal",
-                subtitle: "μU/mL - Opcional para HOMA-IR",
+                title: localizationManager.getLocalizedString("Insulina Basal"),
+                subtitle: localizationManager.getLocalizedString("μU/mL - Opcional para HOMA-IR"),
                 icon: "drop.circle",
                 value: Binding(
                     get: { 
@@ -861,8 +862,8 @@ struct ModernFertilityCalculatorView: View {
             
             // Glucosa (opcional)
             FormField(
-                title: "Glucosa Basal",
-                subtitle: "mg/dL - Opcional para HOMA-IR",
+                title: localizationManager.getLocalizedString("Glucosa Basal"),
+                subtitle: localizationManager.getLocalizedString("mg/dL - Opcional para HOMA-IR"),
                 icon: "drop.circle",
                 value: Binding(
                     get: { 
@@ -892,10 +893,10 @@ struct ModernFertilityCalculatorView: View {
                         .background(Circle().fill(.orange.opacity(0.15)))
                     
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("HOMA-IR Calculado")
+                        Text(localizationManager.getLocalizedString("HOMA-IR Calculado"))
                             .font(.system(size: 14, weight: .semibold))
                             .foregroundColor(colors.text)
-                        Text("Normal: <2.5")
+                        Text(localizationManager.getLocalizedString("Normal: <2.5"))
                             .font(.system(size: 11))
                             .foregroundColor(.white.opacity(0.6))
                     }
@@ -930,7 +931,7 @@ struct ModernFertilityCalculatorView: View {
     // MARK: - 👨 FORMULARIO FACTOR MASCULINO
     private var maleFactorForm: some View {
         VStack(spacing: 12) {
-            Text("Espermatograma (OMS 2021)")
+                            Text(localizationManager.getLocalizedString("Espermatograma (OMS 2021)"))
                 .font(.title3)
                 .fontWeight(.semibold)
                 .foregroundColor(.white)

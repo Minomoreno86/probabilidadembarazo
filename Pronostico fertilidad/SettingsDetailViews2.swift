@@ -15,6 +15,7 @@ import AppKit
 // MARK: - ℹ️ VISTA DE INFORMACIÓN
 struct InfoSettingsView: View {
     @EnvironmentObject var themeManager: ThemeManager
+    @EnvironmentObject var localizationManager: LocalizationManager
     @Environment(\.themeColors) var colors
     
     var body: some View {
@@ -65,11 +66,11 @@ struct InfoSettingsView: View {
             .padding(.top, 20)
             
             VStack(spacing: 8) {
-                Text("Información")
+                Text(localizationManager.getLocalizedString("Información"))
                     .font(.title2.bold())
                     .foregroundColor(colors.text)
                 
-                Text("Versión, soporte y redes sociales")
+                Text(localizationManager.getLocalizedString("Versión, soporte y redes sociales"))
                     .font(.subheadline)
                     .foregroundColor(colors.textSecondary)
                     .multilineTextAlignment(.center)
@@ -85,11 +86,11 @@ struct InfoSettingsView: View {
                 .frame(width: 32)
             
             VStack(alignment: .leading, spacing: 2) {
-                Text("Versión de la Aplicación")
+                Text(localizationManager.getLocalizedString("Versión de la Aplicación"))
                     .font(.system(size: 16, weight: .semibold))
                     .foregroundColor(colors.text)
                 
-                Text("2.1.0 (Build 2024.12)")
+                Text(localizationManager.getLocalizedString("2.1.0 (Build 2024.12)"))
                     .font(.system(size: 13))
                     .foregroundColor(colors.textSecondary)
             }
@@ -107,22 +108,22 @@ struct InfoSettingsView: View {
     private var infoOptionsSection: some View {
         VStack(spacing: 16) {
             SettingsActionRow(
-                title: "Soporte Técnico",
-                subtitle: "Contacta con nuestro equipo de ayuda",
+                title: localizationManager.getLocalizedString("Soporte Técnico"),
+                subtitle: localizationManager.getLocalizedString("Contacta con nuestro equipo de ayuda"),
                 icon: "headphones",
                 action: { contactSupport() }
             )
             
             SettingsActionRow(
-                title: "Síguenos en Instagram",
-                subtitle: "@drjorgevazquez - Contenido médico profesional",
+                title: localizationManager.getLocalizedString("Síguenos en Instagram"),
+                subtitle: localizationManager.getLocalizedString("@drjorgevazquez - Contenido médico profesional"),
                 icon: "camera.fill",
                 action: { openInstagram() }
             )
             
             SettingsActionRow(
-                title: "Síguenos en TikTok",
-                subtitle: "@fertilidadrjorgevasquez - Videos educativos",
+                title: localizationManager.getLocalizedString("Síguenos en TikTok"),
+                subtitle: localizationManager.getLocalizedString("@fertilidadrjorgevasquez - Videos educativos"),
                 icon: "video.fill",
                 action: { openTikTok() }
             )
@@ -176,6 +177,7 @@ struct InfoSettingsView: View {
 // MARK: - ♿ VISTA DE ACCESIBILIDAD
 struct AccessibilitySettingsView: View {
     @EnvironmentObject var themeManager: ThemeManager
+    @EnvironmentObject var localizationManager: LocalizationManager
     @Environment(\.themeColors) var colors
     
     var body: some View {
@@ -229,11 +231,11 @@ struct AccessibilitySettingsView: View {
             .padding(.top, 20)
             
             VStack(spacing: 8) {
-                Text("Accesibilidad")
+                Text(localizationManager.getLocalizedString("Accesibilidad"))
                     .font(.title2.bold())
                     .foregroundColor(colors.text)
                 
-                Text("Compatibilidad con iOS y funciones de asistencia")
+                Text(localizationManager.getLocalizedString("Compatibilidad con iOS y funciones de asistencia"))
                     .font(.subheadline)
                     .foregroundColor(colors.textSecondary)
                     .multilineTextAlignment(.center)
@@ -249,11 +251,11 @@ struct AccessibilitySettingsView: View {
                     .foregroundColor(.green)
                 
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("VoiceOver Compatible")
+                    Text(localizationManager.getLocalizedString("VoiceOver Compatible"))
                         .font(.system(size: 15, weight: .semibold))
                         .foregroundColor(colors.text)
                     
-                    Text("Navegación por voz habilitada")
+                    Text(localizationManager.getLocalizedString("Navegación por voz habilitada"))
                         .font(.system(size: 12))
                         .foregroundColor(colors.textSecondary)
                 }
@@ -271,11 +273,11 @@ struct AccessibilitySettingsView: View {
                     .foregroundColor(.green)
                 
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Dynamic Type")
+                    Text(localizationManager.getLocalizedString("Dynamic Type"))
                         .font(.system(size: 15, weight: .semibold))
                         .foregroundColor(colors.text)
                     
-                    Text("Tamaños de texto adaptativos")
+                    Text(localizationManager.getLocalizedString("Tamaños de texto adaptativos"))
                         .font(.system(size: 12))
                         .foregroundColor(colors.textSecondary)
                 }
@@ -306,7 +308,7 @@ struct AccessibilitySettingsView: View {
             Image(systemName: "info.circle")
                 .foregroundColor(.indigo)
             
-            Text("Esta app es totalmente compatible con todas las funciones de accesibilidad de iOS")
+            Text(localizationManager.getLocalizedString("Esta app es totalmente compatible con todas las funciones de accesibilidad de iOS"))
                 .font(.caption)
                 .foregroundColor(colors.textSecondary)
         }
@@ -340,6 +342,7 @@ struct AccessibilitySettingsView: View {
 // MARK: - 🚪 VISTA DE LOGOUT
 struct LogoutSettingsView: View {
     @EnvironmentObject var themeManager: ThemeManager
+    @EnvironmentObject var localizationManager: LocalizationManager
     @Environment(\.themeColors) var colors
     let userFullName: String
     @Binding var showingLogoutAlert: Bool
@@ -365,14 +368,14 @@ struct LogoutSettingsView: View {
             .padding(.horizontal, 20)
         }
         .background(colors.backgroundGradient)
-        .navigationTitle("Cerrar Sesión")
-        .alert("Cerrar Sesión", isPresented: $showingLogoutAlert) {
-            Button("Cancelar", role: .cancel) { }
-            Button("Cerrar Sesión", role: .destructive) {
+        .navigationTitle(localizationManager.getLocalizedString("Cerrar Sesión"))
+        .alert(localizationManager.getLocalizedString("Cerrar Sesión"), isPresented: $showingLogoutAlert) {
+            Button(localizationManager.getLocalizedString("Cancelar"), role: .cancel) { }
+            Button(localizationManager.getLocalizedString("Cerrar Sesión"), role: .destructive) {
                 performLogout()
             }
         } message: {
-            Text("¿Estás seguro de que deseas cerrar sesión? Se eliminarán todos los datos locales.")
+            Text(localizationManager.getLocalizedString("¿Estás seguro de que deseas cerrar sesión? Se eliminarán todos los datos locales."))
         }
     }
     
@@ -404,11 +407,11 @@ struct LogoutSettingsView: View {
             .padding(.top, 20)
             
             VStack(spacing: 8) {
-                Text("Cerrar Sesión")
+                Text(localizationManager.getLocalizedString("Cerrar Sesión"))
                     .font(.title2.bold())
                     .foregroundColor(colors.text)
                 
-                Text("Salir de la aplicación de forma segura")
+                Text(localizationManager.getLocalizedString("Salir de la aplicación de forma segura"))
                     .font(.subheadline)
                     .foregroundColor(colors.textSecondary)
                     .multilineTextAlignment(.center)
@@ -431,7 +434,7 @@ struct LogoutSettingsView: View {
                         )
                     
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("Sesión Activa")
+                        Text(localizationManager.getLocalizedString("Sesión Activa"))
                             .font(.system(size: 16, weight: .semibold))
                             .foregroundColor(colors.text)
                         
@@ -457,7 +460,7 @@ struct LogoutSettingsView: View {
             Image(systemName: "exclamationmark.triangle.fill")
                 .foregroundColor(.orange)
             
-            Text("Al cerrar sesión se eliminarán todos los datos locales no sincronizados")
+            Text(localizationManager.getLocalizedString("Al cerrar sesión se eliminarán todos los datos locales no sincronizados"))
                 .font(.caption)
                 .foregroundColor(colors.textSecondary)
         }
@@ -480,7 +483,7 @@ struct LogoutSettingsView: View {
                 Image(systemName: "rectangle.portrait.and.arrow.right.fill")
                     .font(.system(size: 16, weight: .medium))
                 
-                Text("Cerrar Sesión")
+                Text(localizationManager.getLocalizedString("Cerrar Sesión"))
                     .font(.system(size: 16, weight: .semibold))
             }
             .foregroundColor(.white)

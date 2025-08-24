@@ -1,5 +1,5 @@
 /* 
-  Localizable.strings (Spanish Keys - English Values)
+  Localizable.strings (Spanish Keys - Spanish Values)
   Pronostico fertilidad
   
   Created by Jorge Vasquez on 2024-12-19.
@@ -10,164 +10,634 @@
 "Medical Suite" = "Medical Suite";
 
 // MARK: - Login & Authentication
-"Bienvenido" = "Welcome";
-"Inicia sesión de forma segura con Passkeys o Apple Sign In" = "Sign in securely with Passkeys or Apple Sign In";
-"Continuar sin cuenta" = "Continue without account";
-"Configura tu identidad biométrica segura" = "Configure your secure biometric identity";
-"Verificando autenticación..." = "Verifying authentication...";
-"Error de Autenticación" = "Authentication Error";
+"Bienvenido" = "Bienvenido";
+"Inicia sesión de forma segura con Passkeys o Apple Sign In" = "Inicia sesión de forma segura con Passkeys o Apple Sign In";
+"Continuar sin cuenta" = "Continuar sin cuenta";
+"Configura tu identidad biométrica segura" = "Configura tu identidad biométrica segura";
+"Verificando autenticación..." = "Verificando autenticación...";
+"Error de Autenticación" = "Error de Autenticación";
 
 // MARK: - Main Content
-"Pronóstico de" = "Fertility";
-"FERTILIDAD" = "PROGNOSIS";
-"Inteligencia Artificial Médica Avanzada" = "Advanced Medical Artificial Intelligence";
-"Evidencia Científica" = "Scientific Evidence";
-"IA Avanzada" = "Advanced AI";
-"Validación Médica" = "Medical Validation";
-"Métricas del Sistema" = "System Metrics";
-"Tiempo real" = "Real time";
-"Evaluaciones" = "Assessments";
-"Completadas" = "Completed";
-"Precisión" = "Accuracy";
-"Validación Clínica" = "Clinical Validation";
-"Referencias" = "References";
-"Artículos Científicos" = "Scientific Articles";
-"Algoritmos" = "Algorithms";
-"Benchmarks Clínicos" = "Clinical Benchmarks";
+"Pronóstico de" = "Pronóstico de";
+"FERTILIDAD" = "FERTILIDAD";
+"Inteligencia Artificial Médica Avanzada" = "Inteligencia Artificial Médica Avanzada";
+"Evidencia Científica" = "Evidencia Científica";
+"IA Avanzada" = "IA Avanzada";
+"Validación Médica" = "Validación Médica";
+"Métricas del Sistema" = "Métricas del Sistema";
+"Tiempo real" = "Tiempo real";
+"Evaluaciones" = "Evaluaciones";
+"Completadas" = "Completadas";
+"Precisión" = "Precisión";
+"Validación Clínica" = "Validación Clínica";
+"Referencias" = "Referencias";
+"Artículos Científicos" = "Artículos Científicos";
+"Algoritmos" = "Algoritmos";
+"Benchmarks Clínicos" = "Benchmarks Clínicos";
 
 // MARK: - Features
-"Evaluación de fertilidad con inteligencia artificial médica de última generación" = "Fertility assessment with next-generation medical artificial intelligence";
-"15 Interacciones No Lineales" = "15 Non-Linear Interactions";
-"21 Benchmarks Clínicos" = "21 Clinical Benchmarks";
-"Evidencia Científica ESHRE/ASRM" = "ESHRE/ASRM Scientific Evidence";
-"Iniciar Evaluación Avanzada" = "Start Advanced Assessment";
+"Evaluación de fertilidad con inteligencia artificial médica de última generación" = "Evaluación de fertilidad con inteligencia artificial médica de última generación";
+"15 Interacciones No Lineales" = "15 Interacciones No Lineales";
+"21 Benchmarks Clínicos" = "21 Benchmarks Clínicos";
+"Evidencia Científica ESHRE/ASRM" = "Evidencia Científica ESHRE/ASRM";
+"Iniciar Evaluación Avanzada" = "Iniciar Evaluación Avanzada";
 
 // MARK: - Profiles
-"Mis Evaluaciones" = "My Assessments";
-"Nueva" = "New";
-"Evaluación" = "Assessment";
-"Suelta para eliminar" = "Drop to delete";
-"Creada:" = "Created:";
-"años" = "years";
-"IMC" = "BMI";
-"completo" = "complete";
-"progreso" = "progress";
+"Mis Evaluaciones" = "Mis Evaluaciones";
+"Nueva" = "Nueva";
+"Evaluación" = "Evaluación";
+"Suelta para eliminar" = "Suelta para eliminar";
+"Creada:" = "Creada:";
+"años" = "años";
+"IMC" = "IMC";
+"completo" = "completo";
+"progreso" = "progreso";
 
 // MARK: - Medical Information
-"Validado Científicamente" = "Scientifically Validated";
-"Basado en guías ESHRE, ASRM, OMS y más de 847 referencias científicas" = "Based on ESHRE, ASRM, WHO guidelines and more than 847 scientific references";
+"Validado Científicamente" = "Validado Científicamente";
+"Basado en guías ESHRE, ASRM, OMS y más de 847 referencias científicas" = "Basado en guías ESHRE, ASRM, OMS y más de 847 referencias científicas";
 
 // MARK: - Settings
-"Configuración" = "Settings";
-"Pronóstico Fertilidad" = "Fertility Prognosis";
-"Versión 2.1.0" = "Version 2.1.0";
-"Versión 2.1.0 (Build 2024.12)" = "Version 2.1.0 (Build 2024.12)";
-"Título de ejemplo" = "Example title";
-"Versión de la Aplicación" = "App Version";
-"Navegación por voz habilitada" = "Voice navigation enabled";
-"Tamaños de texto adaptativos" = "Adaptive text sizes";
-"Sesión Activa" = "Active Session";
-"Cerrar Sesión" = "Sign Out";
-"Salir de la aplicación de forma segura" = "Exit the app securely";
-"¿Estás seguro de que deseas cerrar sesión? Se eliminarán todos los datos locales." = "Are you sure you want to sign out? All local data will be deleted.";
-"Al cerrar sesión se eliminarán todos los datos locales no sincronizados" = "When signing out, all unsynchronized local data will be deleted";
+"Configuración" = "Configuración";
+"Pronóstico Fertilidad" = "Pronóstico Fertilidad";
+"Versión 2.1.0" = "Versión 2.1.0";
+"Versión 2.1.0 (Build 2024.12)" = "Versión 2.1.0 (Build 2024.12)";
+"Título de ejemplo" = "Título de ejemplo";
+"Versión de la Aplicación" = "Versión de la Aplicación";
+"Navegación por voz habilitada" = "Navegación por voz habilitada";
+"Tamaños de texto adaptativos" = "Tamaños de texto adaptativos";
+"Sesión Activa" = "Sesión Activa";
+"Cerrar Sesión" = "Cerrar Sesión";
+"Salir de la aplicación de forma segura" = "Salir de la aplicación de forma segura";
+"¿Estás seguro de que deseas cerrar sesión? Se eliminarán todos los datos locales." = "¿Estás seguro de que deseas cerrar sesión? Se eliminarán todos los datos locales.";
+"Al cerrar sesión se eliminarán todos los datos locales no sincronizados" = "Al cerrar sesión se eliminarán todos los datos locales no sincronizados";
 
 // MARK: - About & Information
-"Acerca de la Aplicación" = "About the App";
-"Herramienta profesional para el cálculo de pronóstico de fertilidad basada en evidencia médica actualizada. Incluye algoritmos avanzados, interacciones no lineales y benchmarks clínicos." = "Professional tool for fertility prognosis calculation based on updated medical evidence. Includes advanced algorithms, non-linear interactions and clinical benchmarks.";
-"Referencias Médicas" = "Medical References";
-"Comparte la app con colegas médicos" = "Share the app with medical colleagues";
-"Legal y Médico" = "Legal and Medical";
-"Términos, políticas y avisos importantes" = "Terms, policies and important notices";
-"Información" = "Information";
-"Versión, soporte y redes sociales" = "Version, support and social networks";
+"Acerca de la Aplicación" = "Acerca de la Aplicación";
+"Herramienta profesional para el cálculo de pronóstico de fertilidad basada en evidencia médica actualizada. Incluye algoritmos avanzados, interacciones no lineales y benchmarks clínicos." = "Herramienta profesional para el cálculo de pronóstico de fertilidad basada en evidencia médica actualizada. Incluye algoritmos avanzados, interacciones no lineales y benchmarks clínicos.";
+"Referencias Médicas" = "Referencias Médicas";
+"Comparte la app con colegas médicos" = "Comparte la app con colegas médicos";
+"Legal y Médico" = "Legal y Médico";
+"Términos, políticas y avisos importantes" = "Términos, políticas y avisos importantes";
+"Información" = "Información";
+"Versión, soporte y redes sociales" = "Versión, soporte y redes sociales";
 
 // MARK: - Medical Disclaimer
-"Aviso Médico Importante" = "Important Medical Notice";
-"Esta herramienta es de apoyo diagnóstico. Siempre consulta con un médico profesional." = "This tool is for diagnostic support. Always consult with a medical professional.";
-"Esta herramienta es de apoyo diagnóstico únicamente. Los resultados no reemplazan el criterio médico profesional. Siempre consulta con un especialista en medicina reproductiva para decisiones clínicas." = "This tool is for diagnostic support only. Results do not replace professional medical judgment. Always consult with a reproductive medicine specialist for clinical decisions.";
-"Apoyo diagnóstico - Consulta médico profesional" = "Diagnostic support - Consult medical professional";
-"© 2024 Dr. Jorge Vásquez - Medicina Reproductiva" = "© 2024 Dr. Jorge Vásquez - Reproductive Medicine";
+"Aviso Médico Importante" = "Aviso Médico Importante";
+"Esta herramienta es de apoyo diagnóstico. Siempre consulta con un médico profesional." = "Esta herramienta es de apoyo diagnóstico. Siempre consulta con un médico profesional.";
+"Esta herramienta es de apoyo diagnóstico únicamente. Los resultados no reemplazan el criterio médico profesional. Siempre consulta con un especialista en medicina reproductiva para decisiones clínicas." = "Esta herramienta es de apoyo diagnóstico únicamente. Los resultados no reemplazan el criterio médico profesional. Siempre consulta con un especialista en medicina reproductiva para decisiones clínicas.";
+"Apoyo diagnóstico - Consulta médico profesional" = "Apoyo diagnóstico - Consulta médico profesional";
+"© 2024 Dr. Jorge Vásquez - Medicina Reproductiva" = "© 2024 Dr. Jorge Vásquez - Medicina Reproductiva";
+
+// MARK: - Onboarding Flow
+"¿Omitir Introducción?" = "¿Omitir Introducción?";
+"La introducción explica cómo funciona la aplicación y qué significan los resultados. ¿Estás seguro de que quieres omitirla?" = "La introducción explica cómo funciona la aplicación y qué significan los resultados. ¿Estás seguro de que quieres omitirla?";
+"Cancelar" = "Cancelar";
+"Omitir" = "Omitir";
+"Importante" = "Importante";
+"Esta herramienta es de apoyo diagnóstico, siempre consulte a un médico profesional" = "Esta herramienta es de apoyo diagnóstico, siempre consulte a un médico profesional";
+"Paso %d de %d" = "Paso %d de %d";
+"Anterior" = "Anterior";
+"Siguiente" = "Siguiente";
+"¡Comenzar!" = "¡Comenzar!";
+"Omitir introducción" = "Omitir introducción";
+"Bienvenido a Pronóstico Fertilidad" = "Bienvenido a Pronóstico Fertilidad";
+"Una herramienta científica basada en guías ESHRE/ASRM para evaluar probabilidades de embarazo" = "Una herramienta científica basada en guías ESHRE/ASRM para evaluar probabilidades de embarazo";
+"Cálculos basados en evidencia científica internacional" = "Cálculos basados en evidencia científica internacional";
+"Algoritmos validados por especialistas en medicina reproductiva" = "Algoritmos validados por especialistas en medicina reproductiva";
+"Procesamiento 100% local de tus datos médicos" = "Procesamiento 100% local de tus datos médicos";
+"Sin conexión a internet requerida para los cálculos" = "Sin conexión a internet requerida para los cálculos";
+"¿Qué Datos Necesitamos?" = "¿Qué Datos Necesitamos?";
+"Para calcular tu pronóstico, necesitamos información médica específica" = "Para calcular tu pronóstico, necesitamos información médica específica";
+"Datos demográficos: edad, peso, altura" = "Datos demográficos: edad, peso, altura";
+"Análisis hormonales: AMH, TSH, prolactina" = "Análisis hormonales: AMH, TSH, prolactina";
+"Historia ginecológica: ciclos, patologías, cirugías" = "Historia ginecológica: ciclos, patologías, cirugías";
+"Factor masculino: espermatograma (si aplica)" = "Factor masculino: espermatograma (si aplica)";
+"Duración de la búsqueda de embarazo" = "Duración de la búsqueda de embarazo";
+"¿Cómo Calculamos la Probabilidad?" = "¿Cómo Calculamos la Probabilidad?";
+"Nuestro algoritmo utiliza modelos matemáticos avanzados" = "Nuestro algoritmo utiliza modelos matemáticos avanzados";
+"Análisis de interacciones no lineales entre factores" = "Análisis de interacciones no lineales entre factores";
+"Ponderación basada en evidencia científica (ESHRE 2023, ASRM 2024)" = "Ponderación basada en evidencia científica (ESHRE 2023, ASRM 2024)";
+"Calibración con cohortes de pacientes reales" = "Calibración con cohortes de pacientes reales";
+"Validación cruzada con resultados clínicos" = "Validación cruzada con resultados clínicos";
+"Actualización continua con nueva evidencia" = "Actualización continua con nueva evidencia";
+"¿Qué Significan los Resultados?" = "¿Qué Significan los Resultados?";
+"Los resultados son probabilidades estadísticas, no predicciones exactas" = "Los resultados son probabilidades estadísticas, no predicciones exactas";
+"Probabilidad de embarazo espontáneo en 12 meses" = "Probabilidad de embarazo espontáneo en 12 meses";
+"Factores críticos identificados automáticamente" = "Factores críticos identificados automáticamente";
+"Recomendaciones personalizadas basadas en tu perfil" = "Recomendaciones personalizadas basadas en tu perfil";
+"Nivel de confianza del análisis (transparencia científica)" = "Nivel de confianza del análisis (transparencia científica)";
+"Sugerencias de seguimiento médico específico" = "Sugerencias de seguimiento médico específico";
+"Limitaciones Importantes" = "Limitaciones Importantes";
+"Es fundamental entender qué puede y qué NO puede hacer esta herramienta" = "Es fundamental entender qué puede y qué NO puede hacer esta herramienta";
+"NO reemplaza la consulta médica profesional" = "NO reemplaza la consulta médica profesional";
+"NO diagnostica enfermedades ni condiciones médicas" = "NO diagnostica enfermedades ni condiciones médicas";
+"Los resultados son orientativos, no definitivos" = "Los resultados son orientativos, no definitivos";
+"Cada caso es único y requiere evaluación individualizada" = "Cada caso es único y requiere evaluación individualizada";
+"Siempre consulta con un especialista en medicina reproductiva" = "Siempre consulta con un especialista en medicina reproductiva";
+"Tu Privacidad es Nuestra Prioridad" = "Tu Privacidad es Nuestra Prioridad";
+"Todos tus datos se procesan de forma completamente local y segura" = "Todos tus datos se procesan de forma completamente local y segura";
+"Procesamiento 100% local en tu dispositivo" = "Procesamiento 100% local en tu dispositivo";
+"Sin transmisión de datos a servidores externos" = "Sin transmisión de datos a servidores externos";
+"Cifrado avanzado para almacenamiento local" = "Cifrado avanzado para almacenamiento local";
+"Sin recopilación de datos personales identificables" = "Sin recopilación de datos personales identificables";
+"Cumplimiento total con GDPR y regulaciones de privacidad" = "Cumplimiento total con GDPR y regulaciones de privacidad";
+
+// MARK: - Content View Additional
+"🧪 Herramientas de Desarrollo" = "🧪 Herramientas de Desarrollo";
+"Ejecutar Tests" = "Ejecutar Tests";
+"Los tests se ejecutan en la consola de Xcode" = "Los tests se ejecutan en la consola de Xcode";
+"Simulador de Tratamientos" = "Simulador de Tratamientos";
+"Transiciones Suaves por Edad" = "Transiciones Suaves por Edad";
+"45 Benchmarks Clínicos" = "45 Benchmarks Clínicos";
+"¡Bienvenida al Futuro!" = "¡Bienvenida al Futuro!";
+"© 2024 FertilyzeAI Medical Suite - Uso Profesional" = "© 2024 FertilyzeAI Medical Suite - Uso Profesional";
+
+// MARK: - Modern Fertility Calculator View
+"Completado:" = "Completado:";
+"Demografía" = "Demografía";
+"Ginecología" = "Ginecología";
+"Laboratorio" = "Laboratorio";
+"Factor Masculino" = "Factor Masculino";
+"Información básica del paciente" = "Información básica del paciente";
+"Historia clínica ginecológica" = "Historia clínica ginecológica";
+"Resultados de laboratorio" = "Resultados de laboratorio";
+"Análisis andrológico" = "Análisis andrológico";
+
+// MARK: - Settings View
+"Debug:" = "Debug:";
+"Autenticado" = "Autenticado";
+"No autenticado" = "No autenticado";
+"85%" = "85%";
+"Idiomas Disponibles" = "Idiomas Disponibles";
+"Esta herramienta es de apoyo diagnóstico. Siempre consulta con criterio médico profesional." = "Esta herramienta es de apoyo diagnóstico. Siempre consulta con criterio médico profesional.";
+"2.1.0 (Build 2024.12)" = "2.1.0 (Build 2024.12)";
+"Esta app es totalmente compatible con todas las funciones de accesibilidad de iOS" = "Esta app es totalmente compatible con todas las funciones de accesibilidad de iOS";
+
+// MARK: - Settings Components
+"• ASRM Guidelines 2024" = "• ASRM Guidelines 2024";
+"• ESHRE Recommendations 2023" = "• ESHRE Recommendations 2023";
+"• NICE Fertility Guidelines 2024" = "• NICE Fertility Guidelines 2024";
+"• WHO Laboratory Manual 2021" = "• WHO Laboratory Manual 2021";
+"• Cochrane Reviews 2023" = "• Cochrane Reviews 2023";
+
+// MARK: - Interactions Visualization View
+"Total" = "Total";
+"Probabilidad Final" = "Probabilidad Final";
+"Interacciones Críticas" = "Interacciones Críticas";
+"👤" = "👤";
+"• %@" = "• %@";
 
 // MARK: - Calculator & Results
-"Evaluación Médica" = "Medical Assessment";
-"Análisis" = "Analysis";
-"Puntuación" = "Score";
-"Interpretación Clínica" = "Clinical Interpretation";
-"Análisis Médico Completo" = "Complete Medical Analysis";
-"Evaluación Clínica" = "Clinical Assessment";
-"Análisis médico detallado" = "Detailed medical analysis";
-"Análisis generado automáticamente" = "Automatically generated analysis";
-"Interacciones Críticas:" = "Critical Interactions:";
-"... y %d más" = "... and %d more";
+"Evaluación Médica" = "Evaluación Médica";
+"Análisis" = "Análisis";
+"Puntuación" = "Puntuación";
+"Interpretación Clínica" = "Interpretación Clínica";
+"Análisis Médico Completo" = "Análisis Médico Completo";
+"Evaluación Clínica" = "Evaluación Clínica";
+"Análisis médico detallado" = "Análisis médico detallado";
+"Análisis generado automáticamente" = "Análisis generado automáticamente";
+"Interacciones Críticas:" = "Interacciones Críticas:";
+"... y %d más" = "... y %d más";
 
 // MARK: - Medical Evaluations
-"Evaluación Detallada del SOP" = "Detailed PCOS Assessment";
-"Manifestaciones Androgénicas" = "Androgenic Manifestations";
-"Leve (vello en mentón)" = "Mild (chin hair)";
-"Moderado (vello en mentón + mejillas)" = "Moderate (chin + cheek hair)";
-"Moderado (acné persistente)" = "Moderate (persistent acne)";
-"Severo (acné quístico)" = "Severe (cystic acne)";
-"Evaluación Ovárica" = "Ovarian Assessment";
-"Ovarios poliquísticos (>12 folículos)" = "Polycystic ovaries (>12 follicles)";
-"Grado I (mínima)" = "Grade I (minimal)";
-"Tamaño del mioma más grande" = "Size of largest fibroid";
-"Pólipos Endometriales" = "Endometrial Polyps";
-"Sin pólipos" = "No polyps";
-"Único" = "Single";
-"Múltiples" = "Multiple";
-"Histerosalpingografía (HSG)" = "Hysterosalpingography (HSG)";
-"Obstrucción unilateral" = "Unilateral obstruction";
-"Obstrucción bilateral" = "Bilateral obstruction";
-"Método de Diagnóstico OTB" = "OTB Diagnostic Method";
-"Coagulación" = "Coagulation";
-"Salpingectomía" = "Salpingectomy";
+"Evaluación Detallada del SOP" = "Evaluación Detallada del SOP";
+"Manifestaciones Androgénicas" = "Manifestaciones Androgénicas";
+"Leve (vello en mentón)" = "Leve (vello en mentón)";
+"Moderado (vello en mentón + mejillas)" = "Moderado (vello en mentón + mejillas)";
+"Moderado (acné persistente)" = "Moderado (acné persistente)";
+"Severo (acné quístico)" = "Severo (acné quístico)";
+"Evaluación Ovárica" = "Evaluación Ovárica";
+"Ovarios poliquísticos (>12 folículos)" = "Ovarios poliquísticos (>12 folículos)";
+"Grado I (mínima)" = "Grado I (mínima)";
+"Tamaño del mioma más grande" = "Tamaño del mioma más grande";
+"Pólipos Endometriales" = "Pólipos Endometriales";
+"Sin pólipos" = "Sin pólipos";
+"Único" = "Único";
+"Múltiples" = "Múltiples";
+"Histerosalpingografía (HSG)" = "Histerosalpingografía (HSG)";
+"Obstrucción unilateral" = "Obstrucción unilateral";
+"Obstrucción bilateral" = "Obstrucción bilateral";
+"Método de Diagnóstico OTB" = "Método de Diagnóstico OTB";
+"Coagulación" = "Coagulación";
+"Salpingectomía" = "Salpingectomía";
 
 // MARK: - Fertility Calculations
-"Excelente" = "Excellent";
-"Buena" = "Good";
-"Moderada" = "Moderate";
-"Baja" = "Low";
-"Muy Baja" = "Very Low";
-"Crítica" = "Critical";
-"Fertilidad excelente. Coito programado con monitoreo." = "Excellent fertility. Timed intercourse with monitoring.";
-"Buena fertilidad. Inducción de ovulación recomendada." = "Good fertility. Ovulation induction recommended.";
-"Fertilidad moderada. IUI con estimulación controlada." = "Moderate fertility. IUI with controlled stimulation.";
-"Fertilidad baja. FIV/ICSI indicada." = "Low fertility. IVF/ICSI indicated.";
-"Fertilidad muy baja. FIV/ICSI con PGT-A." = "Very low fertility. IVF/ICSI with PGT-A.";
-"Fertilidad crítica. Técnicas reproductivas avanzadas." = "Critical fertility. Advanced reproductive techniques.";
+"Excelente" = "Excelente";
+"Buena" = "Buena";
+"Moderada" = "Moderada";
+"Baja" = "Baja";
+"Muy Baja" = "Muy Baja";
+"Crítica" = "Crítica";
+"Fertilidad excelente. Coito programado con monitoreo." = "Fertilidad excelente. Coito programado con monitoreo.";
+"Buena fertilidad. Inducción de ovulación recomendada." = "Buena fertilidad. Inducción de ovulación recomendada.";
+"Fertilidad moderada. IUI con estimulación controlada." = "Fertilidad moderada. IUI con estimulación controlada.";
+"Fertilidad baja. FIV/ICSI indicada." = "Fertilidad baja. FIV/ICSI indicada.";
+"Fertilidad muy baja. FIV/ICSI con PGT-A." = "Fertilidad muy baja. FIV/ICSI con PGT-A.";
+"Fertilidad crítica. Técnicas reproductivas avanzadas." = "Fertilidad crítica. Técnicas reproductivas avanzadas.";
 
 // MARK: - Interactions & Visualization
-"Factores que se potencian entre sí" = "Factors that enhance each other";
-"Críticas" = "Critical";
-"Visualización de cómo interactúan los factores" = "Visualization of how factors interact";
-"Esto significa que los factores actúan de forma independiente y las probabilidades calculadas no requieren ajustes adicionales." = "This means that factors act independently and calculated probabilities do not require additional adjustments.";
+"Factores que se potencian entre sí" = "Factores que se potencian entre sí";
+"Críticas" = "Críticas";
+"Visualización de cómo interactúan los factores" = "Visualización de cómo interactúan los factores";
+"Esto significa que los factores actúan de forma independiente y las probabilidades calculadas no requieren ajustes adicionales." = "Esto significa que los factores actúan de forma independiente y las probabilidades calculadas no requieren ajustes adicionales.";
 
 // MARK: - Font Selection
-"Personaliza la Tipografía" = "Customize Typography";
-"Análisis de Fertilidad" = "Fertility Analysis";
-"Herramienta de apoyo diagnóstico" = "Diagnostic support tool";
-"Resultado del pronóstico: 85%" = "Prognosis result: 85%";
-"Información médica importante que debe ser legible para todos los usuarios." = "Important medical information that must be readable for all users.";
+"Personaliza la Tipografía" = "Personaliza la Tipografía";
+"Análisis de Fertilidad" = "Análisis de Fertilidad";
+"Herramienta de apoyo diagnóstico" = "Herramienta de apoyo diagnóstico";
+"Resultado del pronóstico: 85%" = "Resultado del pronóstico: 85%";
+"Información médica importante que debe ser legible para todos los usuarios." = "Información médica importante que debe ser legible para todos los usuarios.";
 
 // MARK: - Passkeys & Authentication
-"Autenticación cancelada" = "Authentication cancelled";
-"Error de autenticación" = "Authentication error";
-"Respuesta inválida" = "Invalid response";
-"No se pudo procesar la autenticación" = "Could not process authentication";
-"Error desconocido" = "Unknown error";
-"Usuario Passkey" = "Passkey User";
+"Autenticación cancelada" = "Autenticación cancelada";
+"Error de autenticación" = "Error de autenticación";
+"Respuesta inválida" = "Respuesta inválida";
+"No se pudo procesar la autenticación" = "No se pudo procesar la autenticación";
+"Error desconocido" = "Error desconocido";
+"Usuario Passkey" = "Usuario Passkey";
 "Face ID" = "Face ID";
 "Touch ID" = "Touch ID";
-"Biometría" = "Biometrics";
-"Autenticación" = "Authentication";
+"Biometría" = "Biometría";
+"Autenticación" = "Autenticación";
 
 // MARK: - General UI
-"Al continuar, aceptas nuestros términos de servicio y política de privacidad" = "By continuing, you accept our terms of service and privacy policy";
-"Esta herramienta es de apoyo diagnóstico. Siempre consulta con criterio médico profesional." = "This tool is for diagnostic support. Always consult with professional medical judgment.";
+"Al continuar, aceptas nuestros términos de servicio y política de privacidad" = "Al continuar, aceptas nuestros términos de servicio y política de privacidad";
+"Esta herramienta es de apoyo diagnóstico. Siempre consulta con criterio médico profesional." = "Esta herramienta es de apoyo diagnóstico. Siempre consulta con criterio médico profesional.";
 
 // MARK: - Profile Count
-"%d evaluación" = "%d assessment";
-"%d evaluaciones" = "%d assessments";
-"completada" = "completed";
-"completadas" = "completed";
+"%d evaluación" = "%d evaluación";
+"%d evaluaciones" = "%d evaluaciones";
+"completada" = "completada";
+"completadas" = "completadas";
+
+// MARK: - Medical Thinking
+"Modo de Pensamiento Médico" = "Modo de Pensamiento Médico";
+"Análisis paso a paso con evidencia científica" = "Análisis paso a paso con evidencia científica";
+"Perfil del Paciente" = "Perfil del Paciente";
+
+// MARK: - Treatment Simulator
+"Simulador de Tratamientos" = "Simulador de Tratamientos";
+"Recomendación personalizada + mejoras alcanzables" = "Recomendación personalizada + mejoras alcanzables";
+"Resumen del Análisis" = "Resumen del Análisis";
+"Recomendación Principal" = "Recomendación Principal";
+"Motivos clínicos" = "Motivos clínicos";
+"Bibliografía" = "Bibliografía";
+"Factores Modificables (Simulación)" = "Factores Modificables (Simulación)";
+"No se identificaron factores modificables relevantes." = "No se identificaron factores modificables relevantes.";
+"⚠️ Factores No Modificables" = "⚠️ Factores No Modificables";
+"No se identificaron factores no modificables relevantes." = "No se identificaron factores no modificables relevantes.";
+"Simulación de Corrección" = "Simulación de Corrección";
+"No se identificaron factores modificables para simular." = "No se identificaron factores modificables para simular.";
+"Simular Corrección" = "Simular Corrección";
+
+// MARK: - Results View
+"Resumen" = "Resumen";
+"Factores" = "Factores";
+
+// MARK: - User Interface
+"¡Bienvenida al Futuro!" = "¡Bienvenida al Futuro!";
+"Usuario" = "Usuario";
+"No conectado" = "No conectado";
+"Cerrar" = "Cerrar";
+
+// MARK: - Additional Medical Terms
+"HOMA-IR Calculado" = "HOMA-IR Calculado";
+"Normal: <2.5" = "Normal: <2.5";
+"Espermatograma (OMS 2021)" = "Espermatograma (OMS 2021)";
+
+// MARK: - Interactions Visualization
+"Interacciones Detectadas" = "Interacciones Detectadas";
+"Factores que se potencian entre sí" = "Factores que se potencian entre sí";
+"Total" = "Total";
+"Probabilidad Final" = "Probabilidad Final";
+"Críticas" = "Críticas";
+"🕸️ Diagrama de Red" = "🕸️ Diagrama de Red";
+"Visualización de cómo interactúan los factores" = "Visualización de cómo interactúan los factores";
+"📈 Impacto de Multiplicadores" = "📈 Impacto de Multiplicadores";
+"Efecto acumulativo sobre la probabilidad base" = "Efecto acumulativo sobre la probabilidad base";
+"📋 Detalles de Interacciones" = "📋 Detalles de Interacciones";
+"✅ Sin Interacciones Detectadas" = "✅ Sin Interacciones Detectadas";
+"No se encontraron interacciones no lineales significativas en este perfil." = "No se encontraron interacciones no lineales significativas en este perfil.";
+"Esto significa que los factores actúan de forma independiente y las probabilidades calculadas no requieren ajustes adicionales." = "Esto significa que los factores actúan de forma independiente y las probabilidades calculadas no requieren ajustes adicionales.";
+
+// MARK: - Additional Interaction Terms
+"Cambio obligatorio" = "Cambio obligatorio";
+"Multiplicador:" = "Multiplicador:";
+"📚 Referencias" = "📚 Referencias";
+"Prioridad" = "Prioridad";
+"Cambio de Tratamiento" = "Cambio de Tratamiento";
+
+// MARK: - Additional UI Terms
+"Detalle de Interacción" = "Detalle de Interacción";
+
+// MARK: - Fertility Factors
+"Análisis de Factores" = "Análisis de Factores";
+"Impacto General" = "Impacto General";
+"Factores Analizados" = "Factores Analizados";
+"Resumen de Categorías" = "Resumen de Categorías";
+"%" = "%";
+"Impacto:" = "Impacto:";
+"Tu valor:" = "Tu valor:";
+"Rango normal:" = "Rango normal:";
+"¿Qué significa?" = "¿Qué significa?";
+"FertilityFactorsView Preview" = "FertilityFactorsView Preview";
+
+// MARK: - Improved Fertility Results
+"Recomendaciones" = "Recomendaciones";
+"Simulador" = "Simulador";
+"Pensamiento" = "Pensamiento";
+"Análisis Médico Completo" = "Análisis Médico Completo";
+"Evaluación Clínica" = "Evaluación Clínica";
+"Análisis médico detallado" = "Análisis médico detallado";
+"Completa" = "Completa";
+"Análisis generado automáticamente" = "Análisis generado automáticamente";
+"¿Quieres ver recomendaciones de tratamiento?" = "¿Quieres ver recomendaciones de tratamiento?";
+"Simula diferentes opciones terapéuticas basadas en tu perfil" = "Simula diferentes opciones terapéuticas basadas en tu perfil";
+"Ver Simulador" = "Ver Simulador";
+"Factores Clave" = "Factores Clave";
+"Recomendaciones Personalizadas" = "Recomendaciones Personalizadas";
+"Referencias: \(recommendation.citations.joined(separator: \" • \"))" = "Referencias: %@";
+
+// MARK: - Fertility Summary
+"Probabilidad de Embarazo" = "Probabilidad de Embarazo";
+"Anual" = "Anual";
+"Mensual" = "Mensual";
+"Indicadores de Calidad" = "Indicadores de Calidad";
+"Precisión" = "Precisión";
+"Referencias" = "Referencias";
+"Algoritmos" = "Algoritmos";
+"Categorización" = "Categorización";
+"Categoría" = "Categoría";
+"Confianza" = "Confianza";
+"Evidencia Científica" = "Evidencia Científica";
+"Transiciones Suaves por Edad" = "Transiciones Suaves por Edad";
+"Este análisis utiliza funciones matemáticas continuas validadas científicamente para modelar el declive de fertilidad relacionado con la edad, reemplazando las transiciones discretas tradicionales." = "Este análisis utiliza funciones matemáticas continuas validadas científicamente para modelar el declive de fertilidad relacionado con la edad, reemplazando las transiciones discretas tradicionales.";
+"• ESHRE Guidelines 2023: Female Fertility Assessment" = "• ESHRE Guidelines 2023: Female Fertility Assessment";
+"• ASRM Committee Opinion 2024: Age and Fertility" = "• ASRM Committee Opinion 2024: Age and Fertility";
+"• WHO Reproductive Health Guidelines 2024" = "• WHO Reproductive Health Guidelines 2024";
+"• Cochrane Database: Age-related Fertility Decline" = "• Cochrane Database: Age-related Fertility Decline";
+"Excelente" = "Excelente";
+"Buena" = "Buena";
+"Moderada" = "Moderada";
+"Baja" = "Baja";
+"Muy Baja" = "Muy Baja";
+
+// MARK: - Settings Detail Views
+"Perfil Profesional" = "Perfil Profesional";
+"Nombre Completo" = "Nombre Completo";
+"Aparecerá en los reportes" = "Aparecerá en los reportes";
+"Email" = "Email";
+"Correo electrónico profesional" = "Correo electrónico profesional";
+"Especialidad" = "Especialidad";
+"Área médica de especialización" = "Área médica de especialización";
+"Institución" = "Institución";
+"Hospital o clínica" = "Hospital o clínica";
+"Perfil" = "Perfil";
+"Personaliza tu Experiencia" = "Personaliza tu Experiencia";
+"Elige el tema que mejor se adapte a tu trabajo" = "Elige el tema que mejor se adapte a tu trabajo";
+"Selecciona tu Tema" = "Selecciona tu Tema";
+"Vista Previa" = "Vista Previa";
+"Análisis de Fertilidad" = "Análisis de Fertilidad";
+"Herramienta de apoyo diagnóstico" = "Herramienta de apoyo diagnóstico";
+"Calcular" = "Calcular";
+"Configurar" = "Configurar";
+"Reduce Fatiga Visual" = "Reduce Fatiga Visual";
+"Menos cansancio durante sesiones largas" = "Menos cansancio durante sesiones largas";
+"Mejor Concentración" = "Mejor Concentración";
+"Interfaz menos distractiva para trabajo médico" = "Interfaz menos distractiva para trabajo médico";
+"Ahorro de Batería" = "Ahorro de Batería";
+"Mayor duración en dispositivos móviles" = "Mayor duración en dispositivos móviles";
+"Profesional" = "Profesional";
+"Apariencia elegante y moderna" = "Apariencia elegante y moderna";
+"Mayor Legibilidad" = "Mayor Legibilidad";
+"Texto más claro en ambientes iluminados" = "Texto más claro en ambientes iluminados";
+"Colores Precisos" = "Colores Precisos";
+"Mejor visualización de gráficos médicos" = "Mejor visualización de gráficos médicos";
+"Familiaridad" = "Familiaridad";
+"Interfaz tradicional y conocida" = "Interfaz tradicional y conocida";
+"Versatilidad" = "Versatilidad";
+"Ideal para presentaciones y reportes" = "Ideal para presentaciones y reportes";
+"Ambiente Cálido" = "Ambiente Cálido";
+"Colores suaves que transmiten calidez y confianza" = "Colores suaves que transmiten calidez y confianza";
+"Reduce Estrés" = "Reduce Estrés";
+"Tonos rosados ayudan a relajar en consultas médicas" = "Tonos rosados ayudan a relajar en consultas médicas";
+"Feminidad Médica" = "Feminidad Médica";
+"Ideal para especialidades ginecológicas y reproductivas" = "Ideal para especialidades ginecológicas y reproductivas";
+"Único y Elegante" = "Único y Elegante";
+"Diseño distintivo que destaca profesionalismo" = "Diseño distintivo que destaca profesionalismo";
+"Compartir" = "Compartir";
+"Comparte la app con colegas médicos" = "Comparte la app con colegas médicos";
+"Compartir en WhatsApp" = "Compartir en WhatsApp";
+"Recomienda la app a colegas médicos" = "Recomienda la app a colegas médicos";
+"Compartir en Instagram" = "Compartir en Instagram";
+"Publica en tu historia profesional" = "Publica en tu historia profesional";
+"Compartir en TikTok" = "Compartir en TikTok";
+"Crea contenido educativo médico" = "Crea contenido educativo médico";
+"Compartir Enlace" = "Compartir Enlace";
+"Copia enlace de descarga" = "Copia enlace de descarga";
+"Legal y Médico" = "Legal y Médico";
+"Términos, políticas y avisos importantes" = "Términos, políticas y avisos importantes";
+"Política de Privacidad" = "Política de Privacidad";
+"Cómo protegemos tus datos médicos" = "Cómo protegemos tus datos médicos";
+"Términos de Servicio" = "Términos de Servicio";
+"Condiciones de uso de la aplicación" = "Condiciones de uso de la aplicación";
+"Aviso Médico" = "Aviso Médico";
+"Disclaimer y limitaciones profesionales" = "Disclaimer y limitaciones profesionales";
+"Esta herramienta es de apoyo diagnóstico. Siempre consulta con criterio médico profesional." = "Esta herramienta es de apoyo diagnóstico. Siempre consulta con criterio médico profesional.";
+
+// MARK: - Settings Detail Views 2
+"Información" = "Información";
+"Versión, soporte y redes sociales" = "Versión, soporte y redes sociales";
+"Versión de la Aplicación" = "Versión de la Aplicación";
+"2.1.0 (Build 2024.12)" = "2.1.0 (Build 2024.12)";
+"Accesibilidad" = "Accesibilidad";
+"Compatibilidad con iOS y funciones de asistencia" = "Compatibilidad con iOS y funciones de asistencia";
+"VoiceOver Compatible" = "VoiceOver Compatible";
+"Navegación por voz habilitada" = "Navegación por voz habilitada";
+"Dynamic Type" = "Dynamic Type";
+"Tamaños de texto adaptativos" = "Tamaños de texto adaptativos";
+"Esta app es totalmente compatible con todas las funciones de accesibilidad de iOS" = "Esta app es totalmente compatible con todas las funciones de accesibilidad de iOS";
+"¿Estás seguro de que deseas cerrar sesión? Se eliminarán todos los datos locales." = "¿Estás seguro de que deseas cerrar sesión? Se eliminarán todos los datos locales.";
+"Cerrar Sesión" = "Cerrar Sesión";
+"Salir de la aplicación de forma segura" = "Salir de la aplicación de forma segura";
+"Sesión Activa" = "Sesión Activa";
+"Al cerrar sesión se eliminarán todos los datos locales no sincronizados" = "Al cerrar sesión se eliminarán todos los datos locales no sincronizados";
+"Soporte Técnico" = "Soporte Técnico";
+"Contacta con nuestro equipo de ayuda" = "Contacta con nuestro equipo de ayuda";
+"Síguenos en Instagram" = "Síguenos en Instagram";
+"@drjorgevazquez - Contenido médico profesional" = "@drjorgevazquez - Contenido médico profesional";
+"Síguenos en TikTok" = "Síguenos en TikTok";
+"@fertilidadrjorgevasquez - Videos educativos" = "@fertilidadrjorgevasquez - Videos educativos";
+
+// MARK: - Medical Thinking View
+"Edad: %d años" = "Edad: %d años";
+"AMH: %.2f ng/mL" = "AMH: %.2f ng/mL";
+"TSH: %.2f mIU/L" = "TSH: %.2f mIU/L";
+"BMI: %.1f" = "BMI: %.1f";
+"Pólipos: %@" = "Pólipos: %@";
+"Miomas: %@" = "Miomas: %@";
+"Endometriosis: Estadio %d" = "Endometriosis: Estadio %d";
+"SOP: Presente" = "SOP: Presente";
+"Concentración esperm.: %.1f M/mL" = "Concentración esperm.: %.1f M/mL";
+"Motilidad progresiva: %.1f%%" = "Motilidad progresiva: %.1f%%";
+"Morfología normal: %.1f%%" = "Morfología normal: %.1f%%";
+"Volumen seminal: %.1f mL" = "Volumen seminal: %.1f mL";
+"Fragmentación DNA: %.1f%%" = "Fragmentación DNA: %.1f%%";
+"Varicocele: Sí" = "Varicocele: Sí";
+"Cultivo seminal: Positivo" = "Cultivo seminal: Positivo";
+"Duración infertilidad: %.1f años" = "Duración infertilidad: %.1f años";
+"Analizando..." = "Analizando...";
+"Activar Análisis Profundo" = "Activar Análisis Profundo";
+"Ejecutando análisis médico profundo..." = "Ejecutando análisis médico profundo...";
+"¡Análisis Completado!" = "¡Análisis Completado!";
+"Pensamiento Médico" = "Pensamiento Médico";
+"Análisis Completado" = "Análisis Completado";
+"Confianza General:" = "Confianza General:";
+"Pasos de Razonamiento" = "Pasos de Razonamiento";
+"PASO %d" = "PASO %d";
+"Confianza:" = "Confianza:";
+"Lógica Médica" = "Lógica Médica";
+"Evidencia Clínica" = "Evidencia Clínica";
+"Consideraciones Alternativas" = "Consideraciones Alternativas";
+"Referencias Médicas" = "Referencias Médicas";
+"Validación Clínica" = "Validación Clínica";
+"Evaluación de Riesgos" = "Evaluación de Riesgos";
+"Plan de Seguimiento" = "Plan de Seguimiento";
+"Acciones Inmediatas" = "Acciones Inmediatas";
+"Seguimiento a Corto Plazo" = "Seguimiento a Corto Plazo";
+"Timeline: %@" = "Timeline: %@";
+
+// MARK: - Treatment Simulator View
+"Calculando recomendación..." = "Calculando recomendación...";
+"Tasa estimada: %d%%" = "Tasa estimada: %d%%";
+"Tiempo estimado: %@" = "Tiempo estimado: %@";
+"• %@" = "• %@";
+"Actual: %@ → Objetivo: %@" = "Actual: %@ → Objetivo: %@";
+"Mejora estimada: %.0f%% • Tiempo: %@" = "Mejora estimada: %.0f%% • Tiempo: %@";
+"Recomendación: %@" = "Recomendación: %@";
+"Valor actual: %@" = "Valor actual: %@";
+"Impacto: %@" = "Impacto: %@";
+"Implicación clínica: %@" = "Implicación clínica: %@";
+"Factor a corregir: %@" = "Factor a corregir: %@";
+"Recomendación Previa:" = "Recomendación Previa:";
+"Recomendación Corregida:" = "Recomendación Corregida:";
+"¡Cambio de tratamiento!" = "¡Cambio de tratamiento!";
+"Mejora en probabilidad: %.1f%%" = "Mejora en probabilidad: %.1f%%";
+"Tiempo para corrección: %@" = "Tiempo para corrección: %@";
+"Acción clínica: %@" = "Acción clínica: %@";
+
+// MARK: - Root View
+"FertilyzeAI" = "FertilyzeAI";
+"Medical Suite" = "Medical Suite";
+"Bienvenido" = "Bienvenido";
+"Inicia sesión para acceder a herramientas médicas profesionales de fertilidad" = "Inicia sesión para acceder a herramientas médicas profesionales de fertilidad";
+"Continuar con Apple" = "Continuar con Apple";
+"Continuar sin cuenta" = "Continuar sin cuenta";
+"Herramienta de apoyo diagnóstico" = "Herramienta de apoyo diagnóstico";
+"Al continuar, aceptas nuestros términos de servicio y política de privacidad" = "Al continuar, aceptas nuestros términos de servicio y política de privacidad";
+"Verificando autenticación..." = "Verificando autenticación...";
+"Error de Autenticación" = "Error de Autenticación";
+"Reintentar" = "Reintentar";
+
+// MARK: - Language Selection
+"Selecciona tu idioma preferido / Select your preferred language" = "Selecciona tu idioma preferido / Select your preferred language";
+
+// MARK: - Smooth Transitions Demo View
+"Transiciones Suaves en Fertilidad" = "Transiciones Suaves en Fertilidad";
+"Ocultar Comparación" = "Ocultar Comparación";
+"Mostrar Comparación" = "Mostrar Comparación";
+"Validado Científicamente" = "Validado Científicamente";
+"ASRM, ESHRE, OMS - 45,000+ casos clínicos" = "ASRM, ESHRE, OMS - 45,000+ casos clínicos";
+"Precisión:" = "Precisión:";
+"94.3% vs. 78.9% de funciones discretas" = "94.3% vs. 78.9% de funciones discretas";
+"Mejora:" = "Mejora:";
+"+15.4% de precisión" = "+15.4% de precisión";
+"Función Matemática" = "Función Matemática";
+"Función" = "Función";
+"Función %@ seleccionada" = "Función %@ seleccionada";
+"Comparación: Funciones Continuas vs. Discretas" = "Comparación: Funciones Continuas vs. Discretas";
+"Edad" = "Edad";
+"Probabilidad" = "Probabilidad";
+"Función Continua" = "Función Continua";
+"Función Discreta (Actual)" = "Función Discreta (Actual)";
+"Análisis de Sensibilidad en Tiempo Real" = "Análisis de Sensibilidad en Tiempo Real";
+"Edad:" = "Edad:";
+"años" = "años";
+"Probabilidad actual:" = "Probabilidad actual:";
+"Cambio por año:" = "Cambio por año:";
+"Tipo de transición:" = "Tipo de transición:";
+"Suave" = "Suave";
+"Significativa" = "Significativa";
+"Comparación Detallada de Funciones" = "Comparación Detallada de Funciones";
+"Edad seleccionada:" = "Edad seleccionada:";
+"Función discreta (actual):" = "Función discreta (actual):";
+"Función continua:" = "Función continua:";
+"Mejora en precisión:" = "Mejora en precisión:";
+"Abrupta" = "Abrupta";
+"Validación Científica" = "Validación Científica";
+"Total de casos:" = "Total de casos:";
+"Organizaciones:" = "Organizaciones:";
+"Año de publicación:" = "Año de publicación:";
+"Aprobación clínica:" = "Aprobación clínica:";
+"Aprobado" = "Aprobado";
+"Pendiente" = "Pendiente";
+
+// MARK: - Medical Disclaimer
+"Aviso Médico Importante" = "Aviso Médico Importante";
+"Apoyo diagnóstico - Consulta médico profesional" = "Apoyo diagnóstico - Consulta médico profesional";
+"© 2024 Dr. Jorge Vásquez - Medicina Reproductiva" = "© 2024 Dr. Jorge Vásquez - Medicina Reproductiva";
+
+// MARK: - Onboarding Flow
+"Bienvenido a Pronóstico Fertilidad" = "Bienvenido a Pronóstico Fertilidad";
+"Una herramienta científica basada en guías ESHRE/ASRM para evaluar probabilidades de embarazo" = "Una herramienta científica basada en guías ESHRE/ASRM para evaluar probabilidades de embarazo";
+"Cálculos basados en evidencia científica internacional" = "Cálculos basados en evidencia científica internacional";
+"Algoritmos validados por especialistas en medicina reproductiva" = "Algoritmos validados por especialistas en medicina reproductiva";
+"Procesamiento 100% local de tus datos médicos" = "Procesamiento 100% local de tus datos médicos";
+"Sin conexión a internet requerida para los cálculos" = "Sin conexión a internet requerida para los cálculos";
+"¿Qué Datos Necesitamos?" = "¿Qué Datos Necesitamos?";
+"Para calcular tu pronóstico, necesitamos información médica específica" = "Para calcular tu pronóstico, necesitamos información médica específica";
+"Datos demográficos: edad, peso, altura" = "Datos demográficos: edad, peso, altura";
+"Análisis hormonales: AMH, TSH, prolactina" = "Análisis hormonales: AMH, TSH, prolactina";
+"Historia ginecológica: ciclos, patologías, cirugías" = "Historia ginecológica: ciclos, patologías, cirugías";
+"Factor masculino: espermatograma (si aplica)" = "Factor masculino: espermatograma (si aplica)";
+"Duración de la búsqueda de embarazo" = "Duración de la búsqueda de embarazo";
+"¿Cómo Calculamos la Probabilidad?" = "¿Cómo Calculamos la Probabilidad?";
+"Nuestro algoritmo utiliza modelos matemáticos avanzados" = "Nuestro algoritmo utiliza modelos matemáticos avanzados";
+"Análisis de interacciones no lineales entre factores" = "Análisis de interacciones no lineales entre factores";
+"Ponderación basada en evidencia científica (ESHRE 2023, ASRM 2024)" = "Ponderación basada en evidencia científica (ESHRE 2023, ASRM 2024)";
+"Calibración con cohortes de pacientes reales" = "Calibración con cohortes de pacientes reales";
+"Validación cruzada con resultados clínicos" = "Validación cruzada con resultados clínicos";
+"Actualización continua con nueva evidencia" = "Actualización continua con nueva evidencia";
+"¿Qué Significan los Resultados?" = "¿Qué Significan los Resultados?";
+"Los resultados son probabilidades estadísticas, no predicciones exactas" = "Los resultados son probabilidades estadísticas, no predicciones exactas";
+"Probabilidad de embarazo espontáneo en 12 meses" = "Probabilidad de embarazo espontáneo en 12 meses";
+"Factores críticos identificados automáticamente" = "Factores críticos identificados automáticamente";
+"Recomendaciones personalizadas basadas en tu perfil" = "Recomendaciones personalizadas basadas en tu perfil";
+"Nivel de confianza del análisis (transparencia científica)" = "Nivel de confianza del análisis (transparencia científica)";
+"Sugerencias de seguimiento médico específico" = "Sugerencias de seguimiento médico específico";
+"Limitaciones Importantes" = "Limitaciones Importantes";
+"Es fundamental entender qué puede y qué NO puede hacer esta herramienta" = "Es fundamental entender qué puede y qué NO puede hacer esta herramienta";
+"NO reemplaza la consulta médica profesional" = "NO reemplaza la consulta médica profesional";
+"NO diagnostica enfermedades ni condiciones médicas" = "NO diagnostica enfermedades ni condiciones médicas";
+"Los resultados son orientativos, no definitivos" = "Los resultados son orientativos, no definitivos";
+"Cada caso es único y requiere evaluación individualizada" = "Cada caso es único y requiere evaluación individualizada";
+"Siempre consulta con un especialista en medicina reproductiva" = "Siempre consulta con un especialista en medicina reproductiva";
+"Tu Privacidad es Nuestra Prioridad" = "Tu Privacidad es Nuestra Prioridad";
+"Todos tus datos se procesan de forma completamente local y segura" = "Todos tus datos se procesan de forma completamente local y segura";
+"Procesamiento 100% local en tu dispositivo" = "Procesamiento 100% local en tu dispositivo";
+"Sin transmisión de datos a servidores externos" = "Sin transmisión de datos a servidores externos";
+"Cifrado avanzado para almacenamiento local" = "Cifrado avanzado para almacenamiento local";
+"Sin recopilación de datos personales identificables" = "Sin recopilación de datos personales identificables";
+"Cumplimiento total con GDPR y regulaciones de privacidad" = "Cumplimiento total con GDPR y regulaciones de privacidad";
+"Paso %@ de %@" = "Paso %@ de %@";
+"Anterior" = "Anterior";
+"Siguiente" = "Siguiente";
+"¡Comenzar!" = "¡Comenzar!";
+"Omitir introducción" = "Omitir introducción";
+"¿Omitir Introducción?" = "¿Omitir Introducción?";
+"Cancelar" = "Cancelar";
+"Omitir" = "Omitir";
+"La introducción explica cómo funciona la aplicación y qué significan los resultados. ¿Estás seguro de que quieres omitirla?" = "La introducción explica cómo funciona la aplicación y qué significan los resultados. ¿Estás seguro de que quieres omitirla?";
+"Importante" = "Importante";
+"Esta herramienta es de apoyo diagnóstico, siempre consulte a un médico profesional" = "Esta herramienta es de apoyo diagnóstico, siempre consulte a un médico profesional";

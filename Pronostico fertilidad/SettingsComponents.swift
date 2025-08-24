@@ -197,6 +197,7 @@ struct SettingsActionRow: View {
 // MARK: - ℹ️ VISTA ACERCA DE
 struct AboutView: View {
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject var localizationManager: LocalizationManager
     
     var body: some View {
         NavigationView {
@@ -208,11 +209,11 @@ struct AboutView: View {
                             .font(.system(size: 80))
                             .foregroundColor(.pink)
                         
-                        Text("Pronóstico Fertilidad")
+                        Text(localizationManager.getLocalizedString("Pronóstico Fertilidad"))
                             .font(.title.bold())
                             .foregroundColor(.white)
                         
-                        Text("Versión 2.1.0 (Build 2024.12)")
+                        Text(localizationManager.getLocalizedString("Versión 2.1.0 (Build 2024.12)"))
                             .font(.subheadline)
                             .foregroundColor(.white.opacity(0.7))
                     }
@@ -243,11 +244,11 @@ struct AboutView: View {
                     
                     // Descripción
                     VStack(alignment: .leading, spacing: 12) {
-                        Text("Acerca de la Aplicación")
+                        Text(localizationManager.getLocalizedString("Acerca de la Aplicación"))
                             .font(.headline.bold())
                             .foregroundColor(.white)
                         
-                        Text("Herramienta profesional para el cálculo de pronóstico de fertilidad basada en evidencia médica actualizada. Incluye algoritmos avanzados, interacciones no lineales y benchmarks clínicos.")
+                        Text(localizationManager.getLocalizedString("Herramienta profesional para el cálculo de pronóstico de fertilidad basada en evidencia médica actualizada. Incluye algoritmos avanzados, interacciones no lineales y benchmarks clínicos."))
                             .font(.body)
                             .foregroundColor(.white.opacity(0.8))
                             .fixedSize(horizontal: false, vertical: true)
@@ -256,16 +257,16 @@ struct AboutView: View {
                     
                     // Referencias médicas
                     VStack(alignment: .leading, spacing: 12) {
-                        Text("Referencias Médicas")
+                        Text(localizationManager.getLocalizedString("Referencias Médicas"))
                             .font(.headline.bold())
                             .foregroundColor(.white)
                         
                         VStack(alignment: .leading, spacing: 8) {
-                            Text("• ASRM Guidelines 2024")
-                            Text("• ESHRE Recommendations 2023")
-                            Text("• NICE Fertility Guidelines 2024")
-                            Text("• WHO Laboratory Manual 2021")
-                            Text("• Cochrane Reviews 2023")
+                                                    Text(localizationManager.getLocalizedString("• ASRM Guidelines 2024"))
+                        Text(localizationManager.getLocalizedString("• ESHRE Recommendations 2023"))
+                        Text(localizationManager.getLocalizedString("• NICE Fertility Guidelines 2024"))
+                        Text(localizationManager.getLocalizedString("• WHO Laboratory Manual 2021"))
+                        Text(localizationManager.getLocalizedString("• Cochrane Reviews 2023"))
                         }
                         .font(.caption)
                         .foregroundColor(.white.opacity(0.7))
@@ -378,6 +379,7 @@ extension SettingsSection {
         case .profile: return "Información personal y profesional"
         case .appearance: return "Tema y personalización visual"
         case .fonts: return "Personaliza las fuentes de la app"
+        case .language: return "Selecciona el idioma de la aplicación"
         case .onboarding: return "Revisa cómo funciona la aplicación"
         case .share: return "Comparte la app en redes sociales"
         case .legal: return "Términos, políticas y avisos"

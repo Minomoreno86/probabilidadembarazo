@@ -14,6 +14,7 @@ struct ContentView: View {
     @EnvironmentObject var themeManager: ThemeManager
     @EnvironmentObject var appleSignInManager: AppleSignInManager
     @EnvironmentObject var authFlowManager: AuthenticationFlowManager
+    @EnvironmentObject var localizationManager: LocalizationManager
     @Environment(\.themeColors) var colors
     @State private var showingCalculator = false
     @State private var showingSettings = false
@@ -62,7 +63,7 @@ struct ContentView: View {
                             Divider()
                                 .background(Color.white.opacity(0.3))
                             
-                            Text("🧪 Herramientas de Desarrollo")
+                            Text(localizationManager.getLocalizedString("🧪 Herramientas de Desarrollo"))
                                 .font(.headline)
                                 .foregroundColor(.white)
                             
@@ -74,7 +75,7 @@ struct ContentView: View {
                             }) {
                                 HStack {
                                     Image(systemName: "testtube.2")
-                                    Text("Ejecutar Tests")
+                                    Text(localizationManager.getLocalizedString("Ejecutar Tests"))
                                 }
                                 .font(.subheadline)
                                 .fontWeight(.medium)
@@ -85,7 +86,7 @@ struct ContentView: View {
                                 .cornerRadius(10)
                             }
                             
-                            Text("Los tests se ejecutan en la consola de Xcode")
+                            Text(localizationManager.getLocalizedString("Los tests se ejecutan en la consola de Xcode"))
                                 .font(.caption)
                                 .foregroundColor(.white.opacity(0.7))
                         }
@@ -154,11 +155,11 @@ struct ContentView: View {
                         )
                     
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("FertilyzeAI")
+                        Text(localizationManager.getLocalizedString("FertilyzeAI"))
                             .font(.headline)
                             .fontWeight(.bold)
                             .foregroundColor(.white)
-                        Text("Medical Suite")
+                        Text(localizationManager.getLocalizedString("Medical Suite"))
                             .font(.caption)
                             .foregroundColor(.white.opacity(0.8))
                     }
@@ -194,12 +195,12 @@ struct ContentView: View {
                         .scaleEffect(animateHero ? 1.0 : 0.8)
                         .animation(.spring(response: 0.8, dampingFraction: 0.6), value: animateHero)
                     
-                    Text("Pronóstico de")
+                    Text(localizationManager.getLocalizedString("Pronóstico de"))
                         .font(.system(size: 36, weight: .thin, design: .rounded))
                         .foregroundColor(.white)
                 }
                 
-                Text("FERTILIDAD")
+                Text(localizationManager.getLocalizedString("FERTILIDAD"))
                     .font(.system(size: 42, weight: .bold, design: .rounded))
                     .foregroundColor(.white)
                     .tracking(2)
@@ -209,16 +210,16 @@ struct ContentView: View {
                 
                 // Subtítulo con badges
                 VStack(spacing: 12) {
-                    Text("Inteligencia Artificial Médica Avanzada")
+                    Text(localizationManager.getLocalizedString("Inteligencia Artificial Médica Avanzada"))
                         .font(.title3)
                         .fontWeight(.medium)
                         .foregroundColor(.white.opacity(0.95))
                         .multilineTextAlignment(.center)
                     
                     HStack(spacing: 12) {
-                        MedicalBadge(icon: "chart.line.uptrend.xyaxis", text: "Evidencia Científica")
-                        MedicalBadge(icon: "brain", text: "IA Avanzada")
-                        MedicalBadge(icon: "shield.checkered", text: "Validación Médica")
+                        MedicalBadge(icon: "chart.line.uptrend.xyaxis", text: localizationManager.getLocalizedString("Evidencia Científica"))
+                        MedicalBadge(icon: "brain", text: localizationManager.getLocalizedString("IA Avanzada"))
+                        MedicalBadge(icon: "shield.checkered", text: localizationManager.getLocalizedString("Validación Médica"))
                     }
                 }
             }
@@ -234,14 +235,14 @@ struct ContentView: View {
     private var statisticsDashboard: some View {
         VStack(spacing: 20) {
             HStack {
-                Text("Métricas del Sistema")
+                Text(localizationManager.getLocalizedString("Métricas del Sistema"))
                     .font(.title2)
                     .fontWeight(.semibold)
                     .foregroundColor(.white)
                 
                 Spacer()
                 
-                Text("Tiempo real")
+                Text(localizationManager.getLocalizedString("Tiempo real"))
                     .font(.caption)
                     .foregroundColor(.white.opacity(0.8))
                     .padding(.horizontal, 12)
@@ -256,9 +257,9 @@ struct ContentView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 16) {
                     StatCard(
-                        title: "Evaluaciones",
+                        title: localizationManager.getLocalizedString("Evaluaciones"),
                         value: "\(profiles.count)",
-                        subtitle: "Completadas",
+                        subtitle: localizationManager.getLocalizedString("Completadas"),
                         icon: "chart.bar.fill",
                         color: .cyan,
                         animate: animateStats
@@ -266,9 +267,9 @@ struct ContentView: View {
                     .accessibilityIdentifier("evaluations_count")
                     
                     StatCard(
-                        title: "Precisión",
+                        title: localizationManager.getLocalizedString("Precisión"),
                         value: "96.1%",
-                        subtitle: "Validación Clínica",
+                        subtitle: localizationManager.getLocalizedString("Validación Clínica"),
                         icon: "target",
                         color: .green,
                         animate: animateStats
@@ -276,9 +277,9 @@ struct ContentView: View {
                     .accessibilityIdentifier("precision_percentage")
                     
                     StatCard(
-                        title: "Referencias",
+                        title: localizationManager.getLocalizedString("Referencias"),
                         value: "1,247",
-                        subtitle: "Artículos Científicos",
+                        subtitle: localizationManager.getLocalizedString("Artículos Científicos"),
                         icon: "doc.text.magnifyingglass",
                         color: .purple,
                         animate: animateStats
@@ -286,9 +287,9 @@ struct ContentView: View {
                     .accessibilityIdentifier("references_count")
                     
                     StatCard(
-                        title: "Algoritmos",
+                        title: localizationManager.getLocalizedString("Algoritmos"),
                         value: "45",
-                        subtitle: "Benchmarks Clínicos",
+                        subtitle: localizationManager.getLocalizedString("Benchmarks Clínicos"),
                         icon: "function",
                         color: .orange,
                         animate: animateStats
@@ -335,12 +336,12 @@ struct ContentView: View {
                         }
                         
                         VStack(spacing: 12) {
-                            Text("¡Bienvenida al Futuro!")
+                            Text(localizationManager.getLocalizedString("¡Bienvenida al Futuro!"))
                                 .font(.title)
                                 .fontWeight(.bold)
                                 .foregroundColor(.white)
                             
-                            Text("Evaluación de fertilidad con inteligencia artificial médica de última generación")
+                            Text(localizationManager.getLocalizedString("Evaluación de fertilidad con inteligencia artificial médica de última generación"))
                                 .font(.body)
                                 .foregroundColor(.white.opacity(0.9))
                                 .multilineTextAlignment(.center)
@@ -349,11 +350,11 @@ struct ContentView: View {
                         
                         // Características principales
                         VStack(spacing: 8) {
-                            FeatureRow(icon: "brain.head.profile", text: "15 Interacciones No Lineales")
-                            FeatureRow(icon: "chart.xyaxis.line", text: "45 Benchmarks Clínicos")
-                            FeatureRow(icon: "doc.text.below.ecg", text: "Evidencia Científica ESHRE/ASRM")
-                            FeatureRow(icon: "function", text: "Transiciones Suaves por Edad")
-                            FeatureRow(icon: "target", text: "Simulador de Tratamientos")
+                            FeatureRow(icon: "brain.head.profile", text: localizationManager.getLocalizedString("15 Interacciones No Lineales"))
+                            FeatureRow(icon: "chart.xyaxis.line", text: localizationManager.getLocalizedString("45 Benchmarks Clínicos"))
+                            FeatureRow(icon: "doc.text.below.ecg", text: localizationManager.getLocalizedString("Evidencia Científica ESHRE/ASRM"))
+                            FeatureRow(icon: "function", text: localizationManager.getLocalizedString("Transiciones Suaves por Edad"))
+                            FeatureRow(icon: "target", text: localizationManager.getLocalizedString("Simulador de Tratamientos"))
                         }
                     }
                     .padding(32)
@@ -367,7 +368,7 @@ struct ContentView: View {
                             .font(.title2)
                             .fontWeight(.semibold)
                         
-                        Text("Iniciar Evaluación Avanzada")
+                        Text(localizationManager.getLocalizedString("Iniciar Evaluación Avanzada"))
                             .font(.title3)
                             .fontWeight(.semibold)
                         
@@ -410,12 +411,12 @@ struct ContentView: View {
             // Header de perfiles
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Mis Evaluaciones")
+                    Text(localizationManager.getLocalizedString("Mis Evaluaciones"))
                         .font(.title2)
                         .fontWeight(.bold)
                         .foregroundColor(.white)
                     
-                    Text("\(profiles.count) evaluación\(profiles.count == 1 ? "" : "es") completada\(profiles.count == 1 ? "" : "s")")
+                    Text("\(profiles.count) \(profiles.count == 1 ? localizationManager.getLocalizedString("evaluación") : localizationManager.getLocalizedString("evaluaciones")) \(profiles.count == 1 ? localizationManager.getLocalizedString("completada") : localizationManager.getLocalizedString("completadas"))")
                         .font(.subheadline)
                         .foregroundColor(.white.opacity(0.8))
                 }
@@ -428,9 +429,9 @@ struct ContentView: View {
                         Image(systemName: "plus")
                             .font(.title3)
                             .fontWeight(.semibold)
-                        Text("Nueva")
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
+                                            Text(localizationManager.getLocalizedString("Nueva"))
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
                     }
                     .foregroundColor(.white)
                     .padding(.horizontal, 16)
@@ -487,12 +488,12 @@ struct ContentView: View {
             
             // Información médica
             VStack(spacing: 12) {
-                Text("Validado Científicamente")
+                Text(localizationManager.getLocalizedString("Validado Científicamente"))
                     .font(.headline)
                     .fontWeight(.semibold)
                     .foregroundColor(.white)
                 
-                Text("Basado en guías ESHRE, ASRM, OMS y más de 1,247 referencias científicas")
+                Text(localizationManager.getLocalizedString("Basado en guías ESHRE, ASRM, OMS y más de 1,247 referencias científicas"))
                     .font(.subheadline)
                     .foregroundColor(.white.opacity(0.8))
                     .multilineTextAlignment(.center)
@@ -510,7 +511,7 @@ struct ContentView: View {
             }
             
             // Copyright
-            Text("© 2024 FertilyzeAI Medical Suite - Uso Profesional")
+            Text(localizationManager.getLocalizedString("© 2024 FertilyzeAI Medical Suite - Uso Profesional"))
                 .font(.caption)
                 .foregroundColor(.white.opacity(0.6))
                 .padding(.top, 8)
@@ -693,13 +694,14 @@ struct SwipeableProfileCard: View {
     let onDelete: () -> Void
     @State private var offset: CGFloat = 0
     @State private var isSwiped = false
+    @EnvironmentObject var localizationManager: LocalizationManager
     
     private var completionPercentage: Double {
         profile.completionPercentage()
     }
     
     private var profileIdText: String {
-        return "Evaluación"
+        return localizationManager.getLocalizedString("Evaluación")
     }
     
     var body: some View {
@@ -708,7 +710,7 @@ struct SwipeableProfileCard: View {
             HStack {
                 Spacer()
                 if offset < -50 {
-                    Text("Suelta para eliminar")
+                    Text(localizationManager.getLocalizedString("Suelta para eliminar"))
                         .font(.caption)
                         .foregroundColor(.white)
                         .padding(.horizontal, 12)
@@ -738,7 +740,7 @@ struct SwipeableProfileCard: View {
                             if value.translation.width < -80 {
                                 // Deslizamiento completo - eliminar automáticamente
                                 onDelete()
-                            } else if value.translation.width < -50 {
+                            } else if value.translation.width < -80 {
                                 // Deslizamiento parcial - mostrar indicador de eliminación
                                 withAnimation(.easeInOut(duration: 0.3)) {
                                     offset = -100
@@ -761,13 +763,14 @@ struct SwipeableProfileCard: View {
 struct ModernProfileCard: View {
     let profile: FertilityProfile
     let onTap: () -> Void
+    @EnvironmentObject var localizationManager: LocalizationManager
     
     private var completionPercentage: Double {
         profile.completionPercentage()
     }
     
     private var profileIdText: String {
-        return "Evaluación"
+        return localizationManager.getLocalizedString("Evaluación")
     }
     
     var body: some View {
@@ -801,7 +804,7 @@ struct ModernProfileCard: View {
                         .foregroundColor(.white)
                 }
                 
-                Text("Creada: \(profile.createdAt, style: .date)")
+                Text("\(localizationManager.getLocalizedString("Creada:")) \(profile.createdAt, style: .date)")
                     .font(.caption)
                     .foregroundColor(.white.opacity(0.7))
             }
@@ -832,13 +835,13 @@ struct ModernProfileCard: View {
     
     private var metricsRow: some View {
         HStack(spacing: 16) {
-            MetricPill(icon: "person.fill", value: "\(Int(profile.age))", label: "años")
-            MetricPill(icon: "scalemass.fill", value: String(format: "%.1f", profile.bmi), label: "IMC")
+            MetricPill(icon: "person.fill", value: "\(Int(profile.age))", label: localizationManager.getLocalizedString("años"))
+            MetricPill(icon: "scalemass.fill", value: String(format: "%.1f", profile.bmi), label: localizationManager.getLocalizedString("IMC"))
             
             if completionPercentage == 100 {
-                MetricPill(icon: "checkmark.circle.fill", value: "100%", label: "completo")
+                MetricPill(icon: "checkmark.circle.fill", value: "100%", label: localizationManager.getLocalizedString("completo"))
             } else {
-                MetricPill(icon: "clock.fill", value: "\(Int(completionPercentage))%", label: "progreso")
+                MetricPill(icon: "clock.fill", value: "\(Int(completionPercentage))%", label: localizationManager.getLocalizedString("progreso"))
             }
         }
     }

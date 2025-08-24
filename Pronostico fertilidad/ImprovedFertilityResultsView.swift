@@ -8,6 +8,7 @@ import UIKit
 struct ImprovedFertilityResultsView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var themeManager: ThemeManager
+    @EnvironmentObject var localizationManager: LocalizationManager
     @Environment(\.themeColors) var colors
     let result: ImprovedFertilityEngine.ComprehensiveFertilityResult
     let profile: FertilityProfile
@@ -28,7 +29,7 @@ struct ImprovedFertilityResultsView: View {
                 FertilitySummaryView(result: result, profile: profile)
                     .tabItem {
                         Image(systemName: "chart.pie.fill")
-                        Text("Resumen")
+                        Text(localizationManager.getLocalizedString("Resumen"))
                     }
                     .tag(0)
                 
@@ -36,7 +37,7 @@ struct ImprovedFertilityResultsView: View {
                 analysisView
                     .tabItem {
                         Image(systemName: "doc.text.magnifyingglass")
-                        Text("Análisis")
+                        Text(localizationManager.getLocalizedString("Análisis"))
                     }
                     .tag(1)
                 
@@ -44,7 +45,7 @@ struct ImprovedFertilityResultsView: View {
                 FertilityFactorsView(result: result, profile: profile)
                     .tabItem {
                         Image(systemName: "list.bullet.rectangle")
-                        Text("Factores")
+                        Text(localizationManager.getLocalizedString("Factores"))
                     }
                     .tag(2)
                 
@@ -52,7 +53,7 @@ struct ImprovedFertilityResultsView: View {
                 recommendationsView
                     .tabItem {
                         Image(systemName: "heart.text.square")
-                        Text("Recomendaciones")
+                        Text(localizationManager.getLocalizedString("Recomendaciones"))
                     }
                     .tag(3)
                 
@@ -60,7 +61,7 @@ struct ImprovedFertilityResultsView: View {
                 TreatmentSimulatorView(profile: profile)
                     .tabItem {
                         Image(systemName: "cross.case.fill")
-                        Text("Simulador")
+                        Text(localizationManager.getLocalizedString("Simulador"))
                     }
                     .tag(4)
                 
@@ -68,7 +69,7 @@ struct ImprovedFertilityResultsView: View {
                 MedicalThinkingView(fertilityProfile: profile)
                     .tabItem {
                         Image(systemName: "brain.head.profile")
-                        Text("Pensamiento")
+                        Text(localizationManager.getLocalizedString("Pensamiento"))
                     }
                     .tag(5)
             }
@@ -110,7 +111,7 @@ struct ImprovedFertilityResultsView: View {
                         .font(.title)
                         .foregroundColor(.blue)
                     
-                    Text("Análisis Médico Completo")
+                    Text(localizationManager.getLocalizedString("Análisis Médico Completo"))
                         .font(.title2)
                         .fontWeight(.bold)
                     
@@ -193,12 +194,12 @@ struct ImprovedFertilityResultsView: View {
                         }
                         
                         VStack(alignment: .leading, spacing: 2) {
-                            Text("Evaluación Clínica")
+                            Text(localizationManager.getLocalizedString("Evaluación Clínica"))
                                 .font(.title3)
                                 .fontWeight(.bold)
                                 .foregroundColor(.primary)
                             
-                            Text("Análisis médico detallado")
+                            Text(localizationManager.getLocalizedString("Análisis médico detallado"))
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }
@@ -206,7 +207,7 @@ struct ImprovedFertilityResultsView: View {
                         Spacer()
                         
                         // Badge de estado
-                        Text("Completa")
+                        Text(localizationManager.getLocalizedString("Completa"))
                             .font(.caption2)
                             .fontWeight(.semibold)
                             .foregroundColor(.white)
@@ -257,7 +258,7 @@ struct ImprovedFertilityResultsView: View {
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                             
-                            Text("Análisis generado automáticamente")
+                            Text(localizationManager.getLocalizedString("Análisis generado automáticamente"))
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                             
@@ -311,12 +312,12 @@ struct ImprovedFertilityResultsView: View {
                             .foregroundColor(.purple)
                         
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("¿Quieres ver recomendaciones de tratamiento?")
+                            Text(localizationManager.getLocalizedString("¿Quieres ver recomendaciones de tratamiento?"))
                                 .font(.headline)
                                 .fontWeight(.semibold)
                                 .foregroundColor(.primary)
                             
-                            Text("Simula diferentes opciones terapéuticas basadas en tu perfil")
+                            Text(localizationManager.getLocalizedString("Simula diferentes opciones terapéuticas basadas en tu perfil"))
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
                         }
@@ -327,7 +328,7 @@ struct ImprovedFertilityResultsView: View {
                             selectedTab = 4 // Ir a la pestaña Simulador
                         }) {
                             HStack(spacing: 8) {
-                                Text("Ver Simulador")
+                                Text(localizationManager.getLocalizedString("Ver Simulador"))
                                     .font(.subheadline)
                                     .fontWeight(.semibold)
                                 
@@ -380,7 +381,7 @@ struct ImprovedFertilityResultsView: View {
                             .font(.title3)
                             .foregroundColor(.orange)
                         
-                        Text("Factores Clave")
+                        Text(localizationManager.getLocalizedString("Factores Clave"))
                             .font(.headline)
                             .fontWeight(.semibold)
                         
@@ -413,7 +414,7 @@ struct ImprovedFertilityResultsView: View {
                 // Disclaimer médico crítico - REQUERIDO POR APPLE
                 MedicalDisclaimerView(style: .critical)
                 
-                Text("Recomendaciones Personalizadas")
+                Text(localizationManager.getLocalizedString("Recomendaciones Personalizadas"))
                     .font(.title2)
                     .fontWeight(.bold)
                     .padding(.horizontal)
@@ -562,6 +563,7 @@ struct RecommendationRowView: View {
     let recommendation: ImprovedFertilityEngine.Recommendation
     let index: Int
     @Environment(\.themeColors) var colors
+    @EnvironmentObject var localizationManager: LocalizationManager
     
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
@@ -598,7 +600,7 @@ struct RecommendationRowView: View {
                 
                 // Citaciones médicas
                 if !recommendation.citations.isEmpty {
-                    Text("Referencias: \(recommendation.citations.joined(separator: " • "))")
+                    Text(localizationManager.getLocalizedString("Referencias: \(recommendation.citations.joined(separator: " • "))"))
                         .font(.caption)
                         .foregroundColor(.secondary.opacity(0.7))
                         .italic()

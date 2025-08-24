@@ -14,6 +14,7 @@ import SwiftUI
 
 struct FertilityFactorsView: View {
     @EnvironmentObject var themeManager: ThemeManager
+    @EnvironmentObject var localizationManager: LocalizationManager
     @Environment(\.themeColors) var colors
     
     let result: ImprovedFertilityEngine.ComprehensiveFertilityResult
@@ -77,7 +78,7 @@ struct FertilityFactorsView: View {
             HStack {
                 Image(systemName: "chart.bar.fill")
                     .foregroundColor(colors.primary)
-                Text("Análisis de Factores")
+                Text(localizationManager.getLocalizedString("Análisis de Factores"))
                     .font(.headline)
                     .fontWeight(.semibold)
                 Spacer()
@@ -86,7 +87,7 @@ struct FertilityFactorsView: View {
             // Impacto general
             VStack(spacing: 12) {
                 HStack {
-                    Text("Impacto General")
+                    Text(localizationManager.getLocalizedString("Impacto General"))
                         .font(.subheadline)
                         .fontWeight(.medium)
                     Spacer()
@@ -116,7 +117,7 @@ struct FertilityFactorsView: View {
             HStack {
                 Image(systemName: "list.bullet.rectangle")
                     .foregroundColor(colors.primary)
-                Text("Factores Analizados")
+                Text(localizationManager.getLocalizedString("Factores Analizados"))
                     .font(.headline)
                     .fontWeight(.semibold)
                 Spacer()
@@ -153,7 +154,7 @@ struct FertilityFactorsView: View {
             HStack {
                 Image(systemName: "chart.pie.fill")
                     .foregroundColor(colors.primary)
-                Text("Resumen de Categorías")
+                Text(localizationManager.getLocalizedString("Resumen de Categorías"))
                     .font(.headline)
                     .fontWeight(.semibold)
                 Spacer()
@@ -308,6 +309,7 @@ struct SuperFactorCard: View {
     let colors: ThemeColors
     let onLongPress: () -> Void
     @State private var isAnimating = false
+    @EnvironmentObject var localizationManager: LocalizationManager
         
     var body: some View {
         VStack(spacing: 16) {
@@ -356,7 +358,7 @@ struct SuperFactorCard: View {
                         .fontWeight(.bold)
                         .foregroundColor(factorColor)
                     
-                    Text("%")
+                    Text(localizationManager.getLocalizedString("%"))
                         .font(.caption)
                         .foregroundColor(colors.textSecondary)
                 }
@@ -364,7 +366,7 @@ struct SuperFactorCard: View {
             
             // Impacto numérico
             HStack {
-                Text("Impacto:")
+                Text(localizationManager.getLocalizedString("Impacto:"))
                     .font(.caption)
                     .foregroundColor(colors.textSecondary)
                 
@@ -557,6 +559,7 @@ struct CategorySummaryCard: View {
     let color: Color
     let icon: String
     @State private var isAnimating = false
+    @EnvironmentObject var localizationManager: LocalizationManager
     
     var body: some View {
         VStack(spacing: 8) {
@@ -597,6 +600,7 @@ struct FactorTooltip: View {
     let value: Double
     let profile: FertilityProfile
     @Environment(\.themeColors) var colors
+    @EnvironmentObject var localizationManager: LocalizationManager
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -614,7 +618,7 @@ struct FactorTooltip: View {
             
             // Valor actual
             HStack {
-                Text("Tu valor:")
+                Text(localizationManager.getLocalizedString("Tu valor:"))
                     .font(.subheadline)
                     .foregroundColor(colors.textSecondary)
                 Spacer()
@@ -626,7 +630,7 @@ struct FactorTooltip: View {
             
             // Rango normal
             HStack {
-                Text("Rango normal:")
+                Text(localizationManager.getLocalizedString("Rango normal:"))
                     .font(.caption)
                     .foregroundColor(colors.textSecondary)
                 Spacer()
@@ -640,7 +644,7 @@ struct FactorTooltip: View {
             
             // Explicación simple
             VStack(alignment: .leading, spacing: 4) {
-                Text("¿Qué significa?")
+                Text(localizationManager.getLocalizedString("¿Qué significa?"))
                     .font(.caption)
                     .fontWeight(.semibold)
                     .foregroundColor(colors.text)
@@ -862,4 +866,5 @@ struct FactorTooltip: View {
 #Preview {
     Text("FertilityFactorsView Preview")
         .environmentObject(ThemeManager())
+        .environmentObject(LocalizationManager.shared)
 }

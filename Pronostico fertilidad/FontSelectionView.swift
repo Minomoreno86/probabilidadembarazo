@@ -3,6 +3,7 @@ import SwiftUI
 struct FontSelectionView: View {
     @EnvironmentObject var userFontManager: UserFontManager
     @EnvironmentObject var themeManager: ThemeManager
+    @EnvironmentObject var localizationManager: LocalizationManager
     @Environment(\.dismiss) private var dismiss
     @Environment(\.themeColors) var colors
     
@@ -84,11 +85,11 @@ struct FontSelectionView: View {
             .padding(.top, 20)
             
             VStack(spacing: 8) {
-                Text("Personaliza la Tipografía")
+                Text(localizationManager.getLocalizedString("Personaliza la Tipografía"))
                     .font(.title2.bold())
                     .foregroundColor(colors.text)
                 
-                Text("Elige la fuente que mejor se adapte a tu estilo de trabajo")
+                Text(localizationManager.getLocalizedString("Elige la fuente que mejor se adapte a tu estilo de trabajo"))
                     .font(.subheadline)
                     .foregroundColor(colors.textSecondary)
                     .multilineTextAlignment(.center)
@@ -99,7 +100,7 @@ struct FontSelectionView: View {
     // MARK: - Font Selection Section
     private var fontSelectionSection: some View {
         VStack(spacing: 20) {
-            Text("Selecciona una Fuente")
+            Text(localizationManager.getLocalizedString("Selecciona una Fuente"))
                 .font(.headline)
                 .foregroundColor(colors.text)
             
@@ -122,7 +123,7 @@ struct FontSelectionView: View {
     // MARK: - Preview Section
     private var previewSection: some View {
         VStack(spacing: 16) {
-            Text("Vista Previa")
+            Text(localizationManager.getLocalizedString("Vista Previa"))
                 .font(.headline)
                 .foregroundColor(colors.text)
             
@@ -140,18 +141,18 @@ struct FontSelectionView: View {
                             )
                         
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("Paciente de Prueba")
+                            Text(localizationManager.getLocalizedString("Paciente de Prueba"))
                                 .font(.system(size: 16, weight: .semibold))
                                 .foregroundColor(colors.text)
                             
-                            Text("Consulta de Fertilidad")
+                            Text(localizationManager.getLocalizedString("Consulta de Fertilidad"))
                                 .font(.system(size: 12))
                                 .foregroundColor(colors.textSecondary)
                         }
                         
                         Spacer()
                         
-                        Text("Hoy")
+                        Text(localizationManager.getLocalizedString("Hoy"))
                             .font(.system(size: 12))
                             .foregroundColor(colors.textSecondary)
                     }
@@ -160,11 +161,11 @@ struct FontSelectionView: View {
                         .background(colors.border)
                     
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Resultados del Análisis")
+                        Text(localizationManager.getLocalizedString("Resultados del Análisis"))
                             .font(.system(size: 14, weight: .medium))
                             .foregroundColor(colors.text)
                         
-                        Text("AMH: 2.1 ng/mL • FSH: 8.5 mIU/mL • LH: 6.2 mIU/mL")
+                        Text(localizationManager.getLocalizedString("AMH: 2.1 ng/mL • FSH: 8.5 mIU/mL • LH: 6.2 mIU/mL"))
                             .font(.system(size: 12))
                             .foregroundColor(colors.textSecondary)
                             .lineLimit(2)
@@ -185,7 +186,7 @@ struct FontSelectionView: View {
     // MARK: - Font Info Section
     private var fontInfoSection: some View {
         VStack(spacing: 16) {
-            Text("Características de la Fuente")
+            Text(localizationManager.getLocalizedString("Características de la Fuente"))
                 .font(.headline)
                 .foregroundColor(colors.text)
             
@@ -229,31 +230,31 @@ struct FontSelectionView: View {
         switch userFontManager.selectedFontFamily {
         case .system:
             return [
-                ("Fuente Nativa", "Optimizada para iOS y macOS", "checkmark.circle.fill"),
-                ("Excelente Legibilidad", "Diseñada para pantallas", "eye.fill"),
-                ("Rendimiento Óptimo", "Carga rápida y eficiente", "bolt.fill"),
-                ("Accesibilidad", "Compatible con VoiceOver", "accessibility")
+                (localizationManager.getLocalizedString("Fuente Nativa"), localizationManager.getLocalizedString("Optimizada para iOS y macOS"), "checkmark.circle.fill"),
+                (localizationManager.getLocalizedString("Excelente Legibilidad"), localizationManager.getLocalizedString("Diseñada para pantallas"), "eye.fill"),
+                (localizationManager.getLocalizedString("Rendimiento Óptimo"), localizationManager.getLocalizedString("Carga rápida y eficiente"), "bolt.fill"),
+                (localizationManager.getLocalizedString("Accesibilidad"), localizationManager.getLocalizedString("Compatible con VoiceOver"), "accessibility")
             ]
         case .systemRounded:
             return [
-                ("Diseño Amigable", "Bordes redondeados y suaves", "heart.fill"),
-                ("Menos Fatiga Visual", "Ideal para sesiones largas", "eye.fill"),
-                ("Aspecto Moderno", "Estilo contemporáneo", "sparkles"),
-                ("Legibilidad Mejorada", "Perfecta para datos médicos", "doc.text.fill")
+                (localizationManager.getLocalizedString("Diseño Amigable"), localizationManager.getLocalizedString("Bordes redondeados y suaves"), "heart.fill"),
+                (localizationManager.getLocalizedString("Menos Fatiga Visual"), localizationManager.getLocalizedString("Ideal para sesiones largas"), "eye.fill"),
+                (localizationManager.getLocalizedString("Aspecto Moderno"), localizationManager.getLocalizedString("Estilo contemporáneo"), "sparkles"),
+                (localizationManager.getLocalizedString("Legibilidad Mejorada"), localizationManager.getLocalizedString("Perfecta para datos médicos"), "doc.text.fill")
             ]
         case .systemSerif:
             return [
-                ("Elegancia Profesional", "Estilo serif tradicional", "star.fill"),
-                ("Mejor para Lectura", "Ideal para textos largos", "book.fill"),
-                ("Aspecto Clásico", "Diseño atemporal", "crown.fill"),
-                ("Presentaciones", "Perfecta para reportes", "doc.richtext.fill")
+                (localizationManager.getLocalizedString("Elegancia Profesional"), localizationManager.getLocalizedString("Estilo serif tradicional"), "star.fill"),
+                (localizationManager.getLocalizedString("Mejor para Lectura"), localizationManager.getLocalizedString("Ideal para textos largos"), "book.fill"),
+                (localizationManager.getLocalizedString("Aspecto Clásico"), localizationManager.getLocalizedString("Diseño atemporal"), "crown.fill"),
+                (localizationManager.getLocalizedString("Presentaciones"), localizationManager.getLocalizedString("Perfecta para reportes"), "doc.richtext.fill")
             ]
         case .systemMono:
             return [
-                ("Datos Precisos", "Alineación perfecta de números", "number.circle.fill"),
-                ("Código y Datos", "Ideal para información técnica", "terminal.fill"),
-                ("Consistencia", "Espaciado uniforme", "ruler.fill"),
-                ("Análisis Médico", "Perfecta para resultados", "chart.bar.fill")
+                (localizationManager.getLocalizedString("Datos Precisos"), localizationManager.getLocalizedString("Alineación perfecta de números"), "number.circle.fill"),
+                (localizationManager.getLocalizedString("Código y Datos"), localizationManager.getLocalizedString("Ideal para información técnica"), "terminal.fill"),
+                (localizationManager.getLocalizedString("Consistencia"), localizationManager.getLocalizedString("Espaciado uniforme"), "ruler.fill"),
+                (localizationManager.getLocalizedString("Análisis Médico"), localizationManager.getLocalizedString("Perfecta para resultados"), "chart.bar.fill")
             ]
         }
     }

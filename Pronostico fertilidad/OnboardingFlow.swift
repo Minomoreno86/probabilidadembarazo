@@ -7,8 +7,106 @@ struct OnboardingFlow: View {
     @Binding var isPresented: Bool
     @State private var currentPage = 0
     @State private var showingSkipAlert = false
+    @EnvironmentObject var localizationManager: LocalizationManager
     
-    private let pages = OnboardingPage.allPages
+    private var pages: [OnboardingPage] {
+        [
+            // Página 1: Bienvenida
+            OnboardingPage(
+                title: localizationManager.getLocalizedString("Bienvenido a Pronóstico Fertilidad"),
+                description: localizationManager.getLocalizedString("Una herramienta científica basada en guías ESHRE/ASRM para evaluar probabilidades de embarazo"),
+                icon: "heart.fill",
+                iconColor: .pink,
+                bulletPoints: [
+                    localizationManager.getLocalizedString("Cálculos basados en evidencia científica internacional"),
+                    localizationManager.getLocalizedString("Algoritmos validados por especialistas en medicina reproductiva"),
+                    localizationManager.getLocalizedString("Procesamiento 100% local de tus datos médicos"),
+                    localizationManager.getLocalizedString("Sin conexión a internet requerida para los cálculos")
+                ],
+                showMedicalDisclaimer: true
+            ),
+            
+            // Página 2: Qué datos necesitamos
+            OnboardingPage(
+                title: localizationManager.getLocalizedString("¿Qué Datos Necesitamos?"),
+                description: localizationManager.getLocalizedString("Para calcular tu pronóstico, necesitamos información médica específica"),
+                icon: "doc.text.fill",
+                iconColor: .blue,
+                bulletPoints: [
+                    localizationManager.getLocalizedString("Datos demográficos: edad, peso, altura"),
+                    localizationManager.getLocalizedString("Análisis hormonales: AMH, TSH, prolactina"),
+                    localizationManager.getLocalizedString("Historia ginecológica: ciclos, patologías, cirugías"),
+                    localizationManager.getLocalizedString("Factor masculino: espermatograma (si aplica)"),
+                    localizationManager.getLocalizedString("Duración de la búsqueda de embarazo")
+                ],
+                showMedicalDisclaimer: false
+            ),
+            
+            // Página 3: Cómo calculamos
+            OnboardingPage(
+                title: localizationManager.getLocalizedString("¿Cómo Calculamos la Probabilidad?"),
+                description: localizationManager.getLocalizedString("Nuestro algoritmo utiliza modelos matemáticos avanzados"),
+                icon: "function",
+                iconColor: .purple,
+                bulletPoints: [
+                    localizationManager.getLocalizedString("Análisis de interacciones no lineales entre factores"),
+                    localizationManager.getLocalizedString("Ponderación basada en evidencia científica (ESHRE 2023, ASRM 2024)"),
+                    localizationManager.getLocalizedString("Calibración con cohortes de pacientes reales"),
+                    localizationManager.getLocalizedString("Validación cruzada con resultados clínicos"),
+                    localizationManager.getLocalizedString("Actualización continua con nueva evidencia")
+                ],
+                showMedicalDisclaimer: false
+            ),
+            
+            // Página 4: Qué significan los resultados
+            OnboardingPage(
+                title: localizationManager.getLocalizedString("¿Qué Significan los Resultados?"),
+                description: localizationManager.getLocalizedString("Los resultados son probabilidades estadísticas, no predicciones exactas"),
+                icon: "chart.bar.fill",
+                iconColor: .green,
+                bulletPoints: [
+                    localizationManager.getLocalizedString("Probabilidad de embarazo espontáneo en 12 meses"),
+                    localizationManager.getLocalizedString("Factores críticos identificados automáticamente"),
+                    localizationManager.getLocalizedString("Recomendaciones personalizadas basadas en tu perfil"),
+                    localizationManager.getLocalizedString("Nivel de confianza del análisis (transparencia científica)"),
+                    localizationManager.getLocalizedString("Sugerencias de seguimiento médico específico")
+                ],
+                showMedicalDisclaimer: false
+            ),
+            
+            // Página 5: Limitaciones importantes
+            OnboardingPage(
+                title: "Limitaciones Importantes",
+                description: "Es fundamental entender qué puede y qué NO puede hacer esta herramienta",
+                icon: "exclamationmark.triangle.fill",
+                iconColor: .orange,
+                bulletPoints: [
+                    "NO reemplaza la consulta médica profesional",
+                    "NO diagnostica enfermedades ni condiciones médicas",
+                    "Los resultados son orientativos, no definitivos",
+                    "Cada caso es único y requiere evaluación individualizada",
+                    "Siempre consulta con un especialista en medicina reproductiva"
+                ],
+                showMedicalDisclaimer: true
+            ),
+            
+            // Página 6: Privacidad y seguridad
+            OnboardingPage(
+                title: localizationManager.getLocalizedString("Tu Privacidad es Nuestra Prioridad"),
+                description: localizationManager.getLocalizedString("Todos tus datos se procesan de forma completamente local y segura"),
+                icon: "lock.shield.fill",
+                iconColor: .indigo,
+                bulletPoints: [
+                    localizationManager.getLocalizedString("Procesamiento 100% local en tu dispositivo"),
+                    localizationManager.getLocalizedString("Sin transmisión de datos a servidores externos"),
+                    localizationManager.getLocalizedString("Cifrado avanzado para almacenamiento local"),
+                    localizationManager.getLocalizedString("Sin recopilación de datos personales identificables"),
+                    localizationManager.getLocalizedString("Cumplimiento total con GDPR y regulaciones de privacidad")
+                ],
+                showMedicalDisclaimer: false
+            )
+        ]
+    }
     
     var body: some View {
         NavigationView {
@@ -54,13 +152,13 @@ struct OnboardingFlow: View {
             }
             .navigationBarHidden(true)
         }
-        .alert("¿Omitir Introducción?", isPresented: $showingSkipAlert) {
-            Button("Cancelar", role: .cancel) { }
-            Button("Omitir") {
+        .alert(localizationManager.getLocalizedString("¿Omitir Introducción?"), isPresented: $showingSkipAlert) {
+            Button(localizationManager.getLocalizedString("Cancelar"), role: .cancel) { }
+            Button(localizationManager.getLocalizedString("Omitir")) {
                 completeOnboarding()
             }
         } message: {
-            Text("La introducción explica cómo funciona la aplicación y qué significan los resultados. ¿Estás seguro de que quieres omitirla?")
+            Text(localizationManager.getLocalizedString("La introducción explica cómo funciona la aplicación y qué significan los resultados. ¿Estás seguro de que quieres omitirla?"))
         }
     }
     
@@ -79,6 +177,7 @@ struct OnboardingFlow: View {
 
 struct OnboardingPageView: View {
     let page: OnboardingPage
+    @EnvironmentObject var localizationManager: LocalizationManager
     
     var body: some View {
         ScrollView {
@@ -126,19 +225,19 @@ struct OnboardingPageView: View {
                         HStack {
                             Image(systemName: "exclamationmark.triangle.fill")
                                 .foregroundColor(.orange)
-                            Text("Importante")
-                                .font(.headline)
-                                .foregroundColor(.orange)
-                        }
-                        
-                        Text("Esta herramienta es de apoyo diagnóstico, siempre consulte a un médico profesional")
-                            .font(.callout)
-                            .foregroundColor(.secondary)
-                            .multilineTextAlignment(.center)
-                            .padding(.horizontal, 10)
-                            .padding(.vertical, 8)
-                            .background(Color.orange.opacity(0.1))
-                            .cornerRadius(8)
+                                                    Text(localizationManager.getLocalizedString("Importante"))
+                            .font(.headline)
+                            .foregroundColor(.orange)
+                    }
+                    
+                    Text(localizationManager.getLocalizedString("Esta herramienta es de apoyo diagnóstico, siempre consulte a un médico profesional"))
+                        .font(.callout)
+                        .foregroundColor(.secondary)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 8)
+                        .background(Color.orange.opacity(0.1))
+                        .cornerRadius(8)
                     }
                     .padding(.horizontal, 20)
                 }
@@ -175,11 +274,12 @@ struct BulletPointView: View {
 struct ProgressBar: View {
     let currentPage: Int
     let totalPages: Int
+    @EnvironmentObject var localizationManager: LocalizationManager
     
     var body: some View {
         VStack(spacing: 8) {
             HStack {
-                Text("Paso \(currentPage + 1) de \(totalPages)")
+                Text(String(format: localizationManager.getLocalizedString("Paso %@ de %@"), "\(currentPage + 1)", "\(totalPages)"))
                     .font(.caption)
                     .foregroundColor(.secondary)
                 Spacer()
@@ -209,6 +309,7 @@ struct NavigationControls: View {
     let totalPages: Int
     let onComplete: () -> Void
     let onSkip: () -> Void
+    @EnvironmentObject var localizationManager: LocalizationManager
     
     var body: some View {
         VStack(spacing: 16) {
@@ -222,7 +323,7 @@ struct NavigationControls: View {
                 }) {
                     HStack {
                         Image(systemName: "chevron.left")
-                        Text("Anterior")
+                        Text(localizationManager.getLocalizedString("Anterior"))
                     }
                     .font(.headline)
                     .foregroundColor(currentPage > 0 ? .blue : .gray)
@@ -248,7 +349,7 @@ struct NavigationControls: View {
                     }
                 }) {
                     HStack {
-                        Text(currentPage < totalPages - 1 ? "Siguiente" : "¡Comenzar!")
+                        Text(currentPage < totalPages - 1 ? localizationManager.getLocalizedString("Siguiente") : localizationManager.getLocalizedString("¡Comenzar!"))
                         if currentPage < totalPages - 1 {
                             Image(systemName: "chevron.right")
                         } else {
@@ -273,7 +374,7 @@ struct NavigationControls: View {
             }
             
             // Botón Omitir
-            Button("Omitir introducción") {
+            Button(localizationManager.getLocalizedString("Omitir introducción")) {
                 onSkip()
             }
             .font(.callout)
@@ -291,103 +392,6 @@ struct OnboardingPage {
     let iconColor: Color
     let bulletPoints: [String]
     let showMedicalDisclaimer: Bool
-    
-    static let allPages: [OnboardingPage] = [
-        // Página 1: Bienvenida
-        OnboardingPage(
-            title: "Bienvenido a Pronóstico Fertilidad",
-            description: "Una herramienta científica basada en guías ESHRE/ASRM para evaluar probabilidades de embarazo",
-            icon: "heart.fill",
-            iconColor: .pink,
-            bulletPoints: [
-                "Cálculos basados en evidencia científica internacional",
-                "Algoritmos validados por especialistas en medicina reproductiva",
-                "Procesamiento 100% local de tus datos médicos",
-                "Sin conexión a internet requerida para los cálculos"
-            ],
-            showMedicalDisclaimer: true
-        ),
-        
-        // Página 2: Qué datos necesitamos
-        OnboardingPage(
-            title: "¿Qué Datos Necesitamos?",
-            description: "Para calcular tu pronóstico, necesitamos información médica específica",
-            icon: "doc.text.fill",
-            iconColor: .blue,
-            bulletPoints: [
-                "Datos demográficos: edad, peso, altura",
-                "Análisis hormonales: AMH, TSH, prolactina",
-                "Historia ginecológica: ciclos, patologías, cirugías",
-                                        "Factor masculino: espermatograma (si aplica)",
-                "Duración de la búsqueda de embarazo"
-            ],
-            showMedicalDisclaimer: false
-        ),
-        
-        // Página 3: Cómo calculamos
-        OnboardingPage(
-            title: "¿Cómo Calculamos la Probabilidad?",
-            description: "Nuestro algoritmo utiliza modelos matemáticos avanzados",
-            icon: "function",
-            iconColor: .purple,
-            bulletPoints: [
-                "Análisis de interacciones no lineales entre factores",
-                "Ponderación basada en evidencia científica (ESHRE 2023, ASRM 2024)",
-                "Calibración con cohortes de pacientes reales",
-                "Validación cruzada con resultados clínicos",
-                "Actualización continua con nueva evidencia"
-            ],
-            showMedicalDisclaimer: false
-        ),
-        
-        // Página 4: Qué significan los resultados
-        OnboardingPage(
-            title: "¿Qué Significan los Resultados?",
-            description: "Los resultados son probabilidades estadísticas, no predicciones exactas",
-            icon: "chart.bar.fill",
-            iconColor: .green,
-            bulletPoints: [
-                "Probabilidad de embarazo espontáneo en 12 meses",
-                "Factores críticos identificados automáticamente",
-                "Recomendaciones personalizadas basadas en tu perfil",
-                "Nivel de confianza del análisis (transparencia científica)",
-                "Sugerencias de seguimiento médico específico"
-            ],
-            showMedicalDisclaimer: false
-        ),
-        
-        // Página 5: Limitaciones importantes
-        OnboardingPage(
-            title: "Limitaciones Importantes",
-            description: "Es fundamental entender qué puede y qué NO puede hacer esta herramienta",
-            icon: "exclamationmark.triangle.fill",
-            iconColor: .orange,
-            bulletPoints: [
-                "NO reemplaza la consulta médica profesional",
-                "NO diagnostica enfermedades ni condiciones médicas",
-                "Los resultados son orientativos, no definitivos",
-                "Cada caso es único y requiere evaluación individualizada",
-                "Siempre consulta con un especialista en medicina reproductiva"
-            ],
-            showMedicalDisclaimer: true
-        ),
-        
-        // Página 6: Privacidad y seguridad
-        OnboardingPage(
-            title: "Tu Privacidad es Nuestra Prioridad",
-            description: "Todos tus datos se procesan de forma completamente local y segura",
-            icon: "lock.shield.fill",
-            iconColor: .indigo,
-            bulletPoints: [
-                "Procesamiento 100% local en tu dispositivo",
-                "Sin transmisión de datos a servidores externos",
-                "Cifrado avanzado para almacenamiento local",
-                "Sin recopilación de datos personales identificables",
-                "Cumplimiento total con GDPR y regulaciones de privacidad"
-            ],
-            showMedicalDisclaimer: false
-        )
-    ]
 }
 
 // MARK: - Extensión para verificar si se completó el onboarding

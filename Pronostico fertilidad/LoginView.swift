@@ -12,6 +12,7 @@ struct LoginView: View {
     @EnvironmentObject var appleSignInManager: AppleSignInManager
     @EnvironmentObject var themeManager: ThemeManager
     @EnvironmentObject var passkeysManager: PasskeysManager
+    @EnvironmentObject var localizationManager: LocalizationManager
     @Environment(\.themeColors) var colors
     @Environment(\.dismiss) private var dismiss
     
@@ -88,11 +89,11 @@ struct LoginView: View {
             }
             
             VStack(spacing: 8) {
-                Text("FertilyzeAI")
+                Text(localizationManager.getLocalizedString("FertilyzeAI"))
                     .font(.system(size: 32, weight: .bold, design: .rounded))
                     .foregroundColor(.white)
                 
-                Text("Medical Suite")
+                Text(localizationManager.getLocalizedString("Medical Suite"))
                     .font(.system(size: 16, weight: .medium))
                     .foregroundColor(.white.opacity(0.8))
             }
@@ -104,11 +105,11 @@ struct LoginView: View {
     // MARK: - 👋 WELCOME SECTION
     private var welcomeSection: some View {
         VStack(spacing: 16) {
-            Text("Bienvenido")
+            Text(localizationManager.getLocalizedString("Bienvenido"))
                 .font(.system(size: 28, weight: .bold))
                 .foregroundColor(.white)
             
-            Text("Inicia sesión de forma segura con Passkeys o Apple Sign In")
+            Text(localizationManager.getLocalizedString("Inicia sesión de forma segura con Passkeys o Apple Sign In"))
                 .font(.system(size: 16, weight: .medium))
                 .foregroundColor(.white.opacity(0.9))
                 .multilineTextAlignment(.center)
@@ -136,7 +137,7 @@ struct LoginView: View {
                 HStack {
                     Image(systemName: "arrow.right.circle.fill")
                         .font(.title2)
-                    Text("Continuar sin cuenta")
+                    Text(localizationManager.getLocalizedString("Continuar sin cuenta"))
                         .font(.system(size: 16, weight: .semibold))
                 }
                 .foregroundColor(.white.opacity(0.8))
@@ -178,7 +179,7 @@ struct LoginView: View {
             HStack(spacing: 8) {
                 Image(systemName: "exclamationmark.triangle.fill")
                     .foregroundColor(colors.warning)
-                Text("Herramienta de apoyo diagnóstico")
+                Text(localizationManager.getLocalizedString("Herramienta de apoyo diagnóstico"))
                     .font(.system(size: 12, weight: .semibold))
                     .foregroundColor(colors.text)
             }
@@ -193,7 +194,7 @@ struct LoginView: View {
                     )
             )
             
-            Text("Al continuar, aceptas nuestros términos de servicio y política de privacidad")
+            Text(localizationManager.getLocalizedString("Al continuar, aceptas nuestros términos de servicio y política de privacidad"))
                 .font(.system(size: 12, weight: .medium))
                 .foregroundColor(colors.textSecondary)
                 .multilineTextAlignment(.center)
@@ -225,6 +226,7 @@ struct LoginView: View {
 struct PasskeyButton: View {
     let action: () -> Void
     @StateObject private var passkeysManager = PasskeysManager()
+    @EnvironmentObject var localizationManager: LocalizationManager
     
     var body: some View {
         Button(action: action) {
@@ -269,6 +271,7 @@ struct PasskeyButton: View {
 // MARK: - 🍎 APPLE SIGN IN BUTTON
 struct AppleSignInButton: View {
     let action: () -> Void
+    @EnvironmentObject var localizationManager: LocalizationManager
     
     var body: some View {
         Button(action: action) {
@@ -277,7 +280,7 @@ struct AppleSignInButton: View {
                     .font(.title2)
                     .foregroundColor(.white)
                 
-                Text("Continuar con Apple")
+                Text(localizationManager.getLocalizedString("Continuar con Apple"))
                     .font(.system(size: 18, weight: .semibold))
                     .foregroundColor(.white)
                 
@@ -303,6 +306,7 @@ struct PasskeyRegistrationView: View {
     @ObservedObject var passkeysManager: PasskeysManager
     @Environment(\.dismiss) private var dismiss
     @Environment(\.themeColors) var colors
+    @EnvironmentObject var localizationManager: LocalizationManager
     @State private var displayName = ""
     
     var body: some View {
@@ -318,12 +322,12 @@ struct PasskeyRegistrationView: View {
                             .font(.system(size: 60))
                             .foregroundColor(colors.accent)
                         
-                        Text("Crear Passkey")
+                        Text(localizationManager.getLocalizedString("Crear Passkey"))
                             .font(.title2)
                             .fontWeight(.bold)
                             .foregroundColor(colors.text)
                         
-                        Text("Configura tu identidad biométrica segura")
+                        Text(localizationManager.getLocalizedString("Configura tu identidad biométrica segura"))
                             .font(.subheadline)
                             .foregroundColor(colors.textSecondary)
                             .multilineTextAlignment(.center)
@@ -332,7 +336,7 @@ struct PasskeyRegistrationView: View {
                     // Formulario
                     VStack(spacing: 20) {
                         VStack(alignment: .leading, spacing: 8) {
-                            Text("Nombre completo")
+                            Text(localizationManager.getLocalizedString("Nombre completo"))
                                 .font(.system(size: 16, weight: .semibold))
                                 .foregroundColor(colors.text)
                             
@@ -354,7 +358,7 @@ struct PasskeyRegistrationView: View {
                                         .font(.title2)
                                 }
                                 
-                                Text("Crear Passkey")
+                                Text(localizationManager.getLocalizedString("Crear Passkey"))
                                     .font(.system(size: 18, weight: .semibold))
                             }
                             .foregroundColor(.white)

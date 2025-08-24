@@ -16,6 +16,7 @@ struct InteractionsVisualizationView: View {
     @State private var selectedInteraction: NonLinearInteractionsEngine.ClinicalInteraction?
     @State private var showingDetails = false
     @EnvironmentObject var themeManager: ThemeManager
+    @EnvironmentObject var localizationManager: LocalizationManager
     @Environment(\.themeColors) var colors
     
     var body: some View {
@@ -62,11 +63,11 @@ struct InteractionsVisualizationView: View {
                     .foregroundColor(.blue)
                 
                 VStack(alignment: .leading) {
-                    Text("Interacciones Detectadas")
+                    Text(localizationManager.getLocalizedString("Interacciones Detectadas"))
                         .font(.title2)
                         .fontWeight(.bold)
                     
-                    Text("Factores que se potencian entre sí")
+                    Text(localizationManager.getLocalizedString("Factores que se potencian entre sí"))
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
@@ -81,7 +82,7 @@ struct InteractionsVisualizationView: View {
                             .font(.title)
                             .fontWeight(.bold)
                             .foregroundColor(.primary)
-                        Text("Total")
+                        Text(localizationManager.getLocalizedString("Total"))
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
@@ -93,7 +94,7 @@ struct InteractionsVisualizationView: View {
                             .font(.title)
                             .fontWeight(.bold)
                             .foregroundColor(multiplierColor(interactionsReport.finalMultiplier))
-                        Text("Probabilidad Final")
+                        Text(localizationManager.getLocalizedString("Probabilidad Final"))
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
@@ -105,7 +106,7 @@ struct InteractionsVisualizationView: View {
                             .font(.title)
                             .fontWeight(.bold)
                             .foregroundColor(.red)
-                        Text("Críticas")
+                        Text(localizationManager.getLocalizedString("Críticas"))
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
@@ -153,11 +154,11 @@ struct InteractionsVisualizationView: View {
     
     private var networkDiagramSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("🕸️ Diagrama de Red")
+            Text(localizationManager.getLocalizedString("🕸️ Diagrama de Red"))
                 .font(.headline)
                 .fontWeight(.semibold)
             
-            Text("Visualización de cómo interactúan los factores")
+            Text(localizationManager.getLocalizedString("Visualización de cómo interactúan los factores"))
                 .font(.caption)
                 .foregroundColor(.secondary)
             
@@ -175,11 +176,11 @@ struct InteractionsVisualizationView: View {
     
     private var multipliersChartSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("📈 Impacto de Multiplicadores")
+            Text(localizationManager.getLocalizedString("📈 Impacto de Multiplicadores"))
                 .font(.headline)
                 .fontWeight(.semibold)
             
-            Text("Efecto acumulativo sobre la probabilidad base")
+            Text(localizationManager.getLocalizedString("Efecto acumulativo sobre la probabilidad base"))
                 .font(.caption)
                 .foregroundColor(.secondary)
             
@@ -246,7 +247,7 @@ struct InteractionsVisualizationView: View {
     
     private var detailedListSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("📋 Detalles de Interacciones")
+            Text(localizationManager.getLocalizedString("📋 Detalles de Interacciones"))
                 .font(.headline)
                 .fontWeight(.semibold)
             
@@ -269,16 +270,16 @@ struct InteractionsVisualizationView: View {
                 .font(.system(size: 60))
                 .foregroundColor(.green)
             
-            Text("✅ Sin Interacciones Detectadas")
+            Text(localizationManager.getLocalizedString("✅ Sin Interacciones Detectadas"))
                 .font(.title2)
                 .fontWeight(.semibold)
             
-            Text("No se encontraron interacciones no lineales significativas en este perfil.")
+            Text(localizationManager.getLocalizedString("No se encontraron interacciones no lineales significativas en este perfil."))
                 .font(.body)
                 .multilineTextAlignment(.center)
                 .foregroundColor(.secondary)
             
-            Text("Esto significa que los factores actúan de forma independiente y las probabilidades calculadas no requieren ajustes adicionales.")
+            Text(localizationManager.getLocalizedString("Esto significa que los factores actúan de forma independiente y las probabilidades calculadas no requieren ajustes adicionales."))
                 .font(.caption)
                 .multilineTextAlignment(.center)
                 .foregroundColor(.secondary)
@@ -440,6 +441,7 @@ struct InteractionsNetworkView: View {
 struct InteractionRowView: View {
     let interaction: NonLinearInteractionsEngine.ClinicalInteraction
     let onTap: () -> Void
+    @EnvironmentObject var localizationManager: LocalizationManager
     
     var body: some View {
         Button(action: onTap) {
@@ -471,7 +473,7 @@ struct InteractionRowView: View {
                         .foregroundColor(multiplierColor(interaction.multiplier))
                     
                     if interaction.forcesTreatmentChange {
-                        Text("Cambio obligatorio")
+                        Text(localizationManager.getLocalizedString("Cambio obligatorio"))
                             .font(.caption2)
                             .foregroundColor(.red)
                     }
@@ -512,6 +514,7 @@ struct InteractionRowView: View {
 struct InteractionDetailView: View {
     let interaction: NonLinearInteractionsEngine.ClinicalInteraction
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject var localizationManager: LocalizationManager
     
     var body: some View {
         NavigationView {
@@ -533,7 +536,7 @@ struct InteractionDetailView: View {
                         }
                         
                         HStack {
-                            Text("Multiplicador:")
+                            Text(localizationManager.getLocalizedString("Multiplicador:"))
                                 .fontWeight(.medium)
                             Text("\(String(format: "%.2f", interaction.multiplier)) (\(String(format: "%.0f", interaction.multiplier * 100))%)")
                                 .fontWeight(.bold)
@@ -569,12 +572,12 @@ struct InteractionDetailView: View {
                     
                     // References
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("📚 Referencias")
+                        Text(localizationManager.getLocalizedString("📚 Referencias"))
                             .font(.headline)
                             .fontWeight(.semibold)
                         
                         ForEach(interaction.references, id: \.self) { reference in
-                            Text("• \(reference)")
+                            Text(String(format: localizationManager.getLocalizedString("• %@"), reference))
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }
@@ -583,7 +586,7 @@ struct InteractionDetailView: View {
                     // Priority and Treatment Change
                     HStack {
                         VStack(alignment: .leading) {
-                            Text("Prioridad")
+                            Text(localizationManager.getLocalizedString("Prioridad"))
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                             Text(priorityText(interaction.priority))
@@ -595,7 +598,7 @@ struct InteractionDetailView: View {
                         Spacer()
                         
                         VStack(alignment: .trailing) {
-                            Text("Cambio de Tratamiento")
+                            Text(localizationManager.getLocalizedString("Cambio de Tratamiento"))
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                             Text(interaction.forcesTreatmentChange ? "Obligatorio" : "Opcional")
@@ -610,10 +613,10 @@ struct InteractionDetailView: View {
                 }
                 .padding()
             }
-            .navigationTitle("Detalle de Interacción")
+            .navigationTitle(localizationManager.getLocalizedString("Detalle de Interacción"))
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
-                    Button("Cerrar") {
+                    Button(localizationManager.getLocalizedString("Cerrar")) {
                         dismiss()
                     }
                 }

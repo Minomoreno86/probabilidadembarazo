@@ -7,6 +7,7 @@ struct MedicalThinkingView: View {
     @StateObject private var thinkingEngine = MedicalThinkingEngine()
     @State private var thinkingResult: MedicalThinkingResult?
     @State private var showingThinkingMode = false
+    @EnvironmentObject var localizationManager: LocalizationManager
     
     // Recibir el perfil de fertilidad desde la vista padre
     let fertilityProfile: FertilityProfile
@@ -28,14 +29,14 @@ struct MedicalThinkingView: View {
                             .font(.title)
                             .foregroundColor(.blue)
                         
-                        Text("Modo de Pensamiento Médico")
+                        Text(localizationManager.getLocalizedString("Modo de Pensamiento Médico"))
                             .font(.title2)
                             .fontWeight(.bold)
                         
                         Spacer()
                     }
                     
-                    Text("Análisis paso a paso con evidencia científica")
+                    Text(localizationManager.getLocalizedString("Análisis paso a paso con evidencia científica"))
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
@@ -51,7 +52,7 @@ struct MedicalThinkingView: View {
                             .foregroundColor(.green)
                             .font(.title2)
                         
-                        Text("Perfil del Paciente")
+                        Text(localizationManager.getLocalizedString("Perfil del Paciente"))
                             .font(.headline)
                             .fontWeight(.semibold)
                         
@@ -59,81 +60,81 @@ struct MedicalThinkingView: View {
                     }
                     
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("Edad: \(Int(fertilityProfile.age)) años")
+                        Text(String(format: localizationManager.getLocalizedString("Edad: %d años"), Int(fertilityProfile.age)))
                             .font(.subheadline)
                         if let amh = fertilityProfile.amhValue {
-                            Text("AMH: \(amh, specifier: "%.2f") ng/mL")
+                            Text(String(format: localizationManager.getLocalizedString("AMH: %.2f ng/mL"), amh))
                                 .font(.subheadline)
                         }
                         if let tsh = fertilityProfile.tshValue {
-                            Text("TSH: \(tsh, specifier: "%.2f") mIU/L")
+                            Text(String(format: localizationManager.getLocalizedString("TSH: %.2f mIU/L"), tsh))
                                 .font(.subheadline)
                         }
-                        Text("BMI: \(fertilityProfile.bmi, specifier: "%.1f")")
+                        Text(String(format: localizationManager.getLocalizedString("BMI: %.1f"), fertilityProfile.bmi))
                             .font(.subheadline)
                         
                         // Variables ginecológicas
                         if fertilityProfile.polypType != .none {
-                            Text("Pólipos: \(fertilityProfile.polypType.displayName)")
+                            Text(String(format: localizationManager.getLocalizedString("Pólipos: %@"), fertilityProfile.polypType.displayName))
                                 .font(.subheadline)
                                 .foregroundColor(.orange)
                         }
                         if fertilityProfile.myomaType != .none {
-                            Text("Miomas: \(fertilityProfile.myomaType.rawValue)")
+                            Text(String(format: localizationManager.getLocalizedString("Miomas: %@"), fertilityProfile.myomaType.rawValue))
                                 .font(.subheadline)
                                 .foregroundColor(.red)
                         }
                         if fertilityProfile.endometriosisStage > 0 {
-                            Text("Endometriosis: Estadio \(fertilityProfile.endometriosisStage)")
+                            Text(String(format: localizationManager.getLocalizedString("Endometriosis: Estadio %d"), fertilityProfile.endometriosisStage))
                                 .font(.subheadline)
                                 .foregroundColor(.purple)
                         }
                         if fertilityProfile.hasPcos {
-                            Text("SOP: Presente")
+                            Text(localizationManager.getLocalizedString("SOP: Presente"))
                                 .font(.subheadline)
                                 .foregroundColor(.blue)
                         }
                         
                         // Factor masculino
                         if let spermConc = fertilityProfile.spermConcentration {
-                            Text("Concentración esperm.: \(spermConc, specifier: "%.1f") M/mL")
+                            Text(String(format: localizationManager.getLocalizedString("Concentración esperm.: %.1f M/mL"), spermConc))
                                 .font(.subheadline)
                                 .foregroundColor(spermConc < 15.0 ? .red : .green)
                         }
                         if let motility = fertilityProfile.spermProgressiveMotility {
-                            Text("Motilidad progresiva: \(motility, specifier: "%.1f")%")
+                            Text(String(format: localizationManager.getLocalizedString("Motilidad progresiva: %.1f%%"), motility))
                                 .font(.subheadline)
                                 .foregroundColor(motility < 32.0 ? .red : .green)
                         }
                         if let morphology = fertilityProfile.spermNormalMorphology {
-                            Text("Morfología normal: \(morphology, specifier: "%.1f")%")
+                            Text(String(format: localizationManager.getLocalizedString("Morfología normal: %.1f%%"), morphology))
                                 .font(.subheadline)
                                 .foregroundColor(morphology < 4.0 ? .red : .green)
                         }
                         if let volume = fertilityProfile.semenVolume {
-                            Text("Volumen seminal: \(volume, specifier: "%.1f") mL")
+                            Text(String(format: localizationManager.getLocalizedString("Volumen seminal: %.1f mL"), volume))
                                 .font(.subheadline)
                                 .foregroundColor(volume < 1.5 ? .orange : .green)
                         }
                         if let dnaFrag = fertilityProfile.spermDNAFragmentation {
-                            Text("Fragmentación DNA: \(dnaFrag, specifier: "%.1f")%")
+                            Text(String(format: localizationManager.getLocalizedString("Fragmentación DNA: %.1f%%"), dnaFrag))
                                 .font(.subheadline)
                                 .foregroundColor(dnaFrag > 30.0 ? .red : .green)
                         }
                         if fertilityProfile.hasVaricocele {
-                            Text("Varicocele: Sí")
+                            Text(localizationManager.getLocalizedString("Varicocele: Sí"))
                                 .font(.subheadline)
                                 .foregroundColor(.red)
                         }
                         if fertilityProfile.seminalCulturePositive {
-                            Text("Cultivo seminal: Positivo")
+                            Text(localizationManager.getLocalizedString("Cultivo seminal: Positivo"))
                                 .font(.subheadline)
                                 .foregroundColor(.red)
                         }
                         
                         // Duración de infertilidad
                         if let duration = fertilityProfile.infertilityDuration {
-                            Text("Duración infertilidad: \(duration, specifier: "%.1f") años")
+                            Text(String(format: localizationManager.getLocalizedString("Duración infertilidad: %.1f años"), duration))
                                 .font(.subheadline)
                                 .foregroundColor(duration >= 2.0 ? .red : .green)
                         }
@@ -159,7 +160,7 @@ struct MedicalThinkingView: View {
                             Image(systemName: "brain")
                                 .font(.title2)
                         }
-                        Text(showingThinkingMode ? "Analizando..." : "Activar Análisis Profundo")
+                        Text(showingThinkingMode ? localizationManager.getLocalizedString("Analizando...") : localizationManager.getLocalizedString("Activar Análisis Profundo"))
                             .font(.headline)
                             .fontWeight(.semibold)
                     }
@@ -188,7 +189,7 @@ struct MedicalThinkingView: View {
                             .progressViewStyle(CircularProgressViewStyle(tint: .blue))
                             .scaleEffect(1.2)
                         
-                        Text("Ejecutando análisis médico profundo...")
+                        Text(localizationManager.getLocalizedString("Ejecutando análisis médico profundo..."))
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                             .multilineTextAlignment(.center)
@@ -208,7 +209,7 @@ struct MedicalThinkingView: View {
                                 .foregroundColor(.green)
                                 .font(.title2)
                             
-                            Text("¡Análisis Completado!")
+                            Text(localizationManager.getLocalizedString("¡Análisis Completado!"))
                                 .font(.headline)
                                 .fontWeight(.bold)
                                 .foregroundColor(.green)
@@ -227,7 +228,7 @@ struct MedicalThinkingView: View {
             .padding()
         }
         .background(Color(uiColor: .systemGroupedBackground))
-        .navigationTitle("Pensamiento Médico")
+        .navigationTitle(localizationManager.getLocalizedString("Pensamiento Médico"))
         .navigationBarTitleDisplayMode(.inline)
         .refreshable {
             // Permitir pull-to-refresh
@@ -255,6 +256,7 @@ struct MedicalThinkingView: View {
 
 struct ThinkingResultView: View {
     let result: MedicalThinkingResult
+    @EnvironmentObject var localizationManager: LocalizationManager
     
     var body: some View {
         VStack(spacing: 16) {
@@ -265,7 +267,7 @@ struct ThinkingResultView: View {
                         .foregroundColor(.green)
                         .font(.title2)
                     
-                    Text("Análisis Completado")
+                    Text(localizationManager.getLocalizedString("Análisis Completado"))
                         .font(.headline)
                         .fontWeight(.semibold)
                     
@@ -273,7 +275,7 @@ struct ThinkingResultView: View {
                 }
                 
                 HStack {
-                    Text("Confianza General:")
+                    Text(localizationManager.getLocalizedString("Confianza General:"))
                         .font(.subheadline)
                     
                     Text("\(Int(result.overallConfidence * 100))%")
@@ -290,7 +292,7 @@ struct ThinkingResultView: View {
             
             // Pasos de razonamiento
             VStack(spacing: 12) {
-                Text("Pasos de Razonamiento")
+                Text(localizationManager.getLocalizedString("Pasos de Razonamiento"))
                     .font(.headline)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
@@ -316,6 +318,7 @@ struct ThinkingResultView: View {
 struct ReasoningStepCard: View {
     let step: MedicalReasoningStep
     @State private var isExpanded = false
+    @EnvironmentObject var localizationManager: LocalizationManager
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -323,7 +326,7 @@ struct ReasoningStepCard: View {
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
                     HStack {
-                        Text("PASO \(step.stepNumber)")
+                        Text(String(format: localizationManager.getLocalizedString("PASO %d"), step.stepNumber))
                             .font(.caption)
                             .fontWeight(.bold)
                             .foregroundColor(.white)
@@ -338,7 +341,7 @@ struct ReasoningStepCard: View {
                     }
                     
                     HStack {
-                        Text("Confianza:")
+                        Text(localizationManager.getLocalizedString("Confianza:"))
                             .font(.caption)
                             .foregroundColor(.secondary)
                         
@@ -367,7 +370,7 @@ struct ReasoningStepCard: View {
                 VStack(alignment: .leading, spacing: 12) {
                     // Lógica médica
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("Lógica Médica")
+                        Text(localizationManager.getLocalizedString("Lógica Médica"))
                             .font(.subheadline)
                             .fontWeight(.semibold)
                             .foregroundColor(.primary)
@@ -379,7 +382,7 @@ struct ReasoningStepCard: View {
                     
                     // Evidencia clínica
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("Evidencia Clínica")
+                        Text(localizationManager.getLocalizedString("Evidencia Clínica"))
                             .font(.subheadline)
                             .fontWeight(.semibold)
                             .foregroundColor(.primary)
@@ -392,7 +395,7 @@ struct ReasoningStepCard: View {
                     // Consideraciones alternativas
                     if !step.alternativeConsiderations.isEmpty {
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("Consideraciones Alternativas")
+                            Text(localizationManager.getLocalizedString("Consideraciones Alternativas"))
                                 .font(.subheadline)
                                 .fontWeight(.semibold)
                                 .foregroundColor(.primary)
@@ -414,7 +417,7 @@ struct ReasoningStepCard: View {
                     // Referencias médicas
                     if !step.medicalReferences.isEmpty {
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("Referencias Médicas")
+                            Text(localizationManager.getLocalizedString("Referencias Médicas"))
                                 .font(.subheadline)
                                 .fontWeight(.semibold)
                                 .foregroundColor(.primary)
@@ -447,6 +450,7 @@ struct ReasoningStepCard: View {
 
 struct ClinicalValidationCard: View {
     let validation: ClinicalValidation
+    @EnvironmentObject var localizationManager: LocalizationManager
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -455,7 +459,7 @@ struct ClinicalValidationCard: View {
                     .foregroundColor(validation.isValid ? .green : .red)
                     .font(.title2)
                 
-                Text("Validación Clínica")
+                Text(localizationManager.getLocalizedString("Validación Clínica"))
                     .font(.headline)
                     .fontWeight(.semibold)
                 
@@ -499,6 +503,7 @@ struct ClinicalValidationCard: View {
 
 struct RiskAssessmentCard: View {
     let assessment: RiskAssessment
+    @EnvironmentObject var localizationManager: LocalizationManager
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -507,7 +512,7 @@ struct RiskAssessmentCard: View {
                     .foregroundColor(riskColor)
                     .font(.title2)
                 
-                Text("Evaluación de Riesgos")
+                Text(localizationManager.getLocalizedString("Evaluación de Riesgos"))
                     .font(.headline)
                     .fontWeight(.semibold)
                 
@@ -560,6 +565,7 @@ struct RiskAssessmentCard: View {
 
 struct FollowUpPlanCard: View {
     let plan: FollowUpPlan
+    @EnvironmentObject var localizationManager: LocalizationManager
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -568,7 +574,7 @@ struct FollowUpPlanCard: View {
                     .foregroundColor(.blue)
                     .font(.title2)
                 
-                Text("Plan de Seguimiento")
+                Text(localizationManager.getLocalizedString("Plan de Seguimiento"))
                     .font(.headline)
                     .fontWeight(.semibold)
                 
@@ -578,7 +584,7 @@ struct FollowUpPlanCard: View {
             VStack(alignment: .leading, spacing: 12) {
                 // Acciones inmediatas
                 VStack(alignment: .leading, spacing: 6) {
-                    Text("Acciones Inmediatas")
+                    Text(localizationManager.getLocalizedString("Acciones Inmediatas"))
                         .font(.subheadline)
                         .fontWeight(.semibold)
                         .foregroundColor(.primary)
@@ -598,7 +604,7 @@ struct FollowUpPlanCard: View {
                 
                 // Seguimiento a corto plazo
                 VStack(alignment: .leading, spacing: 6) {
-                    Text("Seguimiento a Corto Plazo")
+                    Text(localizationManager.getLocalizedString("Seguimiento a Corto Plazo"))
                         .font(.subheadline)
                         .fontWeight(.semibold)
                         .foregroundColor(.primary)
@@ -614,7 +620,7 @@ struct FollowUpPlanCard: View {
                                     .font(.body)
                                     .fontWeight(.medium)
                                 
-                                Text("Timeline: \(item.timeline)")
+                                Text(String(format: localizationManager.getLocalizedString("Timeline: %@"), item.timeline))
                                     .font(.caption)
                                     .foregroundColor(.secondary)
                             }

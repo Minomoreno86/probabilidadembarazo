@@ -12,6 +12,7 @@ struct RootView: View {
     @EnvironmentObject var themeManager: ThemeManager
     @EnvironmentObject var appleSignInManager: AppleSignInManager
     @EnvironmentObject var userFontManager: UserFontManager
+    @EnvironmentObject var localizationManager: LocalizationManager
     @Environment(\.themeColors) var colors
     
     var body: some View {
@@ -83,11 +84,11 @@ struct RootView: View {
                         }
                         
                         VStack(spacing: 8) {
-                            Text("FertilyzeAI")
+                            Text(localizationManager.getLocalizedString("FertilyzeAI"))
                                 .font(.system(size: 32, weight: .bold, design: .rounded))
                                 .foregroundColor(.white)
                             
-                            Text("Medical Suite")
+                            Text(localizationManager.getLocalizedString("Medical Suite"))
                                 .font(.system(size: 16, weight: .medium))
                                 .foregroundColor(.white.opacity(0.8))
                         }
@@ -97,11 +98,11 @@ struct RootView: View {
                     VStack(spacing: 32) {
                         // Welcome
                         VStack(spacing: 16) {
-                            Text("Bienvenido")
+                            Text(localizationManager.getLocalizedString("Bienvenido"))
                                 .font(.system(size: 28, weight: .bold))
                                 .foregroundColor(.white)
                             
-                            Text("Inicia sesión para acceder a herramientas médicas profesionales de fertilidad")
+                            Text(localizationManager.getLocalizedString("Inicia sesión para acceder a herramientas médicas profesionales de fertilidad"))
                                 .font(.system(size: 16, weight: .medium))
                                 .foregroundColor(.white.opacity(0.9))
                                 .multilineTextAlignment(.center)
@@ -117,7 +118,7 @@ struct RootView: View {
                                         .font(.title2)
                                         .foregroundColor(.white)
                                     
-                                    Text("Continuar con Apple")
+                                    Text(localizationManager.getLocalizedString("Continuar con Apple"))
                                         .font(.system(size: 18, weight: .semibold))
                                         .foregroundColor(.white)
                                     
@@ -143,7 +144,7 @@ struct RootView: View {
                                 HStack {
                                     Image(systemName: "arrow.right.circle.fill")
                                         .font(.title2)
-                                    Text("Continuar sin cuenta")
+                                    Text(localizationManager.getLocalizedString("Continuar sin cuenta"))
                                         .font(.system(size: 16, weight: .semibold))
                                 }
                                 .foregroundColor(.white.opacity(0.8))
@@ -165,7 +166,7 @@ struct RootView: View {
                             HStack(spacing: 8) {
                                 Image(systemName: "exclamationmark.triangle.fill")
                                     .foregroundColor(.orange)
-                                Text("Herramienta de apoyo diagnóstico")
+                                Text(localizationManager.getLocalizedString("Herramienta de apoyo diagnóstico"))
                                     .font(.system(size: 12, weight: .semibold))
                                     .foregroundColor(.white)
                             }
@@ -180,7 +181,7 @@ struct RootView: View {
                                     )
                             )
                             
-                            Text("Al continuar, aceptas nuestros términos de servicio y política de privacidad")
+                            Text(localizationManager.getLocalizedString("Al continuar, aceptas nuestros términos de servicio y política de privacidad"))
                                 .font(.system(size: 12, weight: .medium))
                                 .foregroundColor(.white.opacity(0.7))
                                 .multilineTextAlignment(.center)
@@ -235,11 +236,11 @@ struct RootView: View {
                 .animation(.easeInOut(duration: 1.0).repeatForever(autoreverses: true), value: true)
                 
                 VStack(spacing: 8) {
-                    Text("FertilyzeAI")
+                    Text(localizationManager.getLocalizedString("FertilyzeAI"))
                         .font(.system(size: 28, weight: .bold, design: .rounded))
                         .foregroundColor(.white)
                     
-                    Text("Verificando autenticación...")
+                    Text(localizationManager.getLocalizedString("Verificando autenticación..."))
                         .font(.system(size: 16, weight: .medium))
                         .foregroundColor(.white.opacity(0.8))
                 }
@@ -266,7 +267,7 @@ struct RootView: View {
                 }
                 
                 VStack(spacing: 16) {
-                    Text("Error de Autenticación")
+                    Text(localizationManager.getLocalizedString("Error de Autenticación"))
                         .font(.system(size: 24, weight: .bold))
                         .foregroundColor(.white)
                     
@@ -285,7 +286,7 @@ struct RootView: View {
                     }) {
                         HStack {
                             Image(systemName: "arrow.clockwise")
-                            Text("Reintentar")
+                            Text(localizationManager.getLocalizedString("Reintentar"))
                         }
                         .font(.system(size: 16, weight: .semibold))
                         .foregroundColor(.white)

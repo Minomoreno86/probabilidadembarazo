@@ -44,13 +44,12 @@ class LocalizationManager: ObservableObject {
         currentLanguage = language
         UserDefaults.standard.set(language.rawValue, forKey: "AppLanguage")
         
-        // Change system language
-        if let languageCode = Bundle.main.preferredLocalizations.first,
-           languageCode != language.rawValue {
-            // Force language change
-            UserDefaults.standard.set([language.rawValue], forKey: "AppleLanguages")
-            UserDefaults.standard.synchronize()
-        }
+        // Force language change for the app
+        UserDefaults.standard.set([language.rawValue], forKey: "AppleLanguages")
+        UserDefaults.standard.synchronize()
+        
+        // Post notification to refresh UI
+        NotificationCenter.default.post(name: NSNotification.Name("LanguageChanged"), object: nil)
     }
     
     private func loadSavedLanguage() {
@@ -65,7 +64,14 @@ class LocalizationManager: ObservableObject {
     }
     
     func getLocalizedString(_ key: String) -> String {
-        return NSLocalizedString(key, comment: "")
+        // Get the bundle for the current language
+        guard let languagePath = Bundle.main.path(forResource: currentLanguage.rawValue, ofType: "lproj"),
+              let bundle = Bundle(path: languagePath) else {
+            // Fallback to default localization
+            return NSLocalizedString(key, comment: "")
+        }
+        
+        return bundle.localizedString(forKey: key, value: key, table: "Localizable")
     }
     
     func getLocalizedString(_ key: String, with arguments: CVarArg...) -> String {

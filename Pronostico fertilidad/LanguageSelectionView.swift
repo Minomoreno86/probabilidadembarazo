@@ -48,7 +48,7 @@ struct LanguageSelectionView: View {
                 
                 Spacer()
                 
-                Text("Idioma / Language")
+                Text(localizationManager.getLocalizedString("Idioma / Language"))
                     .font(.title2)
                     .fontWeight(.bold)
                     .foregroundColor(.white)
@@ -61,7 +61,7 @@ struct LanguageSelectionView: View {
                     .foregroundColor(.clear)
             }
             
-            Text("Selecciona tu idioma preferido / Select your preferred language")
+            Text(localizationManager.getLocalizedString("Selecciona tu idioma preferido / Select your preferred language"))
                 .font(.subheadline)
                 .foregroundColor(.white.opacity(0.8))
                 .multilineTextAlignment(.center)

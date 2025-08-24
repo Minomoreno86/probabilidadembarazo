@@ -10,6 +10,7 @@ import SwiftUI
 struct SimpleLoginView: View {
     @EnvironmentObject var appleSignInManager: AppleSignInManager
     @EnvironmentObject var authFlowManager: AuthenticationFlowManager
+    @EnvironmentObject var localizationManager: LocalizationManager
     @State private var animateLogo = false
     @State private var animateContent = false
     
@@ -88,11 +89,11 @@ struct SimpleLoginView: View {
             }
             
             VStack(spacing: 8) {
-                Text("FertilyzeAI")
+                Text(localizationManager.getLocalizedString("FertilyzeAI"))
                     .font(.system(size: 32, weight: .bold, design: .rounded))
                     .foregroundColor(.white)
                 
-                Text("Medical Suite")
+                Text(localizationManager.getLocalizedString("Medical Suite"))
                     .font(.system(size: 16, weight: .medium))
                     .foregroundColor(.white.opacity(0.8))
             }
@@ -104,11 +105,11 @@ struct SimpleLoginView: View {
     // MARK: - 👋 WELCOME SECTION
     private var welcomeSection: some View {
         VStack(spacing: 16) {
-            Text("Bienvenido")
+            Text(localizationManager.getLocalizedString("Bienvenido"))
                 .font(.system(size: 28, weight: .bold))
                 .foregroundColor(.white)
             
-            Text("Inicia sesión para acceder a herramientas médicas profesionales de fertilidad")
+            Text(localizationManager.getLocalizedString("Inicia sesión para acceder a herramientas médicas profesionales de fertilidad"))
                 .font(.system(size: 16, weight: .medium))
                 .foregroundColor(.white.opacity(0.9))
                 .multilineTextAlignment(.center)
@@ -126,7 +127,7 @@ struct SimpleLoginView: View {
                         .font(.title2)
                         .foregroundColor(.white)
                     
-                    Text("Continuar con Apple")
+                    Text(localizationManager.getLocalizedString("Continuar con Apple"))
                         .font(.system(size: 18, weight: .semibold))
                         .foregroundColor(.white)
                     
@@ -152,7 +153,7 @@ struct SimpleLoginView: View {
                 HStack {
                     Image(systemName: "arrow.right.circle.fill")
                         .font(.title2)
-                    Text("Continuar sin cuenta")
+                    Text(localizationManager.getLocalizedString("Continuar sin cuenta"))
                         .font(.system(size: 16, weight: .semibold))
                 }
                 .foregroundColor(.white.opacity(0.8))
@@ -177,7 +178,7 @@ struct SimpleLoginView: View {
             HStack(spacing: 8) {
                 Image(systemName: "exclamationmark.triangle.fill")
                     .foregroundColor(.orange)
-                Text("Herramienta de apoyo diagnóstico")
+                Text(localizationManager.getLocalizedString("Herramienta de apoyo diagnóstico"))
                     .font(.system(size: 12, weight: .semibold))
                     .foregroundColor(.white)
             }
@@ -192,7 +193,7 @@ struct SimpleLoginView: View {
                     )
             )
             
-            Text("Al continuar, aceptas nuestros términos de servicio y política de privacidad")
+            Text(localizationManager.getLocalizedString("Al continuar, aceptas nuestros términos de servicio y política de privacidad"))
                 .font(.system(size: 12, weight: .medium))
                 .foregroundColor(.white.opacity(0.7))
                 .multilineTextAlignment(.center)

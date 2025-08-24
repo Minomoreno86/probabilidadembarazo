@@ -15,6 +15,7 @@ struct Pronostico_fertilidadApp: App {
     @StateObject private var passkeysManager = PasskeysManager()
     @StateObject private var authFlowManager = AuthenticationFlowManager()
     @StateObject private var userFontManager = UserFontManager()
+    @StateObject private var localizationManager = LocalizationManager.shared
     @StateObject private var siriIntentManager = SiriIntentManager.shared
     
     // MARK: - 🗄️ CONFIGURACIÓN DE BASE DE DATOS
@@ -43,6 +44,7 @@ struct Pronostico_fertilidadApp: App {
                 .environmentObject(passkeysManager)
                 .environmentObject(authFlowManager)
                 .environmentObject(userFontManager)
+                .environmentObject(localizationManager)
                 .environmentObject(siriIntentManager)
                 .environment(\.themeColors, ThemeColors.current(themeManager.currentTheme))
                 .preferredColorScheme(themeManager.currentTheme == .dark ? .dark : .light)

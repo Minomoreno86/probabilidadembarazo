@@ -18,6 +18,7 @@ struct SettingsView: View {
     @EnvironmentObject var themeManager: ThemeManager
     @EnvironmentObject var authFlowManager: AuthenticationFlowManager
     @EnvironmentObject var userFontManager: UserFontManager
+    @EnvironmentObject var localizationManager: LocalizationManager
     @Environment(\.themeColors) var colors
     
     // Perfil de usuario
@@ -45,10 +46,10 @@ struct SettingsView: View {
         NavigationView {
             settingsListView
                 .background(medicalGradient)
-                .navigationTitle("Configuración")
+                .navigationTitle(localizationManager.getLocalizedString("Configuración"))
                 .toolbar {
                     ToolbarItem(placement: .automatic) {
-                        Button("Cerrar") {
+                        Button(localizationManager.getLocalizedString("Cerrar")) {
                             dismiss()
                         }
                         .foregroundColor(.white)
@@ -121,9 +122,9 @@ struct SettingsView: View {
                 
                 // Debug info (temporal)
                 if displayName == "Usuario" || displayEmail == "No conectado" {
-                    Text("Debug: \(authFlowManager.isAuthenticated ? "Autenticado" : "No autenticado")")
-                        .font(.caption2)
-                        .foregroundColor(.orange)
+                                    Text("\(localizationManager.getLocalizedString("Debug:")) \(authFlowManager.isAuthenticated ? localizationManager.getLocalizedString("Autenticado") : localizationManager.getLocalizedString("No autenticado"))")
+                    .font(.caption2)
+                    .foregroundColor(.orange)
                 }
                 
                 if !userSpecialty.isEmpty {
@@ -145,7 +146,7 @@ struct SettingsView: View {
                             .foregroundColor(.green)
                             .font(.caption)
                         
-                        Text("Conectado")
+                        Text(localizationManager.getLocalizedString("Conectado"))
                             .font(.caption)
                             .foregroundColor(.green)
                     }
@@ -179,6 +180,9 @@ struct SettingsView: View {
             FontSelectionView()
                 .environmentObject(userFontManager)
                 .environmentObject(themeManager)
+        case .language:
+            LanguageSelectionView()
+                .environmentObject(LocalizationManager.shared)
         case .onboarding:
             // No necesita vista separada, se maneja con fullScreenCover
             EmptyView()
@@ -249,15 +253,15 @@ struct SettingsView: View {
             
             // Footer con versión
             VStack(spacing: 8) {
-                Text("Pronóstico Fertilidad")
+                Text(localizationManager.getLocalizedString("Pronóstico Fertilidad"))
                     .font(.caption.bold())
                     .foregroundColor(.white.opacity(0.8))
                 
-                Text("Versión 2.1.0")
+                Text(localizationManager.getLocalizedString("Versión 2.1.0"))
                     .font(.caption2)
                     .foregroundColor(.white.opacity(0.6))
                 
-                Button("Acerca de") {
+                Button(localizationManager.getLocalizedString("Acerca de")) {
                     showingAbout = true
                 }
                 .font(.caption)
@@ -287,6 +291,8 @@ struct SettingsView: View {
                     appearanceSection
                 case .fonts:
                     fontsSection
+                case .language:
+                    languageSection
                 case .onboarding:
                     onboardingSection
                 case .share:
@@ -327,11 +333,11 @@ struct SettingsView: View {
                             .foregroundColor(.blue)
                     )
                 
-                Text(userFullName.isEmpty ? "Usuario" : userFullName)
+                Text(userFullName.isEmpty ? localizationManager.getLocalizedString("Usuario") : userFullName)
                     .font(.title2.bold())
                     .foregroundColor(.white)
                 
-                Text(userEmail.isEmpty ? "No conectado" : userEmail)
+                Text(userEmail.isEmpty ? localizationManager.getLocalizedString("No conectado") : userEmail)
                     .font(.subheadline)
                     .foregroundColor(.white.opacity(0.7))
             }
@@ -388,9 +394,9 @@ struct SettingsView: View {
                     Image(systemName: "info.circle")
                         .foregroundColor(.cyan)
                     
-                    Text("El modo oscuro reduce el cansancio visual durante sesiones largas")
-                        .font(.caption)
-                        .foregroundColor(.white.opacity(0.7))
+                                    Text(localizationManager.getLocalizedString("El modo oscuro reduce el cansancio visual durante sesiones largas"))
+                    .font(.caption)
+                    .foregroundColor(.white.opacity(0.7))
                 }
                 .padding(.horizontal, 16)
                 .padding(.vertical, 8)
@@ -422,32 +428,32 @@ struct SettingsView: View {
                 
                 // Vista previa de la fuente actual
                 VStack(alignment: .leading, spacing: 12) {
-                    Text("Vista previa actual")
+                    Text(localizationManager.getLocalizedString("Vista previa actual"))
                         .font(.headline)
                         .foregroundColor(.white)
                     
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Título de ejemplo")
+                        Text(localizationManager.getLocalizedString("Título de ejemplo"))
                             .font(userFontManager.title)
                             .foregroundColor(.white)
                         
-                        Text("Texto de ejemplo con la fuente seleccionada")
+                        Text(localizationManager.getLocalizedString("Texto de ejemplo con la fuente seleccionada"))
                             .font(userFontManager.body)
                             .foregroundColor(.white.opacity(0.8))
                         
                         HStack {
-                            Text("Normal")
+                            Text(localizationManager.getLocalizedString("Normal"))
                                 .font(userFontManager.body)
                                 .foregroundColor(.white.opacity(0.7))
                             
                             Spacer()
                             
-                            Text("Bold")
+                            Text(localizationManager.getLocalizedString("Bold"))
                                 .font(userFontManager.customBoldFont(size: 16))
                                 .foregroundColor(.white.opacity(0.7))
                         }
                         
-                        Text("85%")
+                        Text(localizationManager.getLocalizedString("85%"))
                             .font(userFontManager.customBoldFont(size: 28))
                             .foregroundColor(.cyan)
                     }
@@ -464,7 +470,7 @@ struct SettingsView: View {
                     Image(systemName: "info.circle")
                         .foregroundColor(.teal)
                     
-                    Text("Las fuentes personalizadas mejoran la legibilidad y experiencia visual")
+                    Text(localizationManager.getLocalizedString("Las fuentes personalizadas mejoran la legibilidad y experiencia visual"))
                         .font(.caption)
                         .foregroundColor(.white.opacity(0.7))
                 }
@@ -476,6 +482,50 @@ struct SettingsView: View {
                 )
             }
             .padding(.horizontal, 4)
+        }
+    }
+    
+    // MARK: - 🌍 SECCIÓN IDIOMA
+    private var languageSection: some View {
+        VStack(spacing: 20) {
+            SettingsSectionHeader(
+                title: "Idioma",
+                subtitle: "Selecciona el idioma de la aplicación",
+                icon: "globe"
+            )
+            
+            VStack(spacing: 16) {
+                SettingsActionRow(
+                    title: "Cambiar Idioma",
+                    subtitle: "Español o Inglés",
+                    icon: "globe",
+                    action: { /* Se maneja con NavigationLink */ }
+                )
+                
+                // Información sobre idiomas disponibles
+                VStack(alignment: .leading, spacing: 12) {
+                    Text(localizationManager.getLocalizedString("Idiomas Disponibles"))
+                        .font(.headline)
+                        .foregroundColor(.white)
+                    
+                    VStack(alignment: .leading, spacing: 8) {
+                        BulletPoint(text: localizationManager.getLocalizedString("Español - Idioma principal"))
+                        BulletPoint(text: localizationManager.getLocalizedString("Inglés - Para uso internacional"))
+                        BulletPoint(text: localizationManager.getLocalizedString("Cambio en tiempo real"))
+                        BulletPoint(text: localizationManager.getLocalizedString("Se mantiene entre sesiones"))
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 12)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(Color.white.opacity(0.1))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .stroke(Color.yellow.opacity(0.3), lineWidth: 1)
+                            )
+                    )
+                }
+            }
         }
     }
     
@@ -498,16 +548,16 @@ struct SettingsView: View {
                 
                 // Información sobre la introducción
                 VStack(alignment: .leading, spacing: 12) {
-                    Text("¿Qué incluye la introducción?")
+                    Text(localizationManager.getLocalizedString("¿Qué incluye la introducción?"))
                         .font(.headline)
                         .foregroundColor(.white)
                     
                     VStack(alignment: .leading, spacing: 8) {
-                        BulletPoint(text: "Qué datos médicos necesitamos")
-                        BulletPoint(text: "Cómo calculamos las probabilidades")
-                        BulletPoint(text: "Qué significan los resultados")
-                        BulletPoint(text: "Limitaciones importantes")
-                        BulletPoint(text: "Política de privacidad")
+                        BulletPoint(text: localizationManager.getLocalizedString("Qué datos médicos necesitamos"))
+                        BulletPoint(text: localizationManager.getLocalizedString("Cómo calculamos las probabilidades"))
+                        BulletPoint(text: localizationManager.getLocalizedString("Qué significan los resultados"))
+                        BulletPoint(text: localizationManager.getLocalizedString("Limitaciones importantes"))
+                        BulletPoint(text: localizationManager.getLocalizedString("Política de privacidad"))
                     }
                     .padding(.horizontal, 16)
                     .padding(.vertical, 12)
@@ -602,7 +652,7 @@ struct SettingsView: View {
                     Image(systemName: "exclamationmark.triangle.fill")
                         .foregroundColor(.orange)
                     
-                    Text("Esta herramienta es de apoyo diagnóstico. Siempre consulta con criterio médico profesional.")
+                    Text(localizationManager.getLocalizedString("Esta herramienta es de apoyo diagnóstico. Siempre consulta con criterio médico profesional."))
                         .font(.caption)
                         .foregroundColor(.white.opacity(0.7))
                 }
@@ -634,11 +684,11 @@ struct SettingsView: View {
                         .frame(width: 24)
                     
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("Versión de la Aplicación")
+                        Text(localizationManager.getLocalizedString("Versión de la Aplicación"))
                             .font(.system(size: 15, weight: .semibold))
                             .foregroundColor(.white)
                         
-                        Text("2.1.0 (Build 2024.12)")
+                        Text(localizationManager.getLocalizedString("2.1.0 (Build 2024.12)"))
                             .font(.system(size: 12))
                             .foregroundColor(.white.opacity(0.6))
                     }
@@ -693,11 +743,11 @@ struct SettingsView: View {
                         .foregroundColor(.green)
                     
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("VoiceOver Compatible")
+                        Text(localizationManager.getLocalizedString("VoiceOver Compatible"))
                             .font(.system(size: 14, weight: .semibold))
                             .foregroundColor(.white)
                         
-                        Text("Navegación por voz habilitada")
+                        Text(localizationManager.getLocalizedString("Navegación por voz habilitada"))
                             .font(.system(size: 12))
                             .foregroundColor(.white.opacity(0.6))
                     }
@@ -716,11 +766,11 @@ struct SettingsView: View {
                         .foregroundColor(.green)
                     
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("Dynamic Type")
+                        Text(localizationManager.getLocalizedString("Dynamic Type"))
                             .font(.system(size: 14, weight: .semibold))
                             .foregroundColor(.white)
                         
-                        Text("Tamaños de texto adaptativos")
+                        Text(localizationManager.getLocalizedString("Tamaños de texto adaptativos"))
                             .font(.system(size: 12))
                             .foregroundColor(.white.opacity(0.6))
                     }
@@ -746,7 +796,7 @@ struct SettingsView: View {
                     Image(systemName: "info.circle")
                         .foregroundColor(.indigo)
                     
-                    Text("Esta app es totalmente compatible con todas las funciones de accesibilidad de iOS")
+                    Text(localizationManager.getLocalizedString("Esta app es totalmente compatible con todas las funciones de accesibilidad de iOS"))
                         .font(.caption)
                         .foregroundColor(.white.opacity(0.7))
                 }
@@ -784,7 +834,7 @@ struct SettingsView: View {
                             )
                         
                         VStack(alignment: .leading, spacing: 2) {
-                            Text("Sesión Activa")
+                            Text(localizationManager.getLocalizedString("Sesión Activa"))
                                 .font(.system(size: 15, weight: .semibold))
                                 .foregroundColor(.white)
                             
@@ -808,7 +858,7 @@ struct SettingsView: View {
                     Image(systemName: "exclamationmark.triangle.fill")
                         .foregroundColor(.orange)
                     
-                    Text("Al cerrar sesión se eliminarán todos los datos locales no sincronizados")
+                    Text(localizationManager.getLocalizedString("Al cerrar sesión se eliminarán todos los datos locales no sincronizados"))
                         .font(.caption)
                         .foregroundColor(.white.opacity(0.7))
                 }
@@ -825,7 +875,7 @@ struct SettingsView: View {
                         Image(systemName: "rectangle.portrait.and.arrow.right.fill")
                             .font(.system(size: 16, weight: .medium))
                         
-                        Text("Cerrar Sesión")
+                        Text(localizationManager.getLocalizedString("Cerrar Sesión"))
                             .font(.system(size: 16, weight: .semibold))
                     }
                     .foregroundColor(.white)
@@ -844,13 +894,13 @@ struct SettingsView: View {
             }
             .padding(.horizontal, 4)
         }
-        .alert("Cerrar Sesión", isPresented: $showingLogoutAlert) {
-            Button("Cancelar", role: .cancel) { }
-            Button("Cerrar Sesión", role: .destructive) {
+        .alert(localizationManager.getLocalizedString("Cerrar Sesión"), isPresented: $showingLogoutAlert) {
+            Button(localizationManager.getLocalizedString("Cancelar"), role: .cancel) { }
+            Button(localizationManager.getLocalizedString("Cerrar Sesión"), role: .destructive) {
                 performLogout()
             }
         } message: {
-            Text("¿Estás seguro de que deseas cerrar sesión? Se eliminarán todos los datos locales.")
+            Text(localizationManager.getLocalizedString("¿Estás seguro de que deseas cerrar sesión? Se eliminarán todos los datos locales."))
         }
     }
     
@@ -1066,6 +1116,7 @@ enum SettingsSection: String, CaseIterable {
     case profile = "Perfil"
     case appearance = "Apariencia"
     case fonts = "Tipografía"
+    case language = "Idioma"
     case onboarding = "Introducción"
     case share = "Compartir"
     case legal = "Legal"
@@ -1078,6 +1129,7 @@ enum SettingsSection: String, CaseIterable {
         case .profile: return "person.crop.circle.fill"
         case .appearance: return "moon.fill"
         case .fonts: return "textformat"
+        case .language: return "globe"
         case .onboarding: return "graduationcap.fill"
         case .share: return "square.and.arrow.up.fill"
         case .legal: return "doc.text.fill"
@@ -1092,6 +1144,7 @@ enum SettingsSection: String, CaseIterable {
         case .profile: return .blue
         case .appearance: return .purple
         case .fonts: return .teal
+        case .language: return .yellow
         case .onboarding: return .mint
         case .share: return .green
         case .legal: return .orange

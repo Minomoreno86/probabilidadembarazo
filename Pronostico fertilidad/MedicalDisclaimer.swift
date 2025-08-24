@@ -9,6 +9,7 @@ import SwiftUI
 
 // MARK: - 🩺 COMPONENTE DE DISCLAIMER MÉDICO
 struct MedicalDisclaimerView: View {
+    @EnvironmentObject var localizationManager: LocalizationManager
     let style: DisclaimerStyle
     let isCompact: Bool
     
@@ -26,9 +27,9 @@ struct MedicalDisclaimerView: View {
             
             VStack(alignment: .leading, spacing: 4) {
                 if !isCompact {
-                    Text("Aviso Médico Importante")
-                        .font(.system(size: 13, weight: .semibold))
-                        .foregroundColor(.white)
+                                    Text(localizationManager.getLocalizedString("Aviso Médico Importante"))
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundColor(.white)
                 }
                 
                 Text(disclaimerText)
@@ -109,6 +110,7 @@ enum DisclaimerStyle {
 
 // MARK: - 🔄 DISCLAIMER FLOTANTE PARA RESULTADOS
 struct FloatingMedicalDisclaimer: View {
+    @EnvironmentObject var localizationManager: LocalizationManager
     @State private var isVisible = true
     
     var body: some View {
@@ -124,7 +126,7 @@ struct FloatingMedicalDisclaimer: View {
                             .font(.system(size: 14, weight: .medium))
                             .foregroundColor(.orange)
                         
-                        Text("Apoyo diagnóstico - Consulta médico profesional")
+                        Text(localizationManager.getLocalizedString("Apoyo diagnóstico - Consulta médico profesional"))
                             .font(.system(size: 11, weight: .medium))
                             .foregroundColor(.white)
                         
@@ -155,6 +157,8 @@ struct FloatingMedicalDisclaimer: View {
 
 // MARK: - 📱 DISCLAIMER PARA FOOTER
 struct FooterMedicalDisclaimer: View {
+    @EnvironmentObject var localizationManager: LocalizationManager
+    
     var body: some View {
         VStack(spacing: 12) {
             Divider()
@@ -162,7 +166,7 @@ struct FooterMedicalDisclaimer: View {
             
             MedicalDisclaimerView(style: .footer, isCompact: true)
             
-            Text("© 2024 Dr. Jorge Vásquez - Medicina Reproductiva")
+            Text(localizationManager.getLocalizedString("© 2024 Dr. Jorge Vásquez - Medicina Reproductiva"))
                 .font(.caption2)
                 .foregroundColor(.white.opacity(0.5))
                 .multilineTextAlignment(.center)

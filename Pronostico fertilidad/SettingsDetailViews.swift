@@ -15,6 +15,7 @@ import AppKit
 // MARK: - 👤 VISTA DE PERFIL
 struct ProfileSettingsView: View {
     @Environment(\.themeColors) var colors
+    @EnvironmentObject var localizationManager: LocalizationManager
     @Binding var userFullName: String
     @Binding var userEmail: String
     @Binding var userSpecialty: String
@@ -34,7 +35,7 @@ struct ProfileSettingsView: View {
                                 .foregroundColor(.blue)
                         )
                     
-                    Text("Perfil Profesional")
+                    Text(localizationManager.getLocalizedString("Perfil Profesional"))
                         .font(.title2.bold())
                         .foregroundColor(colors.text)
                 }
@@ -42,32 +43,32 @@ struct ProfileSettingsView: View {
                 
                 VStack(spacing: 16) {
                     SettingsTextField(
-                        title: "Nombre Completo",
-                        subtitle: "Aparecerá en los reportes",
+                        title: localizationManager.getLocalizedString("Nombre Completo"),
+                        subtitle: localizationManager.getLocalizedString("Aparecerá en los reportes"),
                         icon: "person.fill",
                         text: $userFullName,
                         placeholder: "Dr. Juan Pérez"
                     )
                     
                     SettingsTextField(
-                        title: "Email",
-                        subtitle: "Correo electrónico profesional",
+                        title: localizationManager.getLocalizedString("Email"),
+                        subtitle: localizationManager.getLocalizedString("Correo electrónico profesional"),
                         icon: "envelope.fill",
                         text: $userEmail,
                         placeholder: "doctor@ejemplo.com"
                     )
                     
                     SettingsTextField(
-                        title: "Especialidad",
-                        subtitle: "Área médica de especialización",
+                        title: localizationManager.getLocalizedString("Especialidad"),
+                        subtitle: localizationManager.getLocalizedString("Área médica de especialización"),
                         icon: "stethoscope",
                         text: $userSpecialty,
                         placeholder: "Medicina Reproductiva"
                     )
                     
                     SettingsTextField(
-                        title: "Institución",
-                        subtitle: "Hospital o clínica",
+                        title: localizationManager.getLocalizedString("Institución"),
+                        subtitle: localizationManager.getLocalizedString("Hospital o clínica"),
                         icon: "building.2.fill",
                         text: $userInstitution,
                         placeholder: "Centro de Fertilidad ABC"
@@ -82,7 +83,7 @@ struct ProfileSettingsView: View {
             }
         }
         .background(colors.medicalGradient)
-        .navigationTitle("Perfil")
+        .navigationTitle(localizationManager.getLocalizedString("Perfil"))
     }
     
 
@@ -92,6 +93,7 @@ struct ProfileSettingsView: View {
 struct AppearanceSettingsView: View {
     @Binding var isDarkMode: Bool
     @EnvironmentObject var themeManager: ThemeManager
+    @EnvironmentObject var localizationManager: LocalizationManager
     @Environment(\.themeColors) var colors
     
     var body: some View {
@@ -148,11 +150,11 @@ struct AppearanceSettingsView: View {
             .padding(.top, 20)
             
             VStack(spacing: 8) {
-                Text("Personaliza tu Experiencia")
+                Text(localizationManager.getLocalizedString("Personaliza tu Experiencia"))
                     .font(.title2.bold())
                     .foregroundColor(colors.text)
                 
-                Text("Elige el tema que mejor se adapte a tu trabajo")
+                Text(localizationManager.getLocalizedString("Elige el tema que mejor se adapte a tu trabajo"))
                     .font(.subheadline)
                     .foregroundColor(colors.textSecondary)
                     .multilineTextAlignment(.center)
@@ -163,7 +165,7 @@ struct AppearanceSettingsView: View {
     // MARK: - Theme Selector
     private var themeSelector: some View {
         VStack(spacing: 20) {
-            Text("Selecciona tu Tema")
+            Text(localizationManager.getLocalizedString("Selecciona tu Tema"))
                 .font(.headline)
                 .foregroundColor(colors.text)
             
@@ -258,7 +260,7 @@ struct AppearanceSettingsView: View {
     // MARK: - Theme Preview
     private var themePreview: some View {
         VStack(spacing: 16) {
-            Text("Vista Previa")
+            Text(localizationManager.getLocalizedString("Vista Previa"))
                 .font(.headline)
                 .foregroundColor(colors.text)
             
@@ -275,11 +277,11 @@ struct AppearanceSettingsView: View {
                         )
                     
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("Análisis de Fertilidad")
+                        Text(localizationManager.getLocalizedString("Análisis de Fertilidad"))
                             .font(.system(size: 16, weight: .semibold))
                             .foregroundColor(colors.text)
                         
-                        Text("Herramienta de apoyo diagnóstico")
+                        Text(localizationManager.getLocalizedString("Herramienta de apoyo diagnóstico"))
                             .font(.caption)
                             .foregroundColor(colors.textSecondary)
                     }
@@ -297,7 +299,7 @@ struct AppearanceSettingsView: View {
                 
                 // Preview buttons
                 HStack(spacing: 12) {
-                    Button("Calcular") {
+                    Button(localizationManager.getLocalizedString("Calcular")) {
                         // Preview only
                     }
                     .font(.system(size: 14, weight: .semibold))
@@ -307,7 +309,7 @@ struct AppearanceSettingsView: View {
                     .background(colors.accentGradient)
                     .cornerRadius(20)
                     
-                    Button("Configurar") {
+                    Button(localizationManager.getLocalizedString("Configurar")) {
                         // Preview only
                     }
                     .font(.system(size: 14, weight: .medium))
@@ -383,28 +385,28 @@ struct AppearanceSettingsView: View {
     // MARK: - Benefits Data
     private var darkModeBenefits: [(title: String, description: String, icon: String)] {
         [
-            ("Reduce Fatiga Visual", "Menos cansancio durante sesiones largas", "eye.fill"),
-            ("Mejor Concentración", "Interfaz menos distractiva para trabajo médico", "brain.head.profile"),
-            ("Ahorro de Batería", "Mayor duración en dispositivos móviles", "battery.100"),
-            ("Profesional", "Apariencia elegante y moderna", "star.fill")
+            (localizationManager.getLocalizedString("Reduce Fatiga Visual"), localizationManager.getLocalizedString("Menos cansancio durante sesiones largas"), "eye.fill"),
+            (localizationManager.getLocalizedString("Mejor Concentración"), localizationManager.getLocalizedString("Interfaz menos distractiva para trabajo médico"), "brain.head.profile"),
+            (localizationManager.getLocalizedString("Ahorro de Batería"), localizationManager.getLocalizedString("Mayor duración en dispositivos móviles"), "battery.100"),
+            (localizationManager.getLocalizedString("Profesional"), localizationManager.getLocalizedString("Apariencia elegante y moderna"), "star.fill")
         ]
     }
     
     private var lightModeBenefits: [(title: String, description: String, icon: String)] {
         [
-            ("Mayor Legibilidad", "Texto más claro en ambientes iluminados", "doc.text.fill"),
-            ("Colores Precisos", "Mejor visualización de gráficos médicos", "chart.bar.fill"),
-            ("Familiaridad", "Interfaz tradicional y conocida", "checkmark.circle.fill"),
-            ("Versatilidad", "Ideal para presentaciones y reportes", "rectangle.on.rectangle")
+            (localizationManager.getLocalizedString("Mayor Legibilidad"), localizationManager.getLocalizedString("Texto más claro en ambientes iluminados"), "doc.text.fill"),
+            (localizationManager.getLocalizedString("Colores Precisos"), localizationManager.getLocalizedString("Mejor visualización de gráficos médicos"), "chart.bar.fill"),
+            (localizationManager.getLocalizedString("Familiaridad"), localizationManager.getLocalizedString("Interfaz tradicional y conocida"), "checkmark.circle.fill"),
+            (localizationManager.getLocalizedString("Versatilidad"), localizationManager.getLocalizedString("Ideal para presentaciones y reportes"), "rectangle.on.rectangle")
         ]
     }
     
     private var pinkModeBenefits: [(title: String, description: String, icon: String)] {
         [
-            ("Ambiente Cálido", "Colores suaves que transmiten calidez y confianza", "heart.fill"),
-            ("Reduce Estrés", "Tonos rosados ayudan a relajar en consultas médicas", "leaf.fill"),
-            ("Feminidad Médica", "Ideal para especialidades ginecológicas y reproductivas", "figure.dress.line.vertical.figure"),
-            ("Único y Elegante", "Diseño distintivo que destaca profesionalismo", "sparkles")
+            (localizationManager.getLocalizedString("Ambiente Cálido"), localizationManager.getLocalizedString("Colores suaves que transmiten calidez y confianza"), "heart.fill"),
+            (localizationManager.getLocalizedString("Reduce Estrés"), localizationManager.getLocalizedString("Tonos rosados ayudan a relajar en consultas médicas"), "leaf.fill"),
+            (localizationManager.getLocalizedString("Feminidad Médica"), localizationManager.getLocalizedString("Ideal para especialidades ginecológicas y reproductivas"), "figure.dress.line.vertical.figure"),
+            (localizationManager.getLocalizedString("Único y Elegante"), localizationManager.getLocalizedString("Diseño distintivo que destaca profesionalismo"), "sparkles")
         ]
     }
     
@@ -425,6 +427,7 @@ struct AppearanceSettingsView: View {
 // MARK: - 📱 VISTA DE COMPARTIR
 struct ShareSettingsView: View {
     @EnvironmentObject var themeManager: ThemeManager
+    @EnvironmentObject var localizationManager: LocalizationManager
     @Environment(\.themeColors) var colors
     
     var body: some View {
@@ -472,11 +475,11 @@ struct ShareSettingsView: View {
             .padding(.top, 20)
             
             VStack(spacing: 8) {
-                Text("Compartir")
+                Text(localizationManager.getLocalizedString("Compartir"))
                     .font(.title2.bold())
                     .foregroundColor(colors.text)
                 
-                Text("Comparte la app con colegas médicos")
+                Text(localizationManager.getLocalizedString("Comparte la app con colegas médicos"))
                     .font(.subheadline)
                     .foregroundColor(colors.textSecondary)
                     .multilineTextAlignment(.center)
@@ -488,29 +491,29 @@ struct ShareSettingsView: View {
     private var sharingOptionsSection: some View {
         VStack(spacing: 16) {
             SettingsActionRow(
-                title: "Compartir en WhatsApp",
-                subtitle: "Recomienda la app a colegas médicos",
+                title: localizationManager.getLocalizedString("Compartir en WhatsApp"),
+                subtitle: localizationManager.getLocalizedString("Recomienda la app a colegas médicos"),
                 icon: "message.fill",
                 action: { shareOnWhatsApp() }
             )
             
             SettingsActionRow(
-                title: "Compartir en Instagram",
-                subtitle: "Publica en tu historia profesional",
+                title: localizationManager.getLocalizedString("Compartir en Instagram"),
+                subtitle: localizationManager.getLocalizedString("Publica en tu historia profesional"),
                 icon: "camera.fill",
                 action: { shareOnInstagram() }
             )
             
             SettingsActionRow(
-                title: "Compartir en TikTok",
-                subtitle: "Crea contenido educativo médico",
+                title: localizationManager.getLocalizedString("Compartir en TikTok"),
+                subtitle: localizationManager.getLocalizedString("Crea contenido educativo médico"),
                 icon: "video.fill",
                 action: { shareOnTikTok() }
             )
             
             SettingsActionRow(
-                title: "Compartir Enlace",
-                subtitle: "Copia enlace de descarga",
+                title: localizationManager.getLocalizedString("Compartir Enlace"),
+                subtitle: localizationManager.getLocalizedString("Copia enlace de descarga"),
                 icon: "link",
                 action: { shareAppLink() }
             )
@@ -587,6 +590,7 @@ struct ShareSettingsView: View {
 // MARK: - 📋 VISTA LEGAL
 struct LegalSettingsView: View {
     @EnvironmentObject var themeManager: ThemeManager
+    @EnvironmentObject var localizationManager: LocalizationManager
     @Environment(\.themeColors) var colors
     
     var body: some View {
@@ -637,11 +641,11 @@ struct LegalSettingsView: View {
             .padding(.top, 20)
             
             VStack(spacing: 8) {
-                Text("Legal y Médico")
+                Text(localizationManager.getLocalizedString("Legal y Médico"))
                     .font(.title2.bold())
                     .foregroundColor(colors.text)
                 
-                Text("Términos, políticas y avisos importantes")
+                Text(localizationManager.getLocalizedString("Términos, políticas y avisos importantes"))
                     .font(.subheadline)
                     .foregroundColor(colors.textSecondary)
                     .multilineTextAlignment(.center)
@@ -653,22 +657,22 @@ struct LegalSettingsView: View {
     private var legalOptionsSection: some View {
         VStack(spacing: 16) {
             SettingsActionRow(
-                title: "Política de Privacidad",
-                subtitle: "Cómo protegemos tus datos médicos",
+                title: localizationManager.getLocalizedString("Política de Privacidad"),
+                subtitle: localizationManager.getLocalizedString("Cómo protegemos tus datos médicos"),
                 icon: "lock.doc.fill",
                 action: { showPrivacyPolicy() }
             )
             
             SettingsActionRow(
-                title: "Términos de Servicio",
-                subtitle: "Condiciones de uso de la aplicación",
+                title: localizationManager.getLocalizedString("Términos de Servicio"),
+                subtitle: localizationManager.getLocalizedString("Condiciones de uso de la aplicación"),
                 icon: "doc.plaintext.fill",
                 action: { showTermsOfService() }
             )
             
             SettingsActionRow(
-                title: "Aviso Médico",
-                subtitle: "Disclaimer y limitaciones profesionales",
+                title: localizationManager.getLocalizedString("Aviso Médico"),
+                subtitle: localizationManager.getLocalizedString("Disclaimer y limitaciones profesionales"),
                 icon: "stethoscope",
                 action: { showMedicalDisclaimer() }
             )
@@ -681,7 +685,7 @@ struct LegalSettingsView: View {
             Image(systemName: "exclamationmark.triangle.fill")
                 .foregroundColor(.orange)
             
-            Text("Esta herramienta es de apoyo diagnóstico. Siempre consulta con criterio médico profesional.")
+            Text(localizationManager.getLocalizedString("Esta herramienta es de apoyo diagnóstico. Siempre consulta con criterio médico profesional."))
                 .font(.caption)
                 .foregroundColor(colors.textSecondary)
         }
