@@ -227,7 +227,7 @@ struct AboutView: View {
                         
                         InfoRow(
                             title: "Especialidad",
-                            value: "Medicina Reproductiva"
+                            value: localizationManager.getLocalizedString("Medicina Reproductiva")
                         )
                         
                         InfoRow(

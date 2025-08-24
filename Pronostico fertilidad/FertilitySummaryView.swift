@@ -309,6 +309,6 @@ struct FertilitySummaryView: View {
 // MARK: - 🔧 PREVIEW
 
 #Preview {
-    Text("FertilitySummaryView Preview")
+    Text("FertilitySummaryView Preview")  // Preview text - no localization needed
         .environmentObject(ThemeManager())
 }

@@ -864,7 +864,7 @@ struct FactorTooltip: View {
 }
 
 #Preview {
-    Text("FertilityFactorsView Preview")
+    Text("FertilityFactorsView Preview")  // Preview text - no localization needed
         .environmentObject(ThemeManager())
         .environmentObject(LocalizationManager.shared)
 }

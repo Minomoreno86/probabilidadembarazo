@@ -217,7 +217,7 @@ struct SettingsView: View {
                     .font(.title2)
                     .foregroundColor(.white)
                 
-                Text("Configuración")
+                Text(localizationManager.getLocalizedString("Configuración"))
                     .font(.title2.bold())
                     .foregroundColor(.white)
                 
@@ -345,7 +345,7 @@ struct SettingsView: View {
             
             VStack(spacing: 16) {
                 SettingsTextField(
-                    title: "Nombre Completo",
+                    title: localizationManager.getLocalizedString("Nombre Completo"),
                     subtitle: "Aparecerá en los reportes",
                     icon: "person.fill",
                     text: $userFullName,
@@ -357,7 +357,7 @@ struct SettingsView: View {
                     subtitle: "Área médica de especialización",
                     icon: "stethoscope",
                     text: $userSpecialty,
-                    placeholder: "Medicina Reproductiva"
+                    placeholder: localizationManager.getLocalizedString("Medicina Reproductiva")
                 )
                 
                 SettingsTextField(
@@ -383,7 +383,7 @@ struct SettingsView: View {
             
             VStack(spacing: 16) {
                 SettingsToggleRow(
-                    title: "Modo Oscuro",
+                    title: localizationManager.getLocalizedString("Modo Oscuro"),
                     subtitle: "Interfaz con colores oscuros",
                     icon: "moon.fill",
                     isOn: $isDarkMode
@@ -420,7 +420,7 @@ struct SettingsView: View {
             
             VStack(spacing: 16) {
                 SettingsActionRow(
-                    title: "Seleccionar Fuente",
+                    title: localizationManager.getLocalizedString("Seleccionar Fuente"),
                     subtitle: "Cambia la tipografía de toda la app",
                     icon: "textformat",
                     action: { showFontSelection() }
@@ -496,7 +496,7 @@ struct SettingsView: View {
             
             VStack(spacing: 16) {
                 SettingsActionRow(
-                    title: "Cambiar Idioma",
+                    title: localizationManager.getLocalizedString("Cambiar Idioma"),
                     subtitle: "Español o Inglés",
                     icon: "globe",
                     action: { /* Se maneja con NavigationLink */ }
@@ -606,7 +606,7 @@ struct SettingsView: View {
                 )
                 
                 SettingsActionRow(
-                    title: "Compartir Enlace",
+                    title: localizationManager.getLocalizedString("Compartir Enlace"),
                     subtitle: "Copia enlace de descarga",
                     icon: "link",
                     action: { shareAppLink() }

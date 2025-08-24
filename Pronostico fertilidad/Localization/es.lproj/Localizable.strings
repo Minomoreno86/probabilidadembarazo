@@ -165,6 +165,12 @@
 "Análisis andrológico" = "Análisis andrológico";
 
 // MARK: - Settings View
+"Configuración" = "Configuración";
+"Nombre Completo" = "Nombre Completo";
+"Modo Oscuro" = "Modo Oscuro";
+"Seleccionar Fuente" = "Seleccionar Fuente";
+"Cambiar Idioma" = "Cambiar Idioma";
+"Compartir Enlace" = "Compartir Enlace";
 "Debug:" = "Debug:";
 "Autenticado" = "Autenticado";
 "No autenticado" = "No autenticado";
@@ -175,6 +181,7 @@
 "Esta app es totalmente compatible con todas las funciones de accesibilidad de iOS" = "Esta app es totalmente compatible con todas las funciones de accesibilidad de iOS";
 
 // MARK: - Settings Components
+"Medicina Reproductiva" = "Medicina Reproductiva";
 "• ASRM Guidelines 2024" = "• ASRM Guidelines 2024";
 "• ESHRE Recommendations 2023" = "• ESHRE Recommendations 2023";
 "• NICE Fertility Guidelines 2024" = "• NICE Fertility Guidelines 2024";
@@ -591,6 +598,8 @@
 // MARK: - Onboarding Flow
 "Bienvenido a Pronóstico Fertilidad" = "Bienvenido a Pronóstico Fertilidad";
 "Una herramienta científica basada en guías ESHRE/ASRM para evaluar probabilidades de embarazo" = "Una herramienta científica basada en guías ESHRE/ASRM para evaluar probabilidades de embarazo";
+"Limitaciones Importantes" = "Limitaciones Importantes";
+"Es fundamental entender qué puede y qué NO puede hacer esta herramienta" = "Es fundamental entender qué puede y qué NO puede hacer esta herramienta";
 "Cálculos basados en evidencia científica internacional" = "Cálculos basados en evidencia científica internacional";
 "Algoritmos validados por especialistas en medicina reproductiva" = "Algoritmos validados por especialistas en medicina reproductiva";
 "Procesamiento 100% local de tus datos médicos" = "Procesamiento 100% local de tus datos médicos";

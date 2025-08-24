@@ -406,12 +406,12 @@ extension EnvironmentValues {
 
 #Preview {
     VStack(spacing: 20) {
-        Text("Light Theme")
+        Text("Light Theme")  // Preview text - no localization needed
             .padding()
             .background(ThemeColors.light.cardGradient)
             .cornerRadius(12)
         
-        Text("Dark Theme")
+        Text("Dark Theme")  // Preview text - no localization needed
             .padding()
             .background(ThemeColors.dark.cardGradient)
             .cornerRadius(12)

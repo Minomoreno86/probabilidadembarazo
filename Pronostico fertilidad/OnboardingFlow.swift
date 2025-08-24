@@ -76,8 +76,8 @@ struct OnboardingFlow: View {
             
             // Página 5: Limitaciones importantes
             OnboardingPage(
-                title: "Limitaciones Importantes",
-                description: "Es fundamental entender qué puede y qué NO puede hacer esta herramienta",
+                title: localizationManager.getLocalizedString("Limitaciones Importantes"),
+                description: localizationManager.getLocalizedString("Es fundamental entender qué puede y qué NO puede hacer esta herramienta"),
                 icon: "exclamationmark.triangle.fill",
                 iconColor: .orange,
                 bulletPoints: [
