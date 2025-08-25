@@ -1301,3 +1301,58 @@
 "Aviso Médico Importante" = "Important Medical Notice";
 "Apoyo diagnóstico - Consulta médico profesional" = "Diagnostic support - Consult medical professional";
 "© 2024 Dr. Jorge Vásquez - Medicina Reproductiva" = "© 2024 Dr. Jorge Vásquez - Reproductive Medicine";
+
+// MARK: - Medical Questionnaire - Missing Texts
+"Analizando..." = "Analyzing...";
+"Generar Pronóstico" = "Generate Prognosis";
+"Normal: <2.5" = "Normal: <2.5";
+"Bajo peso" = "Underweight";
+"Peso normal" = "Normal weight";
+"Sobrepeso" = "Overweight";
+"Obesidad" = "Obesity";
+"Obesidad severa" = "Severe obesity";
+
+// MARK: - Questionnaire Fields - Demographics
+"Edad" = "Age";
+"Años cumplidos" = "Years completed";
+"Peso" = "Weight";
+"Kilogramos" = "Kilograms";
+"Estatura" = "Height";
+"Centímetros" = "Centimeters";
+
+// MARK: - Questionnaire Fields - Gynecological Information
+"Duración del Ciclo Menstrual" = "Menstrual Cycle Duration";
+"Días (normal: 21-35)" = "Days (normal: 21-35)";
+"Duración de Infertilidad" = "Infertility Duration";
+"Años" = "Years";
+"Embarazos Previos" = "Previous Pregnancies";
+"Número total de embarazos (incluye abortos)" = "Total number of pregnancies (includes miscarriages)";
+"Síndrome de Ovario Poliquístico (SOP)" = "Polycystic Ovary Syndrome (PCOS)";
+"Diagnóstico confirmado por especialista" = "Diagnosis confirmed by specialist";
+
+// MARK: - Questionnaire Fields - Surgeries and Pathologies
+"Cirugías Pélvicas Previas" = "Previous Pelvic Surgeries";
+"Laparoscopía, laparotomía, etc." = "Laparoscopy, laparotomy, etc.";
+"Número de Cirugías Pélvicas" = "Number of Pelvic Surgeries";
+"Cantidad total" = "Total amount";
+"Obstrucción Tubárica (OTB)" = "Tubal Obstruction (OTB)";
+"Diagnóstico confirmado" = "Confirmed diagnosis";
+
+// MARK: - Questionnaire Fields - Male Factor
+"Concentración Espermática" = "Sperm Concentration";
+"millones/mL (normal: ≥16)" = "millions/mL (normal: ≥16)";
+"Motilidad Progresiva" = "Progressive Motility";
+"% (normal: ≥30%)" = "% (normal: ≥30%)";
+"Morfología Normal" = "Normal Morphology";
+"% (normal: ≥4%)" = "% (normal: ≥4%)";
+"Volumen Seminal" = "Seminal Volume";
+"mL (normal: ≥1.4)" = "mL (normal: ≥1.4)";
+"Fragmentación DNA Espermática (Opcional)" = "Sperm DNA Fragmentation (Optional)";
+"% (normal: <15%)" = "% (normal: <15%)";
+"Historia de Varicocele" = "Varicocele History";
+"Diagnóstico previo de varicocele" = "Previous varicocele diagnosis";
+"Cultivo Seminal Positivo (Opcional)" = "Positive Seminal Culture (Optional)";
+"Presencia de bacterias en cultivo" = "Presence of bacteria in culture";
+
+// MARK: - Placeholders and Units
+"ej: 2.5" = "e.g.: 2.5";

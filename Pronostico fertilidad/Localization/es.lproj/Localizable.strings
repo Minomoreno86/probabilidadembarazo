@@ -912,3 +912,58 @@
 "La introducción explica cómo funciona la aplicación y qué significan los resultados. ¿Estás seguro de que quieres omitirla?" = "La introducción explica cómo funciona la aplicación y qué significan los resultados. ¿Estás seguro de que quieres omitirla?";
 "Importante" = "Importante";
 "Esta herramienta es de apoyo diagnóstico, siempre consulte a un médico profesional" = "Esta herramienta es de apoyo diagnóstico, siempre consulte a un médico profesional";
+
+// MARK: - Cuestionario Médico - Textos Faltantes
+"Analizando..." = "Analizando...";
+"Generar Pronóstico" = "Generar Pronóstico";
+"Normal: <2.5" = "Normal: <2.5";
+"Bajo peso" = "Bajo peso";
+"Peso normal" = "Peso normal";
+"Sobrepeso" = "Sobrepeso";
+"Obesidad" = "Obesidad";
+"Obesidad severa" = "Obesidad severa";
+
+// MARK: - Campos del Cuestionario - Información Demográfica
+"Edad" = "Edad";
+"Años cumplidos" = "Años cumplidos";
+"Peso" = "Peso";
+"Kilogramos" = "Kilogramos";
+"Estatura" = "Estatura";
+"Centímetros" = "Centímetros";
+
+// MARK: - Campos del Cuestionario - Información Ginecológica
+"Duración del Ciclo Menstrual" = "Duración del Ciclo Menstrual";
+"Días (normal: 21-35)" = "Días (normal: 21-35)";
+"Duración de Infertilidad" = "Duración de Infertilidad";
+"Años" = "Años";
+"Embarazos Previos" = "Embarazos Previos";
+"Número total de embarazos (incluye abortos)" = "Número total de embarazos (incluye abortos)";
+"Síndrome de Ovario Poliquístico (SOP)" = "Síndrome de Ovario Poliquístico (SOP)";
+"Diagnóstico confirmado por especialista" = "Diagnóstico confirmado por especialista";
+
+// MARK: - Campos del Cuestionario - Cirugías y Patologías
+"Cirugías Pélvicas Previas" = "Cirugías Pélvicas Previas";
+"Laparoscopía, laparotomía, etc." = "Laparoscopía, laparotomía, etc.";
+"Número de Cirugías Pélvicas" = "Número de Cirugías Pélvicas";
+"Cantidad total" = "Cantidad total";
+"Obstrucción Tubárica (OTB)" = "Obstrucción Tubárica (OTB)";
+"Diagnóstico confirmado" = "Diagnóstico confirmado";
+
+// MARK: - Campos del Cuestionario - Factor Masculino
+"Concentración Espermática" = "Concentración Espermática";
+"millones/mL (normal: ≥16)" = "millones/mL (normal: ≥16)";
+"Motilidad Progresiva" = "Motilidad Progresiva";
+"% (normal: ≥30%)" = "% (normal: ≥30%)";
+"Morfología Normal" = "Morfología Normal";
+"% (normal: ≥4%)" = "% (normal: ≥4%)";
+"Volumen Seminal" = "Volumen Seminal";
+"mL (normal: ≥1.4)" = "mL (normal: ≥1.4)";
+"Fragmentación DNA Espermática (Opcional)" = "Fragmentación DNA Espermática (Opcional)";
+"% (normal: <15%)" = "% (normal: <15%)";
+"Historia de Varicocele" = "Historia de Varicocele";
+"Diagnóstico previo de varicocele" = "Diagnóstico previo de varicocele";
+"Cultivo Seminal Positivo (Opcional)" = "Cultivo Seminal Positivo (Opcional)";
+"Presencia de bacterias en cultivo" = "Presencia de bacterias en cultivo";
+
+// MARK: - Placeholders y Unidades
+"ej: 2.5" = "ej: 2.5";

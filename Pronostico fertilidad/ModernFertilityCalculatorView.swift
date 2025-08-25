@@ -33,10 +33,10 @@ struct ModernFertilityCalculatorView: View {
     }
     
     enum MedicalSection: String, CaseIterable {
-        case demographics = "Demografía"
-        case gynecology = "Ginecología"
-        case laboratory = "Laboratorio"
-        case maleFactor = "Factor Masculino"
+        case demographics = "demographics"
+        case gynecology = "gynecology"
+        case laboratory = "laboratory"
+        case maleFactor = "maleFactor"
         
         var icon: String {
             switch self {
@@ -56,12 +56,21 @@ struct ModernFertilityCalculatorView: View {
             }
         }
         
+        var displayName: String {
+            switch self {
+            case .demographics: return NSLocalizedString("Demografía", comment: "Sección de información demográfica")
+            case .gynecology: return NSLocalizedString("Ginecología", comment: "Sección de información ginecológica")
+            case .laboratory: return NSLocalizedString("Laboratorio", comment: "Sección de resultados de laboratorio")
+            case .maleFactor: return NSLocalizedString("Factor Masculino", comment: "Sección de factor masculino")
+            }
+        }
+        
         var description: String {
             switch self {
-            case .demographics: return "Información básica del paciente"
-            case .gynecology: return "Historia clínica ginecológica"
-            case .laboratory: return "Resultados de laboratorio"
-            case .maleFactor: return "Análisis andrológico"
+            case .demographics: return NSLocalizedString("Información básica del paciente", comment: "Descripción de la sección demográfica")
+            case .gynecology: return NSLocalizedString("Historia clínica ginecológica", comment: "Descripción de la sección ginecológica")
+            case .laboratory: return NSLocalizedString("Resultados de laboratorio", comment: "Descripción de la sección de laboratorio")
+            case .maleFactor: return NSLocalizedString("Análisis andrológico", comment: "Descripción de la sección de factor masculino")
             }
         }
     }
@@ -250,7 +259,7 @@ struct ModernFertilityCalculatorView: View {
     }
     
     private func sectionTitle(for section: MedicalSection) -> some View {
-        Text(section.rawValue)
+        Text(section.displayName)
             .font(.caption)
             .fontWeight(.medium)
             .foregroundColor(activeSection == section ? section.color : .white.opacity(0.7))
@@ -289,7 +298,7 @@ struct ModernFertilityCalculatorView: View {
                     )
                 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(activeSection.rawValue)
+                    Text(activeSection.displayName)
                         .font(.title2)
                         .fontWeight(.bold)
                         .foregroundColor(colors.text)
@@ -318,8 +327,8 @@ struct ModernFertilityCalculatorView: View {
         VStack(spacing: 12) {
             // Edad
             FormField(
-                title: "Edad",
-                subtitle: "Años cumplidos",
+                title: localizationManager.getLocalizedString("Edad"),
+                subtitle: localizationManager.getLocalizedString("Años cumplidos"),
                 icon: "calendar",
                 value: Binding(
                     get: { 
@@ -335,8 +344,8 @@ struct ModernFertilityCalculatorView: View {
             
             // Peso
             FormField(
-                title: "Peso",
-                subtitle: "Kilogramos",
+                title: localizationManager.getLocalizedString("Peso"),
+                subtitle: localizationManager.getLocalizedString("Kilogramos"),
                 icon: "scalemass",
                 value: Binding(
                     get: { 
@@ -353,8 +362,8 @@ struct ModernFertilityCalculatorView: View {
             
             // Estatura
             FormField(
-                title: "Estatura",
-                subtitle: "Centímetros",
+                title: localizationManager.getLocalizedString("Estatura"),
+                subtitle: localizationManager.getLocalizedString("Centímetros"),
                 icon: "ruler",
                 value: Binding(
                     get: { 
@@ -1056,7 +1065,7 @@ struct ModernFertilityCalculatorView: View {
                         .fontWeight(.semibold)
                 }
                 
-                Text(isCalculating ? "Analizando..." : "Generar Pronóstico")
+                Text(isCalculating ? localizationManager.getLocalizedString("Analizando...") : localizationManager.getLocalizedString("Generar Pronóstico"))
                     .font(.title3)
                     .fontWeight(.semibold)
                 
