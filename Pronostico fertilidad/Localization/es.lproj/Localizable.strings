@@ -414,6 +414,12 @@
 "45" = "45";
 "FertilitySummaryView Preview" = "FertilitySummaryView Preview";
 
+// MARK: - InteractionsVisualizationView Missing Keys
+"Interacciones Detectadas: %@" = "Interacciones Detectadas: %@";
+"Interacciones Criticas: %@" = "Interacciones Críticas: %@";
+"Porcentaje: %@%%" = "Porcentaje: %@%%";
+"Paciente" = "Paciente";
+
 // MARK: - Interactions Visualization
 "Interacciones Detectadas" = "Interacciones Detectadas";
 "Factores que se potencian entre sí" = "Factores que se potencian entre sí";

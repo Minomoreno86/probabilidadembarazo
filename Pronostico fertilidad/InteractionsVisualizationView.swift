@@ -78,7 +78,7 @@ struct InteractionsVisualizationView: View {
             if interactionsReport.hasInteractions {
                 HStack {
                     VStack {
-                        Text("\(interactionsReport.detectedInteractions.count)")
+                        Text(String(format: localizationManager.getLocalizedString("Interacciones Detectadas: %@"), String(interactionsReport.detectedInteractions.count)))
                             .font(.title)
                             .fontWeight(.bold)
                             .foregroundColor(.primary)
@@ -102,7 +102,7 @@ struct InteractionsVisualizationView: View {
                     Spacer()
                     
                     VStack {
-                        Text("\(interactionsReport.criticalInteractionsCount)")
+                        Text(String(format: localizationManager.getLocalizedString("Interacciones Criticas: %@"), String(interactionsReport.criticalInteractionsCount)))
                             .font(.title)
                             .fontWeight(.bold)
                             .foregroundColor(.red)
@@ -201,7 +201,7 @@ struct InteractionsVisualizationView: View {
                         AxisGridLine()
                         AxisValueLabel {
                             if let doubleValue = value.as(Double.self) {
-                                Text("\(Int(doubleValue * 100))%")
+                                Text(String(format: localizationManager.getLocalizedString("Porcentaje: %@%%"), String(Int(doubleValue * 100))))
                                     .font(.caption)
                             }
                         }

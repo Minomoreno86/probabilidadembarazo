@@ -345,6 +345,12 @@
 "45" = "45";
 "FertilitySummaryView Preview" = "FertilitySummaryView Preview";
 
+// MARK: - InteractionsVisualizationView Missing Keys
+"Interacciones Detectadas: %@" = "Detected Interactions: %@";
+"Interacciones Criticas: %@" = "Critical Interactions: %@";
+"Porcentaje: %@%%" = "Percentage: %@%%";
+"Paciente" = "Patient";
+
 // MARK: - ImprovedFertilityResultsView Missing Keys
 "Analisis de Fertilidad" = "Fertility Analysis";
 "Compartir" = "Share";
