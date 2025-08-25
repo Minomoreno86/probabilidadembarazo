@@ -382,7 +382,7 @@ struct PasskeyRegistrationView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancelar") {
+                    Button(localizationManager.getLocalizedString("Cancelar")) {
                         dismiss()
                     }
                     .foregroundColor(colors.accent)

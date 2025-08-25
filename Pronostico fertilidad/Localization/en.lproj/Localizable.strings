@@ -490,6 +490,9 @@
 "Contador de Organizaciones: %@" = "Organization Count: %@";
 "Año de Publicacion: %@" = "Publication Year: %@";
 
+// MARK: - LoginView Missing Keys
+"Cancelar" = "Cancel";
+
 // MARK: - ImprovedFertilityResultsView Missing Keys
 "Analisis de Fertilidad" = "Fertility Analysis";
 "Compartir" = "Share";

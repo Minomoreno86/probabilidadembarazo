@@ -559,6 +559,9 @@
 "Contador de Organizaciones: %@" = "Contador de Organizaciones: %@";
 "Año de Publicacion: %@" = "Año de Publicación: %@";
 
+// MARK: - LoginView Missing Keys
+"Cancelar" = "Cancelar";
+
 // MARK: - Interactions Visualization
 "Interacciones Detectadas" = "Interacciones Detectadas";
 "Factores que se potencian entre sí" = "Factores que se potencian entre sí";
