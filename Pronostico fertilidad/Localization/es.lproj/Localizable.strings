@@ -420,6 +420,12 @@
 "Porcentaje: %@%%" = "Porcentaje: %@%%";
 "Paciente" = "Paciente";
 
+// MARK: - SettingsDetailViews Missing Keys
+"85%" = "85%";
+"Apariencia" = "Apariencia";
+"Compartir" = "Compartir";
+"Legal" = "Legal";
+
 // MARK: - Interactions Visualization
 "Interacciones Detectadas" = "Interacciones Detectadas";
 "Factores que se potencian entre sí" = "Factores que se potencian entre sí";

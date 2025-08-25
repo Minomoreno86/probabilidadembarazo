@@ -116,7 +116,7 @@ struct AppearanceSettingsView: View {
             .padding(.horizontal, 20)
         }
         .background(colors.backgroundGradient)
-        .navigationTitle("Apariencia")
+        .navigationTitle(localizationManager.getLocalizedString("Apariencia"))
         .onChange(of: themeManager.currentTheme) { _, newTheme in
             isDarkMode = newTheme == .dark
         }
@@ -288,7 +288,7 @@ struct AppearanceSettingsView: View {
                     
                     Spacer()
                     
-                    Text("85%")
+                    Text(localizationManager.getLocalizedString("85%"))
                         .font(.system(size: 18, weight: .bold))
                         .foregroundColor(colors.accent)
                 }
@@ -444,7 +444,7 @@ struct ShareSettingsView: View {
             .padding(.horizontal, 20)
         }
         .background(colors.backgroundGradient)
-        .navigationTitle("Compartir")
+        .navigationTitle(localizationManager.getLocalizedString("Compartir"))
     }
     
     // MARK: - Header Section
@@ -610,7 +610,7 @@ struct LegalSettingsView: View {
             .padding(.horizontal, 20)
         }
         .background(colors.backgroundGradient)
-        .navigationTitle("Legal")
+        .navigationTitle(localizationManager.getLocalizedString("Legal"))
     }
     
     // MARK: - Header Section

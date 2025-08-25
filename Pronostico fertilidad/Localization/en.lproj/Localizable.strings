@@ -351,6 +351,12 @@
 "Porcentaje: %@%%" = "Percentage: %@%%";
 "Paciente" = "Patient";
 
+// MARK: - SettingsDetailViews Missing Keys
+"85%" = "85%";
+"Apariencia" = "Appearance";
+"Compartir" = "Share";
+"Legal" = "Legal";
+
 // MARK: - ImprovedFertilityResultsView Missing Keys
 "Analisis de Fertilidad" = "Fertility Analysis";
 "Compartir" = "Share";
