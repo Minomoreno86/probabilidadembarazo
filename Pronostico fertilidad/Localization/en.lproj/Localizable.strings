@@ -407,6 +407,20 @@
 "Error de validacion medica desconocido" = "Unknown medical validation error";
 "Error de persistencia desconocido" = "Unknown persistence error";
 
+// MARK: - FertilityCalculations Missing Keys
+"Fertilidad excelente. Coito programado con monitoreo." = "Excellent fertility. Timed intercourse with monitoring.";
+"Buena fertilidad. Induccion de ovulacion recomendada." = "Good fertility. Ovulation induction recommended.";
+"Fertilidad moderada. IUI con estimulacion controlada." = "Moderate fertility. IUI with controlled stimulation.";
+"Fertilidad baja. FIV/ICSI indicada." = "Low fertility. IVF/ICSI indicated.";
+"Fertilidad muy baja. FIV/ICSI con PGT-A." = "Very low fertility. IVF/ICSI with PGT-A.";
+"Fertilidad critica. Tecnicas reproductivas avanzadas." = "Critical fertility. Advanced reproductive techniques.";
+"green" = "green";
+"blue" = "blue";
+"orange" = "orange";
+"red" = "red";
+"purple" = "purple";
+"black" = "black";
+
 // MARK: - ImprovedFertilityResultsView Missing Keys
 "Analisis de Fertilidad" = "Fertility Analysis";
 "Compartir" = "Share";

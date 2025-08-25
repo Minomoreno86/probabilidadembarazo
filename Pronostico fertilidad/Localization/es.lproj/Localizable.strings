@@ -476,6 +476,20 @@
 "Error de validacion medica desconocido" = "Error de validación médica desconocido";
 "Error de persistencia desconocido" = "Error de persistencia desconocido";
 
+// MARK: - FertilityCalculations Missing Keys
+"Fertilidad excelente. Coito programado con monitoreo." = "Fertilidad excelente. Coito programado con monitoreo.";
+"Buena fertilidad. Induccion de ovulacion recomendada." = "Buena fertilidad. Inducción de ovulación recomendada.";
+"Fertilidad moderada. IUI con estimulacion controlada." = "Fertilidad moderada. IUI con estimulación controlada.";
+"Fertilidad baja. FIV/ICSI indicada." = "Fertilidad baja. FIV/ICSI indicada.";
+"Fertilidad muy baja. FIV/ICSI con PGT-A." = "Fertilidad muy baja. FIV/ICSI con PGT-A.";
+"Fertilidad critica. Tecnicas reproductivas avanzadas." = "Fertilidad crítica. Técnicas reproductivas avanzadas.";
+"green" = "green";
+"blue" = "blue";
+"orange" = "orange";
+"red" = "red";
+"purple" = "purple";
+"black" = "black";
+
 // MARK: - Interactions Visualization
 "Interacciones Detectadas" = "Interacciones Detectadas";
 "Factores que se potencian entre sí" = "Factores que se potencian entre sí";

@@ -481,28 +481,28 @@ extension FertilityCalculations {
         var description: String {
             switch self {
             case .excellent:
-                return "Fertilidad excelente. Coito programado con monitoreo."
+                return NSLocalizedString("Fertilidad excelente. Coito programado con monitoreo.", comment: "")
             case .good:
-                return "Buena fertilidad. Inducción de ovulación recomendada."
+                return NSLocalizedString("Buena fertilidad. Induccion de ovulacion recomendada.", comment: "")
             case .moderate:
-                return "Fertilidad moderada. IUI con estimulación controlada."
+                return NSLocalizedString("Fertilidad moderada. IUI con estimulacion controlada.", comment: "")
             case .low:
-                return "Fertilidad baja. FIV/ICSI indicada."
+                return NSLocalizedString("Fertilidad baja. FIV/ICSI indicada.", comment: "")
             case .veryLow:
-                return "Fertilidad muy baja. FIV/ICSI con PGT-A."
+                return NSLocalizedString("Fertilidad muy baja. FIV/ICSI con PGT-A.", comment: "")
             case .critical:
-                return "Fertilidad crítica. Técnicas reproductivas avanzadas."
+                return NSLocalizedString("Fertilidad critica. Tecnicas reproductivas avanzadas.", comment: "")
             }
         }
         
         var color: String {
             switch self {
-            case .excellent: return "green"
-            case .good: return "blue"
-            case .moderate: return "orange"
-            case .low: return "red"
-            case .veryLow: return "purple"
-            case .critical: return "black"
+            case .excellent: return NSLocalizedString("green", comment: "")
+            case .good: return NSLocalizedString("blue", comment: "")
+            case .moderate: return NSLocalizedString("orange", comment: "")
+            case .low: return NSLocalizedString("red", comment: "")
+            case .veryLow: return NSLocalizedString("purple", comment: "")
+            case .critical: return NSLocalizedString("black", comment: "")
             }
         }
     }
