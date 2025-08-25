@@ -166,7 +166,7 @@ class FertilityResultsViewModel: ObservableObject {
             } catch {
                 await MainActor.run {
                     self.isLoading = false
-                    self.errorMessage = "Error generating PDF: \(error.localizedDescription)"
+                    self.errorMessage = String(format: NSLocalizedString("Error al generar PDF: %@", comment: ""), error.localizedDescription)
                     self.showError = true
                 }
             }
@@ -178,14 +178,14 @@ class FertilityResultsViewModel: ObservableObject {
     /// Genera texto para compartir
     private func generateShareText() -> String {
         return """
-        📊 Fertility Analysis
+        📊 \(NSLocalizedString("Analisis de Fertilidad", comment: ""))
         
-        Annual Probability: \(annualProbabilityFormatted)
-        Monthly Probability: \(monthlyProbabilityFormatted)
-        Category: \(fertilityCategory)
-        Accuracy: \(analysisAccuracy)
+        \(String(format: NSLocalizedString("Probabilidad Anual: %@", comment: ""), annualProbabilityFormatted))
+        \(String(format: NSLocalizedString("Probabilidad Mensual: %@", comment: ""), monthlyProbabilityFormatted))
+        \(String(format: NSLocalizedString("Categoria: %@", comment: ""), fertilityCategory))
+        \(String(format: NSLocalizedString("Precision: %@", comment: ""), analysisAccuracy))
         
-        Generated with Fertility Prognosis
+        \(NSLocalizedString("Generado con Pronostico de Fertilidad", comment: ""))
         """
     }
     
@@ -328,13 +328,13 @@ extension FertilityResultsViewModel {
     var dataConfidenceMessage: String {
         switch dataConfidenceLevel {
         case 0.8...1.0:
-            return "Datos completos - Alta confianza"
+            return NSLocalizedString("Datos completos - Alta confianza", comment: "")
         case 0.6..<0.8:
-            return "Datos parciales - Confianza moderada"
+            return NSLocalizedString("Datos parciales - Confianza moderada", comment: "")
         case 0.4..<0.6:
-            return "Datos limitados - Confianza baja"
+            return NSLocalizedString("Datos limitados - Confianza baja", comment: "")
         default:
-            return "Datos mínimos - Confianza muy baja"
+            return NSLocalizedString("Datos minimos - Confianza muy baja", comment: "")
         }
     }
 }

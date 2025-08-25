@@ -277,6 +277,19 @@
 // MARK: - Interactions Visualization View
 "Total" = "Total";
 
+// MARK: - FertilityResultsViewModel Missing Keys
+"Error al generar PDF: %@" = "Error generating PDF: %@";
+"Analisis de Fertilidad" = "Fertility Analysis";
+"Probabilidad Anual:" = "Annual Probability:";
+"Probabilidad Mensual:" = "Monthly Probability:";
+"Categoria:" = "Category:";
+"Precision:" = "Accuracy:";
+"Generado con Pronostico de Fertilidad" = "Generated with Fertility Prognosis";
+"Datos completos - Alta confianza" = "Complete data - High confidence";
+"Datos parciales - Confianza moderada" = "Partial data - Moderate confidence";
+"Datos limitados - Confianza baja" = "Limited data - Low confidence";
+"Datos minimos - Confianza muy baja" = "Minimal data - Very low confidence";
+
 // MARK: - ImprovedFertilityResultsView Missing Keys
 "Analisis de Fertilidad" = "Fertility Analysis";
 "Compartir" = "Share";

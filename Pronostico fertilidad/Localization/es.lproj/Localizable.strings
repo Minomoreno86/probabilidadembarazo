@@ -346,6 +346,19 @@
 "Probabilidad" = "Probabilidad";
 "Impacto: %@" = "Impacto: %@";
 
+// MARK: - FertilityResultsViewModel Missing Keys
+"Error al generar PDF: %@" = "Error al generar PDF: %@";
+"Analisis de Fertilidad" = "Análisis de Fertilidad";
+"Probabilidad Anual:" = "Probabilidad Anual:";
+"Probabilidad Mensual:" = "Probabilidad Mensual:";
+"Categoria:" = "Categoría:";
+"Precision:" = "Precisión:";
+"Generado con Pronostico de Fertilidad" = "Generado con Pronóstico de Fertilidad";
+"Datos completos - Alta confianza" = "Datos completos - Alta confianza";
+"Datos parciales - Confianza moderada" = "Datos parciales - Confianza moderada";
+"Datos limitados - Confianza baja" = "Datos limitados - Confianza baja";
+"Datos minimos - Confianza muy baja" = "Datos mínimos - Confianza muy baja";
+
 // MARK: - Interactions Visualization
 "Interacciones Detectadas" = "Interacciones Detectadas";
 "Factores que se potencian entre sí" = "Factores que se potencian entre sí";
