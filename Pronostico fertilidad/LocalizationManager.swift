@@ -7,11 +7,13 @@
 
 import Foundation
 import SwiftUI
+import Combine
 
 class LocalizationManager: ObservableObject {
     static let shared = LocalizationManager()
     
     @Published var currentLanguage: Language = .spanish
+    private var cancellables = Set<AnyCancellable>()
     
     enum Language: String, CaseIterable {
         case spanish = "es"
@@ -38,24 +40,22 @@ class LocalizationManager: ObservableObject {
     
     private init() {
         loadSavedLanguage()
+        setupLocaleManagerObserver()
     }
     
-    func setLanguage(_ language: Language) {
-        currentLanguage = language
-        UserDefaults.standard.set(language.rawValue, forKey: "AppLanguage")
-        
-        // Force language change for the app
-        UserDefaults.standard.set([language.rawValue], forKey: "AppleLanguages")
-        UserDefaults.standard.synchronize()
-        
-        // Post notification to refresh UI
-        NotificationCenter.default.post(name: NSNotification.Name("LanguageChanged"), object: nil)
-        
-        // Force UI refresh by updating the published property
-        DispatchQueue.main.async {
-            self.objectWillChange.send()
-        }
+    private func setupLocaleManagerObserver() {
+        // Observar cambios del LocaleManager
+        NotificationCenter.default.publisher(for: NSNotification.Name("forceViewRefresh"))
+            .sink { [weak self] _ in
+                DispatchQueue.main.async {
+                    self?.objectWillChange.send()
+                }
+            }
+            .store(in: &cancellables)
     }
+    
+    // Este método ya no se usa - el LocaleManager maneja el cambio de idioma
+    // func setLanguage(_ language: Language) { ... }
     
     private func loadSavedLanguage() {
         if let savedLanguage = UserDefaults.standard.string(forKey: "AppLanguage"),
@@ -69,13 +69,17 @@ class LocalizationManager: ObservableObject {
     }
     
     func getLocalizedString(_ key: String) -> String {
-        // Get the bundle for the current language
-        guard let languagePath = Bundle.main.path(forResource: currentLanguage.rawValue, ofType: "lproj"),
+        // Cargar manualmente el string del idioma actual
+        let currentLang = UserDefaults.standard.string(forKey: "selectedLanguage") ?? "es"
+        
+        // Cargar el bundle del idioma seleccionado
+        guard let languagePath = Bundle.main.path(forResource: currentLang, ofType: "lproj"),
               let bundle = Bundle(path: languagePath) else {
-            // Fallback to default localization
+            // Fallback a NSLocalizedString
             return NSLocalizedString(key, comment: "")
         }
         
+        // Retornar el string localizado del bundle correcto
         return bundle.localizedString(forKey: key, value: key, table: "Localizable")
     }
     
@@ -110,8 +114,13 @@ extension View {
     
     /// Modifier para hacer que una vista se refresque automáticamente cuando cambie el idioma
     func autoRefreshOnLanguageChange() -> some View {
-        self.onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("LanguageChanged"))) { _ in
-            // La vista se refrescará automáticamente
-        }
+        self.id(LocalizationManager.shared.currentLanguage.rawValue)
+            .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("forceViewRefresh"))) { _ in
+                // Forzar refresh inmediato de la vista
+                DispatchQueue.main.async {
+                    // Esto fuerza un re-render completo
+                    NotificationCenter.default.post(name: NSNotification.Name("ForceViewRefresh"), object: nil)
+                }
+            }
     }
 }

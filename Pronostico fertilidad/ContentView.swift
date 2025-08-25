@@ -15,6 +15,7 @@ struct ContentView: View {
     @EnvironmentObject var appleSignInManager: AppleSignInManager
     @EnvironmentObject var authFlowManager: AuthenticationFlowManager
     @EnvironmentObject var localizationManager: LocalizationManager
+    @StateObject private var localeManager = LocaleManager()
     @Environment(\.themeColors) var colors
     @State private var showingCalculator = false
     @State private var showingSettings = false

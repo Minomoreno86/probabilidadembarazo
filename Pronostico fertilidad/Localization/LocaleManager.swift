@@ -1,51 +1,48 @@
 import SwiftUI
 import Combine
 
-enum AppLanguage: String, CaseIterable {
+enum AppLanguage: String, CaseIterable, Identifiable {
     case es = "es"
     case en = "en"
-
-    var displayName: String {
-        switch self {
-        case .es: return "Español"
-        case .en: return "English"
-        }
-    }
+    var id: String { rawValue }
+    var displayName: String { self == .es ? "Español" : "English" }
+    var flag: String { self == .es ? "🇪🇸" : "🇺🇸" }
 }
 
+@MainActor
 final class LocaleManager: ObservableObject {
     @AppStorage("selectedLanguage") private var storedLanguage: String = "es"
-    @Published var language: AppLanguage
-    
-    var locale: Locale { Locale(identifier: language.rawValue) }
+    @Published private(set) var language: AppLanguage
+    @Published private(set) var locale: Locale
 
     init() {
         let stored = UserDefaults.standard.string(forKey: "selectedLanguage") ?? "es"
         let initial = AppLanguage(rawValue: stored) ?? .es
         self.language = initial
-    }
-    
-    private func updateStoredLanguage() {
-        UserDefaults.standard.set(language.rawValue, forKey: "selectedLanguage")
+        self.locale = Locale(identifier: initial.rawValue)
     }
 
-    func setLanguage(_ lang: AppLanguage) {
-        guard language != lang else { return }
-        language = lang
-        updateStoredLanguage()
+    func setLanguage(_ newLang: AppLanguage) {
+        guard newLang != language else { return }
         
-        // Notifica actualización de localización en toda la app
+        // PRIMERO: Cambiar el idioma en UserDefaults
+        UserDefaults.standard.set([newLang.rawValue], forKey: "AppleLanguages")
+        UserDefaults.standard.synchronize()
+        
+        // SEGUNDO: Actualizar las propiedades
+        storedLanguage = newLang.rawValue
+        language = newLang
+        locale = Locale(identifier: newLang.rawValue)
+        
+        // TERCERO: Notificar cambios y forzar refresh
         objectWillChange.send()
+        NotificationCenter.default.post(name: .forceViewRefresh, object: nil)
         
-        // Post notification para refrescar UI
-        NotificationCenter.default.post(name: .languageChanged, object: nil)
+        // CUARTO: Refresh adicional después de un delay
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            NotificationCenter.default.post(name: .forceViewRefresh, object: nil)
+        }
     }
 }
 
-// MARK: - Notification Names
-extension Notification.Name {
-    static let languageChanged = Notification.Name("languageChanged")
-}
-
-// MARK: - View Extension para Auto-refresh
-// Nota: La función autoRefreshOnLanguageChange ya existe en LocalizationManager.swift
+extension Notification.Name { static let forceViewRefresh = Notification.Name("forceViewRefresh") }

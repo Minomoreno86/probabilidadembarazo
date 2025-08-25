@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LanguageSelectionView: View {
-    @EnvironmentObject var localizationManager: LocalizationManager
+    @StateObject private var localeManager = LocaleManager()
     @Environment(\.dismiss) private var dismiss
     @Environment(\.themeColors) var colors
     
@@ -48,7 +48,7 @@ struct LanguageSelectionView: View {
                 
                 Spacer()
                 
-                Text(localizationManager.getLocalizedString("Idioma / Language"))
+                Text("Idioma / Language")
                     .font(.title2)
                     .fontWeight(.bold)
                     .foregroundColor(.white)
@@ -61,7 +61,7 @@ struct LanguageSelectionView: View {
                     .foregroundColor(.clear)
             }
             
-            Text(localizationManager.getLocalizedString("Selecciona tu idioma preferido / Select your preferred language"))
+            Text("Selecciona tu idioma preferido / Select your preferred language")
                 .font(.subheadline)
                 .foregroundColor(.white.opacity(0.8))
                 .multilineTextAlignment(.center)
@@ -71,12 +71,12 @@ struct LanguageSelectionView: View {
     // MARK: - Language List
     private var languageList: some View {
         VStack(spacing: 16) {
-            ForEach(LocalizationManager.Language.allCases, id: \.self) { language in
+            ForEach(AppLanguage.allCases, id: \.self) { language in
                 LanguageOptionRow(
                     language: language,
-                    isSelected: localizationManager.currentLanguage == language,
+                    isSelected: localeManager.language == language,
                     action: {
-                        localizationManager.setLanguage(language)
+                        localeManager.setLanguage(language)
                         dismiss()
                     }
                 )
@@ -87,7 +87,7 @@ struct LanguageSelectionView: View {
 
 // MARK: - Language Option Row
 struct LanguageOptionRow: View {
-    let language: LocalizationManager.Language
+    let language: AppLanguage
     let isSelected: Bool
     let action: () -> Void
     
@@ -102,7 +102,7 @@ struct LanguageOptionRow: View {
                         .font(.headline)
                         .foregroundColor(.primary)
                     
-                    Text(language == .spanish ? "Español" : "English")
+                    Text(language == .es ? "Español" : "English")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
@@ -134,6 +134,5 @@ struct LanguageOptionRow: View {
 struct LanguageSelectionView_Previews: PreviewProvider {
     static var previews: some View {
         LanguageSelectionView()
-            .environmentObject(LocalizationManager.shared)
     }
 }
