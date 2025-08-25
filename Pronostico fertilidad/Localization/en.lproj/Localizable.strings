@@ -339,6 +339,12 @@
 "Guias Clinicas" = "Clinical Guidelines";
 "FertilityFactorsView Preview" = "FertilityFactorsView Preview";
 
+// MARK: - FertilitySummaryView Missing Keys
+"96.1%" = "96.1%";
+"1,247" = "1,247";
+"45" = "45";
+"FertilitySummaryView Preview" = "FertilitySummaryView Preview";
+
 // MARK: - ImprovedFertilityResultsView Missing Keys
 "Analisis de Fertilidad" = "Fertility Analysis";
 "Compartir" = "Share";

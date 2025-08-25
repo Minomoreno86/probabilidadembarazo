@@ -117,7 +117,7 @@ struct FertilitySummaryView: View {
                         .font(.caption)
                         .foregroundColor(.secondary)
                     
-                    Text("96.1%")
+                    Text(localizationManager.getLocalizedString("96.1%"))
                         .font(.title2)
                         .fontWeight(.semibold)
                         .foregroundColor(.green)
@@ -130,7 +130,7 @@ struct FertilitySummaryView: View {
                         .font(.caption)
                         .foregroundColor(.secondary)
                     
-                    Text("1,247")
+                    Text(localizationManager.getLocalizedString("1,247"))
                         .font(.title2)
                         .fontWeight(.semibold)
                         .foregroundColor(.blue)
@@ -143,7 +143,7 @@ struct FertilitySummaryView: View {
                         .font(.caption)
                         .foregroundColor(.secondary)
                     
-                    Text("45")
+                    Text(localizationManager.getLocalizedString("45"))
                         .font(.title2)
                         .fontWeight(.semibold)
                         .foregroundColor(.purple)

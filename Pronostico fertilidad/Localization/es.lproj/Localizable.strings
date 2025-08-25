@@ -408,6 +408,12 @@
 "Guias Clinicas" = "Guías Clínicas";
 "FertilityFactorsView Preview" = "FertilityFactorsView Preview";
 
+// MARK: - FertilitySummaryView Missing Keys
+"96.1%" = "96.1%";
+"1,247" = "1,247";
+"45" = "45";
+"FertilitySummaryView Preview" = "FertilitySummaryView Preview";
+
 // MARK: - Interactions Visualization
 "Interacciones Detectadas" = "Interacciones Detectadas";
 "Factores que se potencian entre sí" = "Factores que se potencian entre sí";
