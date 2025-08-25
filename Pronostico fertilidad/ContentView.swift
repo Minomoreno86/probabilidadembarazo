@@ -804,7 +804,7 @@ struct ModernProfileCard: View {
                         .foregroundColor(.white)
                 }
                 
-                Text(String(format: localizationManager.getLocalizedString("Fecha de Creacion: %@"), profile.createdAt, style: .date))
+                Text(String(format: localizationManager.getLocalizedString("Fecha de Creacion: %@"), profile.createdAt.formatted(date: .abbreviated, time: .omitted)))
                     .font(.caption)
                     .foregroundColor(.white.opacity(0.7))
             }

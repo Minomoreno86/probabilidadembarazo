@@ -493,6 +493,9 @@
 // MARK: - LoginView Missing Keys
 "Cancelar" = "Cancel";
 
+// MARK: - InteractionsVisualizationView Missing Keys
+"Emoji Paciente" = "👤";
+
 // MARK: - ImprovedFertilityResultsView Missing Keys
 "Analisis de Fertilidad" = "Fertility Analysis";
 "Compartir" = "Share";
