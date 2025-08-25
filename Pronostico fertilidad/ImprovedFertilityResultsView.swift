@@ -73,16 +73,16 @@ struct ImprovedFertilityResultsView: View {
                     }
                     .tag(5)
             }
-            .navigationTitle("Análisis de Fertilidad")
+            .navigationTitle(localizationManager.getLocalizedString("Analisis de Fertilidad"))
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Menu {
                         Button(action: { viewModel.shareResults() }) {
-                            Label("Compartir", systemImage: "square.and.arrow.up")
+                            Label(localizationManager.getLocalizedString("Compartir"), systemImage: "square.and.arrow.up")
                         }
                         
                         Button(action: { viewModel.exportPDF() }) {
-                            Label("Exportar PDF", systemImage: "doc.text.fill")
+                            Label(localizationManager.getLocalizedString("Exportar PDF"), systemImage: "doc.text.fill")
                         }
                     } label: {
                         Image(systemName: "ellipsis.circle")
@@ -96,6 +96,7 @@ struct ImprovedFertilityResultsView: View {
                 }
             }
         }
+        .autoRefreshOnLanguageChange()
     }
     
     // MARK: - Vista de Análisis Detallado
@@ -141,34 +142,34 @@ struct ImprovedFertilityResultsView: View {
                 ], spacing: 16) {
                     MetricCard(
                         icon: "heart.fill",
-                        title: "Puntuación",
+                        title: localizationManager.getLocalizedString("Puntuacion"),
                         value: String(format: "%.1f", result.fertilityScore),
                         color: .red,
-                        subtitle: "Fertilidad"
+                        subtitle: localizationManager.getLocalizedString("Fertilidad")
                     )
                     
                     MetricCard(
                         icon: "chart.line.uptrend.xyaxis",
-                        title: "Tendencia",
+                        title: localizationManager.getLocalizedString("Tendencia"),
                         value: result.category.rawValue.capitalized,
                         color: categoryColor,
-                        subtitle: "Categoría"
+                        subtitle: localizationManager.getLocalizedString("Categoria")
                     )
                     
                     MetricCard(
                         icon: "clock.fill",
-                        title: "Tiempo",
+                        title: localizationManager.getLocalizedString("Tiempo"),
                         value: "\(Int(result.annualProbability * 100))%",
                         color: .blue,
-                        subtitle: "Anual"
+                        subtitle: localizationManager.getLocalizedString("Anual")
                     )
                     
                     MetricCard(
                         icon: "calendar",
-                        title: "Mensual",
+                        title: localizationManager.getLocalizedString("Mensual"),
                         value: "\(Int(result.monthlyProbability * 100))%",
                         color: .green,
-                        subtitle: "Probabilidad"
+                        subtitle: localizationManager.getLocalizedString("Probabilidad")
                     )
                 }
                 .padding(.horizontal)
@@ -505,6 +506,7 @@ struct KeyFactorCard: View {
     let impact: Double
     let index: Int
     @Environment(\.themeColors) var colors
+    @EnvironmentObject var localizationManager: LocalizationManager
     
     var body: some View {
         HStack {
@@ -521,7 +523,7 @@ struct KeyFactorCard: View {
                     .font(.subheadline)
                     .fontWeight(.semibold)
                 
-                Text("Impacto: \(String(format: "%.2f", impact))")
+                Text(String(format: localizationManager.getLocalizedString("Impacto: %@"), String(format: "%.2f", impact)))
                     .font(.caption)
                     .foregroundColor(.secondary)
             }

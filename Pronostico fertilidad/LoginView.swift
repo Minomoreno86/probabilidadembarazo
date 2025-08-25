@@ -68,6 +68,7 @@ struct LoginView: View {
                 dismiss()
             }
         }
+        .autoRefreshOnLanguageChange()
     }
     
     // MARK: - 🏥 LOGO SECTION

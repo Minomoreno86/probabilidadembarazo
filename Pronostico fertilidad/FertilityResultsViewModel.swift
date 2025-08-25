@@ -22,6 +22,8 @@ class FertilityResultsViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var showError: Bool = false
     
+
+    
     // MARK: - Datos del Resultado
     let result: ImprovedFertilityEngine.ComprehensiveFertilityResult
     let profile: FertilityProfile
@@ -164,7 +166,7 @@ class FertilityResultsViewModel: ObservableObject {
             } catch {
                 await MainActor.run {
                     self.isLoading = false
-                    self.errorMessage = "Error al generar PDF: \(error.localizedDescription)"
+                    self.errorMessage = "Error generating PDF: \(error.localizedDescription)"
                     self.showError = true
                 }
             }
@@ -176,14 +178,14 @@ class FertilityResultsViewModel: ObservableObject {
     /// Genera texto para compartir
     private func generateShareText() -> String {
         return """
-        📊 Análisis de Fertilidad
+        📊 Fertility Analysis
         
-        Probabilidad Anual: \(annualProbabilityFormatted)
-        Probabilidad Mensual: \(monthlyProbabilityFormatted)
-        Categoría: \(fertilityCategory)
-        Precisión: \(analysisAccuracy)
+        Annual Probability: \(annualProbabilityFormatted)
+        Monthly Probability: \(monthlyProbabilityFormatted)
+        Category: \(fertilityCategory)
+        Accuracy: \(analysisAccuracy)
         
-        Generado con Pronóstico de Fertilidad
+        Generated with Fertility Prognosis
         """
     }
     

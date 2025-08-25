@@ -50,6 +50,11 @@ class LocalizationManager: ObservableObject {
         
         // Post notification to refresh UI
         NotificationCenter.default.post(name: NSNotification.Name("LanguageChanged"), object: nil)
+        
+        // Force UI refresh by updating the published property
+        DispatchQueue.main.async {
+            self.objectWillChange.send()
+        }
     }
     
     private func loadSavedLanguage() {
@@ -101,5 +106,12 @@ extension View {
     func localizedText(_ key: String, with arguments: CVarArg...) -> some View {
         let localizedString = LocalizationManager.shared.getLocalizedString(key, with: arguments)
         return Text(localizedString)
+    }
+    
+    /// Modifier para hacer que una vista se refresque automáticamente cuando cambie el idioma
+    func autoRefreshOnLanguageChange() -> some View {
+        self.onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("LanguageChanged"))) { _ in
+            // La vista se refrescará automáticamente
+        }
     }
 }

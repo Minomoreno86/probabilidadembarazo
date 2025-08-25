@@ -189,7 +189,7 @@ class SecurityAuditLogger: ObservableObject {
                 fileHandle.closeFile()
             }
         } catch {
-            securityLogger.error("Error escribiendo en archivo de auditoría: \(error.localizedDescription)")
+            securityLogger.error("Error writing to audit file: \(error.localizedDescription)")
         }
     }
     
@@ -252,7 +252,7 @@ class SecurityAuditLogger: ObservableObject {
             return events.sorted { $0.timestamp > $1.timestamp }
             
         } catch {
-            securityLogger.error("Error leyendo logs de auditoría: \(error.localizedDescription)")
+            securityLogger.error("Error reading audit logs: \(error.localizedDescription)")
             return []
         }
     }
@@ -301,7 +301,7 @@ class SecurityAuditLogger: ObservableObject {
             try newContent.write(to: logFile, atomically: true, encoding: .utf8)
             
         } catch {
-            securityLogger.error("Error limpiando logs antiguos: \(error.localizedDescription)")
+            securityLogger.error("Error cleaning old logs: \(error.localizedDescription)")
         }
     }
     

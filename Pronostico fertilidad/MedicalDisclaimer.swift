@@ -50,6 +50,7 @@ struct MedicalDisclaimerView: View {
                         .stroke(style.borderColor, lineWidth: 1)
                 )
         )
+        .autoRefreshOnLanguageChange()
     }
     
     private var disclaimerText: String {

@@ -32,6 +32,7 @@ struct FontSelectionView: View {
                     }
                     .padding(.horizontal, 20)
                 }
+                .autoRefreshOnLanguageChange()
             }
             .navigationTitle("Tipografía")
             #if os(iOS)

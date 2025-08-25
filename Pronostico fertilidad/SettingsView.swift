@@ -69,6 +69,7 @@ struct SettingsView: View {
             FontSelectionView()
                 .environmentObject(userFontManager)
         }
+        .autoRefreshOnLanguageChange()
     }
     
     // MARK: - 📋 LISTA DE CONFIGURACIÓN

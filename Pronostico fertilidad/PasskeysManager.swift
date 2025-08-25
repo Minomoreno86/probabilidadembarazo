@@ -21,6 +21,8 @@ class PasskeysManager: NSObject, ObservableObject {
     @Published var isLoading = false
     @Published var errorMessage: String?
     
+
+    
     // Estado para el challenge de seguridad
     private var currentChallenge: Data?
     private var currentRelyingPartyIdentifier: String = "pronostico-fertilidad.com"
@@ -133,15 +135,15 @@ extension PasskeysManager: ASAuthorizationControllerDelegate {
         let authError = error as? ASAuthorizationError
         switch authError?.code {
         case .canceled:
-            errorMessage = "Autenticación cancelada"
+            errorMessage = "Authentication cancelled"
         case .failed:
-            errorMessage = "Error de autenticación"
+            errorMessage = "Authentication error"
         case .invalidResponse:
-            errorMessage = "Respuesta inválida"
+            errorMessage = "Invalid response"
         case .notHandled:
-            errorMessage = "No se pudo procesar la autenticación"
+            errorMessage = "Could not process authentication"
         case .unknown:
-            errorMessage = "Error desconocido"
+            errorMessage = "Unknown error"
         default:
             errorMessage = error.localizedDescription
         }

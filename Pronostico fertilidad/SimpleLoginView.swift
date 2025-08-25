@@ -62,6 +62,7 @@ struct SimpleLoginView: View {
                 )
             }
         }
+        .autoRefreshOnLanguageChange()
     }
     
     // MARK: - 🏥 LOGO SECTION

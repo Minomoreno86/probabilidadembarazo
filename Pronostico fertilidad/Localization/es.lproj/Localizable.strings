@@ -332,6 +332,20 @@
 "Normal: <2.5" = "Normal: <2.5";
 "Espermatograma (OMS 2021)" = "Espermatograma (OMS 2021)";
 
+// MARK: - ImprovedFertilityResultsView Missing Keys
+"Analisis de Fertilidad" = "Análisis de Fertilidad";
+"Compartir" = "Compartir";
+"Exportar PDF" = "Exportar PDF";
+"Puntuacion" = "Puntuación";
+"Tendencia" = "Tendencia";
+"Tiempo" = "Tiempo";
+"Mensual" = "Mensual";
+"Fertilidad" = "Fertilidad";
+"Categoria" = "Categoría";
+"Anual" = "Anual";
+"Probabilidad" = "Probabilidad";
+"Impacto: %@" = "Impacto: %@";
+
 // MARK: - Interactions Visualization
 "Interacciones Detectadas" = "Interacciones Detectadas";
 "Factores que se potencian entre sí" = "Factores que se potencian entre sí";

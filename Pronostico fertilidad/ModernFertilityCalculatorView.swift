@@ -119,11 +119,12 @@ struct ModernFertilityCalculatorView: View {
                 ImprovedFertilityResultsView(result: result, profile: profile)
             }
         }
-        .alert("Error en el Cálculo", isPresented: $showError) {
-            Button("OK") { }
+        .alert(localizationManager.getLocalizedString("Error en el Cálculo"), isPresented: $showError) {
+            Button(localizationManager.getLocalizedString("OK")) { }
         } message: {
-            Text(errorMessage.isEmpty ? "Ocurrió un error durante el cálculo" : errorMessage)
+            Text(errorMessage.isEmpty ? localizationManager.getLocalizedString("Ocurrió un error durante el cálculo") : errorMessage)
         }
+        .autoRefreshOnLanguageChange()
         .onAppear {
             withAnimation(.easeInOut(duration: 1.0)) {
                 animateProgress = true
@@ -162,7 +163,7 @@ struct ModernFertilityCalculatorView: View {
                         .fontWeight(.bold)
                         .foregroundColor(colors.text)
                     
-                    Text(localizationManager.getLocalizedString("FertilyzeAI Suite"))
+                    Text("FertilyzeAI Suite")
                         .font(.caption)
                         .foregroundColor(.white.opacity(0.8))
                 }
