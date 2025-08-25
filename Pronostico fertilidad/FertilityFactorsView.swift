@@ -353,7 +353,7 @@ struct SuperFactorCard: View {
                     .animation(.easeInOut(duration: 1.5), value: impact)
                 
                 VStack(spacing: 2) {
-                    Text("\(Int(abs(impact) * 100))")
+                    Text(String(format: localizationManager.getLocalizedString("Porcentaje de Impacto: %@"), String(Int(abs(impact) * 100))))
                         .font(.title3)
                         .fontWeight(.bold)
                         .foregroundColor(factorColor)
@@ -569,7 +569,7 @@ struct CategorySummaryCard: View {
                 .scaleEffect(isAnimating ? 1.2 : 1.0)
                 .animation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true), value: isAnimating)
             
-            Text("\(count)")
+            Text(String(format: localizationManager.getLocalizedString("Contador: %@"), String(count)))
                 .font(.title2)
                 .fontWeight(.bold)
                 .foregroundColor(color)
@@ -657,7 +657,7 @@ struct FactorTooltip: View {
             // Referencia
             HStack {
                 Spacer()
-                Text("📚 \(reference)")
+                Text(String(format: localizationManager.getLocalizedString("Referencia: %@"), "📚 \(reference)"))
                     .font(.caption2)
                     .foregroundColor(.blue)
             }

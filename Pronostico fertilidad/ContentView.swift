@@ -416,7 +416,7 @@ struct ContentView: View {
                         .fontWeight(.bold)
                         .foregroundColor(.white)
                     
-                    Text("\(profiles.count) \(profiles.count == 1 ? localizationManager.getLocalizedString("evaluación") : localizationManager.getLocalizedString("evaluaciones")) \(profiles.count == 1 ? localizationManager.getLocalizedString("completada") : localizationManager.getLocalizedString("completadas"))")
+                    Text(String(format: localizationManager.getLocalizedString("Contador de Perfiles: %@"), String(profiles.count)) + " \(profiles.count == 1 ? localizationManager.getLocalizedString("evaluación") : localizationManager.getLocalizedString("evaluaciones")) \(profiles.count == 1 ? localizationManager.getLocalizedString("completada") : localizationManager.getLocalizedString("completadas"))")
                         .font(.subheadline)
                         .foregroundColor(.white.opacity(0.8))
                 }
@@ -804,7 +804,7 @@ struct ModernProfileCard: View {
                         .foregroundColor(.white)
                 }
                 
-                Text("\(localizationManager.getLocalizedString("Creada:")) \(profile.createdAt, style: .date)")
+                Text(String(format: localizationManager.getLocalizedString("Fecha de Creacion: %@"), profile.createdAt, style: .date))
                     .font(.caption)
                     .foregroundColor(.white.opacity(0.7))
             }

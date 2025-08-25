@@ -123,7 +123,7 @@ struct SettingsView: View {
                 
                 // Debug info (temporal)
                 if displayName == "Usuario" || displayEmail == "No conectado" {
-                                    Text("\(localizationManager.getLocalizedString("Debug:")) \(authFlowManager.isAuthenticated ? localizationManager.getLocalizedString("Autenticado") : localizationManager.getLocalizedString("No autenticado"))")
+                                    Text(String(format: localizationManager.getLocalizedString("Debug Autenticado: %@"), authFlowManager.isAuthenticated ? localizationManager.getLocalizedString("Autenticado") : localizationManager.getLocalizedString("No autenticado")))
                     .font(.caption2)
                     .foregroundColor(.orange)
                 }

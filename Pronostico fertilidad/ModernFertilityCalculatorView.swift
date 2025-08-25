@@ -163,7 +163,7 @@ struct ModernFertilityCalculatorView: View {
                         .fontWeight(.bold)
                         .foregroundColor(colors.text)
                     
-                    Text("FertilyzeAI Suite")
+                    Text(localizationManager.getLocalizedString("FertilyzeAI Suite"))
                         .font(.caption)
                         .foregroundColor(.white.opacity(0.8))
                 }

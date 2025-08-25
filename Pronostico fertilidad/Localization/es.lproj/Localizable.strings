@@ -516,6 +516,49 @@
 "No me la han hecho" = "No me la han hecho";
 "Ovarios poliquisticos (>12 foliculos)" = "Ovarios poliquísticos (>12 folículos)";
 
+// MARK: - InteractionsVisualizationView Remaining Keys
+"Porcentaje Final: %@%%" = "Porcentaje Final: %@%%";
+"Porcentaje de Interaccion: %@%%" = "Porcentaje de Interacción: %@%%";
+"Porcentaje en Red: %@%%" = "Porcentaje en Red: %@%%";
+"Porcentaje en Lista: %@%%" = "Porcentaje en Lista: %@%%";
+"Formato Combinado: %@ (%@%%)" = "Formato Combinado: %@ (%@%%)";
+
+// MARK: - FertilityFactorsView Remaining Keys
+"Porcentaje de Impacto: %@" = "Porcentaje de Impacto: %@";
+"Contador: %@" = "Contador: %@";
+"Referencia: %@" = "Referencia: %@";
+
+// MARK: - ModernFertilityCalculatorView Remaining Keys
+"FertilyzeAI Suite" = "FertilyzeAI Suite";
+
+// MARK: - ContentView Remaining Keys
+"Contador de Perfiles: %@" = "Contador de Perfiles: %@";
+"Fecha de Creacion: %@" = "Fecha de Creación: %@";
+
+// MARK: - ImprovedFertilityResultsView Remaining Keys
+"Nivel de Confianza: %@%%" = "Nivel de Confianza: %@%%";
+"Indice del Factor: %@" = "Índice del Factor: %@";
+
+// MARK: - ThemeManager Remaining Keys
+"Tema Claro" = "Tema Claro";
+"Tema Oscuro" = "Tema Oscuro";
+
+// MARK: - SettingsView Remaining Keys
+"Debug Autenticado: %@" = "Debug Autenticado: %@";
+
+// MARK: - SmoothTransitionsDemoView Remaining Keys
+"Edad en Grafico: %@" = "Edad en Gráfico: %@";
+"Probabilidad en Porcentaje: %@%%" = "Probabilidad en Porcentaje: %@%%";
+"Edad Seleccionada: %@ anios" = "Edad Seleccionada: %@ años";
+"Probabilidad Actual: %@%%" = "Probabilidad Actual: %@%%";
+"Cambio Relativo: %@%%" = "Cambio Relativo: %@%%";
+"Probabilidad Discreta: %@%%" = "Probabilidad Discreta: %@%%";
+"Probabilidad Continua: %@%%" = "Probabilidad Continua: %@%%";
+"Mejora: +%@%%" = "Mejora: +%@%%";
+"Tamaño de Muestra: %@" = "Tamaño de Muestra: %@";
+"Contador de Organizaciones: %@" = "Contador de Organizaciones: %@";
+"Año de Publicacion: %@" = "Año de Publicación: %@";
+
 // MARK: - Interactions Visualization
 "Interacciones Detectadas" = "Interacciones Detectadas";
 "Factores que se potencian entre sí" = "Factores que se potencian entre sí";

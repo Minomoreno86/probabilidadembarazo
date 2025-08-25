@@ -90,7 +90,7 @@ struct InteractionsVisualizationView: View {
                     Spacer()
                     
                     VStack {
-                        Text("\(String(format: "%.0f", interactionsReport.finalMultiplier * 100))%")
+                        Text(String(format: localizationManager.getLocalizedString("Porcentaje Final: %@%%"), String(format: "%.0f", interactionsReport.finalMultiplier * 100)))
                             .font(.title)
                             .fontWeight(.bold)
                             .foregroundColor(multiplierColor(interactionsReport.finalMultiplier))
@@ -229,7 +229,7 @@ struct InteractionsVisualizationView: View {
                                 .frame(width: CGFloat(interaction.multiplier * 200), height: 20)
                                 .cornerRadius(4)
                             
-                            Text("\(String(format: "%.0f", interaction.multiplier * 100))%")
+                            Text(String(format: localizationManager.getLocalizedString("Porcentaje de Interaccion: %@%%"), String(format: "%.0f", interaction.multiplier * 100)))
                                 .font(.caption)
                                 .fontWeight(.medium)
                                 .frame(width: 40, alignment: .trailing)
@@ -467,7 +467,7 @@ struct InteractionRowView: View {
                 Spacer()
                 
                 VStack(alignment: .trailing, spacing: 2) {
-                    Text("\(String(format: "%.0f", interaction.multiplier * 100))%")
+                    Text(String(format: localizationManager.getLocalizedString("Porcentaje en Lista: %@%%"), String(format: "%.0f", interaction.multiplier * 100)))
                         .font(.subheadline)
                         .fontWeight(.bold)
                         .foregroundColor(multiplierColor(interaction.multiplier))
@@ -538,7 +538,7 @@ struct InteractionDetailView: View {
                         HStack {
                             Text(localizationManager.getLocalizedString("Multiplicador:"))
                                 .fontWeight(.medium)
-                            Text("\(String(format: "%.2f", interaction.multiplier)) (\(String(format: "%.0f", interaction.multiplier * 100))%)")
+                            Text(String(format: localizationManager.getLocalizedString("Formato Combinado: %@ (%@%%)"), String(format: "%.2f", interaction.multiplier), String(format: "%.0f", interaction.multiplier * 100)))
                                 .fontWeight(.bold)
                                 .foregroundColor(multiplierColor(interaction.multiplier))
                         }

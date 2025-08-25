@@ -123,7 +123,7 @@ struct ImprovedFertilityResultsView: View {
                         Circle()
                             .fill(confidenceColor)
                             .frame(width: 8, height: 8)
-                        Text("\(Int(result.confidenceLevel * 100))%")
+                        Text(String(format: localizationManager.getLocalizedString("Nivel de Confianza: %@%%"), String(Int(result.confidenceLevel * 100))))
                             .font(.caption)
                             .fontWeight(.semibold)
                             .foregroundColor(.secondary)
@@ -510,7 +510,7 @@ struct KeyFactorCard: View {
     
     var body: some View {
         HStack {
-            Text("\(index + 1)")
+            Text(String(format: localizationManager.getLocalizedString("Indice del Factor: %@"), String(index + 1)))
                 .font(.caption)
                 .fontWeight(.bold)
                 .foregroundColor(.white)
@@ -570,7 +570,7 @@ struct RecommendationRowView: View {
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
             // Número de recomendación
-            Text("\(index + 1)")
+            Text(String(format: localizationManager.getLocalizedString("Indice del Factor: %@"), String(index + 1)))
                 .font(.caption)
                 .fontWeight(.bold)
                 .foregroundColor(.white)

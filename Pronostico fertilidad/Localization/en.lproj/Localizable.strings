@@ -447,6 +447,49 @@
 "No me la han hecho" = "Not evaluated";
 "Ovarios poliquisticos (>12 foliculos)" = "Polycystic ovaries (>12 follicles)";
 
+// MARK: - InteractionsVisualizationView Remaining Keys
+"Porcentaje Final: %@%%" = "Final Percentage: %@%%";
+"Porcentaje de Interaccion: %@%%" = "Interaction Percentage: %@%%";
+"Porcentaje en Red: %@%%" = "Network Percentage: %@%%";
+"Porcentaje en Lista: %@%%" = "List Percentage: %@%%";
+"Formato Combinado: %@ (%@%%)" = "Combined Format: %@ (%@%%)";
+
+// MARK: - FertilityFactorsView Remaining Keys
+"Porcentaje de Impacto: %@" = "Impact Percentage: %@";
+"Contador: %@" = "Counter: %@";
+"Referencia: %@" = "Reference: %@";
+
+// MARK: - ModernFertilityCalculatorView Remaining Keys
+"FertilyzeAI Suite" = "FertilyzeAI Suite";
+
+// MARK: - ContentView Remaining Keys
+"Contador de Perfiles: %@" = "Profile Counter: %@";
+"Fecha de Creacion: %@" = "Creation Date: %@";
+
+// MARK: - ImprovedFertilityResultsView Remaining Keys
+"Nivel de Confianza: %@%%" = "Confidence Level: %@%%";
+"Indice del Factor: %@" = "Factor Index: %@";
+
+// MARK: - ThemeManager Remaining Keys
+"Tema Claro" = "Light Theme";
+"Tema Oscuro" = "Dark Theme";
+
+// MARK: - SettingsView Remaining Keys
+"Debug Autenticado: %@" = "Debug Authenticated: %@";
+
+// MARK: - SmoothTransitionsDemoView Remaining Keys
+"Edad en Grafico: %@" = "Age in Chart: %@";
+"Probabilidad en Porcentaje: %@%%" = "Probability in Percentage: %@%%";
+"Edad Seleccionada: %@ anios" = "Selected Age: %@ years";
+"Probabilidad Actual: %@%%" = "Current Probability: %@%%";
+"Cambio Relativo: %@%%" = "Relative Change: %@%%";
+"Probabilidad Discreta: %@%%" = "Discrete Probability: %@%%";
+"Probabilidad Continua: %@%%" = "Continuous Probability: %@%%";
+"Mejora: +%@%%" = "Improvement: +%@%%";
+"Tamaño de Muestra: %@" = "Sample Size: %@";
+"Contador de Organizaciones: %@" = "Organization Count: %@";
+"Año de Publicacion: %@" = "Publication Year: %@";
+
 // MARK: - ImprovedFertilityResultsView Missing Keys
 "Analisis de Fertilidad" = "Fertility Analysis";
 "Compartir" = "Share";

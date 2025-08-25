@@ -195,7 +195,7 @@ struct SmoothTransitionsDemoView: View {
                     AxisGridLine()
                     AxisValueLabel {
                         if let age = value.as(Double.self) {
-                            Text("\(Int(age))")
+                            Text(String(format: localizationManager.getLocalizedString("Edad en Grafico: %@"), String(Int(age))))
                         }
                     }
                 }
@@ -205,7 +205,7 @@ struct SmoothTransitionsDemoView: View {
                     AxisGridLine()
                     AxisValueLabel {
                         if let probability = value.as(Double.self) {
-                            Text("\(Int(probability * 100))%")
+                            Text(String(format: localizationManager.getLocalizedString("Probabilidad en Porcentaje: %@%%"), String(Int(probability * 100))))
                         }
                     }
                 }
@@ -249,7 +249,7 @@ struct SmoothTransitionsDemoView: View {
                     Text(localizationManager.getLocalizedString("Edad:"))
                         .fontWeight(.semibold)
                     Spacer()
-                    Text("\(String(format: "%.1f", selectedAge)) \(localizationManager.getLocalizedString("años"))")
+                    Text(String(format: localizationManager.getLocalizedString("Edad Seleccionada: %@ anios"), String(format: "%.1f", selectedAge)))
                         .foregroundColor(.secondary)
                 }
                 
@@ -262,7 +262,7 @@ struct SmoothTransitionsDemoView: View {
                     HStack {
                         Text(localizationManager.getLocalizedString("Probabilidad actual:"))
                         Spacer()
-                        Text("\(String(format: "%.1f", sensitivity.currentProbability * 100))%")
+                        Text(String(format: localizationManager.getLocalizedString("Probabilidad Actual: %@%%"), String(format: "%.1f", sensitivity.currentProbability * 100))))
                             .fontWeight(.bold)
                             .foregroundColor(selectedFunction.color)
                     }
@@ -270,7 +270,7 @@ struct SmoothTransitionsDemoView: View {
                     HStack {
                         Text(localizationManager.getLocalizedString("Cambio por año:"))
                         Spacer()
-                        Text("\(String(format: "%.1f", sensitivity.relativeChange))%")
+                        Text(String(format: localizationManager.getLocalizedString("Cambio Relativo: %@%%"), String(format: "%.1f", sensitivity.relativeChange))))
                             .fontWeight(.bold)
                             .foregroundColor(sensitivity.isSmooth ? .green : .orange)
                     }
@@ -306,14 +306,14 @@ struct SmoothTransitionsDemoView: View {
                 HStack {
                     Text(localizationManager.getLocalizedString("Edad seleccionada:"))
                     Spacer()
-                    Text("\(Int(selectedAge)) \(localizationManager.getLocalizedString("años"))")
+                    Text(String(format: localizationManager.getLocalizedString("Edad Seleccionada: %@ anios"), String(Int(selectedAge))))
                         .fontWeight(.bold)
                 }
                 
                 HStack {
                     Text(localizationManager.getLocalizedString("Función discreta (actual):"))
                     Spacer()
-                    Text("\(String(format: "%.1f", comparison.discreteProbability * 100))%")
+                    Text(String(format: localizationManager.getLocalizedString("Probabilidad Discreta: %@%%"), String(format: "%.1f", comparison.discreteProbability * 100))))
                         .foregroundColor(.red)
                         .fontWeight(.bold)
                 }
@@ -321,7 +321,7 @@ struct SmoothTransitionsDemoView: View {
                 HStack {
                     Text(localizationManager.getLocalizedString("Función continua:"))
                     Spacer()
-                    Text("\(String(format: "%.1f", comparison.continuousProbability * 100))%")
+                    Text(String(format: localizationManager.getLocalizedString("Probabilidad Continua: %@%%"), String(format: "%.1f", comparison.continuousProbability * 100))))
                         .foregroundColor(selectedFunction.color)
                         .fontWeight(.bold)
                 }
@@ -331,7 +331,7 @@ struct SmoothTransitionsDemoView: View {
                 HStack {
                     Text(localizationManager.getLocalizedString("Mejora en precisión:"))
                     Spacer()
-                    Text("+\(String(format: "%.1f", comparison.improvement))%")
+                    Text(String(format: localizationManager.getLocalizedString("Mejora: +%@%%"), String(format: "%.1f", comparison.improvement))))
                         .foregroundColor(.green)
                         .fontWeight(.bold)
                 }
@@ -366,21 +366,21 @@ struct SmoothTransitionsDemoView: View {
                 HStack {
                     Text(localizationManager.getLocalizedString("Total de casos:"))
                     Spacer()
-                    Text("\(validation.totalSampleSize)")
+                    Text(String(format: localizationManager.getLocalizedString("Tamaño de Muestra: %@"), String(validation.totalSampleSize)))
                         .fontWeight(.bold)
                 }
                 
                 HStack {
                     Text(localizationManager.getLocalizedString("Organizaciones:"))
                     Spacer()
-                    Text("\(validation.organizations.count)")
+                    Text(String(format: localizationManager.getLocalizedString("Contador de Organizaciones: %@"), String(validation.organizations.count)))
                         .fontWeight(.bold)
                 }
                 
                 HStack {
                     Text(localizationManager.getLocalizedString("Año de publicación:"))
                     Spacer()
-                    Text("\(validation.publicationYear)")
+                    Text(String(format: localizationManager.getLocalizedString("Año de Publicacion: %@"), String(validation.publicationYear)))
                         .fontWeight(.bold)
                 }
                 
