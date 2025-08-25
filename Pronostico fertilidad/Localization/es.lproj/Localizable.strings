@@ -490,6 +490,32 @@
 "purple" = "purple";
 "black" = "black";
 
+// MARK: - FertilityModels Missing Keys
+"Ninguno" = "Ninguno";
+"Submucoso" = "Submucoso";
+"Intramural" = "Intramural";
+"Subseroso" = "Subseroso";
+"Ninguna" = "Ninguna";
+"Focal" = "Focal";
+"Difusa" = "Difusa";
+"Unico" = "Único";
+"Multiples" = "Múltiples";
+"Normal" = "Normal";
+"Obstruccion Unilateral" = "Obstrucción Unilateral";
+"Obstruccion Bilateral" = "Obstrucción Bilateral";
+"Clips" = "Clips";
+"Coagulacion" = "Coagulación";
+"Salpingectomia" = "Salpingectomía";
+"No" = "No";
+"Leve (vello en menton)" = "Leve (vello en mentón)";
+"Moderado (vello en menton + mejillas)" = "Moderado (vello en mentón + mejillas)";
+"Severo (vello facial extenso)" = "Severo (vello facial extenso)";
+"Leve (pocos granos)" = "Leve (pocos granos)";
+"Moderado (acne persistente)" = "Moderado (acné persistente)";
+"Severo (acne quistico)" = "Severo (acné quístico)";
+"No me la han hecho" = "No me la han hecho";
+"Ovarios poliquisticos (>12 foliculos)" = "Ovarios poliquísticos (>12 folículos)";
+
 // MARK: - Interactions Visualization
 "Interacciones Detectadas" = "Interacciones Detectadas";
 "Factores que se potencian entre sí" = "Factores que se potencian entre sí";

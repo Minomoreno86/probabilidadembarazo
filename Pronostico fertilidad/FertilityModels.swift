@@ -18,10 +18,10 @@ enum MyomaType: String, CaseIterable, Codable {
     
     var displayName: String {
         switch self {
-        case .none: return "Ninguno"
-        case .submucosal: return "Submucoso"
-        case .intramural: return "Intramural"
-        case .subserosal: return "Subseroso"
+        case .none: return NSLocalizedString("Ninguno", comment: "")
+        case .submucosal: return NSLocalizedString("Submucoso", comment: "")
+        case .intramural: return NSLocalizedString("Intramural", comment: "")
+        case .subserosal: return NSLocalizedString("Subseroso", comment: "")
         }
     }
 }
@@ -33,9 +33,9 @@ enum AdenomyosisType: String, CaseIterable, Codable {
     
     var displayName: String {
         switch self {
-        case .none: return "Ninguna"
-        case .focal: return "Focal"
-        case .diffuse: return "Difusa"
+        case .none: return NSLocalizedString("Ninguna", comment: "")
+        case .focal: return NSLocalizedString("Focal", comment: "")
+        case .diffuse: return NSLocalizedString("Difusa", comment: "")
         }
     }
 }
@@ -47,9 +47,9 @@ enum PolypType: String, CaseIterable, Codable {
     
     var displayName: String {
         switch self {
-        case .none: return "Ninguno"
-        case .single: return "Único"
-        case .multiple: return "Múltiples"
+        case .none: return NSLocalizedString("Ninguno", comment: "")
+        case .single: return NSLocalizedString("Unico", comment: "")
+        case .multiple: return NSLocalizedString("Multiples", comment: "")
         }
     }
 }
@@ -61,9 +61,9 @@ enum HsgResult: String, CaseIterable, Codable {
     
     var displayName: String {
         switch self {
-        case .normal: return "Normal"
-        case .unilateral: return "Obstrucción Unilateral"
-        case .bilateral: return "Obstrucción Bilateral"
+        case .normal: return NSLocalizedString("Normal", comment: "")
+        case .unilateral: return NSLocalizedString("Obstruccion Unilateral", comment: "")
+        case .bilateral: return NSLocalizedString("Obstruccion Bilateral", comment: "")
         }
     }
 }
@@ -76,10 +76,10 @@ enum OtbMethod: String, CaseIterable, Codable {
     
     var displayName: String {
         switch self {
-        case .none: return "Ninguno"
-        case .clips: return "Clips"
-        case .coagulation: return "Coagulación"
-        case .salpingectomy: return "Salpingectomía"
+        case .none: return NSLocalizedString("Ninguno", comment: "")
+        case .clips: return NSLocalizedString("Clips", comment: "")
+        case .coagulation: return NSLocalizedString("Coagulacion", comment: "")
+        case .salpingectomy: return NSLocalizedString("Salpingectomia", comment: "")
         }
     }
 }
@@ -94,10 +94,10 @@ enum HirsutismSeverity: String, CaseIterable, Codable {
     
     var displayName: String {
         switch self {
-        case .none: return "No"
-        case .mild: return "Leve (vello en mentón)"
-        case .moderate: return "Moderado (vello en mentón + mejillas)"
-        case .severe: return "Severo (vello facial extenso)"
+        case .none: return NSLocalizedString("No", comment: "")
+        case .mild: return NSLocalizedString("Leve (vello en menton)", comment: "")
+        case .moderate: return NSLocalizedString("Moderado (vello en menton + mejillas)", comment: "")
+        case .severe: return NSLocalizedString("Severo (vello facial extenso)", comment: "")
         }
     }
 }
@@ -110,10 +110,10 @@ enum AcneSeverity: String, CaseIterable, Codable {
     
     var displayName: String {
         switch self {
-        case .none: return "No"
-        case .mild: return "Leve (pocos granos)"
-        case .moderate: return "Moderado (acné persistente)"
-        case .severe: return "Severo (acné quístico)"
+        case .none: return NSLocalizedString("No", comment: "")
+        case .mild: return NSLocalizedString("Leve (pocos granos)", comment: "")
+        case .moderate: return NSLocalizedString("Moderado (acne persistente)", comment: "")
+        case .severe: return NSLocalizedString("Severo (acne quistico)", comment: "")
         }
     }
 }
@@ -125,9 +125,9 @@ enum OvarianMorphology: String, CaseIterable, Codable {
     
     var displayName: String {
         switch self {
-        case .notEvaluated: return "No me la han hecho"
-        case .normal: return "Normal"
-        case .polycystic: return "Ovarios poliquísticos (>12 folículos)"
+        case .notEvaluated: return NSLocalizedString("No me la han hecho", comment: "")
+        case .normal: return NSLocalizedString("Normal", comment: "")
+        case .polycystic: return NSLocalizedString("Ovarios poliquisticos (>12 foliculos)", comment: "")
         }
     }
 }
