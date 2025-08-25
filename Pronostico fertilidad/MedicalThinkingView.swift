@@ -278,7 +278,7 @@ struct ThinkingResultView: View {
                     Text(localizationManager.getLocalizedString("Confianza General:"))
                         .font(.subheadline)
                     
-                    Text("\(Int(result.overallConfidence * 100))%")
+                    Text(String(format: localizationManager.getLocalizedString("Confianza General: %@%%"), String(Int(result.overallConfidence * 100))))
                         .font(.subheadline)
                         .fontWeight(.bold)
                         .foregroundColor(.blue)
@@ -345,7 +345,7 @@ struct ReasoningStepCard: View {
                             .font(.caption)
                             .foregroundColor(.secondary)
                         
-                        Text("\(Int(step.confidenceLevel * 100))%")
+                        Text(String(format: localizationManager.getLocalizedString("Nivel de Confianza: %@%%"), String(Int(step.confidenceLevel * 100))))
                             .font(.caption)
                             .fontWeight(.bold)
                             .foregroundColor(.blue)
@@ -465,7 +465,7 @@ struct ClinicalValidationCard: View {
                 
                 Spacer()
                 
-                Text("\(Int(validation.validationScore * 100))%")
+                Text(String(format: localizationManager.getLocalizedString("Puntuacion de Validacion: %@%%"), String(Int(validation.validationScore * 100))))
                     .font(.headline)
                     .fontWeight(.bold)
                     .foregroundColor(validation.isValid ? .green : .red)
@@ -537,7 +537,7 @@ struct RiskAssessmentCard: View {
                         
                         Spacer()
                         
-                        Text("\(Int(risk.probability * 100))%")
+                        Text(String(format: localizationManager.getLocalizedString("Probabilidad de Riesgo: %@%%"), String(Int(risk.probability * 100))))
                             .font(.caption)
                             .fontWeight(.bold)
                             .foregroundColor(.blue)

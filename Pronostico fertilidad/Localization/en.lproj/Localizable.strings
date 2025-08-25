@@ -357,6 +357,15 @@
 "Compartir" = "Share";
 "Legal" = "Legal";
 
+// MARK: - MedicalThinkingView Missing Keys
+"Confianza General: %@%%" = "Overall Confidence: %@%%";
+"Nivel de Confianza: %@%%" = "Confidence Level: %@%%";
+"Puntuacion de Validacion: %@%%" = "Validation Score: %@%%";
+"Probabilidad de Riesgo: %@%%" = "Risk Probability: %@%%";
+
+// MARK: - ContentView Missing Keys
+"Progreso: %@%%" = "Progress: %@%%";
+
 // MARK: - ImprovedFertilityResultsView Missing Keys
 "Analisis de Fertilidad" = "Fertility Analysis";
 "Compartir" = "Share";

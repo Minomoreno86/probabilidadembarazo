@@ -426,6 +426,15 @@
 "Compartir" = "Compartir";
 "Legal" = "Legal";
 
+// MARK: - MedicalThinkingView Missing Keys
+"Confianza General: %@%%" = "Confianza General: %@%%";
+"Nivel de Confianza: %@%%" = "Nivel de Confianza: %@%%";
+"Puntuacion de Validacion: %@%%" = "Puntuación de Validación: %@%%";
+"Probabilidad de Riesgo: %@%%" = "Probabilidad de Riesgo: %@%%";
+
+// MARK: - ContentView Missing Keys
+"Progreso: %@%%" = "Progreso: %@%%";
+
 // MARK: - Interactions Visualization
 "Interacciones Detectadas" = "Interacciones Detectadas";
 "Factores que se potencian entre sí" = "Factores que se potencian entre sí";

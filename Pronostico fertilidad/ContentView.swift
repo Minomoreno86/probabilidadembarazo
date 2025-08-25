@@ -825,7 +825,7 @@ struct ModernProfileCard: View {
                 .stroke(Color.cyan, style: StrokeStyle(lineWidth: 4, lineCap: .round))
                 .rotationEffect(.degrees(-90))
             
-            Text("\(Int(completionPercentage))%")
+            Text(String(format: localizationManager.getLocalizedString("Progreso: %@%%"), String(Int(completionPercentage))))
                 .font(.caption)
                 .fontWeight(.bold)
                 .foregroundColor(.white)
@@ -841,7 +841,7 @@ struct ModernProfileCard: View {
             if completionPercentage == 100 {
                 MetricPill(icon: "checkmark.circle.fill", value: "100%", label: localizationManager.getLocalizedString("completo"))
             } else {
-                MetricPill(icon: "clock.fill", value: "\(Int(completionPercentage))%", label: localizationManager.getLocalizedString("progreso"))
+                MetricPill(icon: "clock.fill", value: String(format: localizationManager.getLocalizedString("Progreso: %@%%"), String(Int(completionPercentage))), label: localizationManager.getLocalizedString("progreso"))
             }
         }
     }
