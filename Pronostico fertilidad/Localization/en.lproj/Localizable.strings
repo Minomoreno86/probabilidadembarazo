@@ -366,6 +366,10 @@
 // MARK: - ContentView Missing Keys
 "Progreso: %@%%" = "Progress: %@%%";
 
+// MARK: - FontSelectionView Missing Keys
+"Tipografia" = "Typography";
+"Listo" = "Done";
+
 // MARK: - ImprovedFertilityResultsView Missing Keys
 "Analisis de Fertilidad" = "Fertility Analysis";
 "Compartir" = "Share";

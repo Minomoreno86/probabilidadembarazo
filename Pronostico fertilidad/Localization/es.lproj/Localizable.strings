@@ -435,6 +435,10 @@
 // MARK: - ContentView Missing Keys
 "Progreso: %@%%" = "Progreso: %@%%";
 
+// MARK: - FontSelectionView Missing Keys
+"Tipografia" = "Tipografía";
+"Listo" = "Listo";
+
 // MARK: - Interactions Visualization
 "Interacciones Detectadas" = "Interacciones Detectadas";
 "Factores que se potencian entre sí" = "Factores que se potencian entre sí";

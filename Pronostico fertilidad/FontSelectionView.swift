@@ -34,21 +34,21 @@ struct FontSelectionView: View {
                 }
                 .autoRefreshOnLanguageChange()
             }
-            .navigationTitle("Tipografía")
+            .navigationTitle(localizationManager.getLocalizedString("Tipografia"))
             #if os(iOS)
             .navigationBarTitleDisplayMode(.large)
             #endif
             .toolbar {
                 #if os(iOS)
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Listo") {
+                    Button(localizationManager.getLocalizedString("Listo")) {
                         dismiss()
                     }
                     .foregroundColor(colors.text)
                 }
                 #else
                 ToolbarItem(placement: .primaryAction) {
-                    Button("Listo") {
+                    Button(localizationManager.getLocalizedString("Listo")) {
                         dismiss()
                     }
                     .foregroundColor(colors.text)
