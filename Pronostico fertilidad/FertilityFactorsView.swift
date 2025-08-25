@@ -162,21 +162,21 @@ struct FertilityFactorsView: View {
             
             HStack(spacing: 16) {
                 CategorySummaryCard(
-                    title: "Favorables",
+                    title: localizationManager.getLocalizedString("Favorables"),
                     count: favorableFactorsCount,
                     color: .green,
                     icon: "checkmark.circle.fill"
                 )
                 
                 CategorySummaryCard(
-                    title: "Moderados",
+                    title: localizationManager.getLocalizedString("Moderados"),
                     count: neutralFactorsCount,
                     color: .orange,
                     icon: "exclamationmark.triangle.fill"
                 )
                 
                 CategorySummaryCard(
-                    title: "Críticos",
+                    title: localizationManager.getLocalizedString("Criticos"),
                     count: criticalFactorsCount,
                     color: .red,
                     icon: "xmark.circle.fill"
@@ -523,31 +523,31 @@ struct SuperFactorCard: View {
     private var severityDescription: String {
         if factor.contains("Edad") {
             if impact >= 0.20 {
-                return "Excelente"
+                return localizationManager.getLocalizedString("Excelente")
             } else if impact >= 0.15 {
-                return "Bueno"
+                return localizationManager.getLocalizedString("Bueno")
             } else if impact >= 0.10 {
-                return "Moderado"
+                return localizationManager.getLocalizedString("Moderado")
             } else {
-                return "Crítico"
+                return localizationManager.getLocalizedString("Critico")
             }
         } else if factor.contains("AMH") || factor.contains("Reserva Ovárica") {
             if impact >= 1.0 {
-                return "Normal"
+                return localizationManager.getLocalizedString("Normal")
             } else if impact >= 0.75 {
-                return "Bajo"
+                return localizationManager.getLocalizedString("Bajo")
             } else if impact >= 0.4 {
-                return "Muy Bajo"
+                return localizationManager.getLocalizedString("Muy Bajo")
             } else {
-                return "Crítico"
+                return localizationManager.getLocalizedString("Critico")
             }
         } else {
             if impact >= 0.95 {
-                return "Favorable"
+                return localizationManager.getLocalizedString("Favorable")
             } else if impact >= 0.8 {
-                return "Moderado"
+                return localizationManager.getLocalizedString("Moderado")
             } else {
-                return "Crítico"
+                return localizationManager.getLocalizedString("Critico")
             }
         }
     }
@@ -753,11 +753,11 @@ struct FactorTooltip: View {
     
     private var valueDisplay: String {
         if factor.contains("Edad") {
-            return "\(Int(profile.age)) años"
+            return "\(Int(profile.age)) \(localizationManager.getLocalizedString("anios"))"
         } else if factor.contains("AMH") {
-            return String(format: "%.1f ng/mL", value)
+            return String(format: "%.1f %@", value, localizationManager.getLocalizedString("ng/mL"))
         } else if factor.contains("TSH") {
-            return String(format: "%.1f mUI/L", value)
+            return String(format: "%.1f %@", value, localizationManager.getLocalizedString("mUI/L"))
         } else if factor.contains("BMI") {
             return String(format: "%.1f", value)
         } else {
@@ -768,97 +768,97 @@ struct FactorTooltip: View {
     private var normalRange: String {
         switch factor.lowercased() {
         case "edad", "age":
-            return "18-35 años"
+            return localizationManager.getLocalizedString("18-35 anios")
         case "amh", "antimulleriana":
-            return "1.0-4.0 ng/mL"
+            return localizationManager.getLocalizedString("1.0-4.0 ng/mL")
         case "tsh":
-            return "0.4-4.0 mUI/L"
+            return localizationManager.getLocalizedString("0.4-4.0 mUI/L")
         case "bmi":
             return "18.5-24.9"
         case "prolactina", "prolactin":
-            return "<25 ng/mL"
+            return localizationManager.getLocalizedString("<25 ng/mL")
         case "homa", "homa_ir":
-            return "<2.5"
+            return localizationManager.getLocalizedString("<2.5")
         case "ciclo", "cycle":
-            return "21-35 días"
+            return localizationManager.getLocalizedString("21-35 dias")
         case "infertilidad", "infertility":
-            return "<2 años"
+            return localizationManager.getLocalizedString("<2 anios")
         default:
-            return "Variable"
+            return localizationManager.getLocalizedString("Variable")
         }
     }
     
     private var simpleExplanation: String {
         switch factor.lowercased() {
         case "edad", "age":
-            return "La fertilidad disminuye gradualmente después de los 30 años. Tu probabilidad mensual está en rango moderado."
+            return localizationManager.getLocalizedString("La fertilidad disminuye gradualmente después de los 30 años. Tu probabilidad mensual está en rango moderado.")
         case "amh", "antimulleriana":
-            return "AMH indica la cantidad de óvulos disponibles. Tu nivel sugiere buena reserva ovárica."
+            return localizationManager.getLocalizedString("AMH indica la cantidad de óvulos disponibles. Tu nivel sugiere buena reserva ovárica.")
         case "tsh":
-            return "TSH controla la función tiroidea. Tu nivel está en rango normal, favorable para la fertilidad."
+            return localizationManager.getLocalizedString("TSH controla la función tiroidea. Tu nivel está en rango normal, favorable para la fertilidad.")
         case "bmi":
-            return "El IMC afecta la ovulación y la respuesta a tratamientos. Tu valor está en rango saludable."
+            return localizationManager.getLocalizedString("El IMC afecta la ovulación y la respuesta a tratamientos. Tu valor está en rango saludable.")
         case "prolactina", "prolactin":
             if value > 25 {
-                return "La prolactina elevada puede afectar la ovulación. Tu nivel está por encima del rango normal."
+                return localizationManager.getLocalizedString("La prolactina elevada puede afectar la ovulación. Tu nivel está por encima del rango normal.")
             } else {
-                return "La prolactina elevada puede afectar la ovulación. Tu nivel está en rango normal."
+                return localizationManager.getLocalizedString("La prolactina elevada puede afectar la ovulación. Tu nivel está en rango normal.")
             }
         case "homa", "homa_ir":
-            return "HOMA-IR mide la resistencia a la insulina. Tu valor indica buen metabolismo."
+            return localizationManager.getLocalizedString("HOMA-IR mide la resistencia a la insulina. Tu valor indica buen metabolismo.")
         case "ciclo", "cycle":
-            return "La duración del ciclo menstrual refleja la función ovárica. Tu ciclo está en rango normal."
+            return localizationManager.getLocalizedString("La duración del ciclo menstrual refleja la función ovárica. Tu ciclo está en rango normal.")
         case "infertilidad", "infertility":
-            return "El tiempo de infertilidad es un factor importante para decidir tratamientos."
+            return localizationManager.getLocalizedString("El tiempo de infertilidad es un factor importante para decidir tratamientos.")
         case "sop", "pcos":
-            return "El SOP puede afectar la ovulación y la respuesta a tratamientos."
+            return localizationManager.getLocalizedString("El SOP puede afectar la ovulación y la respuesta a tratamientos.")
         case "hsg":
-            return "La HSG evalúa la permeabilidad de las trompas de Falopio."
+            return localizationManager.getLocalizedString("La HSG evalúa la permeabilidad de las trompas de Falopio.")
         case "endometriosis":
-            return "La endometriosis puede afectar la fertilidad y la implantación."
+            return localizationManager.getLocalizedString("La endometriosis puede afectar la fertilidad y la implantación.")
         case "adenomiosis":
-            return "La adenomiosis puede afectar la implantación del embrión."
+            return localizationManager.getLocalizedString("La adenomiosis puede afectar la implantación del embrión.")
         case "mioma", "myoma":
-            return "Los miomas pueden afectar la implantación y el desarrollo del embarazo."
+            return localizationManager.getLocalizedString("Los miomas pueden afectar la implantación y el desarrollo del embarazo.")
         case "polipo", "polyp":
-            return "Los pólipos pueden afectar la implantación del embrión."
+            return localizationManager.getLocalizedString("Los pólipos pueden afectar la implantación del embrión.")
         default:
-            return "Este factor influye en la probabilidad de embarazo."
+            return localizationManager.getLocalizedString("Este factor influye en la probabilidad de embarazo.")
         }
     }
     
     private var reference: String {
         switch factor.lowercased() {
         case "edad", "age":
-            return "ASRM 2024"
+            return localizationManager.getLocalizedString("ASRM 2024")
         case "amh", "antimulleriana":
-            return "ESHRE 2023"
+            return localizationManager.getLocalizedString("ESHRE 2023")
         case "tsh":
-            return "Endocrine Society 2024"
+            return localizationManager.getLocalizedString("Endocrine Society 2024")
         case "bmi":
-            return "WHO 2024"
+            return localizationManager.getLocalizedString("WHO 2024")
         case "prolactina", "prolactin":
-            return "Endocrine Society 2024"
+            return localizationManager.getLocalizedString("Endocrine Society 2024")
         case "homa", "homa_ir":
-            return "ADA 2024"
+            return localizationManager.getLocalizedString("ADA 2024")
         case "ciclo", "cycle":
-            return "ACOG 2024"
+            return localizationManager.getLocalizedString("ACOG 2024")
         case "infertilidad", "infertility":
-            return "ASRM 2024"
+            return localizationManager.getLocalizedString("ASRM 2024")
         case "sop", "pcos":
-            return "ESHRE 2023"
+            return localizationManager.getLocalizedString("ESHRE 2023")
         case "hsg":
-            return "ACOG 2024"
+            return localizationManager.getLocalizedString("ACOG 2024")
         case "endometriosis":
-            return "ESHRE 2023"
+            return localizationManager.getLocalizedString("ESHRE 2023")
         case "adenomiosis":
-            return "ESHRE 2023"
+            return localizationManager.getLocalizedString("ESHRE 2023")
         case "mioma", "myoma":
-            return "ACOG 2024"
+            return localizationManager.getLocalizedString("ACOG 2024")
         case "polipo", "polyp":
-            return "ACOG 2024"
+            return localizationManager.getLocalizedString("ACOG 2024")
         default:
-            return "Guías Clínicas"
+            return localizationManager.getLocalizedString("Guias Clinicas")
         }
     }
 }

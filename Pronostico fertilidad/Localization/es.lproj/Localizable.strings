@@ -359,6 +359,55 @@
 "Datos limitados - Confianza baja" = "Datos limitados - Confianza baja";
 "Datos minimos - Confianza muy baja" = "Datos mínimos - Confianza muy baja";
 
+// MARK: - FertilityFactorsView Missing Keys
+"Favorables" = "Favorables";
+"Moderados" = "Moderados";
+"Criticos" = "Críticos";
+"Excelente" = "Excelente";
+"Bueno" = "Bueno";
+"Moderado" = "Moderado";
+"Critico" = "Crítico";
+"Normal" = "Normal";
+"Bajo" = "Bajo";
+"Muy Bajo" = "Muy Bajo";
+"Favorable" = "Favorable";
+"anios" = "años";
+"ng/mL" = "ng/mL";
+"mUI/L" = "mUI/L";
+"18-35 anios" = "18-35 años";
+"1.0-4.0 ng/mL" = "1.0-4.0 ng/mL";
+"0.4-4.0 mUI/L" = "0.4-4.0 mUI/L";
+"18.5-24.9" = "18.5-24.9";
+"<25 ng/mL" = "<25 ng/mL";
+"<2.5" = "<2.5";
+"21-35 dias" = "21-35 días";
+"<2 anios" = "<2 años";
+"Variable" = "Variable";
+"La fertilidad disminuye gradualmente después de los 30 años. Tu probabilidad mensual está en rango moderado." = "La fertilidad disminuye gradualmente después de los 30 años. Tu probabilidad mensual está en rango moderado.";
+"AMH indica la cantidad de óvulos disponibles. Tu nivel sugiere buena reserva ovárica." = "AMH indica la cantidad de óvulos disponibles. Tu nivel sugiere buena reserva ovárica.";
+"TSH controla la función tiroidea. Tu nivel está en rango normal, favorable para la fertilidad." = "TSH controla la función tiroidea. Tu nivel está en rango normal, favorable para la fertilidad.";
+"El IMC afecta la ovulación y la respuesta a tratamientos. Tu valor está en rango saludable." = "El IMC afecta la ovulación y la respuesta a tratamientos. Tu valor está en rango saludable.";
+"La prolactina elevada puede afectar la ovulación. Tu nivel está por encima del rango normal." = "La prolactina elevada puede afectar la ovulación. Tu nivel está por encima del rango normal.";
+"La prolactina elevada puede afectar la ovulación. Tu nivel está en rango normal." = "La prolactina elevada puede afectar la ovulación. Tu nivel está en rango normal.";
+"HOMA-IR mide la resistencia a la insulina. Tu valor indica buen metabolismo." = "HOMA-IR mide la resistencia a la insulina. Tu valor indica buen metabolismo.";
+"La duración del ciclo menstrual refleja la función ovárica. Tu ciclo está en rango normal." = "La duración del ciclo menstrual refleja la función ovárica. Tu ciclo está en rango normal.";
+"El tiempo de infertilidad es un factor importante para decidir tratamientos." = "El tiempo de infertilidad es un factor importante para decidir tratamientos.";
+"El SOP puede afectar la ovulación y la respuesta a tratamientos." = "El SOP puede afectar la ovulación y la respuesta a tratamientos.";
+"La HSG evalúa la permeabilidad de las trompas de Falopio." = "La HSG evalúa la permeabilidad de las trompas de Falopio.";
+"La endometriosis puede afectar la fertilidad y la implantación." = "La endometriosis puede afectar la fertilidad y la implantación.";
+"La adenomiosis puede afectar la implantación del embrión." = "La adenomiosis puede afectar la implantación del embrión.";
+"Los miomas pueden afectar la implantación y el desarrollo del embarazo." = "Los miomas pueden afectar la implantación y el desarrollo del embarazo.";
+"Los pólipos pueden afectar la implantación del embrión." = "Los pólipos pueden afectar la implantación del embrión.";
+"Este factor influye en la probabilidad de embarazo." = "Este factor influye en la probabilidad de embarazo.";
+"ASRM 2024" = "ASRM 2024";
+"ESHRE 2023" = "ESHRE 2023";
+"Endocrine Society 2024" = "Endocrine Society 2024";
+"WHO 2024" = "WHO 2024";
+"ADA 2024" = "ADA 2024";
+"ACOG 2024" = "ACOG 2024";
+"Guias Clinicas" = "Guías Clínicas";
+"FertilityFactorsView Preview" = "FertilityFactorsView Preview";
+
 // MARK: - Interactions Visualization
 "Interacciones Detectadas" = "Interacciones Detectadas";
 "Factores que se potencian entre sí" = "Factores que se potencian entre sí";

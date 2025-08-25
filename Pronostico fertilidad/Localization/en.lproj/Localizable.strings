@@ -290,6 +290,55 @@
 "Datos limitados - Confianza baja" = "Limited data - Low confidence";
 "Datos minimos - Confianza muy baja" = "Minimal data - Very low confidence";
 
+// MARK: - FertilityFactorsView Missing Keys
+"Favorables" = "Favorable";
+"Moderados" = "Moderate";
+"Criticos" = "Critical";
+"Excelente" = "Excellent";
+"Bueno" = "Good";
+"Moderado" = "Moderate";
+"Critico" = "Critical";
+"Normal" = "Normal";
+"Bajo" = "Low";
+"Muy Bajo" = "Very Low";
+"Favorable" = "Favorable";
+"anios" = "years";
+"ng/mL" = "ng/mL";
+"mUI/L" = "mUI/L";
+"18-35 anios" = "18-35 years";
+"1.0-4.0 ng/mL" = "1.0-4.0 ng/mL";
+"0.4-4.0 mUI/L" = "0.4-4.0 mUI/L";
+"18.5-24.9" = "18.5-24.9";
+"<25 ng/mL" = "<25 ng/mL";
+"<2.5" = "<2.5";
+"21-35 dias" = "21-35 days";
+"<2 anios" = "<2 years";
+"Variable" = "Variable";
+"La fertilidad disminuye gradualmente después de los 30 años. Tu probabilidad mensual está en rango moderado." = "Fertility gradually decreases after age 30. Your monthly probability is in moderate range.";
+"AMH indica la cantidad de óvulos disponibles. Tu nivel sugiere buena reserva ovárica." = "AMH indicates the number of available eggs. Your level suggests good ovarian reserve.";
+"TSH controla la función tiroidea. Tu nivel está en rango normal, favorable para la fertilidad." = "TSH controls thyroid function. Your level is in normal range, favorable for fertility.";
+"El IMC afecta la ovulación y la respuesta a tratamientos. Tu valor está en rango saludable." = "BMI affects ovulation and treatment response. Your value is in healthy range.";
+"La prolactina elevada puede afectar la ovulación. Tu nivel está por encima del rango normal." = "Elevated prolactin can affect ovulation. Your level is above normal range.";
+"La prolactina elevada puede afectar la ovulación. Tu nivel está en rango normal." = "Elevated prolactin can affect ovulation. Your level is in normal range.";
+"HOMA-IR mide la resistencia a la insulina. Tu valor indica buen metabolismo." = "HOMA-IR measures insulin resistance. Your value indicates good metabolism.";
+"La duración del ciclo menstrual refleja la función ovárica. Tu ciclo está en rango normal." = "Menstrual cycle length reflects ovarian function. Your cycle is in normal range.";
+"El tiempo de infertilidad es un factor importante para decidir tratamientos." = "Infertility duration is an important factor for treatment decisions.";
+"El SOP puede afectar la ovulación y la respuesta a tratamientos." = "PCOS can affect ovulation and treatment response.";
+"La HSG evalúa la permeabilidad de las trompas de Falopio." = "HSG evaluates fallopian tube patency.";
+"La endometriosis puede afectar la fertilidad y la implantación." = "Endometriosis can affect fertility and implantation.";
+"La adenomiosis puede afectar la implantación del embrión." = "Adenomyosis can affect embryo implantation.";
+"Los miomas pueden afectar la implantación y el desarrollo del embarazo." = "Fibroids can affect implantation and pregnancy development.";
+"Los pólipos pueden afectar la implantación del embrión." = "Polyps can affect embryo implantation.";
+"Este factor influye en la probabilidad de embarazo." = "This factor influences pregnancy probability.";
+"ASRM 2024" = "ASRM 2024";
+"ESHRE 2023" = "ESHRE 2023";
+"Endocrine Society 2024" = "Endocrine Society 2024";
+"WHO 2024" = "WHO 2024";
+"ADA 2024" = "ADA 2024";
+"ACOG 2024" = "ACOG 2024";
+"Guias Clinicas" = "Clinical Guidelines";
+"FertilityFactorsView Preview" = "FertilityFactorsView Preview";
+
 // MARK: - ImprovedFertilityResultsView Missing Keys
 "Analisis de Fertilidad" = "Fertility Analysis";
 "Compartir" = "Share";
