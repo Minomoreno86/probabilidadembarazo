@@ -26,42 +26,42 @@ enum MedicalCalculationError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .invalidAgeRange(let age, let min, let max):
-            return "Edad inválida: \(age). Debe estar entre \(min) y \(max) años."
+            return String(format: NSLocalizedString("Edad invalida: %@. Debe estar entre %@ y %@ anios.", comment: ""), String(age), String(min), String(max))
         case .invalidAMHRange(let amh, let min, let max):
-            return "AMH inválido: \(amh). Debe estar entre \(min) y \(max) ng/mL."
+            return String(format: NSLocalizedString("AMH invalido: %@. Debe estar entre %@ y %@ ng/mL.", comment: ""), String(amh), String(min), String(max))
         case .invalidTSHRange(let tsh, let min, let max):
-            return "TSH inválido: \(tsh). Debe estar entre \(min) y \(max) mIU/L."
+            return String(format: NSLocalizedString("TSH invalido: %@. Debe estar entre %@ y %@ mIU/L.", comment: ""), String(tsh), String(min), String(max))
         case .invalidBMIRange(let bmi, let min, let max):
-            return "IMC inválido: \(bmi). Debe estar entre \(min) y \(max)."
+            return String(format: NSLocalizedString("IMC invalido: %@. Debe estar entre %@ y %@.", comment: ""), String(bmi), String(min), String(max))
         case .inconsistentData(let description):
-            return "Datos inconsistentes: \(description)"
+            return String(format: NSLocalizedString("Datos inconsistentes: %@", comment: ""), description)
         case .calculationOverflow(let operation):
-            return "Error de cálculo: \(operation) excedió límites seguros."
+            return String(format: NSLocalizedString("Error de calculo: %@ excedio limites seguros.", comment: ""), operation)
         case .insufficientData(let missingFactors):
-            return "Datos insuficientes. Faltan: \(missingFactors.joined(separator: ", "))"
+            return String(format: NSLocalizedString("Datos insuficientes. Faltan: %@", comment: ""), missingFactors.joined(separator: ", "))
         case .validationFailed(let reason):
-            return "Validación fallida: \(reason)"
+            return String(format: NSLocalizedString("Validacion fallida: %@", comment: ""), reason)
         }
     }
     
     var recoverySuggestion: String? {
         switch self {
         case .invalidAgeRange:
-            return "Verifique que la edad esté en el rango válido (18-50 años)."
+            return NSLocalizedString("Verifique que la edad este en el rango valido (18-50 anios).", comment: "")
         case .invalidAMHRange:
-            return "Verifique que el AMH esté en el rango válido (0.1-10.0 ng/mL)."
+            return NSLocalizedString("Verifique que el AMH este en el rango valido (0.1-10.0 ng/mL).", comment: "")
         case .invalidTSHRange:
-            return "Verifique que el TSH esté en el rango válido (0.1-20.0 mIU/L)."
+            return NSLocalizedString("Verifique que el TSH este en el rango valido (0.1-20.0 mIU/L).", comment: "")
         case .invalidBMIRange:
-            return "Verifique que el IMC esté en el rango válido (15.0-60.0)."
+            return NSLocalizedString("Verifique que el IMC este en el rango valido (15.0-60.0).", comment: "")
         case .inconsistentData:
-            return "Revise la consistencia de los datos médicos ingresados."
+            return NSLocalizedString("Revise la consistencia de los datos medicos ingresados.", comment: "")
         case .calculationOverflow:
-            return "Los valores ingresados pueden estar fuera de rangos seguros."
+            return NSLocalizedString("Los valores ingresados pueden estar fuera de rangos seguros.", comment: "")
         case .insufficientData:
-            return "Complete todos los datos requeridos para el cálculo."
+            return NSLocalizedString("Complete todos los datos requeridos para el calculo.", comment: "")
         case .validationFailed:
-            return "Corrija los datos según las validaciones médicas."
+            return NSLocalizedString("Corrija los datos segun las validaciones medicas.", comment: "")
         }
     }
 }
@@ -76,13 +76,13 @@ enum MedicalValidationError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .ageAMHInconsistency(let age, let amh):
-            return "Inconsistencia edad-AMH: Edad \(age) años con AMH \(amh) ng/mL"
+            return String(format: NSLocalizedString("Inconsistencia edad-AMH: Edad %@ anios con AMH %@ ng/mL", comment: ""), String(age), String(amh))
         case .ageFertilityMismatch(let age, let fertilityScore):
-            return "Puntuación de fertilidad \(fertilityScore) no corresponde a edad \(age)"
+            return String(format: NSLocalizedString("Puntuacion de fertilidad %@ no corresponde a edad %@", comment: ""), String(fertilityScore), String(age))
         case .multiplePathologiesConflict(let pathologies):
-            return "Conflicto entre patologías: \(pathologies.joined(separator: ", "))"
+            return String(format: NSLocalizedString("Conflicto entre patologias: %@", comment: ""), pathologies.joined(separator: ", "))
         case .treatmentContraindication(let treatment, let reason):
-            return "Contraindicación para \(treatment): \(reason)"
+            return String(format: NSLocalizedString("Contraindicacion para %@: %@", comment: ""), treatment, reason)
         }
     }
 }
@@ -98,15 +98,15 @@ enum DataPersistenceError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .saveFailed(let reason):
-            return "Error al guardar datos: \(reason)"
+            return String(format: NSLocalizedString("Error al guardar datos: %@", comment: ""), reason)
         case .loadFailed(let reason):
-            return "Error al cargar datos: \(reason)"
+            return String(format: NSLocalizedString("Error al cargar datos: %@", comment: ""), reason)
         case .deleteFailed(let reason):
-            return "Error al eliminar datos: \(reason)"
+            return String(format: NSLocalizedString("Error al eliminar datos: %@", comment: ""), reason)
         case .encryptionFailed(let reason):
-            return "Error al encriptar datos: \(reason)"
+            return String(format: NSLocalizedString("Error al encriptar datos: %@", comment: ""), reason)
         case .decryptionFailed(let reason):
-            return "Error al desencriptar datos: \(reason)"
+            return String(format: NSLocalizedString("Error al desencriptar datos: %@", comment: ""), reason)
         }
     }
 }
@@ -143,21 +143,21 @@ class MedicalErrorHandler: MedicalErrorHandling {
         logError(error, context: "MedicalCalculation")
         
         // Retornar mensaje de error apropiado
-        return error.errorDescription ?? "Error de cálculo médico desconocido"
+        return error.errorDescription ?? NSLocalizedString("Error de calculo medico desconocido", comment: "")
     }
     
     // MARK: - Manejo de Errores de Validación
     func handleValidationError(_ error: MedicalValidationError) -> String {
         logError(error, context: "MedicalValidation")
         
-        return error.errorDescription ?? "Error de validación médica desconocido"
+        return error.errorDescription ?? NSLocalizedString("Error de validacion medica desconocido", comment: "")
     }
     
     // MARK: - Manejo de Errores de Persistencia
     func handlePersistenceError(_ error: DataPersistenceError) -> String {
         logError(error, context: "DataPersistence")
         
-        return error.errorDescription ?? "Error de persistencia desconocido"
+        return error.errorDescription ?? NSLocalizedString("Error de persistencia desconocido", comment: "")
     }
     
     // MARK: - Logging de Errores

@@ -446,6 +446,36 @@
 // MARK: - AuthenticationFlowManager Missing Keys
 "Usuario Anonimo" = "Usuario Anónimo";
 
+// MARK: - ErrorHandling Missing Keys
+"Edad invalida: %@. Debe estar entre %@ y %@ anios." = "Edad inválida: %@. Debe estar entre %@ y %@ años.";
+"AMH invalido: %@. Debe estar entre %@ y %@ ng/mL." = "AMH inválido: %@. Debe estar entre %@ y %@ ng/mL.";
+"TSH invalido: %@. Debe estar entre %@ y %@ mIU/L." = "TSH inválido: %@. Debe estar entre %@ y %@ mIU/L.";
+"IMC invalido: %@. Debe estar entre %@ y %@." = "IMC inválido: %@. Debe estar entre %@ y %@.";
+"Datos inconsistentes: %@" = "Datos inconsistentes: %@";
+"Error de calculo: %@ excedio limites seguros." = "Error de cálculo: %@ excedió límites seguros.";
+"Datos insuficientes. Faltan: %@" = "Datos insuficientes. Faltan: %@";
+"Validacion fallida: %@" = "Validación fallida: %@";
+"Verifique que la edad este en el rango valido (18-50 anios)." = "Verifique que la edad esté en el rango válido (18-50 años).";
+"Verifique que el AMH este en el rango valido (0.1-10.0 ng/mL)." = "Verifique que el AMH esté en el rango válido (0.1-10.0 ng/mL).";
+"Verifique que el TSH este en el rango valido (0.1-20.0 mIU/L)." = "Verifique que el TSH esté en el rango válido (0.1-20.0 mIU/L).";
+"Verifique que el IMC este en el rango valido (15.0-60.0)." = "Verifique que el IMC esté en el rango válido (15.0-60.0).";
+"Revise la consistencia de los datos medicos ingresados." = "Revise la consistencia de los datos médicos ingresados.";
+"Los valores ingresados pueden estar fuera de rangos seguros." = "Los valores ingresados pueden estar fuera de rangos seguros.";
+"Complete todos los datos requeridos para el calculo." = "Complete todos los datos requeridos para el cálculo.";
+"Corrija los datos segun las validaciones medicas." = "Corrija los datos según las validaciones médicas.";
+"Inconsistencia edad-AMH: Edad %@ anios con AMH %@ ng/mL" = "Inconsistencia edad-AMH: Edad %@ años con AMH %@ ng/mL";
+"Puntuacion de fertilidad %@ no corresponde a edad %@" = "Puntuación de fertilidad %@ no corresponde a edad %@";
+"Conflicto entre patologias: %@" = "Conflicto entre patologías: %@";
+"Contraindicacion para %@: %@" = "Contraindicación para %@: %@";
+"Error al guardar datos: %@" = "Error al guardar datos: %@";
+"Error al cargar datos: %@" = "Error al cargar datos: %@";
+"Error al eliminar datos: %@" = "Error al eliminar datos: %@";
+"Error al encriptar datos: %@" = "Error al encriptar datos: %@";
+"Error al desencriptar datos: %@" = "Error al desencriptar datos: %@";
+"Error de calculo medico desconocido" = "Error de cálculo médico desconocido";
+"Error de validacion medica desconocido" = "Error de validación médica desconocido";
+"Error de persistencia desconocido" = "Error de persistencia desconocido";
+
 // MARK: - Interactions Visualization
 "Interacciones Detectadas" = "Interacciones Detectadas";
 "Factores que se potencian entre sí" = "Factores que se potencian entre sí";

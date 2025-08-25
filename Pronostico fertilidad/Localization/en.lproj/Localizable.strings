@@ -377,6 +377,36 @@
 // MARK: - AuthenticationFlowManager Missing Keys
 "Usuario Anonimo" = "Anonymous User";
 
+// MARK: - ErrorHandling Missing Keys
+"Edad invalida: %@. Debe estar entre %@ y %@ anios." = "Invalid age: %@. Must be between %@ and %@ years.";
+"AMH invalido: %@. Debe estar entre %@ y %@ ng/mL." = "Invalid AMH: %@. Must be between %@ and %@ ng/mL.";
+"TSH invalido: %@. Debe estar entre %@ y %@ mIU/L." = "Invalid TSH: %@. Must be between %@ and %@ mIU/L.";
+"IMC invalido: %@. Debe estar entre %@ y %@." = "Invalid BMI: %@. Must be between %@ and %@.";
+"Datos inconsistentes: %@" = "Inconsistent data: %@";
+"Error de calculo: %@ excedio limites seguros." = "Calculation error: %@ exceeded safe limits.";
+"Datos insuficientes. Faltan: %@" = "Insufficient data. Missing: %@";
+"Validacion fallida: %@" = "Validation failed: %@";
+"Verifique que la edad este en el rango valido (18-50 anios)." = "Verify that age is in valid range (18-50 years).";
+"Verifique que el AMH este en el rango valido (0.1-10.0 ng/mL)." = "Verify that AMH is in valid range (0.1-10.0 ng/mL).";
+"Verifique que el TSH este en el rango valido (0.1-20.0 mIU/L)." = "Verify that TSH is in valid range (0.1-20.0 mIU/L).";
+"Verifique que el IMC este en el rango valido (15.0-60.0)." = "Verify that BMI is in valid range (15.0-60.0).";
+"Revise la consistencia de los datos medicos ingresados." = "Review consistency of entered medical data.";
+"Los valores ingresados pueden estar fuera de rangos seguros." = "Entered values may be outside safe ranges.";
+"Complete todos los datos requeridos para el calculo." = "Complete all required data for calculation.";
+"Corrija los datos segun las validaciones medicas." = "Correct data according to medical validations.";
+"Inconsistencia edad-AMH: Edad %@ anios con AMH %@ ng/mL" = "Age-AMH inconsistency: Age %@ years with AMH %@ ng/mL";
+"Puntuacion de fertilidad %@ no corresponde a edad %@" = "Fertility score %@ does not correspond to age %@";
+"Conflicto entre patologias: %@" = "Conflict between pathologies: %@";
+"Contraindicacion para %@: %@" = "Contraindication for %@: %@";
+"Error al guardar datos: %@" = "Error saving data: %@";
+"Error al cargar datos: %@" = "Error loading data: %@";
+"Error al eliminar datos: %@" = "Error deleting data: %@";
+"Error al encriptar datos: %@" = "Error encrypting data: %@";
+"Error al desencriptar datos: %@" = "Error decrypting data: %@";
+"Error de calculo medico desconocido" = "Unknown medical calculation error";
+"Error de validacion medica desconocido" = "Unknown medical validation error";
+"Error de persistencia desconocido" = "Unknown persistence error";
+
 // MARK: - ImprovedFertilityResultsView Missing Keys
 "Analisis de Fertilidad" = "Fertility Analysis";
 "Compartir" = "Share";
