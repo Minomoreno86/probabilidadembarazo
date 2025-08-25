@@ -19,6 +19,7 @@ struct SettingsView: View {
     @EnvironmentObject var authFlowManager: AuthenticationFlowManager
     @EnvironmentObject var userFontManager: UserFontManager
     @EnvironmentObject var localizationManager: LocalizationManager
+    @StateObject private var localeManager = LocaleManager()
     @Environment(\.themeColors) var colors
     
     // Perfil de usuario

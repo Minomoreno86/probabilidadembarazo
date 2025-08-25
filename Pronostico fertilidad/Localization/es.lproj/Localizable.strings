@@ -565,6 +565,16 @@
 // MARK: - InteractionsVisualizationView Missing Keys
 "Emoji Paciente" = "👤";
 
+// MARK: - FertilitySummaryView Missing Keys
+"FertilitySummaryView Preview" = "FertilitySummaryView Preview";
+
+// MARK: - FertilityFactorsView Missing Keys
+"FertilityFactorsView Preview" = "FertilityFactorsView Preview";
+
+// MARK: - ThemeManager Missing Keys
+"Tema Claro" = "Tema Claro";
+"Tema Oscuro" = "Tema Oscuro";
+
 // MARK: - Interactions Visualization
 "Interacciones Detectadas" = "Interacciones Detectadas";
 "Factores que se potencian entre sí" = "Factores que se potencian entre sí";
