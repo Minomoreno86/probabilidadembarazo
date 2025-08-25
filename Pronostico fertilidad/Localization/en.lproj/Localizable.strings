@@ -370,6 +370,13 @@
 "Tipografia" = "Typography";
 "Listo" = "Done";
 
+// MARK: - AppleSignInManager Missing Keys
+"Usuario" = "User";
+"Usuario Apple" = "Apple User";
+
+// MARK: - AuthenticationFlowManager Missing Keys
+"Usuario Anonimo" = "Anonymous User";
+
 // MARK: - ImprovedFertilityResultsView Missing Keys
 "Analisis de Fertilidad" = "Fertility Analysis";
 "Compartir" = "Share";

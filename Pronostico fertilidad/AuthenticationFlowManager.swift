@@ -82,7 +82,7 @@ class AuthenticationFlowManager: ObservableObject {
             // Marcar como autenticado sin datos específicos
             UserDefaults.standard.set("anonymous", forKey: "appleUserID")
             UserDefaults.standard.set("", forKey: "userEmail")
-            UserDefaults.standard.set("Usuario", forKey: "userFullName")
+            UserDefaults.standard.set(NSLocalizedString("Usuario Anonimo", comment: ""), forKey: "userFullName")
             
             // Actualizar estado
             DispatchQueue.main.async {
@@ -136,7 +136,7 @@ struct UserData: Equatable {
     let fullName: String
     
     var displayName: String {
-        return fullName.isEmpty ? "Usuario" : fullName
+        return fullName.isEmpty ? NSLocalizedString("Usuario Anonimo", comment: "") : fullName
     }
     
     var initials: String {

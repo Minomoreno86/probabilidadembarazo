@@ -204,7 +204,7 @@ extension AppleSignInManager: ASAuthorizationControllerDelegate {
         let finalName: String
         if userFullName.isEmpty {
             let storedName = UserDefaults.standard.string(forKey: "userFullName") ?? ""
-            finalName = storedName.isEmpty ? "Usuario" : storedName
+            finalName = storedName.isEmpty ? NSLocalizedString("Usuario", comment: "") : storedName
         } else {
             finalName = userFullName
         }
@@ -271,7 +271,7 @@ extension AppleSignInManager: ASAuthorizationControllerDelegate {
             let simulatedUser = AppleUser(
                 userID: "simulator_user_\(UUID().uuidString)",
                 email: "",
-                fullName: "Usuario"
+                fullName: NSLocalizedString("Usuario", comment: "")
             )
             
             // Guardar datos del usuario
@@ -331,7 +331,7 @@ struct AppleUser {
     let fullName: String
     
     var displayName: String {
-        return fullName.isEmpty ? "Usuario Apple" : fullName
+        return fullName.isEmpty ? NSLocalizedString("Usuario Apple", comment: "") : fullName
     }
     
     var initials: String {

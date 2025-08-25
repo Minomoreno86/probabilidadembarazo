@@ -439,6 +439,13 @@
 "Tipografia" = "Tipografía";
 "Listo" = "Listo";
 
+// MARK: - AppleSignInManager Missing Keys
+"Usuario" = "Usuario";
+"Usuario Apple" = "Usuario Apple";
+
+// MARK: - AuthenticationFlowManager Missing Keys
+"Usuario Anonimo" = "Usuario Anónimo";
+
 // MARK: - Interactions Visualization
 "Interacciones Detectadas" = "Interacciones Detectadas";
 "Factores que se potencian entre sí" = "Factores que se potencian entre sí";
